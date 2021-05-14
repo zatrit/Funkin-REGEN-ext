@@ -165,7 +165,7 @@ class TitleState extends MusicBeatState
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
-		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
+		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 12);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		titleText.antialiasing = true;
 		titleText.animation.play('idle');
@@ -292,6 +292,7 @@ class TitleState extends MusicBeatState
 
 				var version:String = "v" + Application.current.meta.get('version');
 
+				#if !debug
 				if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
 				{
 					FlxG.switchState(new OutdatedSubState());
@@ -305,6 +306,9 @@ class TitleState extends MusicBeatState
 				{
 					FlxG.switchState(new MainMenuState());
 				}
+				#else
+				FlxG.switchState(new MainMenuState());
+				#end
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
