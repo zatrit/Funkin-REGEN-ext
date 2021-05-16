@@ -78,12 +78,16 @@ class FreeplayState extends MusicBeatState
 
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
+		if (isDebug)
+			addWeek(['Test'], 7, ['bf-pixel']);
 
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		bg.setGraphicSize(Std.int(bg.width * 1.1));
+		bg.screenCenter();
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
@@ -209,11 +213,6 @@ class FreeplayState extends MusicBeatState
 			changeDiff(-1);
 		if (controls.RIGHT_P)
 			changeDiff(1);
-
-		if (controls.BACK)
-		{
-			FlxG.switchState(new MainMenuState());
-		}
 
 		if (accepted)
 		{

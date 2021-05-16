@@ -14,7 +14,10 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.math.FlxPoint;
+#if (!switch&&!mobile)
 import io.newgrounds.NG;
+#end
 import lime.app.Application;
 
 using StringTools;
@@ -82,16 +85,22 @@ class MainMenuState extends MusicBeatState
 
 		for (i in 0...optionShit.length)
 		{
-			var menuItem:FlxSprite = new FlxSprite(0, 60 + (i * 160));
+			var menuItem:FlxSprite = new FlxSprite(20, 60 + (i * 160));
 			menuItem.frames = tex;
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
+			#if mobile
+			menuItems.add(menuItem);
+			menuItem.scrollFactor.set();
+			menuItem.antialiasing = true;
+			#else
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
+			#end
 		}
 
 		FlxG.camera.follow(camFollow, null, 0.06);
@@ -131,12 +140,21 @@ class MainMenuState extends MusicBeatState
 				changeItem(1);
 			}
 
-			if (controls.BACK)
-			{
-				FlxG.switchState(new TitleState());
-			}
+			var touch:Bool=false;
 
-			if (controls.ACCEPT)
+			#if mobile
+			menuItems.forEach(function(spr:FlxSprite){
+			if(FlxG.touches.justStarted().length>0){
+				var _touch:Bool=FlxG.touches.getFirst().overlaps(spr,camera);
+				if(_touch){
+					curSelected=spr.ID;
+					changeItem();
+				}
+				touch=_touch||touch;
+			}
+			});
+			#end
+			if (controls.ACCEPT||touch)
 			{
 				if (optionShit[curSelected] == 'donate')
 				{
@@ -195,10 +213,12 @@ class MainMenuState extends MusicBeatState
 
 		super.update(elapsed);
 
+		#if !mobile
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.screenCenter(X);
 		});
+		#end
 	}
 
 	function changeItem(huh:Int = 0)
@@ -217,7 +237,9 @@ class MainMenuState extends MusicBeatState
 			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
+				#if !mobile
 				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
+				#end
 			}
 
 			spr.updateHitbox();

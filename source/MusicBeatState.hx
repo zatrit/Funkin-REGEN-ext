@@ -38,6 +38,13 @@ class MusicBeatState extends FlxUIState
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
 
+		if (controls.BACK
+			#if mobile
+			||FlxG.android.justReleased.BACK
+			#end
+			)
+			onBack();
+
 		super.update(elapsed);
 	}
 
@@ -71,5 +78,8 @@ class MusicBeatState extends FlxUIState
 	public function beatHit():Void
 	{
 		//do literally nothing dumbass
+	}
+	public function onBack():Void{
+		FlxG.switchState(new TitleState());
 	}
 }

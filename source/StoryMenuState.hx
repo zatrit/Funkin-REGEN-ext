@@ -10,6 +10,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
@@ -70,6 +71,10 @@ class StoryMenuState extends MusicBeatState
 	var sprDifficulty:FlxSprite;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
+	#if mobile
+	var upArrow:FlxSprite;
+	var downArrow:FlxSprite;
+	#end
 
 	override function create()
 	{
@@ -110,8 +115,6 @@ class StoryMenuState extends MusicBeatState
 
 		grpLocks = new FlxTypedGroup<FlxSprite>();
 		add(grpLocks);
-
-		trace("Line 70");
 		
 		#if desktop
 		// Updating Discord Rich Presence
@@ -141,8 +144,6 @@ class StoryMenuState extends MusicBeatState
 				grpLocks.add(lock);
 			}
 		}
-
-		trace("Line 96");
 
 		for (char in 0...3)
 		{
@@ -175,13 +176,12 @@ class StoryMenuState extends MusicBeatState
 		difficultySelectors = new FlxGroup();
 		add(difficultySelectors);
 
-		trace("Line 124");
-
 		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 10, grpWeekText.members[0].y + 10);
 		leftArrow.frames = ui_tex;
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
 		leftArrow.animation.play('idle');
+		leftArrow.updateHitbox();
 		difficultySelectors.add(leftArrow);
 
 		sprDifficulty = new FlxSprite(leftArrow.x + 130, leftArrow.y);
@@ -199,9 +199,33 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
+		rightArrow.updateHitbox();
 		difficultySelectors.add(rightArrow);
 
-		trace("Line 150");
+		var mobile_tex:FlxAtlasFrames= Paths.getSparrowAtlas("mobileControls");
+		
+		#if mobile
+		downArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width+130 , grpWeekText.members[0].y + 90);
+		downArrow.frames = mobile_tex;
+		downArrow.animation.addByPrefix('idle', "Down Alt Idle");
+		downArrow.animation.addByPrefix('press', "Down Alt Press");
+		downArrow.animation.play('idle');
+		downArrow.updateHitbox();
+		downArrow.scale.x=0.8;
+		downArrow.scale.y=0.8;
+
+		upArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width, grpWeekText.members[0].y + 90);
+		upArrow.frames = mobile_tex;
+		upArrow.animation.addByPrefix('idle', "Up Alt Idle");
+		upArrow.animation.addByPrefix('press', "Up Alt Press");
+		upArrow.animation.play('idle');
+		upArrow.updateHitbox();
+		upArrow.scale.x=0.8;
+		upArrow.scale.y=0.8;
+
+		add(upArrow);
+		add(downArrow);
+		#end
 
 		add(yellowBG);
 		add(grpWeekCharacters);
@@ -216,8 +240,6 @@ class StoryMenuState extends MusicBeatState
 		add(txtWeekTitle);
 
 		updateText();
-
-		trace("Line 165");
 
 		super.create();
 	}
@@ -243,45 +265,63 @@ class StoryMenuState extends MusicBeatState
 
 		if (!movedBack)
 		{
+			var touchSelect:Bool=false;
 			if (!selectedWeek)
 			{
-				if (controls.UP_P)
+				var touchLeft:Bool=false;
+				var touchRight:Bool=false;
+				var touchUp:Bool=false;
+				var touchDown:Bool=false;
+				#if mobile
+				if(FlxG.touches.justReleased().length>0){
+					touchLeft=FlxG.touches.getFirst().overlaps(leftArrow,camera);
+					touchRight=FlxG.touches.getFirst().overlaps(rightArrow,camera);
+					touchUp=FlxG.touches.getFirst().overlaps(upArrow,camera);
+					touchDown=FlxG.touches.getFirst().overlaps(downArrow,camera);
+					
+					touchSelect=FlxG.touches.getFirst().overlaps(grpWeekText,camera);
+
+					upArrow.animation.play("idle");
+					downArrow.animation.play("idle");
+				}
+				if(FlxG.touches.justStarted().length>0){
+					if(FlxG.touches.getFirst().overlaps(upArrow,camera))
+						upArrow.animation.play("press");
+					if(FlxG.touches.getFirst().overlaps(downArrow,camera))
+						downArrow.animation.play("press");
+				}
+				#end
+
+				if (controls.UP_P || touchUp)
 				{
 					changeWeek(-1);
 				}
 
-				if (controls.DOWN_P)
+				if (controls.DOWN_P || touchDown)
 				{
 					changeWeek(1);
 				}
 
-				if (controls.RIGHT)
+				if (controls.RIGHT || touchRight)
 					rightArrow.animation.play('press')
 				else
 					rightArrow.animation.play('idle');
 
-				if (controls.LEFT)
+				if (controls.LEFT || touchLeft)
 					leftArrow.animation.play('press');
 				else
 					leftArrow.animation.play('idle');
 
-				if (controls.RIGHT_P)
+				if (controls.RIGHT_P || touchRight)
 					changeDifficulty(1);
-				if (controls.LEFT_P)
+				if (controls.LEFT_P || touchLeft)
 					changeDifficulty(-1);
 			}
 
-			if (controls.ACCEPT)
+			if (controls.ACCEPT || touchSelect)
 			{
 				selectWeek();
 			}
-		}
-
-		if (controls.BACK && !movedBack && !selectedWeek)
-		{
-			FlxG.sound.play(Paths.sound('cancelMenu'));
-			movedBack = true;
-			FlxG.switchState(new MainMenuState());
 		}
 
 		super.update(elapsed);
@@ -442,5 +482,12 @@ class StoryMenuState extends MusicBeatState
 		#if !switch
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 		#end
+	}
+	public override function onBack() {
+		if(!movedBack && !selectedWeek){
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+			movedBack = true;
+			FlxG.switchState(new MainMenuState());
+		}
 	}
 }

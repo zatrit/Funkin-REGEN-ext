@@ -42,6 +42,10 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 
+/*
+Zoom values got from here https://github.com/luckydog7/Funkin-android
+*/
+
 using StringTools;
 
 class PlayState extends MusicBeatState
@@ -115,10 +119,14 @@ class PlayState extends MusicBeatState
 	var talking:Bool = true;
 	var songScore:Int = 0;
 	var scoreTxt:FlxText;
+	var healthTxt:FlxText;
 
 	public static var campaignScore:Int = 0;
-
+#if mobile
+	var defaultCamZoom:Float = 1.6;
+#else
 	var defaultCamZoom:Float = 1.05;
+#end
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
@@ -160,23 +168,6 @@ class PlayState extends MusicBeatState
 
 		switch (SONG.song.toLowerCase())
 		{
-			case 'tutorial':
-				dialogue = ["Hey you're pretty cute.", 'Use the arrow keys to keep up \nwith me singing.'];
-			case 'bopeebo':
-				dialogue = [
-					'HEY!',
-					"You think you can just sing\nwith my daughter like that?",
-					"If you want to date her...",
-					"You're going to have to go \nthrough ME first!"
-				];
-			case 'fresh':
-				dialogue = ["Not too shabby boy.", ""];
-			case 'dadbattle':
-				dialogue = [
-					"gah you think you're hot stuff?",
-					"If you can beat me here...",
-					"Only then I will even CONSIDER letting you\ndate my daughter!"
-				];
 			case 'senpai':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('senpai/senpaiDialogue'));
 			case 'roses':
@@ -733,6 +724,11 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
+		healthTxt = new FlxText(healthBarBG.x+100, healthBarBG.y + 30, 0, "", 20);
+		healthTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT);
+		healthTxt.scrollFactor.set();
+		add(healthTxt);
+
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
@@ -748,6 +744,7 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		healthTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
@@ -1348,10 +1345,9 @@ class PlayState extends MusicBeatState
 				{
 					trainFrameTiming += elapsed;
 
-					if (trainFrameTiming >= 1 / 24)
+					if (trainFrameTiming % 24 == 0)
 					{
 						updateTrainPos();
-						trainFrameTiming = 0;
 					}
 				}
 				// phillyCityLights.members[curLight].alpha -= (Conductor.crochet / 1000) * FlxG.elapsed;
@@ -1360,25 +1356,11 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		scoreTxt.text = "Score:" + songScore;
+		healthTxt.text = "Health: "+Std.int(health/2*100)+"%";
 
-		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
+		if (FlxG.keys.justPressed.ENTER)
 		{
-			persistentUpdate = false;
-			persistentDraw = true;
-			paused = true;
-
-			// 1 / 1000 chance for Gitaroo Man easter egg
-			if (FlxG.random.bool(0.1))
-			{
-				// gitaroo man easter egg
-				FlxG.switchState(new GitarooPause());
-			}
-			else
-				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-		
-			#if desktop
-			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
-			#end
+			onBack();
 		}
 
 		if (FlxG.keys.justPressed.SEVEN)
@@ -1517,8 +1499,12 @@ class PlayState extends MusicBeatState
 
 		if (camZooming)
 		{
+			var zoom:Float=1;
+
 			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+			#if !mobile
 			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
+			#end
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);
@@ -1703,7 +1689,7 @@ class PlayState extends MusicBeatState
 		vocals.volume = 0;
 		if (SONG.validScore)
 		{
-			#if !switch
+			#if  (!switch&&!mobile)
 			Highscore.saveScore(SONG.song, songScore, storyDifficulty);
 			#end
 		}
@@ -1728,7 +1714,9 @@ class PlayState extends MusicBeatState
 
 				if (SONG.validScore)
 				{
+					#if  (!switch&&!mobile)
 					NGio.unlockMedal(60961);
+					#end
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 				}
 
@@ -2459,6 +2447,25 @@ class PlayState extends MusicBeatState
 			lightningStrikeShit();
 		}
 	}
+	override function onBack() {
+		if(startedCountdown && canPause){
+			persistentUpdate = false;
+			persistentDraw = true;
+			paused = true;
 
+			// 1 / 1000 chance for Gitaroo Man easter egg
+			if (FlxG.random.bool(0.1))
+			{
+				// gitaroo man easter egg
+				FlxG.switchState(new GitarooPause());
+			}
+			else
+				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+		
+			#if desktop
+			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+			#end
+		}
+	}
 	var curLight:Int = 0;
 }
