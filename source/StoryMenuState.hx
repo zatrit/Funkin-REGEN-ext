@@ -72,8 +72,8 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 	#if mobile
-	var upArrow:FlxSprite;
-	var downArrow:FlxSprite;
+	var upArrow:MobileButton;
+	var downArrow:MobileButton;
 	#end
 
 	override function create()
@@ -201,27 +201,23 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.play('idle');
 		rightArrow.updateHitbox();
 		difficultySelectors.add(rightArrow);
-
-		var mobile_tex:FlxAtlasFrames= Paths.getSparrowAtlas("mobileControls");
 		
 		#if mobile
-		downArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width+130 , grpWeekText.members[0].y + 90);
-		downArrow.frames = mobile_tex;
-		downArrow.animation.addByPrefix('idle', "Down Alt Idle");
-		downArrow.animation.addByPrefix('press', "Down Alt Press");
-		downArrow.animation.play('idle');
-		downArrow.updateHitbox();
+		downArrow = new MobileButton(grpWeekText.members[0].x + grpWeekText.members[0].width+130 , 
+			grpWeekText.members[0].y + 95,
+			"Down",true,()->{},
+			()->{changeWeek(1);});
 		downArrow.scale.x=0.8;
 		downArrow.scale.y=0.8;
+		downArrow.updateHitbox();
 
-		upArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width, grpWeekText.members[0].y + 90);
-		upArrow.frames = mobile_tex;
-		upArrow.animation.addByPrefix('idle', "Up Alt Idle");
-		upArrow.animation.addByPrefix('press', "Up Alt Press");
-		upArrow.animation.play('idle');
-		upArrow.updateHitbox();
+		upArrow = new MobileButton(grpWeekText.members[0].x + grpWeekText.members[0].width, 
+			grpWeekText.members[0].y + 95,
+			"Up",true,()->{},
+			()->{changeWeek(-1);});
 		upArrow.scale.x=0.8;
 		upArrow.scale.y=0.8;
+		upArrow.updateHitbox();
 
 		add(upArrow);
 		add(downArrow);
@@ -270,34 +266,21 @@ class StoryMenuState extends MusicBeatState
 			{
 				var touchLeft:Bool=false;
 				var touchRight:Bool=false;
-				var touchUp:Bool=false;
-				var touchDown:Bool=false;
 				#if mobile
 				if(FlxG.touches.justReleased().length>0){
 					touchLeft=FlxG.touches.getFirst().overlaps(leftArrow,camera);
 					touchRight=FlxG.touches.getFirst().overlaps(rightArrow,camera);
-					touchUp=FlxG.touches.getFirst().overlaps(upArrow,camera);
-					touchDown=FlxG.touches.getFirst().overlaps(downArrow,camera);
 					
 					touchSelect=FlxG.touches.getFirst().overlaps(grpWeekText,camera);
-
-					upArrow.animation.play("idle");
-					downArrow.animation.play("idle");
-				}
-				if(FlxG.touches.justStarted().length>0){
-					if(FlxG.touches.getFirst().overlaps(upArrow,camera))
-						upArrow.animation.play("press");
-					if(FlxG.touches.getFirst().overlaps(downArrow,camera))
-						downArrow.animation.play("press");
 				}
 				#end
 
-				if (controls.UP_P || touchUp)
+				if (controls.UP_P)
 				{
 					changeWeek(-1);
 				}
 
-				if (controls.DOWN_P || touchDown)
+				if (controls.DOWN_P)
 				{
 					changeWeek(1);
 				}

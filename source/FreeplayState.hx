@@ -1,5 +1,7 @@
 package;
 
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.addons.ui.FlxButtonPlus;
 #if desktop
 import Discord.DiscordClient;
 #end

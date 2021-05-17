@@ -55,19 +55,13 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
-		if (controls.ACCEPT)
+		if (controls.ACCEPT
+			#if mobile
+			|| FlxG.touches.justStarted().length>0
+			#end
+			)
 		{
 			endBullshit();
-		}
-
-		if (controls.BACK)
-		{
-			FlxG.sound.music.stop();
-
-			if (PlayState.isStoryMode)
-				FlxG.switchState(new StoryMenuState());
-			else
-				FlxG.switchState(new FreeplayState());
 		}
 
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
@@ -111,5 +105,13 @@ class GameOverSubstate extends MusicBeatSubstate
 				});
 			});
 		}
+	}
+	override function onBack() {
+		FlxG.sound.music.stop();
+
+		if (PlayState.isStoryMode)
+			FlxG.switchState(new StoryMenuState());
+		else
+			FlxG.switchState(new FreeplayState());
 	}
 }

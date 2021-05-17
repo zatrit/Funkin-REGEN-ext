@@ -42,10 +42,6 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 
-/*
-Zoom values got from here https://github.com/luckydog7/Funkin-android
-*/
-
 using StringTools;
 
 class PlayState extends MusicBeatState
@@ -119,14 +115,10 @@ class PlayState extends MusicBeatState
 	var talking:Bool = true;
 	var songScore:Int = 0;
 	var scoreTxt:FlxText;
-	var healthTxt:FlxText;
 
 	public static var campaignScore:Int = 0;
-#if mobile
-	var defaultCamZoom:Float = 1.6;
-#else
+
 	var defaultCamZoom:Float = 1.05;
-#end
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
@@ -724,11 +716,6 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
-		healthTxt = new FlxText(healthBarBG.x+100, healthBarBG.y + 30, 0, "", 20);
-		healthTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT);
-		healthTxt.scrollFactor.set();
-		add(healthTxt);
-
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
@@ -744,7 +731,6 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
-		healthTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
@@ -1345,9 +1331,10 @@ class PlayState extends MusicBeatState
 				{
 					trainFrameTiming += elapsed;
 
-					if (trainFrameTiming % 24 == 0)
+					if (trainFrameTiming >= 1 / 24)
 					{
 						updateTrainPos();
+						trainFrameTiming = 0;
 					}
 				}
 				// phillyCityLights.members[curLight].alpha -= (Conductor.crochet / 1000) * FlxG.elapsed;
@@ -1356,9 +1343,8 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		scoreTxt.text = "Score:" + songScore;
-		healthTxt.text = "Health: "+Std.int(health/2*100)+"%";
 
-		if (FlxG.keys.justPressed.ENTER)
+		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			onBack();
 		}
@@ -1499,12 +1485,8 @@ class PlayState extends MusicBeatState
 
 		if (camZooming)
 		{
-			var zoom:Float=1;
-
 			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-			#if !mobile
 			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
-			#end
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);
@@ -1689,7 +1671,7 @@ class PlayState extends MusicBeatState
 		vocals.volume = 0;
 		if (SONG.validScore)
 		{
-			#if  (!switch&&!mobile)
+			#if !switch
 			Highscore.saveScore(SONG.song, songScore, storyDifficulty);
 			#end
 		}
@@ -1714,7 +1696,7 @@ class PlayState extends MusicBeatState
 
 				if (SONG.validScore)
 				{
-					#if  (!switch&&!mobile)
+					#if (!mobile&&!switch)
 					NGio.unlockMedal(60961);
 					#end
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
@@ -2447,6 +2429,7 @@ class PlayState extends MusicBeatState
 			lightningStrikeShit();
 		}
 	}
+
 	override function onBack() {
 		if(startedCountdown && canPause){
 			persistentUpdate = false;
@@ -2461,11 +2444,12 @@ class PlayState extends MusicBeatState
 			}
 			else
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-		
+	
 			#if desktop
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 			#end
 		}
 	}
+
 	var curLight:Int = 0;
 }

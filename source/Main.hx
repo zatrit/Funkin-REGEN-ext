@@ -60,13 +60,18 @@ class Main extends Sprite
 			var ratioX:Float = stageWidth / gameWidth;
 			var ratioY:Float = stageHeight / gameHeight;
 			zoom = Math.min(ratioX, ratioY);
+			#if mobile
+			/*
+			Zoom and game size values are taken from here https://github.com/luckydog7/Funkin-android
+			*/
+				zoom = 1;
+				gameWidth = 1280;
+				gameHeight = 720;
+			#else
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
+			#end
 		}
-
-		#if !debug
-		initialState = TitleState;
-		#end
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 		addChild(new FPS(10, 3, 0xFFFFFF));

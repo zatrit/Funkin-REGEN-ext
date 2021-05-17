@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="mobileControls.png">
+	<!-- Arrows -->
+	<SubTexture name="Up Idle0000" x="0" y="0" width="154" height="154"/>
+	<SubTexture name="Right Idle0000" x="154" y="0" width="154" height="154"/>
+	<SubTexture name="Left Idle0000" x="308" y="0" width="154" height="154"/>
+	<SubTexture name="Down Idle0000" x="462" y="0" width="154" height="154"/>
+	<!-- Arrows Alt -->
+	<SubTexture name="Up Alt Idle0000" x="0" y="154" width="154" height="154"/>
+	<SubTexture name="Right Alt Idle0000" x="154" y="154" width="154" height="154"/>
+	<SubTexture name="Left Alt Idle0000" x="308" y="154" width="154" height="154"/>
+	<SubTexture name="Down Alt Idle0000" x="462" y="154" width="154" height="154"/>
+	<!-- Arrows Press -->
+	<SubTexture name="Up Press0000" x="0" y="308" width="154" height="154"/>
+	<SubTexture name="Right Press0000" x="154" y="308" width="154" height="154"/>
+	<SubTexture name="Left Press0000" x="308" y="308" width="154" height="154"/>
+	<SubTexture name="Down Press0000" x="462" y="308" width="154" height="154"/>
+	<!-- Arrows Alt Press  -->
+	<SubTexture name="Up Alt Press0000" x="0" y="462" width="154" height="154"/>
+	<SubTexture name="Right Alt Press0000" x="154" y="462" width="154" height="154"/>
+	<SubTexture name="Left Alt Press0000" x="308" y="462" width="154" height="154"/>
+	<SubTexture name="Down Alt Press0000" x="462" y="462" width="154" height="154"/>
+	<!-- Start  -->
+	<SubTexture name="Start0000" x="0" y="616" width="308" height="154"/>
+	<SubTexture name="Start Press0000" x="154" y="616" width="308" height="154"/>
+</TextureAtlas>
