@@ -13,18 +13,27 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 
+#if mobile
+import mobile.MobileButton;
+import mobile.MobileButtonGroup;
+#end
+
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 
-	#if debug
-	"debug menu", 
+	#if (debug&&desktop)
+	"Charting editor", 
 	#end
 	'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
+
+	#if mobile
+	var grpMobileButtons:MobileButtonGroup;
+	#end
 
 	public function new(x:Float, y:Float)
 	{
@@ -79,6 +88,16 @@ class PauseSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+		#if mobile
+		grpMobileButtons=new MobileButtonGroup(camera,FlxG.camera.width-510,FlxG.camera.height-410);
+		grpMobileButtons.leftArrow.destroy();
+		grpMobileButtons.rightArrow.destroy();
+
+		grpMobileButtons.upArrow.y+=40;
+		
+		add(grpMobileButtons);
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -91,6 +110,16 @@ class PauseSubState extends MusicBeatSubstate
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
 		var accepted = controls.ACCEPT;
+
+		#if mobile
+		if(FlxG.touches.justReleased().length>0){
+		for (touch in FlxG.touches.list) {
+				accepted=accepted||touch.screenX<camera.width/2;
+			}
+		}
+		upP=grpMobileButtons.upArrow.justPressed;
+		downP=grpMobileButtons.downArrow.justPressed;
+		#end
 
 		if (upP)
 		{
@@ -110,11 +139,12 @@ class PauseSubState extends MusicBeatSubstate
 				case "Resume":
 					close();
 				case "Restart Song":
+					PlayState.firstTry=true;
 					FlxG.resetState();
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
 #if debug
-				case "debug menu":
+				case "Charting editor":
 					FlxG.switchState(new ChartingState());
 #end
 			}
@@ -153,5 +183,8 @@ class PauseSubState extends MusicBeatSubstate
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+	}
+	override function onBack() {
+		close();
 	}
 }

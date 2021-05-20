@@ -437,4 +437,5 @@ class TitleState extends MusicBeatState
 			skippedIntro = true;
 		}
 	}
+	override function onBack() {}
 }

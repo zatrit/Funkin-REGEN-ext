@@ -15,13 +15,17 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
 
+#if mobile
+import mobile.MobileButton;
+import mobile.MobileButtonGroup;
+#end
+
 using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
 	var songs:Array<SongMetadata> = [];
 
-	var selector:FlxText;
 	var curSelected:Int = 0;
 	var curDifficulty:Int = 1;
 
@@ -34,6 +38,10 @@ class FreeplayState extends MusicBeatState
 	private var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
+
+	#if mobile
+	var grpMobileButtons:MobileButtonGroup;
+	#end
 
 	override function create()
 	{
@@ -81,7 +89,7 @@ class FreeplayState extends MusicBeatState
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
 		if (isDebug)
-			addWeek(['Test'], 7, ['bf-pixel']);
+			addWeek(['Test'], 7, ['tankman']);
 
 		// LOAD MUSIC
 
@@ -119,7 +127,7 @@ class FreeplayState extends MusicBeatState
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 		// scoreText.alignment = RIGHT;
 
-		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
+		var scoreBG:FlxSprite = new FlxSprite(scoreText.x, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
@@ -134,30 +142,13 @@ class FreeplayState extends MusicBeatState
 
 		// FlxG.sound.playMusic(Paths.music('title'), 0);
 		// FlxG.sound.music.fadeIn(2, 0, 0.8);
-		selector = new FlxText();
-
-		selector.size = 40;
-		selector.text = ">";
-		// add(selector);
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
-
-		// JUST DOIN THIS SHIT FOR TESTING!!!
-		/* 
-			var md:String = Markdown.markdownToHtml(Assets.getText('CHANGELOG.md'));
-
-			var texFel:TextField = new TextField();
-			texFel.width = FlxG.width;
-			texFel.height = FlxG.height;
-			// texFel.
-			texFel.htmlText = md;
-
-			FlxG.stage.addChild(texFel);
-
-			// scoreText.textField.htmlText = md;
-
-			trace(md);
-		 */
+		
+		#if mobile
+		grpMobileButtons=new MobileButtonGroup(FlxG.camera,FlxG.camera.width-510,FlxG.camera.height-410);
+		add(grpMobileButtons);
+		#end
 
 		super.create();
 	}
@@ -200,7 +191,21 @@ class FreeplayState extends MusicBeatState
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
+		var leftP = controls.LEFT_P;
+		var rightP = controls.RIGHT_P;
 		var accepted = controls.ACCEPT;
+		#if mobile
+		if(FlxG.touches.justReleased().length>0){
+			accepted=accepted||FlxG.touches.getFirst().overlaps(grpSongs,camera);
+		}
+		#end
+
+		#if mobile
+		upP=upP||grpMobileButtons.upArrow.justPressed;
+		downP=downP||grpMobileButtons.downArrow.justPressed;
+		leftP=leftP||grpMobileButtons.leftArrow.justPressed;
+		rightP=rightP||grpMobileButtons.rightArrow.justPressed;
+		#end
 
 		if (upP)
 		{
@@ -211,13 +216,14 @@ class FreeplayState extends MusicBeatState
 			changeSelection(1);
 		}
 
-		if (controls.LEFT_P)
+		if (leftP)
 			changeDiff(-1);
-		if (controls.RIGHT_P)
+		if (rightP)
 			changeDiff(1);
-
 		if (accepted)
 		{
+			PlayState.firstTry=true;
+
 			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 
 			trace(poop);

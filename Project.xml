@@ -117,9 +117,10 @@
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod"/>
 	<haxelib name="discord_rpc" if="desktop"/>
-	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
-	<!-- <haxelib name="markdown" /> -->
+	<haxelib name="hxcpp-debug-server" if="desktop && debug"/>
+
+	<haxelib name="markdown" />
 	<!-- <haxelib name="HtmlParser" /> -->
 
 	<!--In case you want to use nape with flixel-->
@@ -169,5 +170,7 @@
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
 	<haxedef name="NG_LOGIN" if="newgrounds" />
+
+	<architecture name="x86" if="android" />
 	
 </project>

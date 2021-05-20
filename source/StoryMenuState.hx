@@ -16,6 +16,9 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.net.curl.CURLCode;
+#if mobile
+import mobile.MobileButton;
+#end
 
 using StringTools;
 
@@ -259,22 +262,22 @@ class StoryMenuState extends MusicBeatState
 			lock.y = grpWeekText.members[lock.ID].y;
 		});
 
+		var touchLeft:Bool=false;
+		var touchRight:Bool=false;
+		var touchSelect:Bool=false;
+		#if mobile
+		if(FlxG.touches.justReleased().length>0){
+			touchLeft=FlxG.touches.getFirst().overlaps(leftArrow,camera);
+			touchRight=FlxG.touches.getFirst().overlaps(rightArrow,camera);
+			
+			touchSelect=FlxG.touches.getFirst().overlaps(grpWeekText,camera);
+		}
+		#end
+
 		if (!movedBack)
 		{
-			var touchSelect:Bool=false;
 			if (!selectedWeek)
 			{
-				var touchLeft:Bool=false;
-				var touchRight:Bool=false;
-				#if mobile
-				if(FlxG.touches.justReleased().length>0){
-					touchLeft=FlxG.touches.getFirst().overlaps(leftArrow,camera);
-					touchRight=FlxG.touches.getFirst().overlaps(rightArrow,camera);
-					
-					touchSelect=FlxG.touches.getFirst().overlaps(grpWeekText,camera);
-				}
-				#end
-
 				if (controls.UP_P)
 				{
 					changeWeek(-1);
@@ -301,7 +304,7 @@ class StoryMenuState extends MusicBeatState
 					changeDifficulty(-1);
 			}
 
-			if (controls.ACCEPT || touchSelect)
+			if (controls.ACCEPT #if mobile || touchSelect #end)
 			{
 				selectWeek();
 			}
@@ -329,6 +332,7 @@ class StoryMenuState extends MusicBeatState
 
 			PlayState.storyPlaylist = weekData[curWeek];
 			PlayState.isStoryMode = true;
+			PlayState.firstTry=true;
 			selectedWeek = true;
 
 			var diffic = "";

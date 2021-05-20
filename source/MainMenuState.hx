@@ -19,6 +19,7 @@ import flixel.math.FlxPoint;
 import io.newgrounds.NG;
 #end
 import lime.app.Application;
+import options.OptionsState;
 
 using StringTools;
 
@@ -202,7 +203,7 @@ class MainMenuState extends MusicBeatState
 									case 'options':
 										FlxTransitionableState.skipNextTransIn = true;
 										FlxTransitionableState.skipNextTransOut = true;
-										FlxG.switchState(new OptionsMenu());
+										FlxG.switchState(new OptionsState());
 								}
 							});
 						}

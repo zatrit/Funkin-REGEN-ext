@@ -1,5 +1,6 @@
 package;
 
+import openfl.display.FPS;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -41,6 +42,11 @@ import lime.utils.Assets;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
+
+#if mobile
+import mobile.MobileButton;
+import mobile.MobileButtonGroup;
+#end
 
 using StringTools;
 
@@ -133,6 +139,12 @@ class PlayState extends MusicBeatState
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
+
+	#if mobile
+	var grpMobileButtons:MobileButtonGroup;
+	#end
+
+	public static var firstTry=true;
 
 	override public function create()
 	{
@@ -740,7 +752,7 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 
-		if (isStoryMode)
+		if (isStoryMode&&firstTry)
 		{
 			switch (curSong.toLowerCase())
 			{
@@ -791,6 +803,10 @@ class PlayState extends MusicBeatState
 					startCountdown();
 			}
 		}
+		#if mobile
+		grpMobileButtons=new MobileButtonGroup(camHUD,camHUD.width-510,camHUD.height-410);
+		add(grpMobileButtons);
+		#end
 
 		super.create();
 	}
@@ -1259,6 +1275,9 @@ class PlayState extends MusicBeatState
 			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 			}
+			#end
+			#if mobile
+			grpMobileButtons.visible=true;
 			#end
 		}
 
@@ -1920,6 +1939,21 @@ class PlayState extends MusicBeatState
 		var downR = controls.DOWN_R;
 		var leftR = controls.LEFT_R;
 
+		#if mobile
+		up=up||grpMobileButtons.upArrow.pressed;
+		upP=upP||grpMobileButtons.upArrow.justPressed;
+		upR=upR||grpMobileButtons.upArrow.justReleased;
+		down=down||grpMobileButtons.downArrow.pressed;
+		downP=downP||grpMobileButtons.downArrow.justPressed;
+		downR=downR||grpMobileButtons.downArrow.justReleased;
+		left=left||grpMobileButtons.leftArrow.pressed;
+		leftP=leftP||grpMobileButtons.leftArrow.justPressed;
+		leftR=leftR||grpMobileButtons.leftArrow.justReleased;
+		right=right||grpMobileButtons.rightArrow.pressed;
+		rightP=rightP||grpMobileButtons.rightArrow.justPressed;
+		rightR=rightR||grpMobileButtons.rightArrow.justReleased;
+		#end
+
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
 
 		// FlxG.watch.addQuick('asdfa', upP);
@@ -2143,6 +2177,12 @@ class PlayState extends MusicBeatState
 		var rightP = controls.RIGHT_P;
 		var downP = controls.DOWN_P;
 		var leftP = controls.LEFT_P;
+		#if mobile
+		upP=upP||grpMobileButtons.upArrow.justPressed;
+		downP=downP||grpMobileButtons.downArrow.justPressed;
+		leftP=leftP||grpMobileButtons.leftArrow.justPressed;
+		rightP=rightP||grpMobileButtons.rightArrow.justPressed;
+		#end
 
 		if (leftP)
 			noteMiss(0);
@@ -2306,11 +2346,6 @@ class PlayState extends MusicBeatState
 		{
 			resyncVocals();
 		}
-
-		if (dad.curCharacter == 'spooky' && curStep % 4 == 2)
-		{
-			// dad.dance();
-		}
 	}
 
 	var lightningStrikeBeat:Int = 0;
@@ -2409,11 +2444,13 @@ class PlayState extends MusicBeatState
 					phillyCityLights.forEach(function(light:FlxSprite)
 					{
 						light.visible = false;
+						light.alpha=1;
 					});
 
 					curLight = FlxG.random.int(0, phillyCityLights.length - 1);
 
 					phillyCityLights.members[curLight].visible = true;
+					FlxTween.tween(phillyCityLights.members[curLight],{alpha:0},Conductor.bpm/60/2);
 					// phillyCityLights.members[curLight].alpha = 1;
 				}
 
@@ -2447,6 +2484,9 @@ class PlayState extends MusicBeatState
 	
 			#if desktop
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+			#end
+			#if mobile
+			grpMobileButtons.visible=false;
 			#end
 		}
 	}

@@ -80,6 +80,6 @@ class MusicBeatState extends FlxUIState
 		//do literally nothing dumbass
 	}
 	public function onBack():Void{
-		FlxG.switchState(new TitleState());
+		FlxG.switchState(new MainMenuState());
 	}
 }

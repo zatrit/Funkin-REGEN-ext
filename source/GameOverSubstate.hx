@@ -105,6 +105,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				});
 			});
 		}
+		PlayState.firstTry=false;
 	}
 	override function onBack() {
 		FlxG.sound.music.stop();
