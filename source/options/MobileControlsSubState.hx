@@ -2,7 +2,6 @@ package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
 
 class MobileControlsSubState extends MusicBeatSubstate
 {

@@ -1,7 +1,6 @@
 #if mobile
 package mobile;
 
-import flixel.FlxObject;
 import flixel.math.FlxPoint;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxG;

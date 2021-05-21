@@ -1,14 +1,10 @@
 package;
 
-import lime.graphics.ImageBuffer;
-import openfl.display.BitmapData;
-import openfl.geom.Rectangle;
-import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
-import openfl.utils.Assets as OpenFlAssets
-;
+import openfl.utils.Assets as OpenFlAssets;
+
 class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
@@ -111,8 +107,7 @@ class Paths
 
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
-		var frames:FlxAtlasFrames=FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
-		return frames;
+		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
 	}
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
