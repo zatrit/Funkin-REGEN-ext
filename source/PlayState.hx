@@ -1,5 +1,6 @@
 package;
 
+import flixel.tweens.misc.VarTween;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -35,7 +36,7 @@ import openfl.filters.ShaderFilter;
 
 #if mobile
 import mobile.MobileButton;
-import mobile.MobileButtonGroup;
+import mobile.MobileControls;
 #end
 
 using StringTools;
@@ -96,6 +97,7 @@ class PlayState extends MusicBeatState
 	var phillyCityLights:FlxTypedGroup<FlxSprite>;
 	var phillyTrain:FlxSprite;
 	var trainSound:FlxSound;
+	var phillyCityTween:VarTween;
 
 	var limo:FlxSprite;
 	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
@@ -131,13 +133,18 @@ class PlayState extends MusicBeatState
 	#end
 
 	#if mobile
-	var grpMobileButtons:MobileButtonGroup;
+	var grpMobileButtons:MobileControls;
+	var pauseButton:MobileButton;
 	#end
 
-	public static var firstTry=true;
+	public static var firstTry:Bool=true;
+	public static var attempt:Int=0;
 
 	override public function create()
 	{
+		if(firstTry)
+			attempt=0;
+
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
@@ -793,10 +800,6 @@ class PlayState extends MusicBeatState
 					startCountdown();
 			}
 		}
-		#if mobile
-		grpMobileButtons=new MobileButtonGroup(camHUD,camHUD.width-510,camHUD.height-410);
-		add(grpMobileButtons);
-		#end
 
 		super.create();
 	}
@@ -890,6 +893,23 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
+		#if mobile
+		var controlType=1;
+		
+		if(FlxG.save.data.mobileControlsType!=null)
+			controlType=FlxG.save.data.mobileControlsType;
+
+		grpMobileButtons=new MobileControls(camHUD,camHUD.width-510,camHUD.height-410,controlType);
+
+		pauseButton=new MobileButton(camHUD.width-140,2,"Pause",false,0.75,()->{},()->{});
+		pauseButton.cameras=[camHUD];
+		pauseButton.scale.x=0.75;
+		pauseButton.scale.y=0.75;
+
+		add(pauseButton);
+		add(grpMobileButtons);
+		#end
+
 		inCutscene = false;
 
 		generateStaticArrows(0);
@@ -1268,6 +1288,7 @@ class PlayState extends MusicBeatState
 			#end
 			#if mobile
 			grpMobileButtons.visible=true;
+			pauseButton.visible=true;
 			#end
 		}
 
@@ -1353,7 +1374,7 @@ class PlayState extends MusicBeatState
 
 		scoreTxt.text = "Score:" + songScore;
 
-		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
+		if ((FlxG.keys.justPressed.ENTER #if mobile || pauseButton.justPressed #end) && startedCountdown && canPause)
 		{
 			onBack();
 		}
@@ -1930,18 +1951,18 @@ class PlayState extends MusicBeatState
 		var leftR = controls.LEFT_R;
 
 		#if mobile
-		up=up||grpMobileButtons.upArrow.pressed;
-		upP=upP||grpMobileButtons.upArrow.justPressed;
-		upR=upR||grpMobileButtons.upArrow.justReleased;
-		down=down||grpMobileButtons.downArrow.pressed;
-		downP=downP||grpMobileButtons.downArrow.justPressed;
-		downR=downR||grpMobileButtons.downArrow.justReleased;
-		left=left||grpMobileButtons.leftArrow.pressed;
-		leftP=leftP||grpMobileButtons.leftArrow.justPressed;
-		leftR=leftR||grpMobileButtons.leftArrow.justReleased;
-		right=right||grpMobileButtons.rightArrow.pressed;
-		rightP=rightP||grpMobileButtons.rightArrow.justPressed;
-		rightR=rightR||grpMobileButtons.rightArrow.justReleased;
+		up=up||grpMobileButtons.up.pressed;
+		upP=upP||grpMobileButtons.up.justPressed;
+		upR=upR||grpMobileButtons.up.justReleased;
+		down=down||grpMobileButtons.down.pressed;
+		downP=downP||grpMobileButtons.down.justPressed;
+		downR=downR||grpMobileButtons.down.justReleased;
+		left=left||grpMobileButtons.left.pressed;
+		leftP=leftP||grpMobileButtons.left.justPressed;
+		leftR=leftR||grpMobileButtons.left.justReleased;
+		right=right||(grpMobileButtons.right.pressed&&!pauseButton.pressed);
+		rightP=rightP||(grpMobileButtons.right.justPressed&&!pauseButton.pressed);
+		rightR=rightR||grpMobileButtons.right.justReleased;
 		#end
 
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
@@ -2168,10 +2189,10 @@ class PlayState extends MusicBeatState
 		var downP = controls.DOWN_P;
 		var leftP = controls.LEFT_P;
 		#if mobile
-		upP=upP||grpMobileButtons.upArrow.justPressed;
-		downP=downP||grpMobileButtons.downArrow.justPressed;
-		leftP=leftP||grpMobileButtons.leftArrow.justPressed;
-		rightP=rightP||grpMobileButtons.rightArrow.justPressed;
+		upP=upP||grpMobileButtons.up.justPressed;
+		downP=downP||grpMobileButtons.down.justPressed;
+		leftP=leftP||grpMobileButtons.left.justPressed;
+		rightP=rightP||(grpMobileButtons.right.justPressed&&!pauseButton.pressed);
 		#end
 
 		if (leftP)
@@ -2431,6 +2452,9 @@ class PlayState extends MusicBeatState
 
 				if (curBeat % 4 == 0)
 				{
+					if(phillyCityTween!=null)
+						phillyCityTween.cancel();
+					
 					phillyCityLights.forEach(function(light:FlxSprite)
 					{
 						light.visible = false;
@@ -2442,7 +2466,7 @@ class PlayState extends MusicBeatState
 						curLight = FlxG.random.int(0, phillyCityLights.length - 1);
 
 					phillyCityLights.members[curLight].visible = true;
-					FlxTween.tween(phillyCityLights.members[curLight],{alpha:0},Conductor.bpm/60/2);
+					phillyCityTween=FlxTween.tween(phillyCityLights.members[curLight],{alpha:0},Conductor.bpm/60/2);
 					// phillyCityLights.members[curLight].alpha = 1;
 				}
 
@@ -2479,6 +2503,7 @@ class PlayState extends MusicBeatState
 			#end
 			#if mobile
 			grpMobileButtons.visible=false;
+			pauseButton.visible=false;
 			#end
 		}
 	}

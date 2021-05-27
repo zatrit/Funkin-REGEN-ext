@@ -12,7 +12,7 @@ import flixel.util.FlxColor;
 
 #if mobile
 import mobile.MobileButton;
-import mobile.MobileButtonGroup;
+import mobile.MobileControls;
 #end
 
 using StringTools;
@@ -35,7 +35,7 @@ class FreeplayState extends MusicBeatState
 	private var iconArray:Array<HealthIcon> = [];
 
 	#if mobile
-	var grpMobileButtons:MobileButtonGroup;
+	var grpMobileButtons:MobileControls;
 	#end
 
 	override function create()
@@ -84,7 +84,7 @@ class FreeplayState extends MusicBeatState
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
 		if (isDebug)
-			addWeek(['Test'], 7, ['tankman']);
+			addWeek(['Test'], 7, ['bf-pixel']);
 
 		// LOAD MUSIC
 
@@ -141,7 +141,7 @@ class FreeplayState extends MusicBeatState
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 		
 		#if mobile
-		grpMobileButtons=new MobileButtonGroup(FlxG.camera,FlxG.camera.width-510,FlxG.camera.height-410);
+		grpMobileButtons=new MobileControls(FlxG.camera,FlxG.camera.width-510,FlxG.camera.height-410,1);
 		add(grpMobileButtons);
 		#end
 
@@ -196,10 +196,10 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		#if mobile
-		upP=upP||grpMobileButtons.upArrow.justPressed;
-		downP=downP||grpMobileButtons.downArrow.justPressed;
-		leftP=leftP||grpMobileButtons.leftArrow.justPressed;
-		rightP=rightP||grpMobileButtons.rightArrow.justPressed;
+		upP=upP||grpMobileButtons.up.justPressed;
+		downP=downP||grpMobileButtons.down.justPressed;
+		leftP=leftP||grpMobileButtons.left.justPressed;
+		rightP=rightP||grpMobileButtons.right.justPressed;
 		#end
 
 		if (upP)
@@ -210,7 +210,6 @@ class FreeplayState extends MusicBeatState
 		{
 			changeSelection(1);
 		}
-
 		if (leftP)
 			changeDiff(-1);
 		if (rightP)

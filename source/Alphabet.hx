@@ -14,9 +14,6 @@ using StringTools;
  */
 class Alphabet extends FlxSpriteGroup
 {
-	public var delay:Float = 0.05;
-	public var paused:Bool = false;
-
 	// for menu shit
 	public var targetY:Float = 0;
 	public var isMenuItem:Bool = false;
@@ -24,9 +21,6 @@ class Alphabet extends FlxSpriteGroup
 	public var text:String = "";
 
 	var _finalText:String = "";
-	var _curText:String = "";
-
-	public var widthOfWords:Float = FlxG.width;
 
 	var yMulti:Float = 1;
 
@@ -100,7 +94,8 @@ class Alphabet extends FlxSpriteGroup
 				{
 					letter.createLetter(character);
 				}
-
+				
+				letter.updateHitbox();
 				add(letter);
 
 				lastSprite = letter;

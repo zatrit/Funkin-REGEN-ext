@@ -19,9 +19,12 @@ class OptionsSubState extends MusicBeatSubstate
 
 		for (i in 0...textMenuItems.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, (105 * i) + 30, textMenuItems[i], true, false);
+			var optionText:Alphabet = new Alphabet(0, (105 * i)+30, textMenuItems[i], true, false);
 			optionText.ID = i;
-			optionText.x+=40;
+			optionText.isMenuItem = true;
+			#if mobile
+			optionText.targetY=i-2;
+			#end
 
 			grpOptions.add(optionText);
 		}
@@ -86,23 +89,21 @@ class OptionsSubState extends MusicBeatSubstate
 	
 		var bullShit:Int = 0;
 
+		#if !mobile
 		for (item in grpOptions.members)
 		{
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
-			#if !mobile
 			item.alpha = 0.6;
-			#end
 			// item.setGraphicSize(Std.int(item.width * 0.8));
 	
 			if (item.targetY == 0)
 			{
-				#if !mobile
 				item.alpha = 1;
-				#end
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+		#end
 	}
 }

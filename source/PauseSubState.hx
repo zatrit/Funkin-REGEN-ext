@@ -12,24 +12,20 @@ import flixel.util.FlxColor;
 
 #if mobile
 import mobile.MobileButton;
-import mobile.MobileButtonGroup;
+import mobile.MobileControls;
 #end
 
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 
-	#if (debug&&desktop)
-	"Charting editor", 
-	#end
-	'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', #if mobile "Charting editor", #end 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
 
 	#if mobile
-	var grpMobileButtons:MobileButtonGroup;
+	var grpMobileButtons:MobileControls;
 	#end
 
 	public function new(x:Float, y:Float)
@@ -61,6 +57,35 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
 
+		var blueBalled:FlxText = new FlxText(20, 15 +64, 0, "", 32);
+		blueBalled.text += "Blue balled: "+PlayState.attempt;
+		blueBalled.scrollFactor.set();
+		blueBalled.setFormat(Paths.font("vcr.ttf"), 32);
+		blueBalled.updateHitbox();
+		add(blueBalled);
+
+		blueBalled.x = FlxG.width - (blueBalled.width + 20);
+		blueBalled.alpha = 0;
+		FlxTween.tween(blueBalled, {alpha: 1, y: blueBalled.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
+
+		#if (mobile&&debug)
+		var controlTypeID:Int=1;
+		
+		if(FlxG.save.data.mobileControlsType!=null)
+			controlTypeID=FlxG.save.data.mobileControlsType;
+
+		var controlType:FlxText = new FlxText(20, 15 +96, 0, "", 32);
+		controlType.text += "Control type: "+controlTypeID;
+		controlType.scrollFactor.set();
+		controlType.setFormat(Paths.font("vcr.ttf"), 32);
+		controlType.updateHitbox();
+		add(controlType);
+
+		controlType.x = FlxG.width - (controlType.width + 20);
+		controlType.alpha = 0;
+		FlxTween.tween(controlType, {alpha: 1, y: controlType.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.9});
+		#end
+
 		levelDifficulty.alpha = 0;
 		levelInfo.alpha = 0;
 
@@ -68,7 +93,7 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
-		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
+		FlxTween.tween(levelInfo, {alpha: 1, y: levelInfo.y}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
@@ -87,11 +112,11 @@ class PauseSubState extends MusicBeatSubstate
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
 		#if mobile
-		grpMobileButtons=new MobileButtonGroup(camera,FlxG.camera.width-510,FlxG.camera.height-410);
-		grpMobileButtons.leftArrow.destroy();
-		grpMobileButtons.rightArrow.destroy();
+		grpMobileButtons=new MobileControls(camera,FlxG.camera.width-510,FlxG.camera.height-410,1);
+		grpMobileButtons.left.destroy();
+		grpMobileButtons.right.destroy();
 
-		grpMobileButtons.upArrow.y+=40;
+		grpMobileButtons.up.y+=40;
 		
 		add(grpMobileButtons);
 		#end
@@ -114,8 +139,8 @@ class PauseSubState extends MusicBeatSubstate
 				accepted=accepted||touch.screenX<camera.width/2;
 			}
 		}
-		upP=grpMobileButtons.upArrow.justPressed;
-		downP=grpMobileButtons.downArrow.justPressed;
+		upP=grpMobileButtons.up.justPressed;
+		downP=grpMobileButtons.down.justPressed;
 		#end
 
 		if (upP)

@@ -6,15 +6,16 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
-class MobileButton extends FlxSprite{
-    public var pressed:Bool=false;
-    public var justPressed:Bool=false;
-    public var justReleased:Bool=false;
-    var pressedBefore:Bool=false;
+class MobileButton extends Control{
     var onPress:Void->Void;
     var onJustPress:Void->Void;
-    public function new (x:Float=0,y:Float=0,direction:String="Up",alt:Bool=false,onPress:Void->Void,onJustPress:Void->Void){
+    public function new (x:Float=0,y:Float=0,direction:String="Up",alt:Bool=false,alpha:Float=1,onPress:Void->Void,onJustPress:Void->Void){
+        this.alpha=alpha;
+
         super(x,y);
+
+        this.visible=true;
+
 		var mobile_tex:FlxAtlasFrames = Paths.getSparrowAtlas("mobileControls");
 
         var name:String=direction;
@@ -52,7 +53,7 @@ class MobileButton extends FlxSprite{
             animation.play("idle");
         }
         else
-            onPress();
+        onPress();
         if(justPressed)
             onJustPress();
         pressedBefore=pressed;

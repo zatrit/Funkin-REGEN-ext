@@ -63,9 +63,9 @@ class Main extends Sprite
 			/*
 			Zoom and game size values are taken from here https://github.com/luckydog7/Funkin-android
 			*/
-				zoom = 1;
-				gameWidth = 1280;
-				gameHeight = 720;
+			zoom = 1;
+			gameWidth = 1280;
+			gameHeight = 720;
 			#else
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
