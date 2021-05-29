@@ -1686,7 +1686,6 @@ class PlayState extends MusicBeatState
 					for(staticNote in dadStrums)
 						if(staticNote.ID==daNote.noteData){
 							staticNote.animation.play('pressed');
-							daNote.animation.play()
 						}
 						else
 							staticNote.animation.play('static');
