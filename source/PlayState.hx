@@ -142,7 +142,7 @@ class PlayState extends MusicBeatState
 	public static var attempt:Int=0;
 
 	var misses=0;
-	var catched=0;
+	var catched:Float=0;
 	var noteCount=0;
 
 	override public function create()
@@ -1391,7 +1391,7 @@ class PlayState extends MusicBeatState
 
 		var ac:Float=100;
 
-		if(misses!=0&&catched!=0)
+		if(catched!=0)
 			ac=catched/(noteCount+misses)*100;
 
 		scoreTxt.text = "Score:" + songScore + "  |  Accuracy: "+Std.int(ac)+"%";
@@ -1682,6 +1682,13 @@ class PlayState extends MusicBeatState
 						case 3:
 							dad.playAnim('singRIGHT' + altAnim, true);
 					}
+
+					for(staticNote in dadStrums)
+						if(staticNote.ID==daNote.noteData){
+							staticNote.animation.play('pressed');
+						}
+						else
+							staticNote.animation.play('static');
 
 					dad.holdTimer = 0;
 
@@ -2256,7 +2263,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!note.wasGoodHit)
 		{
-			catched++;
+			catched+=1/note.sustainLength;
 
 			if (!note.isSustainNote)
 			{
