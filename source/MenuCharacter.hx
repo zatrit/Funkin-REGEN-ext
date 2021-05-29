@@ -26,7 +26,10 @@ class MenuCharacter extends FlxSprite
 		animation.addByPrefix('senpai', "SENPAI idle Black Lines", 24);
 		// Parent Christmas Idle
 
-		animation.play(character);
+		if(character=="")
+			this.visible=false;
+		else
+			animation.play(character);
 		updateHitbox();
 	}
 }

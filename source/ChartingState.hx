@@ -1077,4 +1077,6 @@ class ChartingState extends MusicBeatState
 		_file = null;
 		FlxG.log.error("Problem saving Level data");
 	}
+	override function onBack() {
+	}
 }

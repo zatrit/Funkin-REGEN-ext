@@ -70,6 +70,7 @@ class PlayState extends MusicBeatState
 
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
+	private var dadStrums:FlxTypedGroup<FlxSprite>;
 
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
@@ -139,6 +140,10 @@ class PlayState extends MusicBeatState
 
 	public static var firstTry:Bool=true;
 	public static var attempt:Int=0;
+
+	var misses=0;
+	var catched=0;
+	var noteCount=0;
 
 	override public function create()
 	{
@@ -616,6 +621,9 @@ class PlayState extends MusicBeatState
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+			case 'bf-pixel':
+				dad.x += 200;
+				dad.y += 220;
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -680,6 +688,7 @@ class PlayState extends MusicBeatState
 		add(strumLineNotes);
 
 		playerStrums = new FlxTypedGroup<FlxSprite>();
+		dadStrums = new FlxTypedGroup<FlxSprite>();
 
 		// startCountdown();
 
@@ -720,9 +729,10 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
+		scoreTxt = new FlxText(0, healthBarBG.y + 30, 0, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT);
 		scoreTxt.scrollFactor.set();
+		scoreTxt.screenCenter(X);
 		add(scoreTxt);
 
 		iconP1 = new HealthIcon(SONG.player1, true);
@@ -1028,6 +1038,9 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 
+		attempt=0;
+		firstTry=true;
+
 		#if desktop
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
@@ -1233,6 +1246,10 @@ class PlayState extends MusicBeatState
 				playerStrums.add(babyArrow);
 			}
 
+			if(player==0){
+				dadStrums.add(babyArrow);
+			}
+
 			babyArrow.animation.play('static');
 			babyArrow.x += 50;
 			babyArrow.x += ((FlxG.width / 2) * player);
@@ -1372,12 +1389,23 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore;
+		var ac:Float=100;
 
-		if ((FlxG.keys.justPressed.ENTER #if mobile || pauseButton.justPressed #end) && startedCountdown && canPause)
+		if(misses!=0&&catched!=0)
+			ac=catched/(noteCount+misses)*100;
+
+		scoreTxt.text = "Score:" + songScore + "  |  Accuracy: "+Std.int(ac)+"%";
+		scoreTxt.screenCenter(X);
+
+		if ((FlxG.keys.justPressed.ENTER) && startedCountdown && canPause)
 		{
 			onBack();
 		}
+		#if mobile
+		if(pauseButton!=null)
+			if(pauseButton.justPressed)
+				onBack();
+		#end
 
 		if (FlxG.keys.justPressed.SEVEN)
 		{
@@ -1646,6 +1674,7 @@ class PlayState extends MusicBeatState
 					{
 						case 0:
 							dad.playAnim('singLEFT' + altAnim, true);
+							
 						case 1:
 							dad.playAnim('singDOWN' + altAnim, true);
 						case 2:
@@ -1951,18 +1980,20 @@ class PlayState extends MusicBeatState
 		var leftR = controls.LEFT_R;
 
 		#if mobile
-		up=up||grpMobileButtons.up.pressed;
-		upP=upP||grpMobileButtons.up.justPressed;
-		upR=upR||grpMobileButtons.up.justReleased;
-		down=down||grpMobileButtons.down.pressed;
-		downP=downP||grpMobileButtons.down.justPressed;
-		downR=downR||grpMobileButtons.down.justReleased;
-		left=left||grpMobileButtons.left.pressed;
-		leftP=leftP||grpMobileButtons.left.justPressed;
-		leftR=leftR||grpMobileButtons.left.justReleased;
-		right=right||(grpMobileButtons.right.pressed&&!pauseButton.pressed);
-		rightP=rightP||(grpMobileButtons.right.justPressed&&!pauseButton.pressed);
-		rightR=rightR||grpMobileButtons.right.justReleased;
+		if(grpMobileButtons!=null){
+			up=up||grpMobileButtons.up.pressed;
+			upP=upP||grpMobileButtons.up.justPressed;
+			upR=upR||grpMobileButtons.up.justReleased;
+			down=down||grpMobileButtons.down.pressed;
+			downP=downP||grpMobileButtons.down.justPressed;
+			downR=downR||grpMobileButtons.down.justReleased;
+			left=left||grpMobileButtons.left.pressed;
+			leftP=leftP||grpMobileButtons.left.justPressed;
+			leftR=leftR||grpMobileButtons.left.justReleased;
+			right=right||(grpMobileButtons.right.pressed&&!pauseButton.pressed);
+			rightP=rightP||(grpMobileButtons.right.justPressed&&!pauseButton.pressed);
+			rightR=rightR||grpMobileButtons.right.justReleased;
+		}
 		#end
 
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
@@ -2145,6 +2176,8 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
+			misses++;
+
 			health -= 0.04;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
@@ -2189,10 +2222,12 @@ class PlayState extends MusicBeatState
 		var downP = controls.DOWN_P;
 		var leftP = controls.LEFT_P;
 		#if mobile
-		upP=upP||grpMobileButtons.up.justPressed;
-		downP=downP||grpMobileButtons.down.justPressed;
-		leftP=leftP||grpMobileButtons.left.justPressed;
-		rightP=rightP||(grpMobileButtons.right.justPressed&&!pauseButton.pressed);
+		if(grpMobileButtons!=null){
+			upP=upP||grpMobileButtons.up.justPressed;
+			downP=downP||grpMobileButtons.down.justPressed;
+			leftP=leftP||grpMobileButtons.left.justPressed;
+			rightP=rightP||(grpMobileButtons.right.justPressed&&!pauseButton.pressed);
+		}
 		#end
 
 		if (leftP)
@@ -2207,6 +2242,8 @@ class PlayState extends MusicBeatState
 
 	function noteCheck(keyP:Bool, note:Note):Void
 	{
+		noteCount++;
+
 		if (keyP)
 			goodNoteHit(note);
 		else
@@ -2219,6 +2256,8 @@ class PlayState extends MusicBeatState
 	{
 		if (!note.wasGoodHit)
 		{
+			catched++;
+
 			if (!note.isSustainNote)
 			{
 				popUpScore(note.strumTime);

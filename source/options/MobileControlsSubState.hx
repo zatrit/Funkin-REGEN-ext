@@ -1,20 +1,23 @@
+#if mobile
 package options;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import mobile.Control;
 
 class MobileControlsSubState extends MusicBeatSubstate
 {
 	public var controlTypes:Array<String>=["None","Arrows","Hitboxes A","Hitboxes B"];
 	private var controlProfile:FlxSprite;
 
-	public var buttonScales:Array<Float>=[1,0.9,0.8,0.7,0.6,0.5];
-	public var leftArrow:FlxSprite;
-	public var rightArrow:FlxSprite;
+	public var values:Array<Float>=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9];
+	private var leftArrow:FlxSprite;
+	private var rightArrow:FlxSprite;
 	public var curSelected:Int=1;
 
+	public var preview:Control = new Control();
 
 	public function new()
 	{
@@ -56,9 +59,21 @@ class MobileControlsSubState extends MusicBeatSubstate
 		add(leftArrow);
 		add(rightArrow);
 	}
+
 	public override function update(elapsed:Float) {
 		super.update(elapsed);
-		
+		controlProfileUpdate();
+	}
+
+	override function onBack() {
+		FlxG.save.data.mobileControlsType=curSelected;
+		FlxG.save.flush();
+
+		FlxG.state.closeSubState();
+		FlxG.state.openSubState(new OptionsSubState());
+	}
+
+	private function controlProfileUpdate(){
 		var touchLeft:Bool=false;
 		var touchRight:Bool=false;
 		
@@ -68,9 +83,9 @@ class MobileControlsSubState extends MusicBeatSubstate
 		}
 
 		if(touchLeft)
-			changeSelected(-1);
+			controlProfileChangeSelection(-1);
 		if(touchRight)
-			changeSelected(1);
+			controlProfileChangeSelection(1);
 
 		if(touchLeft)
 			leftArrow.animation.play("press");
@@ -81,16 +96,8 @@ class MobileControlsSubState extends MusicBeatSubstate
 			rightArrow.animation.play("idle");
 			leftArrow.animation.play("idle");
 		}
-			
 	}
-	override function onBack() {
-		FlxG.save.data.mobileControlsType=curSelected;
-		FlxG.save.flush();
-
-		FlxG.state.closeSubState();
-		FlxG.state.openSubState(new OptionsSubState());
-	}
-	private function changeSelected(change:Int) {
+	private function controlProfileChangeSelection(change:Int) {
 		// NGio.logEvent('Fresh');
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
@@ -106,3 +113,4 @@ class MobileControlsSubState extends MusicBeatSubstate
 		// selector.y = (70 * curSelected) + 30;
 	}
 }
+#end

@@ -7,8 +7,8 @@ import flixel.util.FlxColor;
 import flixel.FlxSprite;
 
 class MobileHitbox extends Control{
-    public function new(x:Float=0,width:Float=0,color:FlxColor=FlxColor.GREEN){
-        this.alpha=0.1;
+    public function new(x:Float=0,width:Float=0,color:FlxColor=FlxColor.LIME,alpha:Float=0.15){
+        this.alpha=alpha;
 
         super(x,0);
 

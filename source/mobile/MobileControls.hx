@@ -79,13 +79,13 @@ class MobileControls extends FlxTypedGroup<Control>{
 	}
 	public function createHitboxesA(){
 		final width=FlxG.width*0.25;
-		var leftHitbox=new MobileHitbox(0,width,FlxColor.PURPLE);
+		var leftHitbox=new MobileHitbox(0,width*0.85,FlxColor.PURPLE);
 		leftHitbox.cameras = [camHUD];
-		var downHitbox=new MobileHitbox(FlxG.width*0.25,width,FlxColor.CYAN);
+		var downHitbox=new MobileHitbox(FlxG.width*0.25-width*0.15,width*1.15,FlxColor.CYAN);
 		downHitbox.cameras = [camHUD];
-		var upHitbox=new MobileHitbox(FlxG.width*0.5,width,FlxColor.GREEN);
+		var upHitbox=new MobileHitbox(FlxG.width*0.5,width*1.15,FlxColor.LIME);
 		upHitbox.cameras = [camHUD];
-		var rightHitbox=new MobileHitbox(FlxG.width*0.75,width,FlxColor.RED);
+		var rightHitbox=new MobileHitbox(FlxG.width*0.75+width*0.15,width*0.85,FlxColor.RED);
 		rightHitbox.cameras = [camHUD];
 
 		this.left=leftHitbox;
@@ -102,7 +102,7 @@ class MobileControls extends FlxTypedGroup<Control>{
 		leftHitbox.cameras = [camHUD];
 		var downHitbox=new MobileHitbox(hitboxX+width,width,FlxColor.CYAN);
 		downHitbox.cameras = [camHUD];
-		var upHitbox=new MobileHitbox(hitboxX+width*2,width,FlxColor.GREEN);
+		var upHitbox=new MobileHitbox(hitboxX+width*2,width,FlxColor.LIME);
 		upHitbox.cameras = [camHUD];
 		var rightHitbox=new MobileHitbox(hitboxX+width*3,width,FlxColor.RED);
 		rightHitbox.cameras = [camHUD];

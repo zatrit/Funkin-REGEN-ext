@@ -42,6 +42,11 @@ class MusicBeatState extends FlxUIState
 			)
 			onBack();
 
+		if (FlxG.keys.justPressed.F)
+		{
+			FlxG.fullscreen = !FlxG.fullscreen;
+		}
+
 		super.update(elapsed);
 	}
 
