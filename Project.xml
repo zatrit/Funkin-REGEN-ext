@@ -3,8 +3,8 @@
 	<!-- _________________________ Application Settings _________________________ -->
 
 	<app file="Funkin"  main="Main" version="0.2.8.4" company="ninjamuffin99 and zatrit" />
-	<app if="debug" packageName="com.zatrit.funkin_dev" package="com.zatrit.funkin_dev" title="(DEV) Friday Night Funkin' REGEN"/>
-	<app unless="debug" packageName="com.zatrit.funkin" package="com.zatrit.funkin" title="Friday Night Funkin' REGEN"/>
+	<app if="debug" packageName="com.zatrit.funkin_dev" package="com.zatrit.funkin_dev-ext" title="(DEV) Friday Night Funkin' REGEN EXT"/>
+	<app unless="debug" packageName="com.zatrit.funkin" package="com.zatrit.funkin-ext" title="Friday Night Funkin' REGEN EXT"/>
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
 
@@ -58,7 +58,6 @@
 		<library name="week4"    preload="true" />
 		<library name="week5"    preload="true" />
 		<library name="week6"    preload="true" />
-		<library name="week7"    preload="true" />
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
@@ -71,7 +70,6 @@
 		<library name="week4"    preload="false" />
 		<library name="week5"    preload="false" />
 		<library name="week6"    preload="false" />
-		<library name="week7"    preload="false" />
 	</section>
 	
 	<assets path="assets/songs"    library="songs"    exclude="*.ogg" if="web"/>
@@ -92,8 +90,6 @@
 	<assets path="assets/week5"    library="week5"    exclude="*.mp3" unless="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.ogg" if="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week7"    library="week6"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week7"    library="week6"    exclude="*.mp3" unless="web"/>
 	
 	<assets path='example_mods' rename='mods' embed='false'/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
@@ -108,7 +104,7 @@
 	-->
 	<assets path="assets/fonts" embed='true'/>
 	<!-- _______________________________ Libraries ______________________________ -->
-	
+
 	<haxelib name="flixel" />
 	<haxedev set='webgl' />
 

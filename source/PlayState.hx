@@ -902,11 +902,35 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'thorns':
 					schoolIntro(doof);
-				case 'nerves':
-					garIntro(doof);
-				case 'release':
-					garIntro(doof);
-				case 'fading':
+				case 'headache':
+					var introText:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('garIntroText'));
+					introText.setGraphicSize(Std.int(introText.width * 1.5));
+					introText.scrollFactor.set();
+					camHUD.visible = false;
+	
+					add(introText);
+					FlxG.sound.playMusic(Paths.music('city_ambience'), 0);
+					FlxG.sound.music.fadeIn(1, 0, 0.8);
+
+					new FlxTimer().start(0.1, function(tmr:FlxTimer)
+					{
+						// FlxG.sound.play(Paths.sound('Lights_Turn_On'));
+					
+						new FlxTimer().start(3, function(tmr:FlxTimer)
+						{
+							FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
+								ease: FlxEase.quadInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									FlxG.sound.music.fadeOut(2.2, 0);
+									remove(introText);
+									camHUD.visible = true;
+									garIntro(doof);
+								}
+							});
+						});
+					});
+				case 'nerves' | "release" | "fading":
 					garIntro(doof);
 				default:
 					startCountdown();
