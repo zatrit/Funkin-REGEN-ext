@@ -14,7 +14,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art
 - [Kawaisprite](https://twitter.com/kawaisprite) - Musician
 - [zatrit](https://twitter.com/zatrit) - Mod author
-- [Rageminer996](https://github.com/Rageminer996) - Garcello author
+- [Rageminer996](https://github.com/Rageminer996) and [atsuover](https://www.youtube.com/user/EnergeticShadow) - Garcello authors
 
 This game was made with love to Newgrounds and it's community. Extra love to Tom Fulp.
 
