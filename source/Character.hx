@@ -1,6 +1,8 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
 
 using StringTools;
@@ -137,6 +139,94 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, -30);
 
 				playAnim('idle');
+
+			case 'garcello':
+				// GARCELLO ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('garcello_assets');
+				frames = tex;
+				animation.addByPrefix('idle', 'garcello idle dance', 24);
+				animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
+				animation.addByPrefix('singRIGHT', 'garcello Sing Note RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'garcello Sing Note DOWN', 24);
+				animation.addByPrefix('singLEFT', 'garcello Sing Note LEFT', 24);
+
+				addOffset('idle');
+				addOffset("singUP", 0, 0);
+				addOffset("singRIGHT", 0, 0);
+				addOffset("singLEFT", 0, 0);
+				addOffset("singDOWN", 0, 0);
+
+				playAnim('idle');
+
+			case 'garcellotired':
+				// GARCELLO TIRED ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('garcellotired_assets');
+				frames = tex;
+				animation.addByPrefix('idle', 'garcellotired idle dance', 24, false);
+				animation.addByPrefix('singUP', 'garcellotired Sing Note UP', 24, false);
+				animation.addByPrefix('singRIGHT', 'garcellotired Sing Note RIGHT', 24, false);
+				animation.addByPrefix('singDOWN', 'garcellotired Sing Note DOWN', 24, false);
+				animation.addByPrefix('singLEFT', 'garcellotired Sing Note LEFT', 24, false);
+
+				animation.addByPrefix('singUP-alt', 'garcellotired Sing Note UP', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'garcellotired Sing Note RIGHT', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'garcellotired Sing Note LEFT', 24, false);
+				animation.addByPrefix('singDOWN-alt', 'garcellotired cough', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 0, 0);
+				addOffset("singRIGHT", 0, 0);
+				addOffset("singLEFT", 0, 0);
+				addOffset("singDOWN", 0, 0);
+				addOffset("singUP-alt", 0, 0);
+				addOffset("singRIGHT-alt", 0, 0);
+				addOffset("singLEFT-alt", 0, 0);
+				addOffset("singDOWN-alt", 0, 0);
+
+				playAnim('idle');
+
+			case 'garcellodead':
+				// GARCELLO DEAD ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('garcellodead_assets');
+				frames = tex;
+				animation.addByPrefix('idle', 'garcello idle dance', 24);
+				animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
+				animation.addByPrefix('singRIGHT', 'garcello Sing Note RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'garcello Sing Note DOWN', 24);
+				animation.addByPrefix('singLEFT', 'garcello Sing Note LEFT', 24);
+
+				animation.addByPrefix('garTightBars', 'garcello coolguy', 15);
+
+				addOffset('idle');
+				addOffset("singUP", 0, 0);
+				addOffset("singRIGHT", 0, 0);
+				addOffset("singLEFT", 0, 0);
+				addOffset("singDOWN", 0, 0);
+				addOffset("garTightBars", 0, 0);
+
+				playAnim('idle');
+
+			case 'garcelloghosty':
+				// GARCELLO DEAD ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('garcelloghosty_assets');
+				frames = tex;
+				animation.addByPrefix('idle', 'garcello idle dance', 24);
+				animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
+				animation.addByPrefix('singRIGHT', 'garcello Sing Note RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'garcello Sing Note DOWN', 24);
+				animation.addByPrefix('singLEFT', 'garcello Sing Note LEFT', 24);
+
+				animation.addByPrefix('garFarewell', 'garcello coolguy', 15);
+
+				addOffset('idle');
+				addOffset("singUP", 0, 0);
+				addOffset("singRIGHT", 0, 0);
+				addOffset("singLEFT", 0, 0);
+				addOffset("singDOWN", 0, 0);
+				addOffset("garTightBars", 0, 0);
+
+				playAnim('idle');
+
 			case 'spooky':
 				tex = Paths.getSparrowAtlas('spooky_kids_assets');
 				frames = tex;
@@ -357,7 +447,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel':
-				frames = Paths.getSparrowAtlas('weeb/bfPixel','week6');
+				frames = Paths.getSparrowAtlas('weeb/bfPixel');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
 				animation.addByPrefix('singUP', 'BF UP NOTE', 24, false);
 				animation.addByPrefix('singLEFT', 'BF LEFT NOTE', 24, false);

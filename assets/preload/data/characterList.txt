@@ -11,6 +11,10 @@ monster-christmas
 bf-christmas
 gf-christmas
 monster
+garcello
+garcellotired
+garcellodead
+garcelloghosty
 bf-pixel
 senpai
 senpai-angry
