@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -37,6 +38,8 @@ class FreeplayState extends MusicBeatState
 	#if mobile
 	var grpMobileButtons:MobileControls;
 	#end
+
+	var timer:FlxTimer;
 
 	override function create()
 	{
@@ -277,9 +280,22 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		#if PRELOAD_ALL
+		#if (PRELOAD_ALL&&!mobile)
 		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+		#else
+		#if mobile
+		
 		#end
+		#end
+
+		if(timer!=null)
+			timer.cancel();
+		else
+			timer=new FlxTimer(FlxTimer.globalManager);
+
+		timer.start(3,(timer)->{
+			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+		});
 
 		var bullShit:Int = 0;
 

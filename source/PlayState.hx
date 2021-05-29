@@ -141,10 +141,6 @@ class PlayState extends MusicBeatState
 	public static var firstTry:Bool=true;
 	public static var attempt:Int=0;
 
-	var misses=0;
-	var catched:Float=0;
-	var noteCount=0;
-
 	override public function create()
 	{
 		if(firstTry)
@@ -1389,12 +1385,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		var ac:Float=100;
-
-		if(catched!=0)
-			ac=catched/(noteCount+misses)*100;
-
-		scoreTxt.text = "Score:" + songScore + "  |  Accuracy: "+Std.int(ac)+"%";
+		scoreTxt.text = "Score:" + songScore + "  |  Health: "+Std.int(health/2*100)+"%";
 		scoreTxt.screenCenter(X);
 
 		if ((FlxG.keys.justPressed.ENTER) && startedCountdown && canPause)
@@ -1683,12 +1674,13 @@ class PlayState extends MusicBeatState
 							dad.playAnim('singRIGHT' + altAnim, true);
 					}
 
-					for(staticNote in dadStrums)
+					for(staticNote in dadStrums){
 						if(staticNote.ID==daNote.noteData){
-							staticNote.animation.play('pressed');
+							staticNote.animation.play('press');
 						}
 						else
 							staticNote.animation.play('static');
+					}
 
 					dad.holdTimer = 0;
 
@@ -2185,8 +2177,6 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			misses++;
-
 			health -= 0.04;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
@@ -2251,8 +2241,6 @@ class PlayState extends MusicBeatState
 
 	function noteCheck(keyP:Bool, note:Note):Void
 	{
-		noteCount++;
-
 		if (keyP)
 			goodNoteHit(note);
 		else
@@ -2265,8 +2253,6 @@ class PlayState extends MusicBeatState
 	{
 		if (!note.wasGoodHit)
 		{
-			catched+=1/note.sustainLength;
-
 			if (!note.isSustainNote)
 			{
 				popUpScore(note.strumTime);
