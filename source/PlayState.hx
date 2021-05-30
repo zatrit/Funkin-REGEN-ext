@@ -1602,9 +1602,6 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore + "  |  Health: "+Std.int(health/2*100)+"%";
-		scoreTxt.screenCenter(X);
-
 		if ((FlxG.keys.justPressed.ENTER) && startedCountdown && canPause)
 		{
 			onBack();
@@ -1927,6 +1924,8 @@ class PlayState extends MusicBeatState
 				kadeKeyShit();
 			else
 				keyShit();
+		
+		scoreTxt.text = "Score:" + songScore + "  |  Health: "+Std.int(health/2*100)+"%";
 
 		#if debug
 		if (FlxG.keys.justPressed.ONE)
