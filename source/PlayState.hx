@@ -70,7 +70,6 @@ class PlayState extends MusicBeatState
 
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
-	private var dadStrums:FlxTypedGroup<FlxSprite>;
 
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
@@ -684,7 +683,6 @@ class PlayState extends MusicBeatState
 		add(strumLineNotes);
 
 		playerStrums = new FlxTypedGroup<FlxSprite>();
-		dadStrums = new FlxTypedGroup<FlxSprite>();
 
 		// startCountdown();
 
@@ -1242,10 +1240,6 @@ class PlayState extends MusicBeatState
 				playerStrums.add(babyArrow);
 			}
 
-			if(player==0){
-				dadStrums.add(babyArrow);
-			}
-
 			babyArrow.animation.play('static');
 			babyArrow.x += 50;
 			babyArrow.x += ((FlxG.width / 2) * player);
@@ -1674,14 +1668,6 @@ class PlayState extends MusicBeatState
 							dad.playAnim('singRIGHT' + altAnim, true);
 					}
 
-					for(staticNote in dadStrums){
-						if(staticNote.ID==daNote.noteData){
-							staticNote.animation.play('press');
-						}
-						else
-							staticNote.animation.play('static');
-					}
-
 					dad.holdTimer = 0;
 
 					if (SONG.needsVoices)
@@ -1691,8 +1677,6 @@ class PlayState extends MusicBeatState
 					notes.remove(daNote, true);
 					daNote.destroy();
 				}
-				else
-					dadStrums.members[daNote.noteData].animation.play('static');
 
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));

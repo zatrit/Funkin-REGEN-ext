@@ -1,5 +1,6 @@
 package;
 
+import cpp.vm.Gc;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -83,5 +84,10 @@ class MusicBeatState extends FlxUIState
 	}
 	public function onBack():Void{
 		FlxG.switchState(new MainMenuState());
+	}
+	override function finishTransOut() {
+		super.finishTransOut();
+		
+		Gc.run(true);
 	}
 }
