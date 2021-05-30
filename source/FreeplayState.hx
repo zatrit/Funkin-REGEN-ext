@@ -86,9 +86,9 @@ class FreeplayState extends MusicBeatState
 
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
-		
+
 		if (StoryMenuState.weekUnlocked[7] || isDebug)
-			addWeek(['Headache', 'Nerves', 'Release'], 7, ['garcello', 'garcellotired', 'garcellodead']);
+			addWeek(['Headache', 'Nerves', 'Release'#if (debug&&desktop) , 'Fading' #end], 7, ['garcello', 'garcellotired', 'garcellodead' #if (debug&&desktop) , 'garcelloghosty' #end]);
 
 		// LOAD MUSIC
 
