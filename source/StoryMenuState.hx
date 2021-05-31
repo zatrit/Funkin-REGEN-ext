@@ -58,7 +58,8 @@ class StoryMenuState extends MusicBeatState
 		"MOMMY MUST MURDER",
 		"RED SNOW",
 		"hating simulator ft. moawling",
-		"SMOKE 'EM OUT STRUGGLE"
+		"SMOKE 'EM OUT STRUGGLE",
+		"Back Alley Blitz",
 	];
 
 	var txtWeekTitle:FlxText;
