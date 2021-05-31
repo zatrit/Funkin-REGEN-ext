@@ -1193,6 +1193,12 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
+		healthBar.visible = true;
+		healthBarBG.visible = true;
+		scoreTxt.visible = true;
+		iconP1.visible = true;
+		iconP2.visible = true;
+		
 		#if mobile
 		var controlType=1;
 		
@@ -3157,7 +3163,6 @@ class PlayState extends MusicBeatState
 											{
 												black3.alpha -= 0.1;
 												tmr.reset(0.3);
-												trace('decrease blackness lmao!!!');
 											}
 											else 
 											{
@@ -3205,8 +3210,6 @@ class PlayState extends MusicBeatState
 								remove(black);
 							}
 						});
-					healthBar.visible = true;
-					healthBarBG.visible = true;
 			}
 		}
 		function turnToCrazyWhitty()
@@ -3246,6 +3249,5 @@ class PlayState extends MusicBeatState
 					iconP1.visible = false;
 					iconP2.visible = false;
 				}
-		
 			}
 }

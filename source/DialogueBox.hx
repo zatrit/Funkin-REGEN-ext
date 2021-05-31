@@ -119,6 +119,9 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByIndices('normal', 'speech bubble normal', [11], "", 24);
 				box.antialiasing = true;
+				
+				box.y = FlxG.height - 320;
+				box.flipX=true;
 		}
 
 		this.dialogueList = dialogueList;
@@ -192,7 +195,6 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.scrollFactor.set();
 				add(portraitRight);
 				portraitRight.visible = false;
-				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			case 'headache' | 'nerves' | 'release' | 'fading':
 				portraitRight = new FlxSprite(770, 200);
 				portraitRight.frames = Paths.getSparrowAtlas('weeb/bf_norm');
@@ -202,7 +204,6 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.scrollFactor.set();
 				add(portraitRight);
 				portraitRight.visible = false;
-				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			case 'lo-fight' | 'overhead' | 'ballistic':
 				portraitRight = new FlxSprite(800, FlxG.height - 489);
 				portraitRight.frames = Paths.getSparrowAtlas('boyfriendPort', 'bonusWeek');
@@ -218,7 +219,14 @@ class DialogueBox extends FlxSpriteGroup
 		box.updateHitbox();
 		add(box);
 
-		box.screenCenter(X);
+
+		if(!['lo-fight','overhead','ballistic'].contains(PlayState.SONG.song.toLowerCase())){
+			box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
+			box.screenCenter(X);
+		}
+		else
+			box.x=40;
+		
 		portraitLeft.screenCenter(X);
 
 		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('weeb/pixelUI/hand_textbox','week6'));
