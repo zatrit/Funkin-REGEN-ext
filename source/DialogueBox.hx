@@ -119,86 +119,75 @@ class DialogueBox extends FlxSpriteGroup
 		
 		if (!hasDialog)
 			return;
-		
-		if(PlayState.SONG.song.toLowerCase()=='senpai' || PlayState.SONG.song.toLowerCase()=='roses' || PlayState.SONG.song.toLowerCase()=='thorns' )
-		{
-			portraitLeft = new FlxSprite(-20, 40);
-			portraitLeft.frames = Paths.getSparrowAtlas('weeb/senpaiPortrait');
-			portraitLeft.animation.addByPrefix('enter', 'Senpai Portrait Enter', 24, false);
-			portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
-			portraitLeft.updateHitbox();
-			portraitLeft.scrollFactor.set();
-			add(portraitLeft);
-			portraitLeft.visible = false;
+
+		switch(PlayState.SONG.song.toLowerCase()){
+			case 'senpai' | 'roses' | 'thorns':
+				portraitLeft = new FlxSprite(-20, 40);
+				portraitLeft.frames = Paths.getSparrowAtlas('weeb/senpaiPortrait');
+				portraitLeft.animation.addByPrefix('enter', 'Senpai Portrait Enter', 24, false);
+				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+			case 'headache':
+				portraitLeft = new FlxSprite(130, 100);
+				portraitLeft.frames = Paths.getSparrowAtlas('weeb/gardialogue');
+				portraitLeft.animation.addByPrefix('enter', 'gar Default', 24, false);
+				// portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.2));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+			case 'nerves':
+				portraitLeft = new FlxSprite(130, 100);
+				portraitLeft.frames = Paths.getSparrowAtlas('weeb/gardialogue');
+				portraitLeft.animation.addByPrefix('enter', 'gar Nervous', 24, false);
+				// portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.2));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+			case 'release':
+				portraitLeft = new FlxSprite(130, 100);
+				portraitLeft.frames = Paths.getSparrowAtlas('weeb/gardialogue');
+				portraitLeft.animation.addByPrefix('enter', 'gar Ghost', 24, false);
+				// portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.2));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+			case 'fading':
+				portraitLeft = new FlxSprite(130, 100);
+				portraitLeft.frames = Paths.getSparrowAtlas('weeb/gardialogue');
+				portraitLeft.animation.addByPrefix('enter', 'gar Dippy', 24, false);
+				// portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.2));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
 		}
-		else if (PlayState.SONG.song.toLowerCase()=='headache')
-		{
-			portraitLeft = new FlxSprite(130, 100);
-			portraitLeft.frames = Paths.getSparrowAtlas('weeb/gardialogue');
-			portraitLeft.animation.addByPrefix('enter', 'gar Default', 24, false);
-			// portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.2));
-			portraitLeft.updateHitbox();
-			portraitLeft.scrollFactor.set();
-			add(portraitLeft);
-			portraitLeft.visible = false;
+
+		switch(PlayState.SONG.song.toLowerCase()){
+			case 'senpai' | 'roses':
+				portraitRight = new FlxSprite(0, 40);
+				portraitRight.frames = Paths.getSparrowAtlas('weeb/bfPortrait');
+				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
+				portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
+			case 'headache' | 'nerves' | 'release' | 'fading':
+				portraitRight = new FlxSprite(770, 200);
+				portraitRight.frames = Paths.getSparrowAtlas('weeb/bf_norm');
+				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait Enter', 24, false);
+				// portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.4));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
 		}
-		else if (PlayState.SONG.song.toLowerCase()=='nerves')
-		{
-			portraitLeft = new FlxSprite(130, 100);
-			portraitLeft.frames = Paths.getSparrowAtlas('weeb/gardialogue');
-			portraitLeft.animation.addByPrefix('enter', 'gar Nervous', 24, false);
-			// portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.2));
-			portraitLeft.updateHitbox();
-			portraitLeft.scrollFactor.set();
-			add(portraitLeft);
-			portraitLeft.visible = false;
-		}
-		else if (PlayState.SONG.song.toLowerCase()=='release')
-		{
-			portraitLeft = new FlxSprite(130, 100);
-			portraitLeft.frames = Paths.getSparrowAtlas('weeb/gardialogue');
-			portraitLeft.animation.addByPrefix('enter', 'gar Ghost', 24, false);
-			// portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.2));
-			portraitLeft.updateHitbox();
-			portraitLeft.scrollFactor.set();
-			add(portraitLeft);
-			portraitLeft.visible = false;
-		}
-		else if (PlayState.SONG.song.toLowerCase()=='fading')
-		{
-			portraitLeft = new FlxSprite(130, 100);
-			portraitLeft.frames = Paths.getSparrowAtlas('weeb/gardialogue');
-			portraitLeft.animation.addByPrefix('enter', 'gar Dippy', 24, false);
-			// portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.2));
-			portraitLeft.updateHitbox();
-			portraitLeft.scrollFactor.set();
-			add(portraitLeft);
-			portraitLeft.visible = false;
-		}
-	
-		if(PlayState.SONG.song.toLowerCase()=='senpai' || PlayState.SONG.song.toLowerCase()=='roses' )
-		{
-			portraitRight = new FlxSprite(0, 40);
-			portraitRight.frames = Paths.getSparrowAtlas('weeb/bfPortrait');
-			portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
-			portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
-			portraitRight.updateHitbox();
-			portraitRight.scrollFactor.set();
-			add(portraitRight);
-			portraitRight.visible = false;
-		}
-		else if (PlayState.SONG.song.toLowerCase()=='headache' || PlayState.SONG.song.toLowerCase()=='nerves' || PlayState.SONG.song.toLowerCase()=='release' || PlayState.SONG.song.toLowerCase()=='fading')
-		{
-			portraitRight = new FlxSprite(770, 200);
-			portraitRight.frames = Paths.getSparrowAtlas('weeb/bf_norm');
-			portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait Enter', 24, false);
-			// portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.4));
-			portraitRight.updateHitbox();
-			portraitRight.scrollFactor.set();
-			add(portraitRight);
-			portraitRight.visible = false;
-		}
-	
 		
 		box.animation.play('normalOpen');
 		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
@@ -238,29 +227,22 @@ class DialogueBox extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
-		// HARD CODING CUZ IM STUPDI
-		if (PlayState.SONG.song.toLowerCase() == 'roses')
-			portraitLeft.visible = false;
-		if (PlayState.SONG.song.toLowerCase() == 'thorns')
-		{
-			portraitLeft.color = FlxColor.BLACK;
-			swagDialogue.color = FlxColor.WHITE;
-			dropText.color = FlxColor.BLACK;
-		}
-		else if (PlayState.SONG.song.toLowerCase()=='headache' || PlayState.SONG.song.toLowerCase()=='nerves')
-		{
-			swagDialogue.color = FlxColor.WHITE;
-			dropText.color = FlxColor.BLACK;
-		}
-		else if (PlayState.SONG.song.toLowerCase()=='release')
-		{
-			swagDialogue.color = 0xFF0DF07E;
-			dropText.color = FlxColor.BLACK;
-		}
-		else if (PlayState.SONG.song.toLowerCase()=='fading')
-		{
-			swagDialogue.color = 0xFF0DF07E;
-			dropText.color = FlxColor.BLACK;
+		switch(PlayState.SONG.song.toLowerCase()){
+			case 'roses':
+				portraitLeft.visible = false;
+			case 'thorns':
+				portraitLeft.color = FlxColor.BLACK;
+				swagDialogue.color = FlxColor.WHITE;
+				dropText.color = FlxColor.BLACK;
+			case 'headache' | 'nervers':
+				swagDialogue.color = FlxColor.WHITE;
+				dropText.color = FlxColor.BLACK;
+			case 'release':
+				swagDialogue.color = 0xFF0DF07E;
+				dropText.color = FlxColor.BLACK;
+			case 'fading':
+				swagDialogue.color = 0xFF0DF07E;
+				dropText.color = FlxColor.BLACK;
 		}
 
 		dropText.text = swagDialogue.text;
