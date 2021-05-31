@@ -15,6 +15,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [Kawaisprite](https://twitter.com/kawaisprite) - Musician
 - [zatrit](https://twitter.com/zatrit) - Mod author
 - [Rageminer996](https://github.com/Rageminer996) and [atsuover](https://www.youtube.com/user/EnergeticShadow) - Garcello authors
+- [KadeDev](https://github.com/KadeDev) - Whitty author
 
 This game was made with love to Newgrounds and it's community. Extra love to Tom Fulp.
 
