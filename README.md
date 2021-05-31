@@ -10,7 +10,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 
 ## Ported mods at the moment
 
-- [Smoke 'Em Out Struggle Mod](https://github.com/Rageminer996/Smoke-Em-Out-Struggle-Mod)
+- [Smoke 'Em Out Struggle](https://github.com/Rageminer996/Smoke-Em-Out-Struggle-Mod)
 - [Vs. Whitty](https://github.com/KadeDev/vswhitty-public)
 
 ## Credits / shoutouts
