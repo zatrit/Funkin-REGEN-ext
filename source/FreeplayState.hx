@@ -282,11 +282,6 @@ class FreeplayState extends MusicBeatState
 		#if (PRELOAD_ALL&&!mobile)
 		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		#else
-		#if mobile
-		
-		#end
-		#end
-
 		if(timer!=null)
 			timer.cancel();
 		else
@@ -295,6 +290,7 @@ class FreeplayState extends MusicBeatState
 		timer.start(3,(timer)->{
 			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		});
+		#end
 
 		var bullShit:Int = 0;
 
