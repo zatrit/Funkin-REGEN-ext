@@ -19,6 +19,8 @@ class MusicBeatState extends FlxUIState
 
 	override function create()
 	{
+		Gc.run(false);
+
 		if (transIn != null)
 			trace('reg ' + transIn.region);
 

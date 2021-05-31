@@ -31,11 +31,12 @@ class StoryMenuState extends MusicBeatState
 		['Satin-Panties', "High", "Milf"],
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns'],
-		['Headache', 'Nerves', 'Release','Fading']
+		['Headache', 'Nerves', 'Release','Fading'],
+		['Lo-fight', 'Overhead', 'Ballistic']
 	];
 	var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true];
+	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true, true];
 
 	var weekCharacters:Array<Dynamic> = [
 		['dad', 'bf', 'gf'],
@@ -45,7 +46,8 @@ class StoryMenuState extends MusicBeatState
 		['mom', 'bf', 'gf'],
 		['parents-christmas', 'bf', 'gf'],
 		['senpai', 'bf', 'gf'],
-		['garcello', 'bf', 'gf']
+		['garcello', 'bf', 'gf'],
+		['whitty', 'bf', 'gf']
 	];
 
 	var weekNames:Array<String> = [
@@ -81,6 +83,10 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
+		#if NO_PRELOAD_ALL
+		LoadingState.unloadAll();
+		#end
+		
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
@@ -170,6 +176,8 @@ class StoryMenuState extends MusicBeatState
 					weekCharacterThing.flipX = true;
 				case 'parents-christmas':
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
+					weekCharacterThing.updateHitbox();
+				case 'whitty':
 					weekCharacterThing.updateHitbox();
 			}
 
@@ -448,6 +456,9 @@ class StoryMenuState extends MusicBeatState
 				
 			case 'garcello':
 				grpWeekCharacters.members[0].offset.set(120, 100);
+				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+			case 'whitty':
+				grpWeekCharacters.members[0].offset.set(120, 200);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
 
 			default:

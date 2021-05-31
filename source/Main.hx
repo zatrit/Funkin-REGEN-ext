@@ -1,5 +1,6 @@
 package;
 
+import openfl.Assets;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -71,6 +72,8 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 			#end
 		}
+
+		Assets.cache.enabled=false;
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 		addChild(new FPS(10, 3, 0xFFFFFF));

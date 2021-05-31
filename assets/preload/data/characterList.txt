@@ -19,3 +19,5 @@ bf-pixel
 senpai
 senpai-angry
 spirit
+whitty
+whittyCrazy

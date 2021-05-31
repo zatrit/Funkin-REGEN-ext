@@ -113,6 +113,14 @@ class DialogueBox extends FlxSpriteGroup
 				box.frames = Paths.getSparrowAtlas('garBox','weekG');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
 				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
+			case 'lo-fight' | 'overhead' | 'ballistic':
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByIndices('normal', 'speech bubble normal', [11], "", 24);
+				box.antialiasing = true;
+				
+				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 		}
 
 		this.dialogueList = dialogueList;
@@ -166,6 +174,14 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft.scrollFactor.set();
 				add(portraitLeft);
 				portraitLeft.visible = false;
+			case 'lo-fight' | 'overhead' | 'ballistic': 
+				portraitLeft = new FlxSprite(200, FlxG.height - 525);
+				portraitLeft.frames = Paths.getSparrowAtlas('whittyPort', 'bonusWeek');
+				portraitLeft.antialiasing = true;
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
 		}
 
 		switch(PlayState.SONG.song.toLowerCase()){
@@ -187,6 +203,15 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.scrollFactor.set();
 				add(portraitRight);
 				portraitRight.visible = false;
+			case 'lo-fight' | 'overhead' | 'ballistic':
+				portraitRight = new FlxSprite(800, FlxG.height - 489);
+				portraitRight.frames = Paths.getSparrowAtlas('boyfriendPort', 'bonusWeek');
+				portraitRight.animation.addByPrefix('enter', 'BF portrait enter', 24, false);
+				portraitRight.antialiasing = true;
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
 		}
 		
 		box.animation.play('normalOpen');
@@ -198,7 +223,7 @@ class DialogueBox extends FlxSpriteGroup
 		portraitLeft.screenCenter(X);
 
 		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('weeb/pixelUI/hand_textbox','week6'));
-		add(handSelect);
+		//add(handSelect);
 
 
 		if (!talkingRight)
