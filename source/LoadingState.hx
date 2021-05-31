@@ -1,5 +1,9 @@
 package;
 
+import cpp.Stdlib;
+import cpp.Pointer;
+import openfl.Lib;
+import cpp.vm.Gc;
 import lime.app.Promise;
 import lime.app.Future;
 import flixel.FlxG;
@@ -61,11 +65,23 @@ class LoadingState extends MusicBeatState
 				checkLoadSong(getSongPath());
 				if (PlayState.SONG.needsVoices)
 					checkLoadSong(getVocalPath());
+
 				checkLibrary("shared");
-				if (PlayState.storyWeek > 0)
-					checkLibrary("week" + PlayState.storyWeek);
-				else
-					checkLibrary("tutorial");
+
+				switch (PlayState.storyWeek) 
+				{
+					case 0:
+						checkLibrary("tutorial");
+
+					case 7:
+						checkLibrary("weekG");
+
+					case 8:
+						checkLibrary("bonusWeek");
+						
+					default:
+						checkLibrary("week" + PlayState.storyWeek);
+				}
 				
 				var fadeTime = 0.5;
 				FlxG.camera.fade(FlxG.camera.bgColor, fadeTime, true);
@@ -248,6 +264,18 @@ class LoadingState extends MusicBeatState
 		});
 
 		return promise.future;
+	}
+	public static inline function unloadAll(){
+		var libs:Array<String>=['week1','week2','week3','week4','week5','week6','weekG','bonusWeek'];
+
+		for(lib in libs){
+			Assets.unloadLibrary(lib);
+		}
+		
+		Gc.enable(true);
+		Gc.compact();
+		Gc.run(true);
+		Assets.cache.clear();
 	}
 }
 

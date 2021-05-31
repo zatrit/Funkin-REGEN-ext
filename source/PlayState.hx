@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxState;
 import flixel.tweens.misc.VarTween;
 #if desktop
 import Discord.DiscordClient;
@@ -140,6 +141,11 @@ class PlayState extends MusicBeatState
 
 	public static var firstTry:Bool=true;
 	public static var attempt:Int=0;
+
+	var wstageFront:FlxSprite;
+	var wBg:FlxSprite;
+	var nwBg:FlxSprite;
+	var funneEffect:FlxSprite;
 
 	override public function create()
 	{
@@ -624,6 +630,64 @@ class PlayState extends MusicBeatState
 						  add(corpse);
 
 					}
+					case 'lo-fight' | 'overhead' | 'ballistic':
+					{
+						defaultCamZoom = 0.9;
+						curStage = 'alley';
+						
+						if(SONG.song.toLowerCase()=='ballistic')
+							curStage = 'ballisticAlley';
+
+						wBg = new FlxSprite(-500, -300).loadGraphic(Paths.image('whittyBack', 'bonusWeek'));
+
+						if(curStage=='alley'){
+							wBg.antialiasing = true;
+							wBg.scrollFactor.set(0.9, 0.9);
+							wBg.active = false;
+			
+							wstageFront = new FlxSprite(-650, 600).loadGraphic(Paths.image('whittyFront', 'bonusWeek'));
+							wstageFront.setGraphicSize(Std.int(wstageFront.width * 1.1));
+							wstageFront.updateHitbox();
+							wstageFront.antialiasing = true;
+							wstageFront.scrollFactor.set(0.9, 0.9);
+							wstageFront.active = false;
+							add(wBg);
+							add(wstageFront);
+						}
+						else 
+						{
+							var bgTex = Paths.getSparrowAtlas('BallisticBackground', 'bonusWeek');
+							nwBg = new FlxSprite(-600, -200);
+							nwBg.frames = bgTex;
+							nwBg.antialiasing = true;
+							nwBg.scrollFactor.set(0.9, 0.9);
+							nwBg.active = true;
+							nwBg.animation.addByPrefix('start', 'Background Whitty Start', 24, false);
+							nwBg.animation.addByPrefix('gaming', 'Background Whitty Startup', 24, false);
+							nwBg.animation.addByPrefix('gameButMove', 'Background Whitty Moving', 16, true);
+							add(wBg);
+							add(nwBg);
+							nwBg.alpha = 0;
+							wstageFront = new FlxSprite(-650, 600).loadGraphic(Paths.image('whittyFront', 'bonusWeek'));
+							wstageFront.setGraphicSize(Std.int(wstageFront.width * 1.1));
+							wstageFront.updateHitbox();
+							wstageFront.antialiasing = true;
+							wstageFront.scrollFactor.set(0.9, 0.9);
+							wstageFront.active = false;
+							add(wBg);
+							add(wstageFront);
+
+							funneEffect = new FlxSprite(-600, -200).loadGraphic(Paths.image('thefunnyeffect', 'bonusWeek'));
+							funneEffect.alpha = 0.5;
+							funneEffect.scrollFactor.set();
+							funneEffect.visible = true;
+							add(funneEffect);
+				
+							funneEffect.cameras = [camHUD];
+
+							trace('funne: ' + funneEffect);
+						}
+					}
 		          default:
 		          {
 		                  defaultCamZoom = 0.9;
@@ -663,6 +727,8 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-christmas';
 			case 'school' | 'schoolEvil':
 				gfVersion = 'gf-pixel';
+			case 'alley' | 'ballisticAlley':
+				gfVersion = 'gf-whitty';
 		}
 
 		gf = new Character(400, 130, gfVersion);
@@ -940,6 +1006,15 @@ class PlayState extends MusicBeatState
 					});
 				case 'nerves' | "release" | "fading":
 					garIntro(doof);
+
+				case 'lo-fight':
+					trace('lo-fight animation');
+					whittyAnimation(doof);
+				case 'overhead':
+					whittyAnimation(doof);
+				case 'ballistic':
+					whittyAnimation(doof);
+
 				default:
 					startCountdown();
 			}
@@ -1968,7 +2043,7 @@ class PlayState extends MusicBeatState
 				transOut = FlxTransitionableState.defaultTransOut;
 
 				FlxG.switchState(new StoryMenuState());
-
+				
 				// if ()
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
@@ -2697,6 +2772,12 @@ class PlayState extends MusicBeatState
 			gf.dance();
 		}
 
+		if (curSong.toLowerCase() == 'ballistic')
+		{
+			if (gf.animation.name != 'scared')
+				gf.playAnim('scared');
+		}
+
 		if (!boyfriend.animation.curAnim.name.startsWith("sing"))
 		{
 			boyfriend.playAnim('idle');
@@ -2794,4 +2875,377 @@ class PlayState extends MusicBeatState
 	}
 
 	var curLight:Int = 0;
+
+	//Whitty code
+
+	function whittyAnimation(?dialogueBox:DialogueBox):Void
+		{
+			var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.fromRGB(19, 0, 0));
+			black.scrollFactor.set();
+			var black2:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+			black2.scrollFactor.set();
+			black2.alpha = 0;
+			var black3:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+			black3.scrollFactor.set();
+			if (curSong.toLowerCase() != 'ballistic')
+				add(black);
+	
+			var epic:Bool = false;
+			var white:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.WHITE);
+			white.scrollFactor.set();
+			white.alpha = 0;
+	
+			trace('what animation to play, hmmmm');
+	
+			var wat:Bool = true;
+	
+			trace('cur song: ' + curSong);
+			trace('cur stage: ' + curStage);
+	
+			switch(curSong.toLowerCase()) // WHITTY ANIMATION CODE LMAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+			{
+				case 'ballistic':
+					trace('funny ballistic!!!');
+					add(white);
+					trace(white);
+					var noMore:Bool = false;
+					inCutscene = true;
+	
+					var wind:FlxSound = new FlxSound().loadEmbedded(Paths.sound('windLmao', 'bonusWeek'),true);
+					var mBreak:FlxSound = new FlxSound().loadEmbedded(Paths.sound('micBreak', 'bonusWeek'));
+					var mThrow:FlxSound = new FlxSound().loadEmbedded(Paths.sound('micThrow', 'bonusWeek'));
+					var mSlam:FlxSound = new FlxSound().loadEmbedded(Paths.sound('slammin', 'bonusWeek'));
+					var TOE:FlxSound = new FlxSound().loadEmbedded(Paths.sound('ouchMyToe', 'bonusWeek'));
+					var soljaBOY:FlxSound = new FlxSound().loadEmbedded(Paths.sound('souljaboyCrank', 'bonusWeek'));
+					var rumble:FlxSound = new FlxSound().loadEmbedded(Paths.sound('rumb', 'bonusWeek'));
+	
+					remove(dad);
+					var animation:FlxSprite = new FlxSprite(-480,-100);
+					animation.frames = Paths.getSparrowAtlas('cuttinDeezeBalls', 'bonusWeek');
+					animation.animation.addByPrefix('startup', 'Whitty Ballistic Cutscene', 24, false);
+					animation.antialiasing = true;
+					add(animation);
+	
+					camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+	
+					remove(funneEffect);
+	
+					wind.fadeIn();
+					camHUD.visible = false;
+	
+					new FlxTimer().start(0.01, function(tmr:FlxTimer)
+						{
+							// animation
+	
+							if (!wat)
+								{
+									tmr.reset(1.5);
+									wat = true;
+								}
+							else
+							{
+	
+							
+							if (animation.animation.curAnim == null) // check thingy go BEE BOOP
+								{
+									animation.animation.play('startup'); // if beopoe then make go BEP
+									trace('start ' + animation.animation.curAnim.name);
+								}
+							if (!animation.animation.finished && animation.animation.curAnim.name == 'startup') // beep?
+							{
+								tmr.reset(0.01); // fuck
+								noMore = true; // fuck outta here animation
+								switch(animation.animation.frameIndex)
+								{
+									case 87:
+										if (!mThrow.playing)
+											mThrow.play();
+									case 86:
+										if (!mSlam.playing)
+											mSlam.play();
+									case 128:
+										if (!soljaBOY.playing)
+											{
+												soljaBOY.play();
+												remove(wstageFront);
+												nwBg.alpha = 1;
+												wBg.alpha = 0;
+												nwBg.animation.play('gaming');
+												camFollow.camera.shake(0.01, 3);
+											}
+									case 123:
+										if (!rumble.playing)
+											rumble.play();
+									case 135:
+										camFollow.camera.stopFX();
+									case 158:
+										if (!TOE.playing)
+										{
+											TOE.play();
+											camFollow.camera.stopFX();
+											camFollow.camera.shake(0.03, 6);
+										}
+									case 52:
+										if (!mBreak.playing)
+											{
+												mBreak.play();
+											}
+								}
+							}
+							else
+							{
+								// white screen thingy
+	
+								camFollow.camera.stopFX();
+	
+								if (white.alpha < 1 && !epic)
+								{
+									white.alpha += 0.4;
+									tmr.reset(0.1);
+								}
+								else
+								{
+									if (!epic)
+										{
+											epic = true;
+											trace('epic ' + epic);
+											turnToCrazyWhitty();
+											remove(animation);
+											TOE.fadeOut();
+											tmr.reset(0.1);
+											nwBg.animation.play("gameButMove");
+										}
+									else
+										{
+											if (white.alpha != 0)
+												{
+	
+													white.alpha -= 0.1;
+													tmr.reset(0.1);
+												}
+											else 
+											{
+												if (dialogueBox != null)
+													{
+														camHUD.visible = true;
+														wind.fadeOut();
+														healthBar.visible = false;
+														healthBarBG.visible = false;
+														scoreTxt.visible = false;
+														iconP1.visible = false;
+														iconP2.visible = false;
+														add(dialogueBox);
+													}
+													else
+													{
+														startCountdown();
+													}
+													remove(white);
+											}
+										}
+								}
+							}
+						}
+						});
+				case 'lo-fight':
+					trace('funny lo-fight!!!');
+					inCutscene = true;
+					remove(dad);
+					var animation:FlxSprite = new FlxSprite(-290,-100);
+					animation.frames = Paths.getSparrowAtlas('whittyCutscene','bonusWeek');
+					animation.animation.addByPrefix('startup', 'Whitty Cutscene Startup ', 24, false);
+					animation.antialiasing = true;
+					add(animation);
+					black2.visible = true;
+					black3.visible = true;
+					add(black2);
+					add(black3);
+					black2.alpha = 0;
+					black3.alpha = 0;
+					trace(black2);
+					trace(black3);
+	
+					var city:FlxSound = new FlxSound().loadEmbedded(Paths.sound('city', 'bonusWeek'), true);
+					var rip:FlxSound = new FlxSound().loadEmbedded(Paths.sound('rip', 'bonusWeek'));
+					var fire:FlxSound = new FlxSound().loadEmbedded(Paths.sound('fire', 'bonusWeek'));
+					var BEEP:FlxSound = new FlxSound().loadEmbedded(Paths.sound('beepboop', 'bonusWeek'));
+					city.fadeIn();
+					camFollow.setPosition(dad.getMidpoint().x + 40, dad.getMidpoint().y - 180);
+	
+					camHUD.visible = false;
+	
+					gf.y = 90000000;
+					boyfriend.x += 314;
+	
+					new FlxTimer().start(0.01, function(tmr:FlxTimer)
+						{
+	
+							if (!wat)
+								{
+									tmr.reset(3);
+									wat = true;
+								}
+							else
+							{
+							// animation
+	
+							black.alpha -= 0.15;
+				
+							if (black.alpha > 0)
+							{
+								tmr.reset(0.3);
+							}
+							else
+							{
+	
+								if (animation.animation.curAnim == null)
+									animation.animation.play('startup');
+	
+								if (!animation.animation.finished)
+									{
+										tmr.reset(0.01);
+	
+										switch(animation.animation.frameIndex)
+										{
+											case 0:
+												trace('play city sounds');
+											case 41:
+												trace('fire');
+												if (!fire.playing)
+													fire.play();
+											case 34:
+												trace('paper rip');
+												if (!rip.playing)
+													rip.play();
+											case 147:
+												trace('BEEP');
+												if (!BEEP.playing)
+													{
+														camFollow.setPosition(dad.getMidpoint().x + 460, dad.getMidpoint().y - 100);
+														BEEP.play();
+														boyfriend.playAnim('singLEFT', true);
+													}
+											case 154:
+												if (boyfriend.animation.curAnim.name != 'idle')
+													boyfriend.playAnim('idle');
+										}
+									}
+								else
+								{
+									// CODE LOL!!!!
+									if (black2.alpha != 1)
+									{
+										black2.alpha += 0.4;
+										tmr.reset(0.1);
+										trace('increase blackness lmao!!!');
+									}
+									else
+									{
+										if (black2.alpha == 1 && black2.visible)
+											{
+												black2.visible = false;
+												black3.alpha = 1;
+												trace('transision ' + black2.visible + ' ' + black3.alpha);
+												remove(animation);
+												add(dad);
+												gf.y = 140;
+												boyfriend.x -= 314;
+												camHUD.visible = true;
+												tmr.reset(0.3);
+											}
+										else if (black3.alpha != 0)
+											{
+												black3.alpha -= 0.1;
+												tmr.reset(0.3);
+												trace('decrease blackness lmao!!!');
+											}
+											else 
+											{
+														if (dialogueBox != null)
+														{
+															add(dialogueBox);
+															city.fadeOut();
+														}
+														else
+														{
+															startCountdown();
+														}
+													remove(black);
+											}
+									}
+								}
+							}
+						}
+						});
+				default:
+					trace('funny *goat looking at camera*!!!');
+					new FlxTimer().start(0.3, function(tmr:FlxTimer)
+						{
+	
+							if (!wat)
+								{
+									tmr.reset(3);
+									wat = true;
+								}
+	
+							black.alpha -= 0.15;
+				
+							if (black.alpha > 0)
+							{
+								tmr.reset(0.3);
+							}
+							else
+							{
+			
+								if (dialogueBox != null)
+									{
+										inCutscene = true;
+										add(dialogueBox);
+									}
+								remove(black);
+							}
+						});
+					healthBar.visible = true;
+					healthBarBG.visible = true;
+			}
+		}
+		function turnToCrazyWhitty()
+			{
+		
+				remove(iconP2);
+				remove(iconP1);
+				remove(healthBarBG);
+				remove(healthBar);
+		
+				iconP2 = new HealthIcon('whittyCrazy', false);
+				iconP2.y = healthBar.y - (iconP2.height / 2);
+		
+				iconP1 = new HealthIcon(SONG.player1, true);
+				iconP1.y = healthBar.y - (iconP1.height / 2);
+		
+				add(healthBarBG);
+				add(healthBar);
+		
+				add(iconP2);
+				add(iconP1);
+		
+				iconP1.cameras = [camHUD];
+				iconP2.cameras = [camHUD];
+		
+				healthBar.cameras = [camHUD];
+				healthBarBG.cameras = [camHUD];
+		
+				remove(dad);
+				remove(gf);
+				dad = new Character(100,100,'whittyCrazy');
+				add(gf);
+				add(dad);
+		
+				if (isStoryMode)
+				{
+					iconP1.visible = false;
+					iconP2.visible = false;
+				}
+		
+			}
 }
