@@ -7,6 +7,7 @@ Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
 Support the project on the itch.io page: https://ninja-muffin24.itch.io/funkin
 
 IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN SOURCE YOUR MOD AS WELL
+
 ##Ported mods at the moment
 
 - [Smoke 'Em Out Struggle Mod](https://github.com/Rageminer996/Smoke-Em-Out-Struggle-Mod)
