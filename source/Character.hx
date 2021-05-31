@@ -142,7 +142,7 @@ class Character extends FlxSprite
 
 			case 'garcello':
 				// GARCELLO ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('garcello_assets');
+				tex = Paths.getSparrowAtlas('garcello_assets',"weekG");
 				frames = tex;
 				animation.addByPrefix('idle', 'garcello idle dance', 24);
 				animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
@@ -160,7 +160,7 @@ class Character extends FlxSprite
 
 			case 'garcellotired':
 				// GARCELLO TIRED ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('garcellotired_assets');
+				tex = Paths.getSparrowAtlas('garcellotired_assets','weekG');
 				frames = tex;
 				animation.addByPrefix('idle', 'garcellotired idle dance', 24, false);
 				animation.addByPrefix('singUP', 'garcellotired Sing Note UP', 24, false);
@@ -187,7 +187,7 @@ class Character extends FlxSprite
 
 			case 'garcellodead':
 				// GARCELLO DEAD ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('garcellodead_assets');
+				tex = Paths.getSparrowAtlas('garcellodead_assets','weekG');
 				frames = tex;
 				animation.addByPrefix('idle', 'garcello idle dance', 24);
 				animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
@@ -208,7 +208,7 @@ class Character extends FlxSprite
 
 			case 'garcelloghosty':
 				// GARCELLO DEAD ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('garcelloghosty_assets');
+				tex = Paths.getSparrowAtlas('garcelloghosty_assets','weekG');
 				frames = tex;
 				animation.addByPrefix('idle', 'garcello idle dance', 24);
 				animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);

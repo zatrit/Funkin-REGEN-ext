@@ -91,26 +91,26 @@ class DialogueBox extends FlxSpriteGroup
 			case 'headache':
 				hasDialog = true;
 
-				box.frames = Paths.getSparrowAtlas('garBox');
+				box.frames = Paths.getSparrowAtlas('garBox','weekG');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
 				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
 			case 'nerves':
 				hasDialog = true;
-				FlxG.sound.play(Paths.sound('garWeak'));
+				FlxG.sound.play(Paths.sound('garWeak','weekG'));
 	
-				box.frames = Paths.getSparrowAtlas('garBox');
+				box.frames = Paths.getSparrowAtlas('garBox','weekG');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
 				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
 			case 'release':
 				hasDialog = true;
 
-				box.frames = Paths.getSparrowAtlas('garBox');
+				box.frames = Paths.getSparrowAtlas('garBox','weekG');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
 				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
 			case 'fading':
 				hasDialog = true;
 					
-				box.frames = Paths.getSparrowAtlas('garBox');
+				box.frames = Paths.getSparrowAtlas('garBox','weekG');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
 				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
 		}
@@ -197,7 +197,7 @@ class DialogueBox extends FlxSpriteGroup
 		box.screenCenter(X);
 		portraitLeft.screenCenter(X);
 
-		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('weeb/pixelUI/hand_textbox'));
+		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('weeb/pixelUI/hand_textbox','week6'));
 		add(handSelect);
 
 
