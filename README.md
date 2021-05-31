@@ -8,7 +8,7 @@ Support the project on the itch.io page: https://ninja-muffin24.itch.io/funkin
 
 IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN SOURCE YOUR MOD AS WELL
 
-##Ported mods at the moment
+## Ported mods at the moment
 
 - [Smoke 'Em Out Struggle Mod](https://github.com/Rageminer996/Smoke-Em-Out-Struggle-Mod)
 - [Vs. Whitty](https://github.com/KadeDev/vswhitty-public)
