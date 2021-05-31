@@ -206,7 +206,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.visible = false;
 			case 'lo-fight' | 'overhead' | 'ballistic':
 				portraitRight = new FlxSprite(800, FlxG.height - 489);
-				portraitRight.frames = Paths.getSparrowAtlas('boyfriendPort', 'bonusWeek');
+				portraitRight.frames = Paths.getSparrowAtlas('weeb/bf_norm', 'shared');
 				portraitRight.animation.addByPrefix('enter', 'BF portrait enter', 24, false);
 				portraitRight.antialiasing = true;
 				portraitRight.updateHitbox();
