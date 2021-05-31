@@ -546,13 +546,13 @@ class PlayState extends MusicBeatState
 		                  defaultCamZoom = 0.9;
 						  curStage = 'garAlley';
 
-						  var bg:FlxSprite = new FlxSprite(-500, -170).loadGraphic(Paths.image('garStagebg'));
+						  var bg:FlxSprite = new FlxSprite(-500, -170).loadGraphic(Paths.image('garStagebg','weekG'));
 						  bg.antialiasing = true;
 						  bg.scrollFactor.set(0.7, 0.7);
 						  bg.active = false;
 						  add(bg);
 
-						  var bgAlley:FlxSprite = new FlxSprite(-500, -200).loadGraphic(Paths.image('garStage'));
+						  var bgAlley:FlxSprite = new FlxSprite(-500, -200).loadGraphic(Paths.image('garStage','weekG'));
 						  bgAlley.antialiasing = true;
 						  bgAlley.scrollFactor.set(0.9, 0.9);
 						  bgAlley.active = false;
@@ -564,14 +564,14 @@ class PlayState extends MusicBeatState
 		                  defaultCamZoom = 0.9;
 						  curStage = 'garAlleyDead';
 
-						  var bg:FlxSprite = new FlxSprite(-500, -170).loadGraphic(Paths.image('garStagebgAlt'));
+						  var bg:FlxSprite = new FlxSprite(-500, -170).loadGraphic(Paths.image('garStagebgAlt','weekG'));
 						  bg.antialiasing = true;
 						  bg.scrollFactor.set(0.7, 0.7);
 						  bg.active = false;
 						  add(bg);
 
 						  var smoker:FlxSprite = new FlxSprite(0, -290);
-						  smoker.frames = Paths.getSparrowAtlas('garSmoke');
+						  smoker.frames = Paths.getSparrowAtlas('garSmoke','weekG');
 						  smoker.setGraphicSize(Std.int(smoker.width * 1.7));
 						  smoker.alpha = 0.3;
 						  smoker.animation.addByPrefix('garsmoke', "smokey", 13);
@@ -579,13 +579,13 @@ class PlayState extends MusicBeatState
 						  smoker.scrollFactor.set(0.7, 0.7);
 						  add(smoker);
 
-						  var bgAlley:FlxSprite = new FlxSprite(-500, -200).loadGraphic(Paths.image('garStagealt'));
+						  var bgAlley:FlxSprite = new FlxSprite(-500, -200).loadGraphic(Paths.image('garStagealt','weekG'));
 						  bgAlley.antialiasing = true;
 						  bgAlley.scrollFactor.set(0.9, 0.9);
 						  bgAlley.active = false;
 						  add(bgAlley);
 
-						  var corpse:FlxSprite = new FlxSprite(-230, 540).loadGraphic(Paths.image('gardead'));
+						  var corpse:FlxSprite = new FlxSprite(-230, 540).loadGraphic(Paths.image('gardead','weekG'));
 						  corpse.antialiasing = true;
 						  corpse.scrollFactor.set(0.9, 0.9);
 						  corpse.active = false;
@@ -597,19 +597,19 @@ class PlayState extends MusicBeatState
 		                  defaultCamZoom = 0.9;
 						  curStage = 'garAlleyDip';
 
-						  var bg:FlxSprite = new FlxSprite(-500, -170).loadGraphic(Paths.image('garStagebgRise'));
+						  var bg:FlxSprite = new FlxSprite(-500, -170).loadGraphic(Paths.image('garStagebgRise','weekG'));
 						  bg.antialiasing = true;
 						  bg.scrollFactor.set(0.7, 0.7);
 						  bg.active = false;
 						  add(bg);
 
-						  var bgAlley:FlxSprite = new FlxSprite(-500, -200).loadGraphic(Paths.image('garStageRise'));
+						  var bgAlley:FlxSprite = new FlxSprite(-500, -200).loadGraphic(Paths.image('garStageRise','weekG'));
 						  bgAlley.antialiasing = true;
 						  bgAlley.scrollFactor.set(0.9, 0.9);
 						  bgAlley.active = false;
 						  add(bgAlley);
 
-						  var corpse:FlxSprite = new FlxSprite(-230, 540).loadGraphic(Paths.image('gardead'));
+						  var corpse:FlxSprite = new FlxSprite(-230, 540).loadGraphic(Paths.image('gardead','weekG'));
 						  corpse.antialiasing = true;
 						  corpse.scrollFactor.set(0.9, 0.9);
 						  corpse.active = false;
@@ -763,7 +763,7 @@ class PlayState extends MusicBeatState
 		if (curStage == 'garAlleyDead')
 		{
 			var smoke:FlxSprite = new FlxSprite(0, 0);
-			smoke.frames = Paths.getSparrowAtlas('garSmoke');
+			smoke.frames = Paths.getSparrowAtlas('garSmoke','weekG');
 			smoke.setGraphicSize(Std.int(smoke.width * 1.6));
 			smoke.animation.addByPrefix('garsmoke', "smokey", 15);
 			smoke.animation.play('garsmoke');
@@ -903,13 +903,13 @@ class PlayState extends MusicBeatState
 				case 'thorns':
 					schoolIntro(doof);
 				case 'headache':
-					var introText:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('garIntroText'));
+					var introText:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('garIntroText','weekG'));
 					introText.setGraphicSize(Std.int(introText.width * 1.5));
 					introText.scrollFactor.set();
 					camHUD.visible = false;
 	
 					add(introText);
-					FlxG.sound.playMusic(Paths.music('city_ambience'), 0);
+					FlxG.sound.playMusic(Paths.music('city_ambience','weekG'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
 
 					new FlxTimer().start(0.1, function(tmr:FlxTimer)
@@ -1042,7 +1042,7 @@ class PlayState extends MusicBeatState
 	
 			var sexycutscene:FlxSprite = new FlxSprite();
 			sexycutscene.antialiasing = true;
-			sexycutscene.frames = Paths.getSparrowAtlas('GAR_CUTSCENE');
+			sexycutscene.frames = Paths.getSparrowAtlas('GAR_CUTSCENE','weekG');
 			sexycutscene.animation.addByPrefix('video', 'garcutscene', 15, false);
 			sexycutscene.setGraphicSize(Std.int(sexycutscene.width * 2));
 			sexycutscene.scrollFactor.set();
@@ -1080,11 +1080,11 @@ class PlayState extends MusicBeatState
 							add(sexycutscene);
 							sexycutscene.animation.play('video');
 	
-							FlxG.sound.play(Paths.sound('Garcello_Dies'), 1, false, null, true, function()
+							FlxG.sound.play(Paths.sound('Garcello_Dies','weekG'), 1, false, null, true, function()
 								{
 									remove(red);
 									remove(sexycutscene);
-									FlxG.sound.play(Paths.sound('Wind_Fadeout'));
+									FlxG.sound.play(Paths.sound('Wind_Fadeout','weekG'));
 	
 									FlxG.camera.fade(FlxColor.WHITE, 5, true, function()
 									{
