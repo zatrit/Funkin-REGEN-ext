@@ -119,8 +119,6 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByIndices('normal', 'speech bubble normal', [11], "", 24);
 				box.antialiasing = true;
-				
-				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 		}
 
 		this.dialogueList = dialogueList;
@@ -194,6 +192,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.scrollFactor.set();
 				add(portraitRight);
 				portraitRight.visible = false;
+				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			case 'headache' | 'nerves' | 'release' | 'fading':
 				portraitRight = new FlxSprite(770, 200);
 				portraitRight.frames = Paths.getSparrowAtlas('weeb/bf_norm');
@@ -203,6 +202,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.scrollFactor.set();
 				add(portraitRight);
 				portraitRight.visible = false;
+				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			case 'lo-fight' | 'overhead' | 'ballistic':
 				portraitRight = new FlxSprite(800, FlxG.height - 489);
 				portraitRight.frames = Paths.getSparrowAtlas('boyfriendPort', 'bonusWeek');
@@ -215,7 +215,6 @@ class DialogueBox extends FlxSpriteGroup
 		}
 		
 		box.animation.play('normalOpen');
-		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 		box.updateHitbox();
 		add(box);
 
