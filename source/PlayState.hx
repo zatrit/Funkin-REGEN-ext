@@ -188,6 +188,7 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
 			case 'thorns':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
+				
 			case 'headache':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('headache/headacheDialogue'));
 			case 'nerves':
@@ -196,6 +197,13 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('release/releaseDialogue'));
 			case 'fading':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('fading/fadingDialogue'));
+				
+			case 'lo-fight':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('lo-fight/pleaseSubscribe'));
+			case 'overhead':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('overhead/pleaseSubscribe'));
+			case 'ballistic':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('ballistic/pleaseSubscribe'));
 		}
 
 		#if desktop
