@@ -119,10 +119,14 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByIndices('normal', 'speech bubble normal', [11], "", 24);
 				box.antialiasing = true;
-				
-				box.y = FlxG.height - 320;
-				box.flipX=true;
 		}
+
+		switch(PlayState.SONG.song.toLowerCase()){
+			case 'lo-fight' | 'overhead' | 'ballistic':
+				box.flipX=true;
+				box.x=40;
+		}
+		box.y = FlxG.height - 340;
 
 		this.dialogueList = dialogueList;
 		
@@ -224,8 +228,6 @@ class DialogueBox extends FlxSpriteGroup
 			box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			box.screenCenter(X);
 		}
-		else
-			box.x=40;
 		
 		portraitLeft.screenCenter(X);
 

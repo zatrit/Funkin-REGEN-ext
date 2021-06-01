@@ -14,10 +14,11 @@ class OptionsState extends MusicBeatState
 	var controlsStrings:Array<String> = [];
 
 	private var grpControls:FlxTypedGroup<Alphabet>;
+	public var menuBG = new FlxSprite();
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		menuBG.loadGraphic(Paths.image(MainMenuState.bgStyle+'/menuDesat','menuBackgrounds'));
 		controlsStrings = CoolUtil.coolTextFile(Paths.txt('controls'));
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -45,7 +46,7 @@ class OptionsState extends MusicBeatState
 
 		super.create();
 
-		openSubState(new OptionsSubState());
+		openSubState(new OptionsSubState(this));
 	}
 
 	override function update(elapsed:Float)
@@ -129,6 +130,6 @@ class OptionsState extends MusicBeatState
 		FlxG.switchState(new MainMenuState());
 	}
 	override function closeSubState() {
-		openSubState(new OptionsSubState());
+		openSubState(new OptionsSubState(this));
 	}
 }

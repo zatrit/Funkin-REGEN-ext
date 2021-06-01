@@ -70,7 +70,6 @@ class MobileControlsSubState extends MusicBeatSubstate
 		FlxG.save.flush();
 
 		FlxG.state.closeSubState();
-		FlxG.state.openSubState(new OptionsSubState());
 	}
 
 	private function controlProfileUpdate(){

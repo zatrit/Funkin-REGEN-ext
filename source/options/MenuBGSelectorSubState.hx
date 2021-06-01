@@ -3,9 +3,9 @@ package options;
 import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-class OptionsSubState extends MusicBeatSubstate
+class MenuBGSelectorSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = [#if mobile 'Controls', #end 'Menu background selector', 'GitHub repo','About'];
+	var textMenuItems:Array<String> = ['default', 'garcello', 'whitty'];
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	var curSelected:Int = 0;
@@ -33,6 +33,7 @@ class OptionsSubState extends MusicBeatSubstate
 			grpOptions.add(optionText);
 		}
 
+		curSelected=textMenuItems.indexOf(MainMenuState.bgStyle);
 		changeSelection();
 	}
 
@@ -61,21 +62,14 @@ class OptionsSubState extends MusicBeatSubstate
 
 		if (accept)
 		{
-			switch (textMenuItems[curSelected])
-			{
-				#if mobile
-				case "Controls":
-					FlxG.state.closeSubState();
-					FlxG.state.openSubState(new MobileControlsSubState());
-				#end
-				case "Menu background selector":
-					FlxG.state.closeSubState();
-					FlxG.state.openSubState(new MenuBGSelectorSubState(parent));
-				case "GitHub repo":
-					FlxG.openURL("https://github.com/zatrit/Funkin-REGEN-ext");
-				case "About":
-					FlxG.switchState(new AboutState());
-			}
+            var bgStyle:String=textMenuItems[curSelected];
+			MainMenuState.bgStyle=bgStyle;
+            FlxG.save.data.bgStyle=bgStyle;
+			FlxG.save.flush();
+			
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+
+			close();
 		}
 	}
 	
@@ -86,6 +80,9 @@ class OptionsSubState extends MusicBeatSubstate
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 	
 		curSelected += change;
+
+        var bgStyle:String=textMenuItems[curSelected];
+        parent.menuBG.loadGraphic(Paths.image(bgStyle+'/menuDesat','menuBackgrounds'));
 	
 		if (curSelected < 0)
 			curSelected = textMenuItems.length - 1;
