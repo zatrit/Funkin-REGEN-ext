@@ -20,7 +20,7 @@ class AboutState extends MusicBeatState
 	{
 		// LOAD MUSIC
 		// LOAD CHARACTERS
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.bgStyle+'/menuBGBlue','menuBackgrounds'));
 		
 		logoBl = new FlxSprite(-150, -100);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');

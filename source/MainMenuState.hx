@@ -36,6 +36,8 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
+	public static var bgStyle='default';
+
 	override function create()
 	{
 		#if NO_PRELOAD_ALL
@@ -57,7 +59,10 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		if(FlxG.save.data.bgStyle!=null)
+			bgStyle=FlxG.save.data.bgStyle;
+
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image(bgStyle+'/menuBG','menuBackgrounds'));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.18;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -69,7 +74,7 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		magenta = new FlxSprite(-80).loadGraphic(Paths.image(bgStyle+'/menuDesat','menuBackgrounds'));
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.18;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));

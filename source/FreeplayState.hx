@@ -96,7 +96,7 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.bgStyle+'/menuBGBlue','menuBackgrounds'));
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.screenCenter();
 		add(bg);
