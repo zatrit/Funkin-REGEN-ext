@@ -5,7 +5,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class OptionsSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = [#if mobile 'Controls', #end 'kade input: off','skip cutscenes: off','Menu background selector', 'GitHub repo','About'];
+	var textMenuItems:Array<String> = [#if mobile 'Controls', #end 'kade input: off','skip cutscenes: off','Menu background selector', 'About'];
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	var curSelected:Int = 0;
@@ -82,8 +82,6 @@ class OptionsSubState extends MusicBeatSubstate
 				case "Menu background selector":
 					FlxG.state.closeSubState();
 					FlxG.state.openSubState(new MenuBGSelectorSubState(parent));
-				case "GitHub repo":
-					FlxG.openURL("https://github.com/zatrit/Funkin-REGEN-ext");
 				case "About":
 					FlxG.switchState(new AboutState());
 				case 'kade input: off' | 'kade input: on':
