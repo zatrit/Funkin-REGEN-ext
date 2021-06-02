@@ -26,14 +26,14 @@ class MobileHitbox extends Control{
         {
             var point:FlxPoint=touch.getScreenPosition(cameras[0]);
             if(overlapsPoint(point,true,cameras[0])){
-                this.alpha=0.25;
+                this.alpha=0.15;
                 this.pressed=true;
                 this.justPressed=touch.justPressed||this.justPressed||!this.pressedBefore;
                 this.justReleased=(touch.released&&this.justReleased);
             }
         }
         if(!pressed){
-            this.alpha=0.1;
+            this.alpha=0;
         }
         pressedBefore=pressed;
     }

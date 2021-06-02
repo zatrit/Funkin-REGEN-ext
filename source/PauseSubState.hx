@@ -20,13 +20,13 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = ['Resume', 'Restart Song', #if !mobile "Charting editor", #end 'Exit to menu'];
-	var curSelected:Int = 0;
 
+	var curSelected:Int = 0;
 	var pauseMusic:FlxSound;
 
-	#if mobile
-	var grpMobileButtons:MobileControls;
-	#end
+	final DIST_BEETWEN_ITEMS = #if !mobile 1 #else 0.9 #end;
+
+	var isChangeDiffMenu:Bool=false;
 
 	public function new(x:Float, y:Float)
 	{
@@ -102,24 +102,15 @@ class PauseSubState extends MusicBeatSubstate
 		for (i in 0...menuItems.length)
 		{
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
+			songText.ID=i;
 			songText.isMenuItem = true;
-			songText.targetY = i;
+			songText.targetY = (i-(menuItems.length/2)+0.5)*DIST_BEETWEN_ITEMS;
 			grpMenuShit.add(songText);
 		}
 
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-
-		#if mobile
-		grpMobileButtons=new MobileControls(camera,FlxG.camera.width-510,FlxG.camera.height-410,1);
-		grpMobileButtons.left.destroy();
-		grpMobileButtons.right.destroy();
-
-		grpMobileButtons.up.y+=40;
-		
-		add(grpMobileButtons);
-		#end
 	}
 
 	override function update(elapsed:Float)
@@ -136,11 +127,15 @@ class PauseSubState extends MusicBeatSubstate
 		#if mobile
 		if(FlxG.touches.justReleased().length>0){
 		for (touch in FlxG.touches.list) {
-				accepted=accepted||touch.screenX<camera.width/2;
+				for (item in grpMenuShit.members) {
+					if(item.overlapsPoint(touch.getWorldPosition(camera))){
+						curSelected=item.ID;
+						changeSelection();
+						accepted=true;
+					}
+				}
 			}
 		}
-		upP=grpMobileButtons.up.justPressed;
-		downP=grpMobileButtons.down.justPressed;
 		#end
 
 		if (upP)
@@ -165,6 +160,8 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.resetState();
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
+				case "Change difficulty":
+
 #if debug
 				case "Charting editor":
 					FlxG.switchState(new ChartingState());
@@ -191,9 +188,11 @@ class PauseSubState extends MusicBeatSubstate
 
 		var bullShit:Int = 0;
 
+
 		for (item in grpMenuShit.members)
 		{
-			item.targetY = bullShit - curSelected;
+			#if !mobile
+			item.targetY = (bullShit - curSelected)*DIST_BEETWEN_ITEMS;
 			bullShit++;
 
 			item.alpha = 0.6;
@@ -204,6 +203,9 @@ class PauseSubState extends MusicBeatSubstate
 				item.alpha = 1;
 				// item.setGraphicSize(Std.int(item.width));
 			}
+			#else
+			item.alpha = 1;
+			#end
 		}
 	}
 	override function onBack() {

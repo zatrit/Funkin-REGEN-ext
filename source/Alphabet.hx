@@ -225,6 +225,14 @@ class Alphabet extends FlxSpriteGroup
 
 		super.update(elapsed);
 	}
+	public function fullClear() {
+		super.clear();
+		lastSprite=null;
+		lastWasSpace=false;
+		xPosResetted = false;
+		splitWords = [];
+		_finalText=text;
+	}
 }
 
 class AlphaCharacter extends FlxSprite

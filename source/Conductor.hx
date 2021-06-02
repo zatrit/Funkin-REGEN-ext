@@ -28,6 +28,8 @@ class Conductor
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
+	public static var timeScale:Float = Conductor.safeZoneOffset / 166;
+
 	public function new()
 	{
 	}
@@ -65,5 +67,6 @@ class Conductor
 
 		crochet = ((60 / bpm) * 1000);
 		stepCrochet = crochet / 4;
+		Conductor.timeScale = Conductor.safeZoneOffset / 166;
 	}
 }
