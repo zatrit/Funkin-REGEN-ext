@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app file="Funkin"  main="Main" version="0.2.8.5" company="ninjamuffin99 and zatrit" />
+	<app file="Funkin"  main="Main" version="0.2.8.5-ext" company="ninjamuffin99 and zatrit" />
 	<app if="debug" packageName="com.zatrit.funkin_dev" package="com.zatrit.funkin_dev_ext" title="(DEV) Friday Night Funkin' REGEN EXT"/>
 	<app unless="debug" packageName="com.zatrit.funkin" package="com.zatrit.funkin_ext" title="Friday Night Funkin' REGEN EXT"/>
 	<!--Switch Export with Unique ApplicationID and Icon-->

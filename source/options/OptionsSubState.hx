@@ -15,20 +15,17 @@ class OptionsSubState extends MusicBeatSubstate
 
 	final DIST_BEETWEN_ITEMS = #if !mobile 1 #else 0.8 #end;
 
-	public function new()
-	{
-		super();
+	public var parent:OptionsState;
 
+	public function new(parent:OptionsState)
+	{
+		super();		
+		
 		if(FlxG.save.data.kadeInput)
 			textMenuItems[KADE_INPUT_NUMBER]='kade input: on';
 		if(FlxG.save.data.skipCutscenes)
 			textMenuItems[SKIP_CUTSCENES_NUMBER]='skip cutscenes: on';
 
-	var parent:OptionsState;
-
-	public function new(parent:OptionsState)
-	{
-		super();
 
 		this.parent=parent;
 
