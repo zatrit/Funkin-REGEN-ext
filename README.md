@@ -14,6 +14,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 
 - [Smoke 'Em Out Struggle](https://github.com/Rageminer996/Smoke-Em-Out-Struggle-Mod)
 - [Vs. Whitty](https://github.com/KadeDev/vswhitty-public)
+- [VS. KAPI - Arcade Showdown](https://gamebanana.com/mods/44683)
 
 ## Credits / shoutouts
 
@@ -23,6 +24,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [zatrit](https://twitter.com/zatrit) - Mod author
 - [Rageminer996](https://github.com/Rageminer996) and [atsuover](https://www.youtube.com/user/EnergeticShadow) - Garcello authors
 - [KadeDev](https://github.com/KadeDev) - Whitty author
+- [paperkitty](https://gamebanana.com/members/1838959) - Kapi author
 
 This game was made with love to Newgrounds and it's community. Extra love to Tom Fulp.
 
