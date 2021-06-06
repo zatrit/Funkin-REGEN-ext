@@ -78,6 +78,9 @@ class LoadingState extends MusicBeatState
 
 					case 8:
 						checkLibrary("bonusWeek");
+
+					case 9:
+						checkLibrary("kapiWeek");
 						
 					default:
 						checkLibrary("week" + PlayState.storyWeek);
@@ -266,7 +269,7 @@ class LoadingState extends MusicBeatState
 		return promise.future;
 	}
 	public static inline function unloadAll(){
-		var libs:Array<String>=['week1','week2','week3','week4','week5','week6','weekG','bonusWeek'];
+		var libs:Array<String>=['week1','week2','week3','week4','week5','week6','weekG','bonusWeek','kapiWeek'];
 
 		for(lib in libs){
 			Assets.unloadLibrary(lib);

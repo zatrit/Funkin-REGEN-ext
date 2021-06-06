@@ -5,7 +5,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class MenuBGSelectorSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = ['default', 'garcello', 'whitty'];
+	var textMenuItems:Array<String> = ['default', 'garcello', 'whitty', 'kapi'];
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	var curSelected:Int = 0;

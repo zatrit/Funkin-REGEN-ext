@@ -32,11 +32,11 @@ class StoryMenuState extends MusicBeatState
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns'],
 		['Headache', 'Nerves', 'Release','Fading'],
-		['Lo-fight', 'Overhead', 'Ballistic']
+		['Lo-fight', 'Overhead', 'Ballistic'],
+		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'],		
+		//['Flatzone'],
 	];
 	var curDifficulty:Int = 1;
-
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true, true];
 
 	var weekCharacters:Array<Dynamic> = [
 		['dad', 'bf', 'gf'],
@@ -47,7 +47,9 @@ class StoryMenuState extends MusicBeatState
 		['parents-christmas', 'bf', 'gf'],
 		['senpai', 'bf', 'gf'],
 		['garcello', 'bf', 'gf'],
-		['whitty', 'bf', 'gf']
+		['whitty', 'bf', 'gf'],
+		['kapi', 'bf', 'gf'],
+		//['g3w', 'bf', 'gf'],
 	];
 
 	var weekNames:Array<String> = [
@@ -60,6 +62,8 @@ class StoryMenuState extends MusicBeatState
 		"hating simulator ft. moawling",
 		"SMOKE 'EM OUT STRUGGLE",
 		"Back Alley Blitz",
+		"B-B-BREAK DOWN!",
+		//"Please nerf up-b...",
 	];
 
 	var txtWeekTitle:FlxText;
@@ -81,6 +85,8 @@ class StoryMenuState extends MusicBeatState
 	var upArrow:MobileButton;
 	var downArrow:MobileButton;
 	#end
+
+	var yellowBG:FlxSprite;
 
 	override function create()
 	{
@@ -113,7 +119,7 @@ class StoryMenuState extends MusicBeatState
 		rankText.screenCenter(X);
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
-		var yellowBG:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
+		yellowBG = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -143,7 +149,7 @@ class StoryMenuState extends MusicBeatState
 			// weekThing.updateHitbox();
 
 			// Needs an offset thingie
-			if (!weekUnlocked[i])
+			if (!weekUnlocked(i))
 			{
 				var lock:FlxSprite = new FlxSprite(weekThing.width + 10 + weekThing.x);
 				lock.frames = ui_tex;
@@ -264,7 +270,7 @@ class StoryMenuState extends MusicBeatState
 
 		// FlxG.watch.addQuick('font', scoreText.font);
 
-		difficultySelectors.visible = weekUnlocked[curWeek];
+		difficultySelectors.visible = weekUnlocked(curWeek);
 
 		grpLocks.forEach(function(lock:FlxSprite)
 		{
@@ -328,7 +334,7 @@ class StoryMenuState extends MusicBeatState
 
 	function selectWeek()
 	{
-		if (weekUnlocked[curWeek])
+		if (weekUnlocked(curWeek))
 		{
 			if (stopspamming == false)
 			{
@@ -416,7 +422,7 @@ class StoryMenuState extends MusicBeatState
 		for (item in grpWeekText.members)
 		{
 			item.targetY = bullShit - curWeek;
-			if (item.targetY == Std.int(0) && weekUnlocked[curWeek])
+			if (item.targetY == Std.int(0) && weekUnlocked(curWeek))
 				item.alpha = 1;
 			else
 				item.alpha = 0.6;
@@ -436,6 +442,9 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.text = "Tracks\n";
 
 		grpWeekCharacters.members[0].visible=curWeek!=0;
+		
+		grpWeekCharacters.members[1].visible=curWeek!=9;
+		grpWeekCharacters.members[2].visible=curWeek!=9;
 
 		switch (grpWeekCharacters.members[0].animation.curAnim.name)
 		{
@@ -461,6 +470,11 @@ class StoryMenuState extends MusicBeatState
 			case 'whitty':
 				grpWeekCharacters.members[0].offset.set(120, 200);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+
+			case 'kapi':
+				grpWeekCharacters.members[0].offset.set(160, 0);
+				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+				grpWeekCharacters.members[0].clipRect=yellowBG.clipRect;
 
 			default:
 				grpWeekCharacters.members[0].offset.set(100, 100);
@@ -490,5 +504,8 @@ class StoryMenuState extends MusicBeatState
 			movedBack = true;
 			FlxG.switchState(new MainMenuState());
 		}
+	}
+	public static function weekUnlocked(id:Int=0):Bool{
+		return true;
 	}
 }

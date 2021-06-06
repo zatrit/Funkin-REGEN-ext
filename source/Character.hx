@@ -63,6 +63,17 @@ class Character extends FlxSprite
 				addOffset('scared', -2, -17);
 
 				playAnim('danceRight');
+			case 'gf-arcade':
+				// ARCADE GIRLFRIEND CODE
+				tex = Paths.getSparrowAtlas('GF_arcade','kapiWeek');
+				frames = tex;
+				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+	
+				addOffset('danceLeft', 0, -9);
+				addOffset('danceRight', 0, -9);
+	
+				playAnim('danceRight');
 
 			case 'gf-christmas':
 				tex = Paths.getSparrowAtlas('christmas/gfChristmas');
@@ -647,6 +658,49 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 75, -150);
 				
 				playAnim('idle');
+			case 'kapi':
+				// DAD ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('KAPI','kapiWeek');
+				frames = tex;
+				animation.addByIndices('idle', 'Dad idle dance', [2, 4, 6, 8, 10, 0], "", 12, false);
+				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
+				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24);
+				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24);
+				animation.addByPrefix('meow', 'Dad meow', 24, false);
+				animation.addByPrefix('stare', 'Dad stare', 24, false);
+				
+				addOffset('idle');
+				
+				addOffset("singUP", -6, 50);
+				addOffset("singRIGHT", 0, 27);
+				addOffset("singLEFT", -10, 10);
+				addOffset("singDOWN", 0, -30);
+	
+				addOffset("stare");
+				addOffset("meow");
+				playAnim('idle');
+			case 'kapi-angry':
+				// DADMAD ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('KAPI_ANGRY','kapiWeek');
+				frames = tex;
+				animation.addByIndices('idle', 'Dad idle dance', [2, 4, 6, 8, 10, 0], "", 12, false);
+				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
+				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24);
+				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24);
+				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24);
+				animation.addByPrefix('meow', 'Dad meow', 24, false);
+	
+					
+				addOffset('idle');
+					
+				addOffset("singUP", -6, 50);
+				addOffset("singRIGHT", 0, 27);
+				addOffset("singLEFT", -10, 10);
+				addOffset("singDOWN", 0, -30);
+	
+				addOffset("meow");
+				playAnim('idle');
 		}
 
 		dance();
@@ -720,6 +774,17 @@ class Character extends FlxSprite
 					{
 						danced = !danced;
 
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
+					}
+
+				case 'gf-arcade':
+					if (!animation.curAnim.name.startsWith('hair'))
+					{
+						danced = !danced;
+	
 						if (danced)
 							playAnim('danceRight');
 						else

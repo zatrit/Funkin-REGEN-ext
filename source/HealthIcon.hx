@@ -31,15 +31,22 @@ class HealthIcon extends FlxSprite
 		animation.add('spirit', [23, 23], 0, false, isPlayer);
 		animation.add('bf-old', [14, 15], 0, false, isPlayer);
 		animation.add('gf', [16], 0, false, isPlayer);
+		animation.add('monster', [19, 20], 0, false, isPlayer);
+		animation.add('monster-christmas', [19, 20], 0, false, isPlayer);
+
 		animation.add('garcello', [24, 25], 0, false, isPlayer);
 		animation.add('garcellotired', [26, 27], 0, false, isPlayer);
 		animation.add('garcellodead', [28, 29], 0, false, isPlayer);
 		animation.add('garcelloghosty', [29, 29], 0, false, isPlayer);
 		animation.add('parents-christmas', [17], 0, false, isPlayer);
-		animation.add('monster', [19, 20], 0, false, isPlayer);
-		animation.add('monster-christmas', [19, 20], 0, false, isPlayer);
+
+
 		animation.add('whitty', [30, 31], 0, false, isPlayer);
 		animation.add('whittyCrazy', [32, 33], 0, false, isPlayer);
+
+		animation.add('kapi', [34, 35], 0, false, isPlayer);
+		animation.add('kapi-angry', [36, 35], 0, false, isPlayer);
+
 		animation.play(char);
 		scrollFactor.set();
 	}

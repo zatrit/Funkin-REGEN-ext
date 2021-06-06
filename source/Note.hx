@@ -76,7 +76,8 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				frames = Paths.getSparrowAtlas('NOTE_assets');
+				if(['arcade','arcadeclosed'].contains(daStage))
+					frames = Paths.getSparrowAtlas('NOTE_assets','kapiWeek');
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');

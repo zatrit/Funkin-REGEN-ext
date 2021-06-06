@@ -160,6 +160,8 @@ class PlayState extends MusicBeatState
 	var nwBg:FlxSprite;
 	var funneEffect:FlxSprite;
 
+	var littleGuys:FlxSprite;
+
 	override public function create()
 	{
 		if(firstTry)
@@ -211,6 +213,15 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('overhead/pleaseSubscribe'));
 			case 'ballistic':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('ballistic/pleaseSubscribe'));
+
+			case 'wocky':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('wocky/dialogue'));
+			case 'hairball':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('hairball/dialogue'));
+			case 'nyaw':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('nyaw/dialogue'));
+			case 'beathoven':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('beathoven/dialogue'));
 		}
 
 		#if desktop
@@ -701,6 +712,87 @@ class PlayState extends MusicBeatState
 							trace('funne: ' + funneEffect);
 						}
 					}
+					case 'beathoven' | 'wocky' | 'nyaw' | 'hairball':
+						{
+							defaultCamZoom = 0.9;
+							if(SONG.song.toLowerCase()=='nyaw')
+								curStage = 'arcadeclosed';
+							else
+								curStage = 'arcade';
+							var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback','kapiWeek'));
+							if(SONG.song.toLowerCase()=='nyaw')
+								bg = new FlxSprite(-600, -200).loadGraphic(Paths.image('closed','kapiWeek'));
+							else if (SONG.song.toLowerCase()=='hairball')
+								bg = new FlxSprite(-600, -200).loadGraphic(Paths.image('sunset','kapiWeek'));
+							else
+								bg = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback','kapiWeek'));
+							bg.antialiasing = true;
+							bg.scrollFactor.set(0.9, 0.9);
+							bg.active = false;
+							add(bg);
+
+							var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront','kapiWeek'));
+							stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+							stageFront.updateHitbox();
+							stageFront.antialiasing = true;
+							stageFront.scrollFactor.set(0.9, 0.9);
+							stageFront.active = false;
+							add(stageFront);
+
+							var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains','kapiWeek'));
+							stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+							stageCurtains.updateHitbox();
+							stageCurtains.antialiasing = true;
+							stageCurtains.scrollFactor.set(1.3, 1.3);
+							stageCurtains.active = false;
+
+							add(stageCurtains);
+					
+							phillyCityLights = new FlxTypedGroup<FlxSprite>();
+							add(phillyCityLights);
+
+							for (i in 0...4)
+								{
+								var light:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('lamps' + i,'kapiWeek'));
+								light.scrollFactor.set(0.9, 0.9);
+								light.visible = false;
+								light.updateHitbox();
+								light.antialiasing = true;
+								phillyCityLights.add(light);
+							}
+							
+							if(SONG.song.toLowerCase()=='beathoven'||SONG.song.toLowerCase()=='hairball'){
+								littleGuys = new FlxSprite(25, 200);
+								littleGuys.frames = Paths.getSparrowAtlas('littleguys','kapiWeek');
+		                		littleGuys.animation.addByPrefix('bop', 'Bottom Level Boppers', 24, false);
+		                		littleGuys.antialiasing = true;
+	                        	littleGuys.scrollFactor.set(0.9, 0.9);
+ 								littleGuys.setGraphicSize(Std.int(littleGuys.width * 1));
+		                 		littleGuys.updateHitbox();
+		               	 		add(littleGuys);
+							}
+							if(SONG.song.toLowerCase()=='nyaw'){
+								bottomBoppers = new FlxSprite(-600, -200);
+		                		bottomBoppers.frames = Paths.getSparrowAtlas('bgFreaks','kapiWeek');
+		                	  	bottomBoppers.animation.addByPrefix('bop', 'Bottom Level Boppers', 24, false);
+		                	  	bottomBoppers.antialiasing = true;
+	                        	bottomBoppers.scrollFactor.set(0.92, 0.92);
+ 								bottomBoppers.setGraphicSize(Std.int(bottomBoppers.width * 1));
+		                 	 	bottomBoppers.updateHitbox();
+		               	 	  	add(bottomBoppers);
+								// var cityLights:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.win0.png);
+							}
+							if(SONG.song.toLowerCase()=='nyaw'||SONG.song.toLowerCase()=='hairball'){
+								upperBoppers = new FlxSprite(-600, -200);
+		            			upperBoppers.frames = Paths.getSparrowAtlas('upperBop','kapiWeek');
+		            			upperBoppers.animation.addByPrefix('bop', "Upper Crowd Bob", 24, false);
+		            			upperBoppers.antialiasing = true;
+		            			upperBoppers.scrollFactor.set(1.05, 1.05);
+		            			upperBoppers.setGraphicSize(Std.int(upperBoppers.width * 1));
+		            			upperBoppers.updateHitbox();
+		            			add(upperBoppers);
+							}
+					}
 		          default:
 		          {
 		                  defaultCamZoom = 0.9;
@@ -742,6 +834,8 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-pixel';
 			case 'alley' | 'ballisticAlley':
 				gfVersion = 'gf-whitty';
+			case 'arcade' | 'arcadeclosed':
+				gfVersion = 'gf-arcade';
 		}
 
 		gf = new Character(400, 130, gfVersion);
@@ -1019,14 +1113,42 @@ class PlayState extends MusicBeatState
 				case 'nerves' | "release" | "fading":
 					garIntro(doof);
 
-				case 'lo-fight':
-					trace('lo-fight animation');
-					whittyAnimation(doof);
-				case 'overhead':
-					whittyAnimation(doof);
-				case 'ballistic':
+				case 'lo-fight' | 'overhead' | 'ballistic':
 					whittyAnimation(doof);
 
+				case 'wocky' | 'beathoven' | 'nyaw':
+					kapiIntro(doof);
+				case 'hairball':
+					var blackScreen:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
+					add(blackScreen);
+					blackScreen.scrollFactor.set();
+					camHUD.visible = false;
+
+					new FlxTimer().start(0.1, function(tmr:FlxTimer)
+					{
+						remove(blackScreen);
+						FlxG.sound.play(Paths.sound('brokenpad','kapiWeek'));
+						camFollow.y = 590;
+						camFollow.x -= 200;
+						FlxG.camera.focusOn(camFollow.getPosition());
+						FlxG.camera.zoom = 1.1;
+						new FlxTimer().start(0.2, function(tmr:FlxTimer)
+						{
+						dad.playAnim('meow', true);
+						});
+						new FlxTimer().start(0.6, function(tmr:FlxTimer)
+						{
+							camHUD.visible = true;
+							remove(blackScreen);
+							FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
+								ease: FlxEase.quadInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									kapiIntro(doof);
+								}
+							});
+						});
+					});
 				default:
 					startCountdown();
 			}
@@ -1035,12 +1157,51 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
+				case 'ballistic':
+					trace('Skipping ballistic background animation');
+					nwBg.alpha = 1;
+					nwBg.animation.play("gameButMove");
+					startCountdown();
 				default:
 					startCountdown();
 			}
 		}
 
 		super.create();
+	}
+	function kapiIntro(?dialogueBox:DialogueBox):Void
+	{
+		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+		black.scrollFactor.set();
+		add(black);
+
+		if (SONG.song.toLowerCase() == 'hairball')
+		{
+			remove(black);
+		}
+
+		new FlxTimer().start(0.3, function(tmr:FlxTimer)
+		{
+			black.alpha -= 0.1;
+
+			if (black.alpha > 0)
+			{
+				tmr.reset(0.3);
+			}
+			else
+			{
+				if (dialogueBox != null)
+				{
+					inCutscene = true;
+
+					add(dialogueBox);
+				}
+				else
+					startCountdown();
+
+				remove(black);
+			}
+		});
 	}
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
@@ -1504,6 +1665,8 @@ class PlayState extends MusicBeatState
 
 				default:
 					babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+					if(['wocky','beathoven','hairball','nyaw'].contains(SONG.song.toLowerCase()))
+						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets','kapiWeek');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -2050,9 +2213,6 @@ class PlayState extends MusicBeatState
 				transOut = FlxTransitionableState.defaultTransOut;
 
 				FlxG.switchState(new StoryMenuState());
-				
-				// if ()
-				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
 				if (SONG.validScore)
 				{
@@ -2061,9 +2221,6 @@ class PlayState extends MusicBeatState
 					#end
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 				}
-
-				FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
-				FlxG.save.flush();
 			}
 			else
 			{
@@ -2767,6 +2924,82 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
 		}
+		//NYAW
+		if(curSong.toLowerCase() == 'nyaw'){
+			if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 1 == 0 && curBeat != 283 && curBeat != 282)
+			{
+				phillyCityLights.forEach(function(light:FlxSprite)
+				{
+					light.visible = false;
+				});
+
+				curLight = FlxG.random.int(0, phillyCityLights.length - 1);
+				phillyCityLights.members[curLight].visible = true;
+				// phillyCityLights.members[curLight].alpha = 1;
+			}
+			FlxG.camera.zoom += 0.02;
+			camHUD.zoom += 0.022;
+			if(curBeat == 282){
+				FlxTween.tween(FlxG.camera, {zoom: 1}, .5, {
+						ease: FlxEase.quadInOut,
+					});
+			}
+		}
+		//HAIRBALL
+		if (curSong.toLowerCase() == 'hairball'){
+			if(camZooming && FlxG.camera.zoom < 1.35 && curBeat % 1 == 0)
+			{
+				FlxG.camera.zoom += 0.017;
+				camHUD.zoom += 0.02;
+			}
+			if (curBeat % 1 == 0)
+			{
+				phillyCityLights.forEach(function(light:FlxSprite)
+				{
+					light.visible = false;
+				});
+	
+				curLight = FlxG.random.int(0, phillyCityLights.length - 1);
+	
+				phillyCityLights.members[curLight].visible = true;
+				// phillyCityLights.members[curLight].alpha = 1;
+			}
+		}
+		//WOCKY
+		if(curSong.toLowerCase()=='wocky'){
+			if(curBeat % 2 == 0){
+				phillyCityLights.forEach(function(light:FlxSprite)
+				{
+					light.visible = false;
+				});
+		
+				curLight = FlxG.random.int(0, phillyCityLights.length - 1);
+		
+				phillyCityLights.members[curLight].visible = true;
+				// phillyCityLights.members[curLight].alpha = 1;
+			}
+		}
+		//BEATHOVEN
+		if(curSong.toLowerCase() == 'beathoven'){
+			if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 2 == 0)
+			{
+				FlxG.camera.zoom += 0.014;
+				camHUD.zoom += 0.015;
+			}
+			if(curBeat % 1 == 0)
+			{
+				phillyCityLights.forEach(function(light:FlxSprite)
+				{
+					light.visible = false;
+				});
+		
+				curLight = FlxG.random.int(0, phillyCityLights.length - 1);
+		
+				phillyCityLights.members[curLight].visible = true;
+				// phillyCityLights.members[curLight].alpha = 1;
+			}
+		}
+		//END OF VS KAPI PART
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
@@ -2778,6 +3011,48 @@ class PlayState extends MusicBeatState
 		{
 			gf.dance();
 		}
+
+		//NYAW
+		if (curSong == 'Nyaw'){
+			if(curBeat == 283)
+				boyfriend.playAnim('hey', true);
+
+			if (curBeat == 434)
+			{
+				dad.playAnim('stare', true);
+					new FlxTimer().start(1.1, function(tmr:FlxTimer)
+					{
+					var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+					black.scrollFactor.set();
+					add(black);
+					});
+			}
+
+			if (curBeat == 31)
+				dad.playAnim('meow', true);
+			if (curBeat == 135)
+				dad.playAnim('meow', true);
+			if (curBeat == 363)
+				dad.playAnim('meow', true);
+			if (curBeat == 203)
+				dad.playAnim('meow', true);
+
+			if (curBeat % 2 == 0)
+				bottomBoppers.animation.play('bop', true);
+			if (curBeat % 2 == 1)
+				upperBoppers.animation.play('bop', true);
+		}
+		//HAIRBALL
+		if(curSong == 'Hairball'){
+			if (curBeat % 2 == 0)
+				littleGuys.animation.play('bop', true);
+
+			if (curBeat % 2 == 1)
+				upperBoppers.animation.play('bop', true);
+		}
+
+		if (curBeat % 2 == 0 && curSong == 'Beathoven')
+			littleGuys.animation.play('bop', true);
 
 		if (curSong.toLowerCase() == 'ballistic')
 		{
@@ -2801,15 +3076,18 @@ class PlayState extends MusicBeatState
 			dad.playAnim('cheer', true);
 		}
 
+		
+
 		switch (curStage)
 		{
 			case 'school':
 				bgGirls.dance();
 
-			case 'mall':
+			case 'mall' | 'arcadeclosed':
 				upperBoppers.animation.play('bop', true);
 				bottomBoppers.animation.play('bop', true);
-				santa.animation.play('idle', true);
+				if(curStage=='mall')
+					santa.animation.play('idle', true);
 
 			case 'limo':
 				grpLimoDancers.forEach(function(dancer:BackgroundDancer)
@@ -2839,7 +3117,7 @@ class PlayState extends MusicBeatState
 						curLight = FlxG.random.int(0, phillyCityLights.length - 1);
 
 					phillyCityLights.members[curLight].visible = true;
-					phillyCityTween=FlxTween.tween(phillyCityLights.members[curLight],{alpha:0},Conductor.bpm/60/2);
+					phillyCityTween=FlxTween.tween(phillyCityLights.members[curLight],{alpha:0},SONG.bpm/60/2);
 					// phillyCityLights.members[curLight].alpha = 1;
 				}
 
@@ -2900,19 +3178,19 @@ class PlayState extends MusicBeatState
 			holdArray = [controls.LEFT #if mobile || grpMobileButtons.left.pressed #end,
 				 controls.DOWN #if mobile || grpMobileButtons.down.pressed #end,
 				  controls.UP #if mobile || grpMobileButtons.up.pressed #end,
-				   controls.RIGHT #if mobile || grpMobileButtons.right.pressed #end
+				   controls.RIGHT #if mobile || (grpMobileButtons.right.pressed&&!pauseButton.pressed) #end
 				];
 			pressArray = [
 				controls.LEFT_P #if mobile || grpMobileButtons.left.justPressed #end,
 				controls.DOWN_P #if mobile || grpMobileButtons.down.justPressed #end,
 				controls.UP_P #if mobile || grpMobileButtons.up.justPressed #end,
-				controls.RIGHT_P #if mobile || grpMobileButtons.right.justPressed #end
+				controls.RIGHT_P #if mobile || (grpMobileButtons.right.justPressed&&!pauseButton.pressed) #end
 			];
 			releaseArray = [
 				controls.LEFT_R #if mobile || grpMobileButtons.left.justReleased #end,
 				controls.DOWN_R #if mobile || grpMobileButtons.down.justReleased #end,
 				controls.UP_R #if mobile || grpMobileButtons.up.justReleased #end,
-				controls.RIGHT_R #if mobile || grpMobileButtons.right.justReleased #end
+				controls.RIGHT_R #if mobile || (grpMobileButtons.right.justReleased&&!pauseButton.pressed) #end
 			];
 			#if mobile
 			}

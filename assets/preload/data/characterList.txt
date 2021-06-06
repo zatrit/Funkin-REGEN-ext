@@ -21,3 +21,5 @@ senpai-angry
 spirit
 whitty
 whittyCrazy
+kapi
+kapi-angry

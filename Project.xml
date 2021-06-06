@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app file="Funkin"  main="Main" version="0.2.8.5-ext" company="ninjamuffin99 and zatrit" />
+	<app file="Funkin"  main="Main" version="0.2.8.6-ext" company="ninjamuffin99 and zatrit" />
 	<app if="debug" packageName="com.zatrit.funkin_dev" package="com.zatrit.funkin_dev_ext" title="(DEV) Friday Night Funkin' REGEN EXT"/>
 	<app unless="debug" packageName="com.zatrit.funkin" package="com.zatrit.funkin_ext" title="Friday Night Funkin' REGEN EXT"/>
 	<!--Switch Export with Unique ApplicationID and Icon-->
@@ -60,6 +60,8 @@
 		<library name="week6"    preload="true" />
 		<library name="weekG"    preload="true" />
 		<library name="bonusWeek"    preload="true" />
+		<library name="kapiWeek"    preload="true" />
+
 		<library name="menuBackgrounds"    preload="true" />
 	</section>
 	
@@ -74,7 +76,9 @@
 		<library name="week5"    preload="false" />
 		<library name="week6"    preload="false" />
 		<library name="weekG"    preload="false" />
-		<library name="bonusWeek"    preload="false" />
+		<library name="bonusWeek"    preload="false"/>
+		<library name="kapiWeek"    preload="false" />
+
 		<!-- It's not all, LOL -->
 		<library name="menuBackgrounds"    preload="true" />
 	</section>
@@ -101,6 +105,8 @@
 	<assets path="assets/weekG"    library="weekG"    exclude="*.mp3" unless="web"/>
 	<assets path="assets/bonusWeek"    library="bonusWeek"    exclude="*.ogg" if="web"/>
 	<assets path="assets/bonusWeek"    library="bonusWeek"    exclude="*.mp3" unless="web"/>
+	<assets path="assets/kapiWeek"    library="kapiWeek"    exclude="*.ogg" if="web"/>
+	<assets path="assets/kapiWeek"    library="kapiWeek"    exclude="*.mp3" unless="web"/>
 
 	<assets path="assets/menuBackgrounds" library="menuBackgrounds"/>
 	
