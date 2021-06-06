@@ -125,8 +125,6 @@ class DialogueBox extends FlxSpriteGroup
 				box.frames = Paths.getSparrowAtlas('weeb/dialogueBox-kapi','kapiWeek');
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
 				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
-				box.x=0;
-				box.y=0;
 		}
 
 		switch(PlayState.SONG.song.toLowerCase()){
@@ -262,7 +260,7 @@ class DialogueBox extends FlxSpriteGroup
 		add(box);
 
 
-		if(!['lo-fight','overhead','ballistic','wocky','beathoven','hairball','nyaw'].contains(PlayState.SONG.song.toLowerCase())){
+		if(!['lo-fight','overhead','ballistic'].contains(PlayState.SONG.song.toLowerCase())){
 			box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			box.screenCenter(X);
 		}
@@ -278,31 +276,16 @@ class DialogueBox extends FlxSpriteGroup
 			// box.flipX = true;
 		}
 
-		if(!['wocky','beathoven','hairball','nyaw'].contains(PlayState.SONG.song.toLowerCase())){
-			dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
-			dropText.font = 'Pixel Arial 11 Bold';
-			dropText.color = 0xFFD89494;
-			add(dropText);
+		dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+		dropText.font = 'Pixel Arial 11 Bold';
+		dropText.color = 0xFFD89494;
+		add(dropText);
 
-			swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
-			swagDialogue.font = 'Pixel Arial 11 Bold';
-			swagDialogue.color = 0xFF3F2021;
-			swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-			add(swagDialogue);
-		}else{
-			dropText = new FlxText(185, 500, Std.int(FlxG.width * 1), "", 48);
-			dropText.font = 'Delfino';
-			dropText.bold=true;
-			dropText.color = 0x00000000;
-			add(dropText);
-
-			swagDialogue = new FlxTypeText(182, 497, Std.int(FlxG.width * 1), "", 48);
-			swagDialogue.font = 'Delfino';
-			swagDialogue.color = 0xFFFFFFFF;
-			swagDialogue.bold=true;
-			swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-			add(swagDialogue);
-		}
+		swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+		swagDialogue.font = 'Pixel Arial 11 Bold';
+		swagDialogue.color = 0xFF3F2021;
+		swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+		add(swagDialogue);
 		// dialogue.x = 90;
 		// add(dialogue);
 	}
