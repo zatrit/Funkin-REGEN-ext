@@ -124,7 +124,7 @@ class DialogueBox extends FlxSpriteGroup
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('weeb/dialogueBox-kapi','kapiWeek');
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear instance', 24, false);
-				box.animation.addByIndices('normal', 'Text Box Appear instance', [4], "", 24);
+				box.animation.addByPrefix('normal', 'Text Box Appear instance', 24, false);
 				box.antialiasing = true;
 		}
 
@@ -132,8 +132,12 @@ class DialogueBox extends FlxSpriteGroup
 			case 'lo-fight' | 'overhead' | 'ballistic':
 				box.flipX=true;
 				box.x=40;
+				box.y = FlxG.height - 340;
+			default:
+				box.y = FlxG.height - 340;
+			case 'wocky'|'beathoven'|'hairball'|'nyaw':
+				box.y=0;
 		}
-		box.y = FlxG.height - 340;
 
 		this.dialogueList = dialogueList;
 		
@@ -273,13 +277,17 @@ class DialogueBox extends FlxSpriteGroup
 			// box.flipX = true;
 		}
 
+		var font:String='Pixel Arial 11 Bold';
+		if(['wocky','beathoven','hairball','nyaw'].contains(PlayState.SONG.song.toLowerCase()))
+			font='Delfino';
+
 		dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
-		dropText.font = 'Pixel Arial 11 Bold';
+		dropText.font = font;
 		dropText.color = 0xFFD89494;
 		add(dropText);
 
 		swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
-		swagDialogue.font = 'Pixel Arial 11 Bold';
+		swagDialogue.font = font;
 		swagDialogue.color = 0xFF3F2021;
 		swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
 		add(swagDialogue);
@@ -299,7 +307,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft.color = FlxColor.BLACK;
 				swagDialogue.color = FlxColor.WHITE;
 				dropText.color = FlxColor.BLACK;
-			case 'headache' | 'nervers':
+			case 'headache' | 'nerves':
 				swagDialogue.color = FlxColor.WHITE;
 				dropText.color = FlxColor.BLACK;
 			case 'release':
@@ -307,6 +315,9 @@ class DialogueBox extends FlxSpriteGroup
 				dropText.color = FlxColor.BLACK;
 			case 'fading':
 				swagDialogue.color = 0xFF0DF07E;
+				dropText.color = FlxColor.BLACK;
+			case 'wocky' | 'beathoven' | 'hairball' | 'nyaw':
+				swagDialogue.color = 0xFFFFFFFF;
 				dropText.color = FlxColor.BLACK;
 		}
 
