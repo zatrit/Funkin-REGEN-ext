@@ -125,6 +125,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.frames = Paths.getSparrowAtlas('weeb/dialogueBox-kapi','kapiWeek');
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
 				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
+				box.antialiasing = true;
 		}
 
 		switch(PlayState.SONG.song.toLowerCase()){
@@ -260,16 +261,12 @@ class DialogueBox extends FlxSpriteGroup
 		add(box);
 
 
-		if(!['lo-fight','overhead','ballistic'].contains(PlayState.SONG.song.toLowerCase())){
+		if(!['lo-fight','overhead','ballistic','wocky','beathoven','hairball','nyaw'].contains(PlayState.SONG.song.toLowerCase())){
 			box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			box.screenCenter(X);
 		}
 		
 		portraitLeft.screenCenter(X);
-
-		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('weeb/pixelUI/hand_textbox','week6'));
-		//add(handSelect);
-
 
 		if (!talkingRight)
 		{

@@ -4,9 +4,10 @@ package mobile;
 import flixel.util.FlxColor;
 import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-class MobileControls extends FlxTypedGroup<Control>{
+class MobileControls extends FlxTypedGroup<FlxSprite>{
 
 	public var left:Control;
 	public var right:Control;
@@ -79,14 +80,35 @@ class MobileControls extends FlxTypedGroup<Control>{
 	}
 	public function createHitboxesA(){
 		final width=FlxG.width*0.25;
+		final height=FlxG.height;
+
 		var leftHitbox=new MobileHitbox(0,width*0.85,FlxColor.PURPLE);
 		leftHitbox.cameras = [camHUD];
+
+		var leftHitboxFlag:FlxSprite=new FlxSprite(0,height-5).makeGraphic(Std.int(width*0.85),5,FlxColor.PURPLE);
+		leftHitboxFlag.cameras=[camHUD];
+		add(leftHitboxFlag);
+
 		var downHitbox=new MobileHitbox(FlxG.width*0.25-width*0.15,width*1.15,FlxColor.CYAN);
 		downHitbox.cameras = [camHUD];
+
+		var downHitboxFlag:FlxSprite=new FlxSprite(FlxG.width*0.25-width*0.15,height-5).makeGraphic(Std.int(width*1.15),5,FlxColor.CYAN);
+		downHitboxFlag.cameras=[camHUD];
+		add(downHitboxFlag);
+
 		var upHitbox=new MobileHitbox(FlxG.width*0.5,width*1.15,FlxColor.LIME);
 		upHitbox.cameras = [camHUD];
+
+		var upHitboxFlag:FlxSprite=new FlxSprite(FlxG.width*0.5,height-5).makeGraphic(Std.int(width*1.15),5,FlxColor.LIME);
+		upHitboxFlag.cameras=[camHUD];
+		add(upHitboxFlag);
+
 		var rightHitbox=new MobileHitbox(FlxG.width*0.75+width*0.15,width*0.85,FlxColor.RED);
 		rightHitbox.cameras = [camHUD];
+
+		var rightHitboxFlag:FlxSprite=new FlxSprite(FlxG.width*0.75+width*0.15,height-5).makeGraphic(Std.int(width*0.85),5,FlxColor.RED);
+		rightHitboxFlag.cameras=[camHUD];
+		add(rightHitboxFlag);
 
 		this.left=leftHitbox;
 		this.right=rightHitbox;

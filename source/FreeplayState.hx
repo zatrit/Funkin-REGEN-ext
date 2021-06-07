@@ -251,6 +251,9 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
+		if(songs[curSelected].week==9)
+			curDifficulty=2;
+
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		#end
@@ -278,6 +281,11 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
+
+		if(songs[curSelected].week==9){
+			curDifficulty=2;
+			changeDiff();
+		}
 
 		// selector.y = (70 * curSelected) + 30;
 

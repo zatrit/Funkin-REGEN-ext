@@ -1664,9 +1664,10 @@ class PlayState extends MusicBeatState
 					}
 
 				default:
-					babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
 					if(['wocky','beathoven','hairball','nyaw'].contains(SONG.song.toLowerCase()))
 						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets','kapiWeek');
+					else
+						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets','shared');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');

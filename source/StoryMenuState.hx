@@ -381,6 +381,9 @@ class StoryMenuState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
+		if(curWeek==9)
+			curDifficulty = 2;
+
 		sprDifficulty.offset.x = 0;
 
 		switch (curDifficulty)
@@ -417,6 +420,11 @@ class StoryMenuState extends MusicBeatState
 		if (curWeek < 0)
 			curWeek = weekData.length - 1;
 
+		if(curWeek==9){
+			curDifficulty=2;
+			changeDifficulty();
+		}
+
 		var bullShit:Int = 0;
 
 		for (item in grpWeekText.members)
@@ -436,6 +444,7 @@ class StoryMenuState extends MusicBeatState
 
 	function updateText()
 	{
+
 		grpWeekCharacters.members[0].animation.play(weekCharacters[curWeek][0]);
 		grpWeekCharacters.members[1].animation.play(weekCharacters[curWeek][1]);
 		grpWeekCharacters.members[2].animation.play(weekCharacters[curWeek][2]);
