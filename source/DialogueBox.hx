@@ -123,8 +123,8 @@ class DialogueBox extends FlxSpriteGroup
 			case 'wocky'|'beathoven'|'hairball'|'nyaw':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('weeb/dialogueBox-kapi','kapiWeek');
-				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
-				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
+				box.animation.addByPrefix('normalOpen', 'Text Box Appear instance', 24, false);
+				box.animation.addByIndices('normal', 'Text Box Appear instance', [4], "", 24);
 				box.antialiasing = true;
 		}
 
