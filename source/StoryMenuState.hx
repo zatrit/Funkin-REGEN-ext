@@ -99,7 +99,7 @@ class StoryMenuState extends MusicBeatState
 
 		if (FlxG.sound.music != null)
 		{
-			if (!FlxG.sound.music.playing)
+			if (!FlxG.sound.music.playing && PlayState.SONG.song.toLowerCase()!='fading')
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
 

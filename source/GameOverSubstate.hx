@@ -12,6 +12,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	var camFollow:FlxObject;
 
 	var stageSuffix:String = "";
+	var arcade:Bool=false;
 
 	public function new(x:Float, y:Float)
 	{
@@ -22,6 +23,9 @@ class GameOverSubstate extends MusicBeatSubstate
 			case 'school' | 'schoolEvil':
 				stageSuffix = '-pixel';
 				daBf = 'bf-pixel-dead';
+			case 'arcade' | 'arcadeclosed':
+				daBf = 'bf';
+				arcade=true;
 			default:
 				daBf = 'bf';
 		}
@@ -43,8 +47,11 @@ class GameOverSubstate extends MusicBeatSubstate
 		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
-
-		bf.playAnim('firstDeath');
+		
+		if(!arcade)
+			bf.playAnim('firstDeath');
+		else
+			bf.playAnim('arcadeDeath');
 	}
 
 	override function update(elapsed:Float)

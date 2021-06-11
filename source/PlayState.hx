@@ -3171,7 +3171,6 @@ class PlayState extends MusicBeatState
 		{
 			var holdArray:Array<Bool>;
 			var pressArray:Array<Bool>;
-			var releaseArray:Array<Bool>;
 			#if mobile
 			if(grpMobileButtons!=null){
 			#end
@@ -3186,12 +3185,6 @@ class PlayState extends MusicBeatState
 				controls.DOWN_P #if mobile || grpMobileButtons.down.justPressed #end,
 				controls.UP_P #if mobile || grpMobileButtons.up.justPressed #end,
 				controls.RIGHT_P #if mobile || (grpMobileButtons.right.justPressed&&!pauseButton.pressed) #end
-			];
-			releaseArray = [
-				controls.LEFT_R #if mobile || grpMobileButtons.left.justReleased #end,
-				controls.DOWN_R #if mobile || grpMobileButtons.down.justReleased #end,
-				controls.UP_R #if mobile || grpMobileButtons.up.justReleased #end,
-				controls.RIGHT_R #if mobile || (grpMobileButtons.right.justReleased&&!pauseButton.pressed) #end
 			];
 			#if mobile
 			}
@@ -3208,17 +3201,11 @@ class PlayState extends MusicBeatState
 					controls.UP_P,
 					controls.RIGHT_P
 				];
-				releaseArray = [
-					controls.LEFT_R,
-					controls.DOWN_R,
-					controls.UP_R,
-					controls.RIGHT_R
-				];
 			}
 			#end
 	 
 			// HOLDS, check for sustain notes
-			if (holdArray.contains(true) && /*!boyfriend.stunned && */ generatedMusic)
+			if (holdArray.contains(true) && /*!boyfriend.stunned && */ generatedMusic && !inCutscene)
 			{
 				notes.forEachAlive(function(daNote:Note)
 				{
@@ -3228,7 +3215,7 @@ class PlayState extends MusicBeatState
 			}
 	 
 			// PRESSES, check for note hits
-			if (pressArray.contains(true) && /*!boyfriend.stunned && */ generatedMusic)
+			if (pressArray.contains(true) && /*!boyfriend.stunned && */ generatedMusic && !inCutscene)
 			{
 				boyfriend.holdTimer = 0;
 	 

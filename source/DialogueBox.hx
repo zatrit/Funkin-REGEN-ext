@@ -115,6 +115,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
 			case 'lo-fight' | 'overhead' | 'ballistic':
 				hasDialog = true;
+				
 				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByIndices('normal', 'speech bubble normal', [11], "", 24);
@@ -122,6 +123,7 @@ class DialogueBox extends FlxSpriteGroup
 			
 			case 'wocky'|'beathoven'|'hairball'|'nyaw':
 				hasDialog = true;
+
 				box.frames = Paths.getSparrowAtlas('weeb/dialogueBox-kapi','kapiWeek');
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear instance', 24, false);
 				box.animation.addByPrefix('normal', 'Text Box Appear instance', 24, false);
@@ -137,6 +139,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.y = FlxG.height - 340;
 			case 'wocky'|'beathoven'|'hairball'|'nyaw':
 				box.y=0;
+				box.screenCenter(X);
 		}
 
 		this.dialogueList = dialogueList;

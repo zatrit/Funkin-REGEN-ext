@@ -427,4 +427,12 @@
 	<SubTexture name="BF idle shaking0001" x="2505" y="2344" width="408" height="412" frameX="-2" frameY="-1" frameWidth="410" frameHeight="413"/>
 	<SubTexture name="BF idle shaking0002" x="2923" y="2344" width="408" height="413" frameX="-1" frameY="0" frameWidth="410" frameHeight="413"/>
 	<SubTexture name="BF idle shaking0003" x="3341" y="2344" width="410" height="413"/>
+
+	<SubTexture name="BF arcade death0000" x="0" y="2770" width="492" height="457"/>
+	<SubTexture name="BF arcade death0001" x="492" y="2770" width="514" height="457"/>
+	<SubTexture name="BF arcade death0002" x="1006" y="2770" width="520" height="457"/>
+	<SubTexture name="BF arcade death0003" x="1526" y="2770" width="446" height="457"/>
+	<SubTexture name="BF arcade death0004" x="1972" y="2770" width="500" height="457"/>
+	<SubTexture name="BF arcade death0005" x="2541" y="2770" width="520" height="457"/>
+	<SubTexture name="BF arcade death0006" x="3061" y="2770" width="520" height="457"/>
 </TextureAtlas>
