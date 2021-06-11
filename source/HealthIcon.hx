@@ -46,6 +46,7 @@ class HealthIcon extends FlxSprite
 
 		animation.add('kapi', [34, 35], 0, false, isPlayer);
 		animation.add('kapi-angry', [36, 35], 0, false, isPlayer);
+		animation.add('mrgame', [37, 38], 0, false, isPlayer);
 
 		animation.play(char);
 		scrollFactor.set();

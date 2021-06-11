@@ -241,7 +241,7 @@ class DialogueBox extends FlxSpriteGroup
 				add(portraitRight);
 				portraitRight.visible = false;
 			case 'wocky' | 'beathoven' | 'hairball' | 'nyaw':
-				portraitRight = new FlxSprite(700, 145);
+				portraitRight = new FlxSprite(700, 220);
 				portraitRight.frames = Paths.getSparrowAtlas('weeb/bf_norm', 'shared');
 				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
 				portraitRight.setGraphicSize(Std.int(portraitRight.width * 1));
@@ -256,7 +256,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitMiddle = new FlxSprite(350, 90);
 				portraitMiddle.frames = Paths.getSparrowAtlas('weeb/gf','kapiWeek');
 				portraitMiddle.animation.addByPrefix('enter', 'Girlfriend portrait enter', 24, false);
-				portraitMiddle.setGraphicSize(Std.int(portraitRight.width * 1));
+				portraitMiddle.setGraphicSize(Std.int(portraitRight.width * 1.5),Std.int(portraitRight.height * 1.5));
 				portraitMiddle.updateHitbox();
 				portraitMiddle.scrollFactor.set();
 				add(portraitMiddle);
@@ -281,15 +281,18 @@ class DialogueBox extends FlxSpriteGroup
 		}
 
 		var font:String='Pixel Arial 11 Bold';
-		if(['wocky','beathoven','hairball','nyaw'].contains(PlayState.SONG.song.toLowerCase()))
+		var size:Int=32;
+		if(['wocky','beathoven','hairball','nyaw'].contains(PlayState.SONG.song.toLowerCase())){
 			font='Delfino';
+			size=48;
+		}
 
-		dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+		dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", size);
 		dropText.font = font;
 		dropText.color = 0xFFD89494;
 		add(dropText);
 
-		swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+		swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", size);
 		swagDialogue.font = font;
 		swagDialogue.color = 0xFF3F2021;
 		swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
@@ -471,6 +474,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft.visible = false;
 				portraitRight.visible = false;
 				portraitMiddle.frames = Paths.getSparrowAtlas('weeb/gf','kapiWeek');
+				
 				if (!portraitMiddle.visible)
 				{
 					portraitMiddle.visible = true;
@@ -480,6 +484,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft.visible = false;
 				portraitRight.visible = false;
 				portraitMiddle.frames = Paths.getSparrowAtlas('weeb/gfwave','kapiWeek');
+
 				if (!portraitMiddle.visible)
 				{
 					portraitMiddle.visible = true;
@@ -489,6 +494,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft.visible = false;
 				portraitRight.visible = false;
 				portraitMiddle.frames = Paths.getSparrowAtlas('weeb/gflaugh','kapiWeek');
+				
 				if (!portraitMiddle.visible)
 				{
 					portraitMiddle.visible = true;

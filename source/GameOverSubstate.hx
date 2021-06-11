@@ -1,5 +1,7 @@
 package;
 
+import flixel.tweens.FlxTween;
+import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.math.FlxPoint;
@@ -13,6 +15,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	var stageSuffix:String = "";
 	var arcade:Bool=false;
+
+	var bfThought:FlxSprite;
 
 	public function new(x:Float, y:Float)
 	{
@@ -50,8 +54,13 @@ class GameOverSubstate extends MusicBeatSubstate
 		
 		if(!arcade)
 			bf.playAnim('firstDeath');
-		else
+		else{
 			bf.playAnim('arcadeDeath');
+
+			bfThought=new FlxSprite(bf.x-bf.width-200,30).loadGraphic(Paths.image('bfThought','kapiWeek'));
+			bfThought.flipX=true;
+			add(bfThought);
+		}
 	}
 
 	override function update(elapsed:Float)
@@ -67,12 +76,14 @@ class GameOverSubstate extends MusicBeatSubstate
 			endBullshit();
 		}
 
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
+		var firstDeath=(bf.animation.curAnim.name == 'firstDeath' || bf.animation.curAnim.name == 'arcadeDeath');
+
+		if (firstDeath && bf.animation.curAnim.curFrame == 12)
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.01);
 		}
 
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
+		if (firstDeath && bf.animation.curAnim.finished)
 		{
 			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
 		}
@@ -97,9 +108,14 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (!isEnding)
 		{
 			isEnding = true;
-			bf.playAnim('deathConfirm', true);
+			if(!arcade)
+				bf.playAnim('deathConfirm', true);
+			else{
+				bf.playAnim('arcadeDeathConfirm',true);
+			}
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
+			FlxTween.tween(bfThought,{alpha: 0},0.7);
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()

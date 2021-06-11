@@ -719,13 +719,20 @@ class PlayState extends MusicBeatState
 								curStage = 'arcadeclosed';
 							else
 								curStage = 'arcade';
-							var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback','kapiWeek'));
-							if(SONG.song.toLowerCase()=='nyaw')
-								bg = new FlxSprite(-600, -200).loadGraphic(Paths.image('closed','kapiWeek'));
-							else if (SONG.song.toLowerCase()=='hairball')
-								bg = new FlxSprite(-600, -200).loadGraphic(Paths.image('sunset','kapiWeek'));
-							else
-								bg = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback','kapiWeek'));
+							var bg:FlxSprite = new FlxSprite(-600, -200);
+							bg.frames=Paths.getSparrowAtlas("stageback","kapiWeek");
+
+							switch(SONG.song.toLowerCase()){
+								case 'nyaw':
+									bg.animation.addByPrefix("stageback","stageback closed");
+								case 'hairball':
+									bg.animation.addByPrefix("stageback","stageback sunset");
+								default:
+									bg.animation.addByPrefix("stageback","stageback default");
+							}
+
+							bg.animation.play("stageback");
+
 							bg.antialiasing = true;
 							bg.scrollFactor.set(0.9, 0.9);
 							bg.active = false;
@@ -793,6 +800,15 @@ class PlayState extends MusicBeatState
 		            			add(upperBoppers);
 							}
 					}
+				case 'flatzone':
+					curStage = 'gas';
+					var hallowTex = Paths.getSparrowAtlas('gas_bg','g3wWeek');
+					halloweenBG = new FlxSprite(-200, -100);
+					halloweenBG.frames = hallowTex;
+					halloweenBG.animation.addByPrefix('idle', 'halloweem bg');
+					halloweenBG.animation.play('idle');
+					halloweenBG.antialiasing = true;
+					add(halloweenBG);
 		          default:
 		          {
 		                  defaultCamZoom = 0.9;
@@ -884,6 +900,8 @@ class PlayState extends MusicBeatState
 			case 'bf-pixel':
 				dad.x += 200;
 				dad.y += 220;
+			case "mrgame":
+				dad.y += 200;
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -2208,6 +2226,7 @@ class PlayState extends MusicBeatState
 
 			if (storyPlaylist.length <= 0)
 			{
+				if(curSong.toLowerCase()!='fading')
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 				transIn = FlxTransitionableState.defaultTransIn;

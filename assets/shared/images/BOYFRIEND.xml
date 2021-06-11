@@ -435,4 +435,16 @@
 	<SubTexture name="BF arcade death0004" x="1972" y="2770" width="500" height="457"/>
 	<SubTexture name="BF arcade death0005" x="2541" y="2770" width="520" height="457"/>
 	<SubTexture name="BF arcade death0006" x="3061" y="2770" width="520" height="457"/>
+	
+	<SubTexture name="BF arcade Dead confirm0000" x="3791" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0001" x="4341" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0002" x="4891" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0003" x="5441" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0004" x="5991" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0005" x="6541" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0006" x="7091" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0007" x="7641" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0008" x="7641" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0009" x="8191" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
+	<SubTexture name="BF arcade Dead confirm0010" x="8191" y="3048" width="550" height="697" frameX="0" frameY="-290" frameWidth="550" frameHeight="697"/>
 </TextureAtlas>

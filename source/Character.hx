@@ -408,7 +408,9 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
 				animation.addByPrefix('hey', 'BF HEY', 24, false);
+
 				animation.addByPrefix('arcadeDeath', 'BF arcade death', 24, false);
+				animation.addByPrefix('arcadeDeathConfirm', 'BF arcade Dead confirm', 12, false);
 
 				animation.addByPrefix('firstDeath', "BF dies", 24, false);
 				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
@@ -430,6 +432,9 @@ class Character extends FlxSprite
 				addOffset('deathLoop', 37, 5);
 				addOffset('deathConfirm', 37, 69);
 				addOffset('scared', -4);
+
+				addOffset('arcadeDeath', 37, 11);
+				addOffset('arcadeDeathConfirm', 100, 540);
 
 				playAnim('idle');
 
@@ -702,6 +707,23 @@ class Character extends FlxSprite
 	
 				addOffset("meow");
 				playAnim('idle');
+			case 'mrgame':
+				tex = Paths.getSparrowAtlas('mrgame','g3wWeek');
+				frames = tex;
+				animation.addByPrefix('singUP', 'spooky UP NOTE', 24, false);
+				animation.addByPrefix('singDOWN', 'spooky DOWN note', 24, false);
+				animation.addByPrefix('singLEFT', 'note sing left', 24, false);
+				animation.addByPrefix('singRIGHT', 'spooky sing right', 24, false);
+				animation.addByIndices('danceRight', 'spooky dance idle', [8, 10, 12, 14], "", 12, false);
+	
+				addOffset('danceRight');
+	
+				addOffset("singUP", 0, 0);
+				addOffset("singRIGHT", 0, 0);
+				addOffset("singLEFT", 0, 0);
+				addOffset("singDOWN", 0, 0);
+	
+				playAnim('danceRight');
 		}
 
 		dance();

@@ -34,7 +34,7 @@ class StoryMenuState extends MusicBeatState
 		['Headache', 'Nerves', 'Release','Fading'],
 		['Lo-fight', 'Overhead', 'Ballistic'],
 		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'],		
-		//['Flatzone'],
+		['Flatzone'],
 	];
 	var curDifficulty:Int = 1;
 
@@ -49,7 +49,7 @@ class StoryMenuState extends MusicBeatState
 		['garcello', 'bf', 'gf'],
 		['whitty', 'bf', 'gf'],
 		['kapi', 'bf', 'gf'],
-		//['g3w', 'bf', 'gf'],
+		['mrgame', 'bf', 'gf'],
 	];
 
 	var weekNames:Array<String> = [
@@ -63,7 +63,7 @@ class StoryMenuState extends MusicBeatState
 		"SMOKE 'EM OUT STRUGGLE",
 		"Back Alley Blitz",
 		"B-B-BREAK DOWN!",
-		//"Please nerf up-b...",
+		"Please nerf up-b...",
 	];
 
 	var txtWeekTitle:FlxText;
@@ -381,7 +381,7 @@ class StoryMenuState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
-		if(curWeek==9)
+		if(curWeek==9||curWeek==10)
 			curDifficulty = 2;
 
 		sprDifficulty.offset.x = 0;
@@ -420,7 +420,7 @@ class StoryMenuState extends MusicBeatState
 		if (curWeek < 0)
 			curWeek = weekData.length - 1;
 
-		if(curWeek==9){
+		if(curWeek==9||curWeek==10){
 			curDifficulty=2;
 			changeDifficulty();
 		}
@@ -452,8 +452,8 @@ class StoryMenuState extends MusicBeatState
 
 		grpWeekCharacters.members[0].visible=curWeek!=0;
 		
-		grpWeekCharacters.members[1].visible=curWeek!=9;
-		grpWeekCharacters.members[2].visible=curWeek!=9;
+		grpWeekCharacters.members[1].visible=(curWeek!=9&&curWeek!=10);
+		grpWeekCharacters.members[2].visible=(curWeek!=9&&curWeek!=10);
 
 		switch (grpWeekCharacters.members[0].animation.curAnim.name)
 		{
@@ -476,11 +476,17 @@ class StoryMenuState extends MusicBeatState
 			case 'garcello':
 				grpWeekCharacters.members[0].offset.set(120, 100);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+
 			case 'whitty':
 				grpWeekCharacters.members[0].offset.set(120, 200);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
 
 			case 'kapi':
+				grpWeekCharacters.members[0].offset.set(160, 0);
+				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+				grpWeekCharacters.members[0].clipRect=yellowBG.clipRect;
+			
+			case 'mrgame':
 				grpWeekCharacters.members[0].offset.set(160, 0);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
 				grpWeekCharacters.members[0].clipRect=yellowBG.clipRect;

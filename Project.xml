@@ -61,6 +61,7 @@
 		<library name="weekG"    preload="true" />
 		<library name="bonusWeek"    preload="true" />
 		<library name="kapiWeek"    preload="true" />
+		<library name="g3wWeek"    preload="true" />
 
 		<library name="menuBackgrounds"    preload="true" />
 	</section>
@@ -78,6 +79,7 @@
 		<library name="weekG"    preload="false" />
 		<library name="bonusWeek"    preload="false"/>
 		<library name="kapiWeek"    preload="false" />
+		<library name="g3wWeek"    preload="false" />
 
 		<!-- It's not all, LOL -->
 		<library name="menuBackgrounds"    preload="true" />
@@ -101,12 +103,17 @@
 	<assets path="assets/week5"    library="week5"    exclude="*.mp3" unless="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.ogg" if="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.mp3" unless="web"/>
+	<!-- SeoS -->
 	<assets path="assets/weekG"    library="weekG"    exclude="*.ogg" if="web"/>
 	<assets path="assets/weekG"    library="weekG"    exclude="*.mp3" unless="web"/>
+	<!-- Vs Whitty -->
 	<assets path="assets/bonusWeek"    library="bonusWeek"    exclude="*.ogg" if="web"/>
 	<assets path="assets/bonusWeek"    library="bonusWeek"    exclude="*.mp3" unless="web"/>
+	<!-- Vs KAPI -->
 	<assets path="assets/kapiWeek"    library="kapiWeek"    exclude="*.ogg" if="web"/>
 	<assets path="assets/kapiWeek"    library="kapiWeek"    exclude="*.mp3" unless="web"/>
+	<assets path="assets/g3wWeek"    library="g3wWeek"    exclude="*.ogg" if="web"/>
+	<assets path="assets/g3wWeek"    library="g3wWeek"    exclude="*.mp3" unless="web"/>
 
 	<assets path="assets/menuBackgrounds" library="menuBackgrounds"/>
 	

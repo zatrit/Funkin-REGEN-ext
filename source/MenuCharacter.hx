@@ -27,6 +27,7 @@ class MenuCharacter extends FlxSprite
 		animation.addByPrefix('garcello', "garcello idle", 24);
 		animation.addByPrefix('whitty', 'Whitty idle dance BLACK LINE', 24);
 		animation.addByPrefix('kapi', 'Kapi idle dance BLACK LINE', 24);
+		animation.addByPrefix('mrgame', 'mrgame idle dance BLACK LINE', 24);
 		// Parent Christmas Idle
 
 		if(character=="")

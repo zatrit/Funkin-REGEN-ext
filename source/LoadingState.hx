@@ -82,6 +82,9 @@ class LoadingState extends MusicBeatState
 					case 9:
 						checkLibrary("kapiWeek");
 						
+					case 10:
+						checkLibrary("g3wWeek");
+						
 					default:
 						checkLibrary("week" + PlayState.storyWeek);
 				}

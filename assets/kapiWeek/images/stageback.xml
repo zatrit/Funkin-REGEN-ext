@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="stageback.png">
+    <SubTexture name="stageback default0000" x="0" y="0" width="2560" height="1400"/>
+    <SubTexture name="stageback sunset0000" x="2560" y="0" width="2560" height="1400"/>
+    <SubTexture name="stageback closed0000" x="5120" y="0" width="2560" height="1400"/>
+</TextureAtlas>
