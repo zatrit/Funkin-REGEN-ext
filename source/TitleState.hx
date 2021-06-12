@@ -273,9 +273,17 @@ class TitleState extends MusicBeatState
 			{
 				// Check if version is outdated
 
-				var version:String = "v" + Application.current.meta.get('version');
+				var version:String = Application.current.meta.get('version');
+				
+				#if !debug
+				var http = new haxe.Http("https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/version.downloadMe");
+				var githubVersion:String;
+				
+				http.onData = function (data:String)
+				{
+					githubVersion
+				}
 
-				#if (!debug&&!mobile)
 				if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
 				{
 					FlxG.switchState(new OutdatedSubState());

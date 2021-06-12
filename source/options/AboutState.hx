@@ -31,7 +31,14 @@ class AboutState extends MusicBeatState
 		logoBl.screenCenter();
 		logoBl.y = logoBl.y - 100;
 
-		text = new FlxText(0, 0, 0, "version "+ Application.current.meta.get('version')  + "\n" #if mobile + "ported by zatrit" + "\n" #end + "about screen(OMG, it's awesome) by luckydog7", 64);
+		text = new FlxText(0, 0, 0, 
+		"version "+ Application.current.meta.get('version')  + 
+		"\n" #if mobile + "ported by zatrit" + "\n" #end + "about screen(OMG, it's awesome) by luckydog7
+		\nMr. Game & Watch and Flatzone are owned by Nintendo
+		\nKapi Artwork, Music and Charting were done by PaperKitty
+		\nWhitty and Kade input by KadeDev
+		\nGarcello by Rageminer996 and atsuover", 64);
+
 		text.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
 		text.screenCenter();
 		text.y = text.y + 150;
