@@ -96,6 +96,9 @@ class FreeplayState extends MusicBeatState
 		if (StoryMenuState.weekUnlocked(9) || isDebug)
 			addWeek(['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], 9, ['kapi', 'kapi', 'kapi-angry','kapi']);
 
+		if (StoryMenuState.weekUnlocked(10) || isDebug)
+			addWeek(['Flatzone'], 10, ['mrgame']);
+
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS
@@ -251,7 +254,7 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
-		if(songs[curSelected].week==9)
+		if(songs[curSelected].week==9||songs[curSelected].week==10)
 			curDifficulty=2;
 
 		#if !switch
@@ -282,7 +285,7 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		if(songs[curSelected].week==9){
+		if(songs[curSelected].week==9||songs[curSelected].week==10){
 			curDifficulty=2;
 			changeDiff();
 		}

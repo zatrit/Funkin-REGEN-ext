@@ -260,8 +260,8 @@ class TitleState extends MusicBeatState
 			if (Date.now().getDay() == 5)
 				NGio.unlockMedal(61034);
 			#end
-
-			titleText.animation.play('press');
+			if(titleText!=null)
+				titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
@@ -281,17 +281,23 @@ class TitleState extends MusicBeatState
 				
 				http.onData = function (data:String)
 				{
-					githubVersion
+					githubVersion=data.trim();
 				}
+				http.onError = (msg:String)->{
+					githubVersion="";
+					trace(msg);
+				};
+				
+				http.request();
 
-				if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
+				if (version.trim() != githubVersion && !OutdatedSubState.leftState)
 				{
 					FlxG.switchState(new OutdatedSubState());
 					trace('OLD VERSION!');
 					trace('old ver');
 					trace(version.trim());
 					trace('cur ver');
-					trace(NGio.GAME_VER_NUMS.trim());
+					trace(githubVersion);
 				}
 				else
 				{
