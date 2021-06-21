@@ -252,7 +252,7 @@ class DialogueBox extends FlxSpriteGroup
 		}
 
 		switch(PlayState.SONG.song.toLowerCase()){
-			default:			
+			case 'nyaw'|'hairball'|'beathoven'|'wocky':			
 				portraitMiddle = new FlxSprite(350, 90);
 				portraitMiddle.frames = Paths.getSparrowAtlas('weeb/gf','kapiWeek');
 				portraitMiddle.animation.addByPrefix('enter', 'Girlfriend portrait enter', 24, false);
@@ -411,7 +411,8 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			case 'dad':
 				portraitRight.visible = false;
-				portraitMiddle.visible = false;
+				if(portraitMiddle!=null)
+					portraitMiddle.visible = false;
 				if (!portraitLeft.visible)
 				{
 					portraitLeft.visible = true;
@@ -419,7 +420,8 @@ class DialogueBox extends FlxSpriteGroup
 				}
 			case 'bf':
 				portraitLeft.visible = false;
-				portraitMiddle.visible = false;
+				if(portraitMiddle!=null)
+					portraitMiddle.visible = false;
 				if (!portraitRight.visible)
 				{
 					portraitRight.visible = true;

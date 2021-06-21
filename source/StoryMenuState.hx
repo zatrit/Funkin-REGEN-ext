@@ -35,6 +35,7 @@ class StoryMenuState extends MusicBeatState
 		['Lo-fight', 'Overhead', 'Ballistic'],
 		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'],		
 		['Flatzone'],
+		['Improbable-Outset', 'Madness', 'Hellclown'],
 	];
 	var curDifficulty:Int = 1;
 
@@ -50,6 +51,7 @@ class StoryMenuState extends MusicBeatState
 		['whitty', 'bf', 'gf'],
 		['kapi', 'bf', 'gf'],
 		['mrgame', 'bf', 'gf'],
+		['trickyMask', 'bf', 'gf'],
 	];
 
 	var weekNames:Array<String> = [
@@ -64,6 +66,7 @@ class StoryMenuState extends MusicBeatState
 		"Back Alley Blitz",
 		"B-B-BREAK DOWN!",
 		"Please nerf up-b...",
+		"Madness",
 	];
 
 	var txtWeekTitle:FlxText;
@@ -185,6 +188,12 @@ class StoryMenuState extends MusicBeatState
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
 					weekCharacterThing.updateHitbox();
 				case 'whitty':
+					weekCharacterThing.updateHitbox();
+				case 'trickyMask':
+					trace('AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+					weekCharacterThing.y -= 150;
+					weekCharacterThing.x -= 60;
+					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 3.5));
 					weekCharacterThing.updateHitbox();
 			}
 
@@ -490,6 +499,10 @@ class StoryMenuState extends MusicBeatState
 				grpWeekCharacters.members[0].offset.set(160, 0);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
 				grpWeekCharacters.members[0].clipRect=yellowBG.clipRect;
+			
+			case 'trickyMask':
+				grpWeekCharacters.members[0].offset.set(195, 180);
+				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1.6));
 
 			default:
 				grpWeekCharacters.members[0].offset.set(100, 100);
@@ -499,9 +512,9 @@ class StoryMenuState extends MusicBeatState
 
 		var stringThing:Array<String> = weekData[curWeek];
 
-		for (i in stringThing)
+		for (i in 0...stringThing.length+1)
 		{
-			txtTracklist.text += "\n" + i;
+			txtTracklist.text += "\n" + stringThing[i];
 		}
 
 		txtTracklist.text = txtTracklist.text.toUpperCase();

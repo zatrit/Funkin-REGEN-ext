@@ -15,7 +15,11 @@ class MenuItem extends FlxSpriteGroup
 	public function new(x:Float, y:Float, weekNum:Int = 0)
 	{
 		super(x, y);
-		week = new FlxSprite().loadGraphic(Paths.image('storymenu/week' + weekNum));
+		week = new FlxSprite();
+		week.frames=Paths.getSparrowAtlas("storymenu");
+		week.animation.addByPrefix("idle",weekNum+"week");
+		week.animation.play("idle");
+		week.updateHitbox();
 		add(week);
 	}
 

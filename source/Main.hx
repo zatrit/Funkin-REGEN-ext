@@ -1,5 +1,7 @@
 package;
 
+import openfl.text.TextFormat;
+import webm.WebmPlayer;
 import openfl.Assets;
 import flixel.FlxG;
 import flixel.FlxGame;
@@ -65,8 +67,6 @@ class Main extends Sprite
 			Zoom and game size values are taken from here https://github.com/luckydog7/Funkin-android
 			*/
 			zoom = 1;
-			gameWidth = 1280;
-			gameHeight = 720;
 			#else
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
@@ -76,6 +76,34 @@ class Main extends Sprite
 		Assets.cache.enabled=false;
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
-		addChild(new FPS(10, 3, 0xFFFFFF));
+
+		var fps:FPS=new FPS(10, 3, 0xFFFFFF);
+		fps.setTextFormat(new TextFormat(null,#if mobile 24 #else 12 #end));
+
+		addChild(fps);
+
+		var ourSource:String = "assets/videos/dontDelete.webm";
+
+		//haxelib git extension-webm https://github.com/zatrit/extension-webm
+
+		#if web
+        var str1:String = "HTML";
+        var vHandler = new VideoHandler();
+        vHandler.init1();
+        vHandler.video.name = str1;
+        addChild(vHandler.video);
+        vHandler.init2();
+        GlobalVideo.setVid(vHandler);
+        vHandler.source(ourSource);
+		#elseif (desktop)
+		WebmPlayer.SKIP_STEP_LIMIT = 90;
+        var str1:String = "WEBM"; 
+        var webmHandle = new WebmHandler();
+        webmHandle.source(ourSource);
+        webmHandle.makePlayer();
+        webmHandle.webm.name = str1;
+        addChild(webmHandle.webm);
+        GlobalVideo.setWebm(webmHandle);
+		#end
 	}
 }

@@ -1,5 +1,7 @@
 package;
 
+import kade.CachedFrames;
+import haxe.macro.Context;
 import cpp.Stdlib;
 import cpp.Pointer;
 import openfl.Lib;
@@ -85,6 +87,9 @@ class LoadingState extends MusicBeatState
 					case 10:
 						checkLibrary("g3wWeek");
 						
+					case 11:
+						checkLibrary("clown");
+						
 					default:
 						checkLibrary("week" + PlayState.storyWeek);
 				}
@@ -121,7 +126,13 @@ class LoadingState extends MusicBeatState
 				throw "Missing library: " + library;
 			
 			var callback = callbacks.add("library:" + library);
-			Assets.loadLibrary(library).onComplete(function (_) { callback(); });
+			Assets.loadLibrary(library).onComplete(function (_) { 
+				callback(); 
+				#if NO_PRELOAD_ALL
+				if(library=="clown")
+					CachedFrames.loadEverything();
+				#end
+			});
 		}
 	}
 	

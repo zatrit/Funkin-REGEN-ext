@@ -3,7 +3,7 @@
 	<!-- _________________________ Application Settings _________________________ -->
 
 	<app file="Funkin"  main="Main" version="0.2.8.7-ext" company="ninjamuffin99 and zatrit" />
-	<app if="debug" packageName="com.zatrit.funkin_dev" package="com.zatrit.funkin_dev_ext" title="(DEV) Friday Night Funkin' REGEN EXT"/>
+	<app if="debug" packageName="com.zatrit.funkin_dev" package="com.zatrit.funkin_ext" title="(DEV) Friday Night Funkin' REGEN EXT"/>
 	<app unless="debug" packageName="com.zatrit.funkin" package="com.zatrit.funkin_ext" title="Friday Night Funkin' REGEN EXT"/>
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -62,6 +62,7 @@
 		<library name="bonusWeek"    preload="true" />
 		<library name="kapiWeek"    preload="true" />
 		<library name="g3wWeek"    preload="true" />
+		<library name="clown"    preload="true" />
 
 		<library name="menuBackgrounds"    preload="true" />
 	</section>
@@ -80,6 +81,7 @@
 		<library name="bonusWeek"    preload="false"/>
 		<library name="kapiWeek"    preload="false" />
 		<library name="g3wWeek"    preload="false" />
+		<library name="clown"    preload="false" />
 
 		<!-- It's not all, LOL -->
 		<library name="menuBackgrounds"    preload="true" />
@@ -114,6 +116,9 @@
 	<assets path="assets/kapiWeek"    library="kapiWeek"    exclude="*.mp3" unless="web"/>
 	<assets path="assets/g3wWeek"    library="g3wWeek"    exclude="*.ogg" if="web"/>
 	<assets path="assets/g3wWeek"    library="g3wWeek"    exclude="*.mp3" unless="web"/>
+	<!-- Tricky -->
+	<assets path="assets/clown"    library="clown"    exclude="*.ogg" if="web"/>
+	<assets path="assets/clown"    library="clown"    exclude="*.mp3" unless="web"/>
 
 	<assets path="assets/menuBackgrounds" library="menuBackgrounds"/>
 	
@@ -143,6 +148,8 @@
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod" unless="mobile"/>
 	<haxelib name="discord_rpc" if="desktop"/>
+	<haxelib name="actuate" />
+	<haxelib name="extension-webm"/>
 
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
 	

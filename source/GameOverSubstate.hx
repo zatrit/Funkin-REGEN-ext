@@ -115,7 +115,8 @@ class GameOverSubstate extends MusicBeatSubstate
 			}
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
-			FlxTween.tween(bfThought,{alpha: 0},0.7);
+			if(bfThought!=null)
+				FlxTween.tween(bfThought,{alpha: 0},0.7);
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
@@ -123,7 +124,7 @@ class GameOverSubstate extends MusicBeatSubstate
 					PlayState.firstTry=false;
 					PlayState.attempt++;
 					LoadingState.loadAndSwitchState(new PlayState());
-				});
+				});	
 			});
 		}
 	}

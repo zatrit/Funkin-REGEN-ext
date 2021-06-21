@@ -24,3 +24,10 @@ whittyCrazy
 kapi
 kapi-angry
 mrgame
+tricky
+trickyMask
+trickyH
+trickyEx
+bf-hell
+gf-hell
+gf-tied

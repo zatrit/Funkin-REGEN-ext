@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 
 using StringTools;
@@ -9,6 +10,7 @@ class Note extends FlxSprite
 	public var strumTime:Float = 0;
 
 	public var mustPress:Bool = false;
+	public var burning:Bool = false;
 	public var noteData:Int = 0;
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
@@ -42,6 +44,14 @@ class Note extends FlxSprite
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
+
+		burning = noteData > 7;
+
+		if(isSustainNote && prevNote.burning) { 
+			burning = true;
+		}
+		if(isSustainNote && FlxG.save.data.downscroll)
+			flipY = true;
 
 		this.noteData = noteData;
 
@@ -96,10 +106,44 @@ class Note extends FlxSprite
 				animation.addByPrefix('redhold', 'red hold piece');
 				animation.addByPrefix('bluehold', 'blue hold piece');
 
+				if(burning){
+					if (daStage == 'auditorHell')
+					{
+						frames = Paths.getSparrowAtlas('fourth/mech/ALL_deathnotes', "clown");
+						animation.addByPrefix('greenScroll', 'Green Arrow');
+						animation.addByPrefix('redScroll', 'Red Arrow');
+						animation.addByPrefix('blueScroll', 'Blue Arrow');
+						animation.addByPrefix('purpleScroll', 'Purple Arrow');
+						x -= 165;
+					}
+					else
+					{
+						frames = Paths.getSparrowAtlas('NOTE_fire', "clown");
+						if(!FlxG.save.data.downscroll){
+							animation.addByPrefix('blueScroll', 'blue fire');
+							animation.addByPrefix('greenScroll', 'green fire');
+						}
+						else{
+							animation.addByPrefix('greenScroll', 'blue fire');
+							animation.addByPrefix('blueScroll', 'green fire');
+						}
+						animation.addByPrefix('redScroll', 'red fire');
+						animation.addByPrefix('purpleScroll', 'purple fire');
+
+						if(FlxG.save.data.downscroll)
+							flipY = true;
+
+						x -= 50;
+					}
+				}
+
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
 				antialiasing = true;
 		}
+
+		if (burning)
+			setGraphicSize(Std.int(width * 0.86));
 
 		switch (noteData)
 		{
@@ -172,15 +216,37 @@ class Note extends FlxSprite
 
 		if (mustPress)
 		{
-			// The * 0.5 is so that it's easier to hit them too late, instead of too early
-			if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
-				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
-				canBeHit = true;
+			if (!burning)
+			{
+				if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
+					&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
+					canBeHit = true;
+				else
+					canBeHit = false;
+			}
 			else
-				canBeHit = false;
+			{
+				if (PlayState.curStage == 'auditorHell') // these though, REALLY hard to hit.
+				{
+					if (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * 0.3)
+						&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.2)) // also they're almost impossible to hit late!
+						canBeHit = true;
+					else
+						canBeHit = false;
+				}
+				else
+				{
+					// The * 0.5 is so that it's easier to hit them too late, instead of too early
+					if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
+						&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
+						canBeHit = true;
+					else
+						canBeHit = false;
 
-			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
-				tooLate = true;
+					if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
+						tooLate = true;
+				}
+			}
 		}
 		else
 		{

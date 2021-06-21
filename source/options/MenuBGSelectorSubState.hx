@@ -5,7 +5,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class MenuBGSelectorSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = ['default', 'garcello', 'whitty', 'kapi'];
+	var textMenuItems:Array<String> = ['default', 'garcello', 'whitty', 'kapi','tricky','tricky amogus'];
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	var curSelected:Int = 0;
@@ -63,6 +63,7 @@ class MenuBGSelectorSubState extends MusicBeatSubstate
 		if (accept)
 		{
             var bgStyle:String=textMenuItems[curSelected];
+			
 			MainMenuState.bgStyle=bgStyle;
             FlxG.save.data.bgStyle=bgStyle;
 			FlxG.save.flush();

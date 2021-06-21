@@ -99,6 +99,12 @@ class FreeplayState extends MusicBeatState
 		if (StoryMenuState.weekUnlocked(10) || isDebug)
 			addWeek(['Flatzone'], 10, ['mrgame']);
 
+		if (StoryMenuState.weekUnlocked(11) || isDebug)
+			addWeek(['Improbable-Outset','Madness','Hellclown'], 11, ['trickyMask','tricky','trickyH']);
+
+		if (Highscore.getWeekScore(11,2)>0 || isDebug)
+			addWeek(['expurgation'], 11, ['exTricky']);
+
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS
@@ -254,7 +260,7 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
-		if(songs[curSelected].week==9||songs[curSelected].week==10)
+		if(isOnlyHard())
 			curDifficulty=2;
 
 		#if !switch
@@ -285,7 +291,7 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		if(songs[curSelected].week==9||songs[curSelected].week==10){
+		if(isOnlyHard()){
 			curDifficulty=2;
 			changeDiff();
 		}
@@ -333,6 +339,9 @@ class FreeplayState extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+	}
+	function isOnlyHard() : Bool {
+		return songs[curSelected].week==9||songs[curSelected].week==10||songs[curSelected].songName.toLowerCase()=="expurgation";
 	}
 }
 

@@ -1,5 +1,6 @@
 package;
 
+import kade.CachedFrames;
 import kade.Ratings;
 
 import flixel.FlxState;
@@ -16,10 +17,8 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.addons.effects.FlxTrail;
-import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.atlas.FlxAtlas;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
@@ -32,10 +31,7 @@ import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
-import haxe.Json;
-import lime.utils.Assets;
 import openfl.display.BlendMode;
-import openfl.filters.ShaderFilter;
 
 import kade.Ratings;
 import kade.HelperFunctions;
@@ -154,16 +150,48 @@ class PlayState extends MusicBeatState
 
 	public static var firstTry:Bool=true;
 	public static var attempt:Int=0;
-
+	//Kapi vars
 	var wstageFront:FlxSprite;
 	var wBg:FlxSprite;
 	var nwBg:FlxSprite;
 	var funneEffect:FlxSprite;
 
 	var littleGuys:FlxSprite;
+	
+	//Tricky vars
+	var tstatic:FlxSprite = new FlxSprite(0,0).loadGraphic(Paths.image('TrickyStatic','clown'), true, 320, 180);
+	var tStaticSound:FlxSound = new FlxSound().loadEmbedded(Paths.sound("staticSound","preload"));
+	var bfScared:Bool = false;
+	var resetSpookyText:Bool = true;
+	var spookyText:FlxText;
+	var spookyRendered:Bool = false;
+	var spookySteps:Int = 0;
+	var MAINLIGHT:FlxSprite;
+	public var hank:FlxSprite;
+
+	public var trickyCutsceneText:Array<String> = ["OMFG CLOWN!!!!", "YOU DO NOT KILL CLOWN", "CLOWN KILLS YOU!!!!!!"];
+
+	public var TrickyLinesSing:Array<String> = ["SUFFER","INCORRECT", "INCOMPLETE", "INSUFFICIENT", "INVALID", "CORRECTION", "MISTAKE", "REDUCE", "ERROR", "ADJUSTING", "IMPROBABLE", "IMPLAUSIBLE", "MISJUDGED"];
+	public var ExTrickyLinesSing:Array<String> = ["YOU AREN'T HANK", "WHERE IS HANK", "HANK???", "WHO ARE YOU", "WHERE AM I", "THIS ISN'T RIGHT", "MIDGET", "SYSTEM UNRESPONSIVE", "WHY CAN'T I KILL?????"];
+	public var TrickyLinesMiss:Array<String> = ["TERRIBLE", "WASTE", "MISS CALCULTED", "PREDICTED", "FAILURE", "DISGUSTING", "ABHORRENT", "FORESEEN", "CONTEMPTIBLE", "PROGNOSTICATE", "DISPICABLE", "REPREHENSIBLE"];
+
+	public static var staticVar:PlayState;
+
+	var interupt:Bool=false;
+	var shouldBeDead:Bool=false;
+	var totalDamageTaken:Float=0;
+	
+	var cover:FlxSprite = new FlxSprite(-180,755).loadGraphic(Paths.image('fourth/cover','clown'));
+	var hole:FlxSprite = new FlxSprite(50,530).loadGraphic(Paths.image('fourth/Spawnhole_Ground_BACK','clown'));
+	var converHole:FlxSprite = new FlxSprite(7,578).loadGraphic(Paths.image('fourth/Spawnhole_Ground_COVER','clown'));
+
+	var cloneOne:FlxSprite;
+	var cloneTwo:FlxSprite;
 
 	override public function create()
 	{
+		staticVar=this;
+
 		if(firstTry)
 			attempt=0;
 
@@ -809,6 +837,125 @@ class PlayState extends MusicBeatState
 					halloweenBG.animation.play('idle');
 					halloweenBG.antialiasing = true;
 					add(halloweenBG);
+				case 'improbable-outset'|'madness':
+					defaultCamZoom = 0.75;
+					curStage = 'nevada';
+	
+					tstatic.antialiasing = true;
+					tstatic.scrollFactor.set(0,0);
+					tstatic.setGraphicSize(Std.int(tstatic.width * 8.3));
+					tstatic.animation.add('static', [0, 1, 2], 24, true);
+					tstatic.animation.play('static');
+	
+					tstatic.alpha = 0;
+	
+					var bg:FlxSprite = new FlxSprite(-350, -300).loadGraphic(Paths.image('red','clown'));
+					// bg.setGraphicSize(Std.int(bg.width * 2.5));
+					// bg.updateHitbox();
+					bg.antialiasing = true;
+					bg.scrollFactor.set(0.9, 0.9);
+					var stageFront:FlxSprite;
+					if (SONG.song.toLowerCase() != 'madness')
+					{
+						add(bg);
+						stageFront = new FlxSprite(-1100, -460).loadGraphic(Paths.image('island_but_dumb','clown'));
+					}
+					else
+						stageFront = new FlxSprite(-1100, -460).loadGraphic(Paths.image('island_but_rocks_float','clown'));
+	
+					stageFront.setGraphicSize(Std.int(stageFront.width * 1.4));
+					stageFront.antialiasing = true;
+					stageFront.scrollFactor.set(0.9, 0.9);
+					stageFront.active = false;
+					add(stageFront);
+				
+					MAINLIGHT = new FlxSprite(-470, -150).loadGraphic(Paths.image('hue','clown'));
+					MAINLIGHT.alpha - 0.3;
+					MAINLIGHT.setGraphicSize(Std.int(MAINLIGHT.width * 0.9));
+					MAINLIGHT.blend = "screen";
+					MAINLIGHT.updateHitbox();
+					MAINLIGHT.antialiasing = true;
+					MAINLIGHT.scrollFactor.set(1.2, 1.2);
+				case 'hellclown':
+					//trace("line 538");
+					defaultCamZoom = 0.35;
+					curStage = 'nevadaSpook';
+	
+					tstatic.antialiasing = true;
+					tstatic.scrollFactor.set(0,0);
+					tstatic.setGraphicSize(Std.int(tstatic.width * 10));
+					tstatic.screenCenter(Y);
+					tstatic.animation.add('static', [0, 1, 2], 24, true);
+					tstatic.animation.play('static');
+	
+					tstatic.alpha = 0;
+	
+	
+					var bg:FlxSprite = new FlxSprite(-1000, -1000).loadGraphic(Paths.image('fourth/bg','clown'));
+					bg.antialiasing = true;
+					bg.scrollFactor.set(0.9, 0.9);
+					bg.setGraphicSize(Std.int(bg.width * 5));
+					bg.active = false;
+					add(bg);
+	
+					var stageFront:FlxSprite = new FlxSprite(-2000, -400).loadGraphic(Paths.image('hellclwn/island_but_red','clown'));
+					stageFront.setGraphicSize(Std.int(stageFront.width * 2.6));
+					stageFront.antialiasing = true;
+					stageFront.scrollFactor.set(0.9, 0.9);
+					stageFront.active = false;
+					add(stageFront);
+				
+					hank = new FlxSprite(60,-170);
+					hank.frames = Paths.getSparrowAtlas('hellclwn/Hank','clown');
+					hank.animation.addByPrefix('dance','Hank',24);
+					hank.animation.play('dance');
+					hank.scrollFactor.set(0.9, 0.9);
+					hank.setGraphicSize(Std.int(hank.width * 1.55));
+					hank.antialiasing = true;
+				
+	
+					add(hank);
+				case 'expurgation':
+				  	defaultCamZoom = 0.55;
+				  	curStage = 'auditorHell';
+	  
+				  	tstatic.antialiasing = true;
+				  	tstatic.scrollFactor.set(0,0);
+				  	tstatic.setGraphicSize(Std.int(tstatic.width * 8.3));
+				  	tstatic.animation.add('static', [0, 1, 2], 24, true);
+				  	tstatic.animation.play('static');
+	  
+				  	tstatic.alpha = 0;
+	  
+				  	var bg:FlxSprite = new FlxSprite(-10, -10).loadGraphic(Paths.image('fourth/bg','clown'));
+				  	bg.antialiasing = true;
+				  	bg.scrollFactor.set(0.9, 0.9);
+				  	bg.active = false;
+				  	bg.setGraphicSize(Std.int(bg.width * 4));
+				  	add(bg);
+	  
+				  	hole.antialiasing = true;
+				  	hole.scrollFactor.set(0.9, 0.9);
+						  
+				  	converHole.antialiasing = true;
+				  	converHole.scrollFactor.set(0.9, 0.9);
+				  	converHole.setGraphicSize(Std.int(converHole.width * 1.3));
+				  	hole.setGraphicSize(Std.int(hole.width * 1.55));
+	  
+				  	cover.antialiasing = true;
+				  	cover.scrollFactor.set(0.9, 0.9);
+				  	cover.setGraphicSize(Std.int(cover.width * 1.55));
+	  
+				  	var energyWall:FlxSprite = new FlxSprite(1350,-690).loadGraphic(Paths.image("fourth/Energywall","clown"));
+				  	energyWall.antialiasing = true;
+				  	energyWall.scrollFactor.set(0.9, 0.9);
+				  	add(energyWall);
+				  
+				  	var stageFront:FlxSprite = new FlxSprite(-350, -355).loadGraphic(Paths.image('fourth/daBackground','clown'));
+				  	stageFront.antialiasing = true;
+				  	stageFront.scrollFactor.set(0.9, 0.9);
+				  	stageFront.setGraphicSize(Std.int(stageFront.width * 1.55));
+				  	add(stageFront);
 		          default:
 		          {
 		                  defaultCamZoom = 0.9;
@@ -852,6 +999,8 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-whitty';
 			case 'arcade' | 'arcadeclosed':
 				gfVersion = 'gf-arcade';
+			case 'nevadaSpook':
+				gfVersion = 'gf-hell';
 		}
 
 		gf = new Character(400, 130, gfVersion);
@@ -902,6 +1051,17 @@ class PlayState extends MusicBeatState
 				dad.y += 220;
 			case "mrgame":
 				dad.y += 200;
+
+			case 'tricky':
+				camPos.x += 400;
+				camPos.y += 600;
+			case 'trickyMask':
+				camPos.x += 400;
+			case 'trickyH':
+				camPos.set(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y + 500);
+				dad.y -= 2000;
+				dad.x -= 1400;
+				gf.x -= 380;
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -957,6 +1117,28 @@ class PlayState extends MusicBeatState
 			add(limo);
 
 		add(dad);
+
+		if (curStage == 'auditorHell')
+		{
+			// Clown init
+			cloneOne = new FlxSprite(0,0);
+			cloneTwo = new FlxSprite(0,0);
+			cloneOne.frames = CachedFrames.cachedInstance.fromSparrow('cln','fourth/Clone');
+			cloneTwo.frames = CachedFrames.cachedInstance.fromSparrow('cln','fourth/Clone');
+			cloneOne.alpha = 0;
+			cloneTwo.alpha = 0;
+			cloneOne.animation.addByPrefix('clone','Clone',24,false);
+			cloneTwo.animation.addByPrefix('clone','Clone',24,false);
+	
+				// cover crap
+	
+			add(cloneOne);
+			add(cloneTwo);
+			add(cover);
+			add(converHole);
+			add(dad.exSpikes);
+		}
+
 		add(boyfriend);
 		
 		if (curStage == 'garAlleyDead')
@@ -980,6 +1162,9 @@ class PlayState extends MusicBeatState
 
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 		strumLine.scrollFactor.set();
+		
+		if (FlxG.save.data.downscroll)
+			strumLine.y = FlxG.height - 165;
 
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
 		add(strumLineNotes);
@@ -1014,6 +1199,8 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
+		if (FlxG.save.data.downscroll)
+			healthBarBG.y = 50;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
@@ -1142,6 +1329,7 @@ class PlayState extends MusicBeatState
 					blackScreen.scrollFactor.set();
 					camHUD.visible = false;
 
+					if(!FlxG.save.data.skipCutscenes)
 					new FlxTimer().start(0.1, function(tmr:FlxTimer)
 					{
 						remove(blackScreen);
@@ -1167,6 +1355,11 @@ class PlayState extends MusicBeatState
 							});
 						});
 					});
+					else
+						kapiIntro(doof);
+				case 'improbable-outset':
+					camFollow.setPosition(boyfriend.getMidpoint().x + 70, boyfriend.getMidpoint().y - 50);
+					trickyCutscene();
 				default:
 					startCountdown();
 			}
@@ -1522,6 +1715,8 @@ class PlayState extends MusicBeatState
 
 		if (!paused)
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+		if (SONG.song.toLowerCase().contains('madness') && isStoryMode && !FlxG.save.data.skipCutscenes)
+			FlxG.sound.music.onComplete = trickySecondCutscene;
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 
@@ -1977,6 +2172,10 @@ class PlayState extends MusicBeatState
 				{
 					case 'mom':
 						camFollow.y = dad.getMidpoint().y;
+					case 'trickyMask':
+						camFollow.y = dad.getMidpoint().y + 25;
+					case 'trickyH':
+						camFollow.y = dad.getMidpoint().y + 375;
 					case 'senpai':
 						camFollow.y = dad.getMidpoint().y - 430;
 						camFollow.x = dad.getMidpoint().x - 100;
@@ -2121,7 +2320,12 @@ class PlayState extends MusicBeatState
 					daNote.active = true;
 				}
 
-				daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+				if (FlxG.save.data.downscroll)
+					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(SONG.speed, 2)));	
+				else
+					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+
+				daNote.y -= (daNote.burning ? ((curStage != 'auditorHell' && FlxG.save.data.downscroll) ? 185 : 65 ) : 0);
 
 				// i am so fucking sorry for this if condition
 				if (daNote.isSustainNote
@@ -2161,6 +2365,31 @@ class PlayState extends MusicBeatState
 							dad.playAnim('singRIGHT' + altAnim, true);
 					}
 
+					switch(dad.curCharacter)
+					{
+						case 'trickyMask': // 1% chance
+							if (FlxG.random.bool(1) && !spookyRendered && !daNote.isSustainNote) // create spooky text :flushed:
+							{
+								createSpookyText(TrickyLinesSing[FlxG.random.int(0,TrickyLinesSing.length)]);
+							}
+						case 'tricky': // 20% chance
+							if (FlxG.random.bool(20) && !spookyRendered && !daNote.isSustainNote) // create spooky text :flushed:
+							{
+								createSpookyText(TrickyLinesSing[FlxG.random.int(0,TrickyLinesSing.length)]);
+							}
+						case 'trickyH': // 45% chance
+							if (FlxG.random.bool(45) && !spookyRendered && !daNote.isSustainNote) // create spooky text :flushed:
+							{
+								createSpookyText(TrickyLinesSing[FlxG.random.int(0,TrickyLinesSing.length)]);
+							}
+							FlxG.camera.shake(0.02,0.2);
+						case 'exTricky': // 60% chance
+							if (FlxG.random.bool(60) && !spookyRendered && !daNote.isSustainNote) // create spooky text :flushed:
+							{
+								createSpookyText(ExTrickyLinesSing[FlxG.random.int(0,ExTrickyLinesSing.length)]);
+							}
+					}
+
 					dad.holdTimer = 0;
 
 					if (SONG.needsVoices)
@@ -2174,14 +2403,35 @@ class PlayState extends MusicBeatState
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
 
-				if (daNote.y < -daNote.height)
+				if (daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumLine.y + 106 && FlxG.save.data.downscroll)
 				{
-					if (daNote.tooLate || !daNote.wasGoodHit)
-					{
-						health -= 0.0475;
-						vocals.volume = 0;
-					}
-
+					if (daNote.isSustainNote && daNote.wasGoodHit)
+						{
+							daNote.kill();
+							notes.remove(daNote, true);
+							daNote.destroy();
+						}
+						else
+						{
+							
+							if (!daNote.burning && daNote.mustPress)
+							{
+								if (!daNote.isSustainNote || curStage != 'nevedaSpook')
+								{
+									health -= 0.075;
+									totalDamageTaken += 0.075;
+									interupt = true;
+									noteMiss(daNote.noteData);
+								}
+								else if (daNote.isSustainNote && curStage == 'nevedaSpook') // nerf long notes on hellclown cuz they're too op
+								{
+									interupt = true;
+									health -= 0.035;
+									totalDamageTaken += 0.005;
+								}
+								vocals.volume = 0;
+							}
+						}		
 					daNote.active = false;
 					daNote.visible = false;
 
@@ -2270,10 +2520,22 @@ class PlayState extends MusicBeatState
 				FlxTransitionableState.skipNextTransOut = true;
 				prevCamFollow = camFollow;
 
-				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 				FlxG.sound.music.stop();
 
-				LoadingState.loadAndSwitchState(new PlayState());
+				if(!FlxG.save.data.skipCutscenes)
+					switch(SONG.song.toLowerCase())
+					{
+						case 'improbable-outset':
+							LoadingState.loadAndSwitchState(new VideoState("assets/videos/HankFuckingShootsTricky.webm", new PlayState()));
+						case 'madness':
+							LoadingState.loadAndSwitchState(new VideoState("assets/videos/HELLCLOWN_ENGADGED.webm",new PlayState()));
+						default:
+							LoadingState.loadAndSwitchState(new PlayState());
+					}
+				else
+					LoadingState.loadAndSwitchState(new PlayState());
+
+				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 			}
 		}
 		else
@@ -2511,8 +2773,48 @@ class PlayState extends MusicBeatState
 					{
 						for (coolNote in possibleNotes)
 						{
-							if (controlArray[coolNote.noteData])
+							if (controlArray[coolNote.noteData]){
+								if (coolNote.burning)
+									{
+										if (curStage == 'auditorHell')
+										{
+											// lol death
+											health = 0;
+											shouldBeDead = true;
+											FlxG.sound.play(Paths.sound('death','clown'));
+										}
+										else
+										{
+											health -= 0.45;
+											totalDamageTaken += 0.45;
+											interupt = true;
+											coolNote.wasGoodHit = true;
+											coolNote.canBeHit = false;
+											coolNote.kill();
+											notes.remove(coolNote, true);
+											coolNote.destroy();
+											FlxG.sound.play(Paths.sound('burnSound','clown'));
+											playerStrums.forEach(function(spr:FlxSprite)
+											{
+												if ([leftP,downP,upP,rightP][spr.ID] && spr.ID == coolNote.noteData)
+												{
+													var smoke:FlxSprite = new FlxSprite(spr.x - spr.width + 15, spr.y - spr.height);
+													smoke.frames = Paths.getSparrowAtlas('Smoke','clown');
+													smoke.animation.addByPrefix('boom','smoke',24,false);
+													smoke.animation.play('boom');
+													smoke.setGraphicSize(Std.int(smoke.width * 0.6));
+													smoke.cameras = [camHUD];
+													add(smoke);
+													smoke.animation.finishCallback = function(name:String) {
+														remove(smoke);	
+													}
+												}
+											});
+										}
+									}
+								else
 								goodNoteHit(coolNote);
+							}
 							else
 							{
 								var inIgnoreList:Bool = false;
@@ -3250,18 +3552,52 @@ class PlayState extends MusicBeatState
 						{
 							for (coolNote in possibleNotes)
 							{
-								if (coolNote.noteData == daNote.noteData && Math.abs(daNote.strumTime - coolNote.strumTime) < 10)
-								{ // if it's the same note twice at < 10ms distance, just delete it
-									// EXCEPT u cant delete it in this loop cuz it fucks with the collection lol
-									dumbNotes.push(daNote);
-									break;
-								}
-								else if (coolNote.noteData == daNote.noteData && daNote.strumTime < coolNote.strumTime)
-								{ // if daNote is earlier than existing note (coolNote), replace
-									possibleNotes.remove(coolNote);
-									possibleNotes.push(daNote);
-									break;
-								}
+								if (pressArray[coolNote.noteData])
+									{
+										if (mashViolations != 0)
+											mashViolations--;
+										scoreTxt.color = FlxColor.WHITE;
+										if (coolNote.burning)
+										{
+											if (curStage == 'auditorHell')
+											{
+												// lol death
+												health = 0;
+												shouldBeDead = true;
+												FlxG.sound.play(Paths.sound('death','clown'));
+											}
+											else
+											{
+												health -= 0.45;
+												totalDamageTaken += 0.45;
+												interupt = true;
+												coolNote.wasGoodHit = true;
+												coolNote.canBeHit = false;
+												coolNote.kill();
+												notes.remove(coolNote, true);
+												coolNote.destroy();
+												FlxG.sound.play(Paths.sound('burnSound','clown'));
+												playerStrums.forEach(function(spr:FlxSprite)
+												{
+													if (pressArray[spr.ID] && spr.ID == coolNote.noteData)
+													{
+														var smoke:FlxSprite = new FlxSprite(spr.x - spr.width + 15, spr.y - spr.height);
+														smoke.frames = Paths.getSparrowAtlas('Smoke','clown');
+														smoke.animation.addByPrefix('boom','smoke',24,false);
+														smoke.animation.play('boom');
+														smoke.setGraphicSize(Std.int(smoke.width * 0.6));
+														smoke.cameras = [camHUD];
+														add(smoke);
+														smoke.animation.finishCallback = function(name:String) {
+															remove(smoke);	
+														}
+													}
+												});
+											}
+										}
+										else
+											kadeGoodNoteHit(coolNote);
+									}
 							}
 						}
 						else
@@ -4020,4 +4356,490 @@ class PlayState extends MusicBeatState
 					iconP2.visible = false;
 				}
 			}
+
+	//tricky
+	function trickyCutscene():Void // god this function is terrible
+		{
+			trace('starting cutscene');
+
+			var playonce:Bool = false;
+
+			var faded:Bool = false;
+			var wat:Bool = false;
+			var black:FlxSprite = new FlxSprite(-300, -120).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.fromRGB(19, 0, 0));
+			black.scrollFactor.set();
+			black.alpha = 0;
+			var black3:FlxSprite = new FlxSprite(-300, -120).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.fromRGB(19, 0, 0));
+			black3.scrollFactor.set();
+			black3.alpha = 0;
+			var red:FlxSprite = new FlxSprite(-300, -120).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.fromRGB(19, 0, 0));
+			red.scrollFactor.set();
+			red.alpha = 1;
+			inCutscene = true;
+			//camFollow.setPosition(bf.getMidpoint().x + 80, bf.getMidpoint().y + 200);
+			dad.alpha = 0;
+			gf.alpha = 0;
+			remove(boyfriend);
+			var nevada:FlxSprite = new FlxSprite(260,FlxG.height * 0.7);
+			nevada.frames = Paths.getSparrowAtlas('somewhere','clown'); // add animation from sparrow
+			nevada.antialiasing = true;
+			nevada.animation.addByPrefix('nevada', 'somewhere idfk', 24, false);
+			var animation:FlxSprite = new FlxSprite(-50,200); // create the fuckin thing
+			animation.frames = Paths.getSparrowAtlas('intro','clown'); // add animation from sparrow
+			animation.antialiasing = true;
+			animation.animation.addByPrefix('fuckyou','Symbol', 24, false);
+			animation.setGraphicSize(Std.int(animation.width * 1.2));
+			nevada.setGraphicSize(Std.int(nevada.width * 0.5));
+			add(animation); // add it to the scene
+			
+			// sounds
+
+			var ground:FlxSound = new FlxSound().loadEmbedded(Paths.sound('ground','clown'));
+			var wind:FlxSound = new FlxSound().loadEmbedded(Paths.sound('wind','clown'));
+			var cloth:FlxSound = new FlxSound().loadEmbedded(Paths.sound('cloth','clown'));
+			var metal:FlxSound = new FlxSound().loadEmbedded(Paths.sound('metal','clown'));
+			var buildUp:FlxSound = new FlxSound().loadEmbedded(Paths.sound('trickyIsTriggered','clown'));
+
+			camHUD.visible = false;
+			
+			add(boyfriend);
+
+			add(red);
+			add(black);
+			add(black3);
+
+			add(nevada);
+			trace('animation done lol');
+			new FlxTimer().start(0.01, function(tmr:FlxTimer)
+			{
+					if (boyfriend.animation.finished && !bfScared)
+						boyfriend.animation.play('idle');
+					else if (boyfriend.animation.finished)
+						boyfriend.animation.play('scared');
+					if (nevada.animation.curAnim == null)
+					{
+						trace('NEVADA | ' + nevada);
+						nevada.animation.play('nevada');
+					}
+					if (!nevada.animation.finished && nevada.animation.curAnim.name == 'nevada')
+					{
+						if (nevada.animation.frameIndex >= 41 && red.alpha != 0)
+						{
+							// trace(red.alpha);
+							// don't spam, lol
+							red.alpha -= 0.1;
+						}
+						if (nevada.animation.frameIndex == 34)
+							wind.fadeIn();
+							tmr.reset(0.1);
+					}
+					if (animation.animation.curAnim == null && red.alpha == 0)
+					{
+						remove(red);
+						trace('play tricky');
+						animation.animation.play('fuckyou', false, false, 40);
+					}
+					if (!animation.animation.finished && animation.animation.curAnim.name == 'fuckyou' && red.alpha == 0 && !faded)
+					{
+						// trace("animation loop");
+						// wtf, don't spam
+						tmr.reset(0.01);
+
+						// animation code is bad I hate this
+						// :(
+
+						
+						switch(animation.animation.frameIndex) // THESE ARE THE SOUNDS NOT THE ACTUAL CAMERA MOVEMENT!!!!
+						{
+							case 73:
+								ground.play();
+							case 84:
+								metal.play();
+							case 170:
+								if (!playonce)
+								{
+									resetSpookyText = false;
+									createSpookyText(trickyCutsceneText[0], 260, FlxG.height * 0.9);
+									playonce = true;
+								}
+								cloth.play();
+							case 192:
+								resetSpookyTextManual();
+								buildUp.fadeIn();
+							case 219:
+								trace('reset thingy');
+								buildUp.fadeOut();
+						}
+
+						
+						// im sorry for making this code.
+						// TODO: CLEAN THIS FUCKING UP (switch case it or smth)
+
+						if (animation.animation.frameIndex == 190)
+							bfScared = true;
+
+						if (animation.animation.frameIndex >= 115 && animation.animation.frameIndex < 200)
+						{
+							camFollow.setPosition(dad.getMidpoint().x + 150, boyfriend.getMidpoint().y + 50);
+							if (FlxG.camera.zoom < 1.1)
+								FlxG.camera.zoom += 0.01;
+							else
+								FlxG.camera.zoom = 1.1;
+						}
+						else if (animation.animation.frameIndex > 200 && FlxG.camera.zoom != defaultCamZoom)
+						{
+							FlxG.camera.shake(0.01, 3);
+							if (FlxG.camera.zoom < defaultCamZoom || camFollow.y < boyfriend.getMidpoint().y - 50)
+								{
+									FlxG.camera.zoom = defaultCamZoom;
+									camFollow.y = boyfriend.getMidpoint().y - 50;
+								}
+							else
+								{
+									FlxG.camera.zoom -= 0.008;
+									camFollow.y = dad.getMidpoint().y -= 1;
+								}
+						}
+						if (animation.animation.frameIndex >= 235)
+							faded = true;
+					}
+					else if (red.alpha == 0 && faded)
+					{
+						//trace('red gay');
+						// don't spam, lol
+
+						// animation finished, start a dialog or start the countdown (should also probably fade into this, aka black fade in when the animation gets done and black fade out. Or just make the last frame tranisiton into the idle animation)
+						if (black.alpha != 1)
+						{
+							if (tstatic.alpha != 0)
+								manuallymanuallyresetspookytextmanual();
+							black.alpha += 0.4;
+							tmr.reset(0.1);
+							// trace('increase blackness lmao!!!');
+							// don't spam, lol
+						}
+						else
+						{
+							if (black.alpha == 1 && black.visible)
+							{
+								black.visible = false;
+								black3.alpha = 1;
+								trace('transision ' + black.visible + ' ' + black3.alpha);
+								remove(animation);
+								dad.alpha = 1;
+								// why did I write this comment? I'm so confused
+								// shitty layering but ninja muffin can suck my dick like mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+								remove(red);
+								remove(black);
+								remove(black3);
+								dad.alpha = 1;
+								gf.alpha = 1;
+								add(black);
+								add(black3);
+								remove(tstatic);
+								add(tstatic);
+								tmr.reset(0.3);
+								FlxG.camera.stopFX();
+								camHUD.visible = true;
+							}
+							else if (black3.alpha != 0)
+							{
+								black3.alpha -= 0.1;
+								tmr.reset(0.3);
+								
+								// trace('decrease blackness lmao!!!');
+								// don't spam, lol
+							}
+							else 
+							{
+								wind.fadeOut();
+								startCountdown();
+							}
+						}
+					}
+				});
+		}
+		function resetSpookyTextManual():Void
+		{
+			trace('reset spooky');
+			spookySteps = curStep;
+			spookyRendered = true;
+			tstatic.alpha = 0.5;
+			FlxG.sound.play(Paths.sound('staticSound','clown'));
+			resetSpookyText = true;
+		}
+		
+		function manuallymanuallyresetspookytextmanual()
+		{
+			remove(spookyText);
+			spookyRendered = false;
+			tstatic.alpha = 0;
+		}
+		function createSpookyText(text:String, x:Float = -1111111111111, y:Float = -1111111111111):Void
+		{
+			spookySteps = curStep;
+			spookyRendered = true;
+			tstatic.alpha = 0.5;
+			FlxG.sound.play(Paths.sound('staticSound','clown'));
+			spookyText = new FlxText((x == -1111111111111 ? FlxG.random.float(dad.x + 40,dad.x + 120) : x), (y == -1111111111111 ? FlxG.random.float(dad.y + 200, dad.y + 300) : y));
+			spookyText.setFormat("assets/fonts/tahoma-bold.ttf", 128, FlxColor.RED);
+			if (curStage == 'nevedaSpook')
+			{
+				spookyText.size = 200;
+				spookyText.x += 250;
+			}
+			spookyText.bold = true;
+			spookyText.text = text;
+			add(spookyText);
+		}
+		function trickySecondCutscene():Void // why is this a second method? idk cry about it loL!!!!
+			{
+				var done:Bool = false;
+	
+				trace('starting cutscene');
+	
+				var black:FlxSprite = new FlxSprite(-300, -120).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.WHITE);
+				black.scrollFactor.set();
+				black.alpha = 0;
+				
+				var animation:FlxSprite = new FlxSprite(200,300); // create the fuckin thing
+	
+				animation.frames = Paths.getSparrowAtlas('trickman','clown'); // add animation from sparrow
+				animation.antialiasing = true;
+				animation.animation.addByPrefix('cut1','Cutscene 1', 24, false);
+				animation.animation.addByPrefix('cut2','Cutscene 2', 24, false);
+				animation.animation.addByPrefix('cut3','Cutscene 3', 24, false);
+				animation.animation.addByPrefix('cut4','Cutscene 4', 24, false);
+				animation.animation.addByPrefix('pillar','Pillar Beam Tricky', 24, false);
+				
+				animation.setGraphicSize(Std.int(animation.width * 1.5));
+	
+				animation.alpha = 0;
+	
+				camFollow.setPosition(dad.getMidpoint().x + 300, boyfriend.getMidpoint().y - 200);
+	
+				inCutscene = true;
+				startedCountdown = false;
+				generatedMusic = false;
+				canPause = false;
+	
+				FlxG.sound.music.volume = 0;
+				vocals.volume = 0;
+	
+				var sounders:FlxSound = new FlxSound().loadEmbedded(Paths.sound('honkers','clown'));
+				var energy:FlxSound = new FlxSound().loadEmbedded(Paths.sound('energy shot','clown'));
+				var roar:FlxSound = new FlxSound().loadEmbedded(Paths.sound('sound_clown_roar','clown'));
+				var pillar:FlxSound = new FlxSound().loadEmbedded(Paths.sound('firepillar','clown'));
+	
+				var fade:FlxSprite = new FlxSprite(-300, -120).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.fromRGB(19, 0, 0));
+				fade.scrollFactor.set();
+				fade.alpha = 0;
+	
+				var textFadeOut:FlxText = new FlxText(300,FlxG.height * 0.5,0,"TO BE CONTINUED");
+				textFadeOut.setFormat("Impact", 128, FlxColor.RED);
+	
+				textFadeOut.alpha = 0;
+	
+				add(animation);
+	
+				add(black);
+	
+				add(textFadeOut);
+	
+				add(fade);
+	
+				var startFading:Bool = false;
+				var varNumbaTwo:Bool = false;
+				var fadeDone:Bool = false;
+	
+				sounders.fadeIn(30);
+	
+				new FlxTimer().start(0.01, function(tmr:FlxTimer)
+					{
+						if (fade.alpha != 1 && !varNumbaTwo)
+						{
+							camHUD.alpha -= 0.1;
+							fade.alpha += 0.1;
+							if (fade.alpha == 1)
+							{
+								// THIS IS WHERE WE LOAD SHIT UN-NOTICED
+								varNumbaTwo = true;
+	
+								animation.alpha = 1;
+								
+								dad.alpha = 0;
+							}
+							tmr.reset(0.1);
+						}
+						else
+						{
+							fade.alpha -= 0.1;
+							if (fade.alpha <= 0.5)
+								fadeDone = true;
+							tmr.reset(0.1);
+						}
+					});
+	
+				var roarPlayed:Bool = false;
+	
+				new FlxTimer().start(0.01, function(tmr:FlxTimer)
+				{
+					if (!fadeDone)
+						tmr.reset(0.1)
+					else
+					{
+						if (animation.animation == null || animation.animation.name == null)
+						{
+							trace('playin cut cuz its funny lol!!!');
+							animation.animation.play("cut1");
+							resetSpookyText = false;
+							createSpookyText(trickyCutsceneText[1], 260, FlxG.height * 0.9);
+						}
+	
+						if (!animation.animation.finished)
+						{
+							tmr.reset(0.1);
+							trace(animation.animation.name + ' - FI ' + animation.animation.frameIndex);
+	
+							switch(animation.animation.frameIndex)
+							{
+								case 104:
+									if (animation.animation.name == 'cut1')
+										resetSpookyTextManual();
+							}
+	
+							if (animation.animation.name == 'pillar')
+							{
+								if (animation.animation.frameIndex >= 85) // why is this not in the switch case above? idk cry about it
+									startFading = true;
+								FlxG.camera.shake(0.05);
+							}
+						}
+						else
+						{
+							trace('completed ' + animation.animation.name);
+							resetSpookyTextManual();
+							switch(animation.animation.name)
+							{
+								case 'cut1':
+									animation.animation.play('cut2');
+								case 'cut2':
+									animation.animation.play('cut3');
+									energy.play();
+								case 'cut3':
+									animation.animation.play('cut4');
+									resetSpookyText = false;
+									createSpookyText(trickyCutsceneText[2], 260, FlxG.height * 0.9);
+									animation.x -= 100;
+								case 'cut4':
+									resetSpookyTextManual();
+									sounders.fadeOut();
+									pillar.fadeIn(4);
+									animation.animation.play('pillar');
+									animation.y -= 670;
+									animation.x -= 100;
+							}
+							tmr.reset(0.1);
+						}
+	
+						if (startFading)
+						{
+							sounders.fadeOut();
+							trace('do the fade out and the text');
+							if (black.alpha != 1)
+							{
+								tmr.reset(0.1);
+								black.alpha += 0.02;
+	
+								if (black.alpha >= 0.7 && !roarPlayed)
+								{
+									roar.play();
+									roarPlayed = true;
+								}
+							}
+							else if (done)
+							{
+								endSong();
+								FlxG.camera.stopFX();
+							}
+							else
+							{
+								done = true;
+								tmr.reset(5);
+							}
+						}
+					}
+				});
+			}
+			function doStopSign(sign:Int = 0, fuck:Bool = false)
+				{
+					trace('sign ' + sign);
+					var daSign:FlxSprite = new FlxSprite(0,0);
+					// CachedFrames.cachedInstance.get('sign')
+			
+					daSign.frames = CachedFrames.cachedInstance.fromSparrow('sign','fourth/mech/Sign_Post_Mechanic');
+			
+					daSign.setGraphicSize(Std.int(daSign.width * 0.67));
+			
+					daSign.cameras = [camHUD];
+			
+					switch(sign)
+					{
+						case 0:
+							daSign.animation.addByPrefix('sign','Signature Stop Sign 1',24, false);
+							daSign.x = FlxG.width - 650;
+							daSign.angle = -90;
+							daSign.y = -300;
+						case 1:
+							/*daSign.animation.addByPrefix('sign','Signature Stop Sign 2',20, false);
+							daSign.x = FlxG.width - 670;
+							daSign.angle = -90;*/ // this one just doesn't work???
+						case 2:
+							daSign.animation.addByPrefix('sign','Signature Stop Sign 3',24, false);
+							daSign.x = FlxG.width - 780;
+							daSign.angle = -90;
+							if (FlxG.save.data.downscroll)
+								daSign.y = -395;
+							else
+								daSign.y = -980;
+						case 3:
+							daSign.animation.addByPrefix('sign','Signature Stop Sign 4',24, false);
+							daSign.x = FlxG.width - 1070;
+							daSign.angle = -90;
+							daSign.y = -145;
+					}
+					add(daSign);
+					daSign.flipX = fuck;
+					daSign.animation.play('sign');
+					daSign.animation.finishCallback = function(pog:String)
+						{
+							trace('ended sign');
+							remove(daSign);
+						}
+				}
+				function doClone(side:Int)
+					{
+						switch(side)
+						{
+							case 0:
+								if (cloneOne.alpha == 1)
+									return;
+								cloneOne.x = dad.x - 20;
+								cloneOne.y = dad.y + 140;
+								cloneOne.alpha = 1;
+				
+								cloneOne.animation.play('clone');
+								cloneOne.animation.finishCallback = function(pog:String) {cloneOne.alpha = 0;}
+							case 1:
+								if (cloneTwo.alpha == 1)
+									return;
+								cloneTwo.x = dad.x + 390;
+								cloneTwo.y = dad.y + 140;
+								cloneTwo.alpha = 1;
+				
+								cloneTwo.animation.play('clone');
+								cloneTwo.animation.finishCallback = function(pog:String) {cloneTwo.alpha = 0;}
+						}
+				
+					}
 }

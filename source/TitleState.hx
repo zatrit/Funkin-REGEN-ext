@@ -1,5 +1,6 @@
 package;
 
+import kade.CachedFrames;
 #if desktop
 import Discord.DiscordClient;
 import sys.thread.Thread;
@@ -69,6 +70,10 @@ class TitleState extends MusicBeatState
 		FlxG.save.bind('funkin', 'zatrit');
 
 		Highscore.load();
+
+		#if PRELOAD_ALL
+		CachedFrames.loadEverything();
+		#end
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
@@ -159,11 +164,6 @@ class TitleState extends MusicBeatState
 		titleText.updateHitbox();
 		titleText.screenCenter(X);
 		add(titleText);
-
-		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
-		logo.screenCenter();
-		logo.antialiasing = true;
-		// add(logo);
 
 		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
 		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
@@ -290,7 +290,7 @@ class TitleState extends MusicBeatState
 				
 				http.request();
 
-				if (version.trim() != githubVersion && !OutdatedSubState.leftState)
+				if (version.trim() != githubVersion && !OutdatedSubState.leftState&&githubVersion!="")
 				{
 					FlxG.switchState(new OutdatedSubState());
 					trace('OLD VERSION!');
@@ -377,39 +377,62 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
 			case 5:
-				createCoolText(['In association', 'with']);
+				createCoolText(['Thanks', 'to']);
+			case 6:
+				addMoreText('KadeDev');
+				addMoreText('atsuover');
+				addMoreText('Rageminer');
+				addMoreText('Paperkitty');
 			case 7:
+				deleteCoolText();
+				createCoolText(['MikeGeno','Tenaxis','bbpanzu','Banbuds','Cval']);
+			case 8:
+				deleteCoolText();
+				createCoolText(['Rozebud','MORO','YingYang','Jads','Tom Fulp']);
+			case 9:
+				deleteCoolText();
+				createCoolText(['Krinkels','GWebDev','Tsuraran']);
+			case 10:
+				deleteCoolText();
+				createCoolText(['In association', 'with']);
+			case 11:
 				addMoreText('newgrounds');
 				ngSpr.visible = true;
 			// credTextShit.text += '\nNewgrounds';
-			case 8:
+			case 12:
 				deleteCoolText();
 				ngSpr.visible = false;
 			// credTextShit.visible = false;
 
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
-			case 9:
+			case 13:
 				createCoolText([curWacky[0]]);
 			// credTextShit.visible = true;
-			case 11:
+			case 14:
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
-			case 12:
+			case 15:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
-			case 13:
+			case 16:
 				addMoreText('Friday');
 			// credTextShit.visible = true;
-			case 14:
+			case 17:
 				addMoreText('Night');
 			// credTextShit.text += '\nNight';
-			case 15:
+			case 18:
 				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
-			case 16:
+			case 19:
+				addMoreText('REGEN'); // credTextShit.text += '\nFunkin';
+
+			case 20:
+				addMoreText('EXT'); // credTextShit.text += '\nFunkin';
+
+			case 22:
 				skipIntro();
 		}
 	}
