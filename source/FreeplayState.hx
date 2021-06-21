@@ -12,7 +12,6 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
 #if mobile
-import mobile.MobileButton;
 import mobile.MobileControls;
 #end
 

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="storymenu.png">
+	<!-- Created with Adobe Animate version 20.0.0.17400 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="0week 0000" x="0" y="0" width="443" height="82"/>
+	<SubTexture name="1week 0000" x="0" y="82" width="359" height="89"/>
+	<SubTexture name="2week 0000" x="0" y="171" width="359" height="89"/>
+	<SubTexture name="3week 0000" x="0" y="260" width="358" height="89"/>
+	<SubTexture name="4week 0000" x="0" y="349" width="354" height="88"/>
+	<SubTexture name="5week 0000" x="0" y="437" width="364" height="91"/>
+	<SubTexture name="6week 0000" x="0" y="530" width="359" height="104"/>
+	<SubTexture name="7week 0000" x="0" y="632" width="359" height="104"/>
+	<SubTexture name="8week 0000" x="0" y="737" width="363" height="91"/>
+	<SubTexture name="9week 0000" x="0" y="827" width="443" height="82"/>
+	<SubTexture name="10week 0000" x="0" y="909" width="359" height="89"/>
+	<SubTexture name="11week 0000" x="0" y="998" width="351" height="92"/>
+</TextureAtlas>
