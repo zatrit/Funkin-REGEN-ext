@@ -1,14 +1,9 @@
 //This was made by GWebDev lol btw this uses actuate
 package;
 
-import openfl.events.EventType;
-import motion.Actuate;
-import openfl.display.Sprite;
 import openfl.events.AsyncErrorEvent;
-import openfl.events.MouseEvent;
 import openfl.events.NetStatusEvent;
 import openfl.media.Video;
-import openfl.net.NetConnection;
 import openfl.net.NetStream;
 import flixel.FlxG;
 
@@ -60,9 +55,8 @@ class VideoHandler
 	}
 	
 	public function client_onMetaData (metaData:Dynamic) {
-		#if web
+		
 		video.attachNetStream (netStream);
-		#end
 		
 		video.width = FlxG.width;
 		video.height = FlxG.height;
@@ -95,9 +89,7 @@ class VideoHandler
 	
 	public function stop():Void
 	{
-		#if web
 		netStream.close();
-		#end
 		onStop();
 	}
 	
@@ -123,17 +115,13 @@ class VideoHandler
 	
 	public function pause():Void
 	{
-		#if web
 		netStream.pause();
-		#end
 		paused = true;
 	}
 	
 	public function resume():Void
 	{
-		#if web
 		netStream.resume();
-		#end
 		paused = false;
 	}
 	

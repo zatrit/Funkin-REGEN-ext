@@ -54,14 +54,14 @@ class OutdatedSubState extends MusicBeatState
 			FlxG.openURL("https://github.com/zatrit/Funkin-REGEN-ext");
 			#else
 			leftState = true;
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new DisclaimerSubState());
 			#end
 		}
 		#if !mobile
 		if (controls.BACK)
 		{
 			leftState = true;
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new DisclaimerSubState());
 		}
 		#end
 		super.update(elapsed);

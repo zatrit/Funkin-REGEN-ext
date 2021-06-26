@@ -5,16 +5,17 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class OptionsSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = [#if mobile 'Controls', #end 'kade input: off','skip cutscenes: off','downscroll: off','Menu background selector', 'About'];
+	var textMenuItems:Array<String> = [#if mobile 'Controls', #end 'kade input: off','skip cutscenes: off','Menu background selector', 'About'];
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	var curSelected:Int = 0;
 
 	final KADE_INPUT_NUMBER = #if mobile 1 #else 0 #end;
 	final SKIP_CUTSCENES_NUMBER = #if mobile 2 #else 1 #end;
-	final DOWNSCROLL_NUMBER = #if mobile 3 #else 2 #end;
 
-	final DIST_BEETWEN_ITEMS = #if !mobile 1 #else 0.7 #end;
+	#if mobile
+	final DIST_BEETWEN_ITEMS = 0.7;
+	#end
 
 	public var parent:OptionsState;
 
@@ -26,8 +27,6 @@ class OptionsSubState extends MusicBeatSubstate
 			textMenuItems[KADE_INPUT_NUMBER]='kade input: on';
 		if(FlxG.save.data.skipCutscenes)
 			textMenuItems[SKIP_CUTSCENES_NUMBER]='skip cutscenes: on';
-		if(FlxG.save.data.downscroll)
-			textMenuItems[DOWNSCROLL_NUMBER]='downscroll: on';
 
 
 		this.parent=parent;
@@ -108,29 +107,6 @@ class OptionsSubState extends MusicBeatSubstate
 
 						grpOptions.replace(oldAlphabet,alphabet);
 
-						FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-					}
-				case 'downscroll: off' | 'downscroll: on':
-					{
-						var downscroll:Bool=FlxG.save.data.downscroll;
-						
-						FlxG.save.data.downscroll=!downscroll;
-						FlxG.save.flush();
-	
-						var oldAlphabet=grpOptions.members[DOWNSCROLL_NUMBER];
-	
-						textMenuItems[DOWNSCROLL_NUMBER]='downscroll: ' + (downscroll ? 'off' : 'on');
-						
-						var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[DOWNSCROLL_NUMBER], true, false);
-						alphabet.ID = DOWNSCROLL_NUMBER;
-						alphabet.isMenuItem = true;
-	
-						alphabet.x=oldAlphabet.x;
-						alphabet.y=oldAlphabet.y;
-						alphabet.targetY=oldAlphabet.targetY;
-	
-						grpOptions.replace(oldAlphabet,alphabet);
-	
 						FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 					}
 				case 'skip cutscenes: off' | 'skip cutscenes: on':

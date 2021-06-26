@@ -1,7 +1,8 @@
 package;
 
-import openfl.Lib;
+import openfl.display3D.textures.VideoTexture;
 import kade.GameDimensions;
+import openfl.Lib;
 
 class GlobalVideo
 {
@@ -27,7 +28,6 @@ class GlobalVideo
 		webm = vid;
 		isWebm = true;
 	}
-	
 	public static function getWebm():WebmHandler
 	{
 		return webm;
@@ -38,7 +38,8 @@ class GlobalVideo
 		if (isWebm)
 		{
 			return getWebm();
-		} else {
+		}
+		else {
 			return getVid();
 		}
 	}

@@ -68,27 +68,7 @@ You should have everything ready for compiling the game! Follow the guide below 
 At the moment, you can optionally fix the transition bug in songs with zoomed out cameras.
 - Run `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` in the terminal/command-prompt.
 
-### Ignored files
-
-I gitignore the API keys for the game, so that no one can nab them and post fake highscores on the leaderboards. But because of that the game
-doesn't compile without it.
-
-Just make a file in `/source` and call it `APIStuff.hx`, and copy paste this into it
-
-```haxe
-package;
-
-class APIStuff
-{
-	public static var API:String = "";
-	public static var EncKey:String = "";
-}
-
-```
-
-and you should be good to go there.
-
-### Compiling game
+### Compiling game for PC
 
 Once you have all those installed, it's pretty easy to compile the game. You just need to run 'lime test html5 -debug' in the root of the project to build and run the HTML5 version. (command prompt navigation guide can be found here: [https://ninjamuffin99.newgrounds.com/news/post/1090480](https://ninjamuffin99.newgrounds.com/news/post/1090480))
 
@@ -107,8 +87,19 @@ To run it from your desktop (Windows, Mac, Linux) it can be a bit more involved.
 * MSVC v141 - VS 2017 C++ x64/x86 build tools
 * MSVC v140 - VS 2015 C++ build tools (v14.00)
 
-This will install about 22GB of crap, but once that is done you can open up a command line in the project's directory and run `lime test windows -debug`. Once that command finishes (it takes forever even on a higher end PC), you can run FNF from the .exe file under export\release\windows\bin
+This will install about 22GB of crap, but once that is done you can open up a command line in the project's directory and run `lime test windows` or `lime test windows -D MOD_ONLY` for lite version. Once that command finishes (it takes forever even on a higher end PC), you can run FNF from the .exe file under export\release\windows\bin
 As for Mac, 'lime test mac -debug' should work, if not the internet surely has a guide on how to compile Haxe stuff for Mac.
+
+### Compiling game for Android
+
+For run it on Android, you need install:
+* Android NDK (21.4.7075529)
+* Android Build Tools (30.0.3)
+* AdoptOpenJDK 11 (or any JDK)
+* `haxelib install extension-android-media`
+
+Then run `lime setup android`, go to `Settings` -> `About phone` and click `Build number` several times, then go to `Settings` -> `System` -> `Developer options` and enable `USB Debugging`.
+For start the game, run `lime test android` or `lime test android -D MOD_ONLY` for lite version (connect phone to PC via USB)
 
 ### Additional guides
 

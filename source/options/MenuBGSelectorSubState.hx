@@ -6,6 +6,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 class MenuBGSelectorSubState extends MusicBeatSubstate
 {
 	var textMenuItems:Array<String> = ['default', 'garcello', 'whitty', 'kapi','tricky','tricky amogus'];
+	final DIST_BEETWEN_ITEMS = #if !mobile 1 #else 0.7 #end;
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	var curSelected:Int = 0;
@@ -23,11 +24,11 @@ class MenuBGSelectorSubState extends MusicBeatSubstate
 
 		for (i in 0...textMenuItems.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, (105 * i)+30, textMenuItems[i], true, false);
+			var optionText:Alphabet = new Alphabet(0, ((105 * i)+30), textMenuItems[i], true, false);
 			optionText.ID = i;
 			optionText.isMenuItem = true;
 			#if mobile
-			optionText.targetY=i-2;
+			optionText.targetY=(i-2)*DIST_BEETWEN_ITEMS;
 			#end
 
 			grpOptions.add(optionText);
@@ -81,14 +82,14 @@ class MenuBGSelectorSubState extends MusicBeatSubstate
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 	
 		curSelected += change;
-
-        var bgStyle:String=textMenuItems[curSelected];
-        parent.menuBG.loadGraphic(Paths.image(bgStyle+'/menuDesat','menuBackgrounds'));
 	
 		if (curSelected < 0)
 			curSelected = textMenuItems.length - 1;
 		if (curSelected >= textMenuItems.length)
 			curSelected = 0;
+
+        var bgStyle:String=textMenuItems[curSelected];
+        parent.menuBG.loadGraphic(Paths.image(bgStyle+'/menuDesat','menuBackgrounds'));
 	
 		// selector.y = (70 * curSelected) + 30;
 	

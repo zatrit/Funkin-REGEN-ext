@@ -72,7 +72,7 @@ class TitleState extends MusicBeatState
 		Highscore.load();
 
 		#if PRELOAD_ALL
-		CachedFrames.loadEverything();
+		CachedFrames.loadEverything(()->{});
 		#end
 
 		#if FREEPLAY
@@ -301,10 +301,10 @@ class TitleState extends MusicBeatState
 				}
 				else
 				{
-					FlxG.switchState(new MainMenuState());
+					FlxG.switchState(new DisclaimerSubState());
 				}
 				#else
-				FlxG.switchState(new MainMenuState());
+				FlxG.switchState(new DisclaimerSubState());
 				#end
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);

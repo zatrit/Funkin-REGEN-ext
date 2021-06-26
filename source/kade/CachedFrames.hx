@@ -1,5 +1,6 @@
 package kade;
 
+import LoadingState.MultiCallback;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
 #if haxe4
@@ -21,10 +22,22 @@ class CachedFrames
 
     function new() {}
 
-    public static function loadEverything()
+    public static function loadClown(callback:Void->Void)
     {
-        cachedInstance = new CachedFrames();
-        cachedInstance.loadFrames();
+        if(cachedInstance!=null)
+            cachedInstance = new CachedFrames();
+        cachedInstance.loadFrames(callback,"clown");
+    }
+
+    public static function loadShared(callback:Void->Void){
+        if(cachedInstance!=null)
+            cachedInstance = new CachedFrames();
+        cachedInstance.loadFrames(callback,"shared");
+    }
+    public static function loadEverything(callback:Void->Void){
+        var callback2:MultiCallback = new MultiCallback(callback);
+        loadShared(callback2.add("shared"));
+        loadClown(callback2.add("tiky"));
     }
 
     // so it doesn't brick your computer lol!
@@ -85,9 +98,9 @@ class CachedFrames
         return cachedGraphics.get(id);
     }
 
-    public function load(id:String, path:String)
+    public function load(id:String, path:String,lib:String="clown")
     {
-        var graph = FlxGraphic.fromAssetKey(Paths.image(path,'clown'));
+        var graph = FlxGraphic.fromAssetKey(Paths.image(path,lib));
         graph.persist = true;
         graph.destroyOnNoUse = false;
         cachedGraphics.set(id,graph);
@@ -99,27 +112,35 @@ class CachedFrames
 
     public var progress:Float = 0;
 
-    public function loadFrames()
+    public function loadFrames(callback:Void->Void,lib:String="clown")
     {
         sys.thread.Thread.create(() -> {
-            toBeLoaded.set('sign','fourth/mech/Sign_Post_Mechanic');
-            toBeLoaded.set('left','hellclwn/Tricky/Left');
-            toBeLoaded.set('right','hellclwn/Tricky/right');
-            toBeLoaded.set('up','hellclwn/Tricky/Up');
-            toBeLoaded.set('down','hellclwn/Tricky/Down');
-            toBeLoaded.set('idle','hellclwn/Tricky/Idle');
-            toBeLoaded.set('grem','fourth/mech/HP GREMLIN');
-            toBeLoaded.set('cln','fourth/Clone');
+            if(lib=="clown"){
+                toBeLoaded.set('sign','fourth/mech/Sign_Post_Mechanic');
+                toBeLoaded.set('left','hellclwn/Tricky/Left');
+                toBeLoaded.set('right','hellclwn/Tricky/right');
+                toBeLoaded.set('up','hellclwn/Tricky/Up');
+                toBeLoaded.set('down','hellclwn/Tricky/Down');
+                toBeLoaded.set('idle','hellclwn/Tricky/Idle');
+                toBeLoaded.set('grem','fourth/mech/HP GREMLIN');
+                toBeLoaded.set('cln','fourth/Clone');
+            }else if (lib=="shared"){
+                toBeLoaded.set('shit','shit');
+                toBeLoaded.set('bad','bad');
+                toBeLoaded.set('good','good');
+                toBeLoaded.set('sick','sick');
+            }
             // all the big sprites
             var numba = 0;
             for(i in toBeLoaded.keys())
             {
-                load(i,toBeLoaded.get(i));
+                load(i,toBeLoaded.get(i),lib);
                 numba++;
                 progress = HelperFunctions.truncateFloat(numba / Lambda.count(toBeLoaded) * 100,2);
             }
             trace('loaded everythin');
             loaded = true;
+            callback();
         });
     }
 }

@@ -68,6 +68,7 @@ class FreeplayState extends MusicBeatState
 		isDebug = true;
 		#end
 
+		#if !MOD_ONLY
 		if (StoryMenuState.weekUnlocked(1) || isDebug)
 			addWeek(['Bopeebo', 'Fresh', 'Dadbattle'], 1, ['dad']);
 
@@ -85,6 +86,7 @@ class FreeplayState extends MusicBeatState
 
 		if (StoryMenuState.weekUnlocked(6) || isDebug)
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
+		#end
 
 		if (StoryMenuState.weekUnlocked(7) || isDebug)
 			addWeek(['Headache', 'Nerves', 'Release'#if (debug&&desktop) , 'Fading' #end], 7, ['garcello', 'garcellotired', 'garcellodead' #if (debug&&desktop) , 'garcelloghosty' #end]);
@@ -302,8 +304,15 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		#if (PRELOAD_ALL&&!mobile)
-		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+		#if (PRELOAD_ALL)
+		if(timer!=null)
+			timer.cancel();
+		else
+			timer=new FlxTimer(FlxTimer.globalManager);
+
+		timer.start(1,(timer)->{
+			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+		});
 		#else
 		if(timer!=null)
 			timer.cancel();

@@ -34,10 +34,13 @@ class VideoState extends MusicBeatState
 		
 		leSource = source;
 		transClass = toTrans;
+
+		FlxG.switchState(transClass);
 	}
 	
 	override function create()
 	{
+		#if !android
 		super.create();
 		trace(leSource);
 
@@ -46,7 +49,7 @@ class VideoState extends MusicBeatState
 		
 		if (GlobalVideo.isWebm)
 		{
-		videoFrames = Std.parseInt(Assets.getText(leSource.replace(".webm", ".txt")));
+			videoFrames = Std.parseInt(Assets.getText(leSource.replace(".webm", ".txt")));
 		}
 		
 		fuckingVolume = FlxG.sound.music.volume;
@@ -80,7 +83,8 @@ class VideoState extends MusicBeatState
 		if (GlobalVideo.isWebm)
 		{
 			GlobalVideo.get().restart();
-		} else {
+		} 
+		else {
 			GlobalVideo.get().play();
 		}
 		
@@ -101,10 +105,12 @@ class VideoState extends MusicBeatState
 				doShit = true;
 			//}, 1);
 		}
+		#end
 	}
 	
 	override function update(elapsed:Float)
 	{
+		#if !android
 		super.update(elapsed);
 		
 		if (useSound)
@@ -196,6 +202,7 @@ class VideoState extends MusicBeatState
 		GlobalVideo.get().played = false;
 		GlobalVideo.get().stopped = false;
 		GlobalVideo.get().ended = false;
+		#end
 	}
 	override function onBack() {
 		skip=true;

@@ -1,10 +1,6 @@
 package;
 
 import kade.CachedFrames;
-import haxe.macro.Context;
-import cpp.Stdlib;
-import cpp.Pointer;
-import openfl.Lib;
 import cpp.vm.Gc;
 import lime.app.Promise;
 import lime.app.Future;
@@ -129,8 +125,13 @@ class LoadingState extends MusicBeatState
 			Assets.loadLibrary(library).onComplete(function (_) { 
 				callback(); 
 				#if NO_PRELOAD_ALL
-				if(library=="clown")
-					CachedFrames.loadEverything();
+				var loadCached=callbacks.add("loadCached: "+library);
+				switch(library){
+					case "shared":
+						CachedFrames.loadShared(loadCached);
+					case "clown":
+						CachedFrames.loadClown(loadCached);
+				}
 				#end
 			});
 		}

@@ -15,6 +15,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	var stageSuffix:String = "";
 	var arcade:Bool=false;
+	var clown:Bool=false;
 
 	var bfThought:FlxSprite;
 
@@ -30,6 +31,9 @@ class GameOverSubstate extends MusicBeatSubstate
 			case 'arcade' | 'arcadeclosed':
 				daBf = 'bf';
 				arcade=true;
+			case 'auditorHell' | 'nevada' | 'nevadaSpook':
+				daBf = 'signDeath';
+				clown=true;
 			default:
 				daBf = 'bf';
 		}
@@ -44,8 +48,15 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
-		FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix));
-		Conductor.changeBPM(100);
+		if(!clown){
+			FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix));
+			Conductor.changeBPM(100);
+		}
+		else{
+			FlxG.sound.play(Paths.sound('BF_Deathsound','clown'));
+			FlxG.sound.play(Paths.sound('Micdrop','clown'));
+			Conductor.changeBPM(200);
+		}
 
 		// FlxG.camera.followLerp = 1;
 		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
@@ -85,7 +96,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (firstDeath && bf.animation.curAnim.finished)
 		{
-			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
+			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix,clown ? "clown" : "shared"));
 		}
 
 		if (FlxG.sound.music.playing)
@@ -97,8 +108,6 @@ class GameOverSubstate extends MusicBeatSubstate
 	override function beatHit()
 	{
 		super.beatHit();
-
-		FlxG.log.add('beat');
 	}
 
 	var isEnding:Bool = false;
@@ -114,7 +123,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				bf.playAnim('arcadeDeathConfirm',true);
 			}
 			FlxG.sound.music.stop();
-			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
+			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix,clown ? "clown" : "shared"));
 			if(bfThought!=null)
 				FlxTween.tween(bfThought,{alpha: 0},0.7);
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)

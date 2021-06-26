@@ -30,7 +30,7 @@ class Note extends FlxSprite
 	
 	public var rating:String = "shit";
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
+	public function new(strumTime:Float, _noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
 	{
 		super();
 
@@ -45,15 +45,13 @@ class Note extends FlxSprite
 		y -= 2000;
 		this.strumTime = strumTime;
 
-		burning = noteData > 7;
+		burning = _noteData > 7;
+		this.noteData = _noteData % 4;
 
 		if(isSustainNote && prevNote.burning) { 
 			burning = true;
 		}
-		if(isSustainNote && FlxG.save.data.downscroll)
-			flipY = true;
 
-		this.noteData = noteData;
 
 		var daStage:String = PlayState.curStage;
 
@@ -119,20 +117,11 @@ class Note extends FlxSprite
 					else
 					{
 						frames = Paths.getSparrowAtlas('NOTE_fire', "clown");
-						if(!FlxG.save.data.downscroll){
-							animation.addByPrefix('blueScroll', 'blue fire');
-							animation.addByPrefix('greenScroll', 'green fire');
-						}
-						else{
-							animation.addByPrefix('greenScroll', 'blue fire');
-							animation.addByPrefix('blueScroll', 'green fire');
-						}
+						animation.addByPrefix('blueScroll', 'blue fire');
+						animation.addByPrefix('greenScroll', 'green fire');
 						animation.addByPrefix('redScroll', 'red fire');
 						animation.addByPrefix('purpleScroll', 'purple fire');
-
-						if(FlxG.save.data.downscroll)
-							flipY = true;
-
+						
 						x -= 50;
 					}
 				}

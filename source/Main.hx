@@ -1,15 +1,17 @@
 package;
 
 import openfl.text.TextFormat;
-import webm.WebmPlayer;
 import openfl.Assets;
-import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
 import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
+#if desktop
+import webm.WebmPlayer;
+#elseif android
+#end
 
 class Main extends Sprite
 {
@@ -20,6 +22,8 @@ class Main extends Sprite
 	var framerate:Int = 60; // How many frames per second the game should run at.
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
+
+	public static var MAIN:Main;
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -54,6 +58,8 @@ class Main extends Sprite
 
 	private function setupGame():Void
 	{
+		MAIN=this;
+
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
@@ -82,7 +88,7 @@ class Main extends Sprite
 
 		addChild(fps);
 
-		var ourSource:String = "assets/videos/dontDelete.webm";
+		var ourSource:String = Paths.getVideo("dontDelete");
 
 		//haxelib git extension-webm https://github.com/zatrit/extension-webm
 
@@ -95,8 +101,8 @@ class Main extends Sprite
         vHandler.init2();
         GlobalVideo.setVid(vHandler);
         vHandler.source(ourSource);
-		#elseif (desktop)
-		WebmPlayer.SKIP_STEP_LIMIT = 90;
+		#elseif desktop
+		WebmPlayer.SKIP_STEP_LIMIT = 90; //haxelib git extension-webm https://github.com/ThatRozebudDude/extension-webm
         var str1:String = "WEBM"; 
         var webmHandle = new WebmHandler();
         webmHandle.source(ourSource);
@@ -104,6 +110,7 @@ class Main extends Sprite
         webmHandle.webm.name = str1;
         addChild(webmHandle.webm);
         GlobalVideo.setWebm(webmHandle);
+		#elseif android
 		#end
 	}
 }

@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app file="Funkin"  main="Main" version="0.2.8.7-ext" company="ninjamuffin99 and zatrit" />
+	<app file="Funkin"  main="Main" version="0.2.8.8-ext" company="ninjamuffin99 and zatrit" />
 	<app if="debug" packageName="com.zatrit.funkin_dev" package="com.zatrit.funkin_ext" title="(DEV) Friday Night Funkin' REGEN EXT"/>
 	<app unless="debug" packageName="com.zatrit.funkin" package="com.zatrit.funkin_ext" title="Friday Night Funkin' REGEN EXT"/>
 	<!--Switch Export with Unique ApplicationID and Icon-->
@@ -38,26 +38,36 @@
 	<set name="BUILD_DIR" value="export/debug" if="debug" />
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
 	<set name="BUILD_DIR" value="export/32bit" if="32bit" />
+	<set name="BUILD_DIR" value="export/modOnly" if="MOD_ONLY" />
 
 	<classpath name="source" />
 
-	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/preload" rename="assets" exclude="*.mp3" unless="web"/>
+	<assets path="assets/preload" rename="assets" exclude="*.ogg|*.mp4" if="web"/>
+	<assets path="assets/preload" rename="assets" exclude="*.mp3|*.mp4" if="desktop"/>
+	<assets path="assets/preload" rename="assets" exclude="*.mp3|*.webm|*.mp4" if="mobile"/>
+
+	<assets path="assets/modSongs" rename="assets/songs" exclude="*.ogg" if="web"/>
+	<assets path="assets/modSongs" rename="assets/songs" exclude="*.mp3" unless="web"/>
 	
 	<!-- <define name="PRELOAD_ALL" /> -->
-	<define name="PRELOAD_ALL" unless="web || mobile" />
+	<define name="PRELOAD_ALL" unless="web || mobile || loadingTest" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
 	
 	<section if="PRELOAD_ALL">
-		<library name="songs"    preload="true" />
 		<library name="shared"   preload="true" />
 		<library name="tutorial" preload="true" />
-		<library name="week1"    preload="true" />
-		<library name="week2"    preload="true" />
-		<library name="week3"    preload="true" />
-		<library name="week4"    preload="true" />
-		<library name="week5"    preload="true" />
-		<library name="week6"    preload="true" />
+		<section unless="MOD_ONLY">
+			<library name="songs"    preload="true" />
+			<library name="week1"    preload="true" />
+			<library name="week2"    preload="true" />
+			<library name="week3"    preload="true" />
+			<library name="week4"    preload="true" />
+			<library name="week5"    preload="true" />
+			<library name="week6"    preload="true" />
+		</section>
+		<section if="MOD_ONLY">
+			<library name="songs"    preload="true" />
+		</section>
 		<library name="weekG"    preload="true" />
 		<library name="bonusWeek"    preload="true" />
 		<library name="kapiWeek"    preload="true" />
@@ -68,15 +78,20 @@
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
-		<library name="songs"    preload="false" />
 		<library name="shared"   preload="false" />
 		<library name="tutorial" preload="false" />
-		<library name="week1"    preload="false" />
-		<library name="week2"    preload="false" />
-		<library name="week3"    preload="false" />
-		<library name="week4"    preload="false" />
-		<library name="week5"    preload="false" />
-		<library name="week6"    preload="false" />
+		<section unless="MOD_ONLY">
+			<library name="songs"    preload="false" />
+			<library name="week1"    preload="false" />
+			<library name="week2"    preload="false" />
+			<library name="week3"    preload="false" />
+			<library name="week4"    preload="false" />
+			<library name="week5"    preload="false" />
+			<library name="week6"    preload="false" />
+		</section>
+		<section if="MOD_ONLY">
+			<library name="songs"    preload="false" />
+		</section>
 		<library name="weekG"    preload="false" />
 		<library name="bonusWeek"    preload="false"/>
 		<library name="kapiWeek"    preload="false" />
@@ -86,25 +101,29 @@
 		<!-- It's not all, LOL -->
 		<library name="menuBackgrounds"    preload="true" />
 	</section>
-	
-	<assets path="assets/songs"    library="songs"    exclude="*.ogg" if="web"/>
-	<assets path="assets/songs"    library="songs"    exclude="*.mp3" unless="web"/>
 	<assets path="assets/shared"   library="shared"   exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"   library="shared"   exclude="*.mp3" unless="web"/>
+	<assets path="assets/modSongs"	rename="assets/songs"  library="songs"    exclude="*.ogg" if="web"/>
+	<assets path="assets/modSongs" 	rename="assets/songs"  library="songs"    exclude="*.mp3" unless="web"/>
+
 	<assets path="assets/tutorial" library="tutorial" exclude="*.ogg" if="web"/>
 	<assets path="assets/tutorial" library="tutorial" exclude="*.mp3" unless="web"/>
-	<assets path="assets/week1"    library="week1"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week1"    library="week1"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week2"    library="week2"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week2"    library="week2"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week3"    library="week3"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week3"    library="week3"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week4"    library="week4"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week4"    library="week4"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week5"    library="week5"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week5"    library="week5"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week6"    library="week6"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week6"    library="week6"    exclude="*.mp3" unless="web"/>
+	<section unless="MOD_ONLY">
+		<assets path="assets/songs"    library="songs"    exclude="*.ogg" if="web"/>
+		<assets path="assets/songs"    library="songs"    exclude="*.mp3" unless="web"/>
+		<assets path="assets/week1"    library="week1"    exclude="*.ogg" if="web"/>
+		<assets path="assets/week1"    library="week1"    exclude="*.mp3" unless="web"/>
+		<assets path="assets/week2"    library="week2"    exclude="*.ogg" if="web"/>
+		<assets path="assets/week2"    library="week2"    exclude="*.mp3" unless="web"/>
+		<assets path="assets/week3"    library="week3"    exclude="*.ogg" if="web"/>
+		<assets path="assets/week3"    library="week3"    exclude="*.mp3" unless="web"/>
+		<assets path="assets/week4"    library="week4"    exclude="*.ogg" if="web"/>
+		<assets path="assets/week4"    library="week4"    exclude="*.mp3" unless="web"/>
+		<assets path="assets/week5"    library="week5"    exclude="*.ogg" if="web"/>
+		<assets path="assets/week5"    library="week5"    exclude="*.mp3" unless="web"/>
+		<assets path="assets/week6"    library="week6"    exclude="*.ogg" if="web"/>
+		<assets path="assets/week6"    library="week6"    exclude="*.mp3" unless="web"/>
+	</section>
 	<!-- SeoS -->
 	<assets path="assets/weekG"    library="weekG"    exclude="*.ogg" if="web"/>
 	<assets path="assets/weekG"    library="weekG"    exclude="*.mp3" unless="web"/>
@@ -128,6 +147,16 @@
 	
 	<assets path="CHANGELOG.md" rename='changelog.txt'/>
 
+	<section if="MOD_ONLY">
+		<assets path="assets/songs" exclude="*"/>
+		<assets path="assets/week1" exclude="*"/>
+		<assets path="assets/week2" exclude="*"/>
+		<assets path="assets/week3" exclude="*"/>
+		<assets path="assets/week4" exclude="*"/>
+		<assets path="assets/week5" exclude="*"/>
+		<assets path="assets/week6" exclude="*"/>
+	</section>
+
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
 		THEN UHHH I USED THE NAME OF THE FONT WITH SETFORMAT() ON THE TEXT!!!
@@ -149,7 +178,7 @@
 	<haxelib name="polymod" unless="mobile"/>
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="actuate" />
-	<haxelib name="extension-webm"/>
+	<haxelib name="extension-webm" if="desktop"/>
 
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
 	
@@ -203,5 +232,5 @@
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
 	<haxedef name="NG_LOGIN" if="newgrounds" />
 
-	<architecture name="x86" if="android" />	
+	<architecture name="x86" if="android" />
 </project>
