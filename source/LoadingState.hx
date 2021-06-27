@@ -126,12 +126,7 @@ class LoadingState extends MusicBeatState
 				callback(); 
 				#if NO_PRELOAD_ALL
 				var loadCached=callbacks.add("loadCached: "+library);
-				switch(library){
-					case "shared":
-						CachedFrames.loadShared(loadCached);
-					case "clown":
-						CachedFrames.loadClown(loadCached);
-				}
+				CachedFrames.loadLibrary(loadCached,library);
 				#end
 			});
 		}

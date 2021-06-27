@@ -2703,8 +2703,8 @@ class PlayState extends MusicBeatState
 				daRating = 'bad';
 		 */
 
-		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
+		var pixelShitPart1:String = '';
 
 		if (curStage.startsWith('school'))
 		{
@@ -2712,7 +2712,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 
-		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
+		rating.loadGraphic(CachedFrames.cachedInstance.get(daRating + pixelShitPart2));
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
 		rating.y -= 60;
@@ -2720,7 +2720,7 @@ class PlayState extends MusicBeatState
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
 
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
+		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1+'combo' + pixelShitPart2));
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = 600;
@@ -2754,7 +2754,7 @@ class PlayState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(CachedFrames.cachedInstance.get('num' + Std.int(i) + pixelShitPart2));
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
@@ -4043,7 +4043,7 @@ class PlayState extends MusicBeatState
 							pixelShitPart2 = '-pixel';
 						}
 				
-						rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
+						rating.loadGraphic(CachedFrames.cachedInstance.get(daRating + pixelShitPart2));
 						rating.screenCenter();
 						rating.y -= 50;
 						rating.x = coolText.x - 125;
@@ -4098,7 +4098,7 @@ class PlayState extends MusicBeatState
 						var daLoop:Int = 0;
 						for (i in seperatedScore)
 						{
-							var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+							var numScore:FlxSprite = new FlxSprite().loadGraphic(CachedFrames.cachedInstance.get('num' + Std.int(i) + pixelShitPart2));
 							numScore.screenCenter();
 							numScore.x = rating.x + (43 * daLoop) - 50;
 							numScore.y = rating.y + 100;

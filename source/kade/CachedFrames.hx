@@ -18,26 +18,20 @@ import kade.HelperFunctions;
 
 class CachedFrames
 {
-    public static var cachedInstance:CachedFrames;
+    public static var cachedInstance:CachedFrames = new CachedFrames();
 
     function new() {}
 
-    public static function loadClown(callback:Void->Void)
+    public static function loadLibrary(callback:Void->Void,lib:String="shared")
     {
-        if(cachedInstance!=null)
-            cachedInstance = new CachedFrames();
-        cachedInstance.loadFrames(callback,"clown");
+        cachedInstance.loadFrames(callback,lib);
     }
 
-    public static function loadShared(callback:Void->Void){
-        if(cachedInstance!=null)
-            cachedInstance = new CachedFrames();
-        cachedInstance.loadFrames(callback,"shared");
-    }
     public static function loadEverything(callback:Void->Void){
         var callback2:MultiCallback = new MultiCallback(callback);
-        loadShared(callback2.add("shared"));
-        loadClown(callback2.add("tiky"));
+        loadLibrary(callback2.add("shared"),"shared");
+        loadLibrary(callback2.add("clown"),"clown");
+        loadLibrary(callback2.add("week6"),"week6");
     }
 
     // so it doesn't brick your computer lol!
@@ -104,10 +98,7 @@ class CachedFrames
         graph.persist = true;
         graph.destroyOnNoUse = false;
         cachedGraphics.set(id,graph);
-        trace('Loaded ' + id);
     }
-
-    public var toBeLoaded:Map<String,String> = new Map<String,String>();
 
 
     public var progress:Float = 0;
@@ -115,20 +106,51 @@ class CachedFrames
     public function loadFrames(callback:Void->Void,lib:String="clown")
     {
         sys.thread.Thread.create(() -> {
-            if(lib=="clown"){
-                toBeLoaded.set('sign','fourth/mech/Sign_Post_Mechanic');
-                toBeLoaded.set('left','hellclwn/Tricky/Left');
-                toBeLoaded.set('right','hellclwn/Tricky/right');
-                toBeLoaded.set('up','hellclwn/Tricky/Up');
-                toBeLoaded.set('down','hellclwn/Tricky/Down');
-                toBeLoaded.set('idle','hellclwn/Tricky/Idle');
-                toBeLoaded.set('grem','fourth/mech/HP GREMLIN');
-                toBeLoaded.set('cln','fourth/Clone');
-            }else if (lib=="shared"){
-                toBeLoaded.set('shit','shit');
-                toBeLoaded.set('bad','bad');
-                toBeLoaded.set('good','good');
-                toBeLoaded.set('sick','sick');
+            var toBeLoaded:Map<String,String> = new Map<String,String>();
+            switch (lib){
+                case "clown":
+                    toBeLoaded.set('sign','fourth/mech/Sign_Post_Mechanic');
+                    toBeLoaded.set('left','hellclwn/Tricky/Left');
+                    toBeLoaded.set('right','hellclwn/Tricky/right');
+                    toBeLoaded.set('up','hellclwn/Tricky/Up');
+                    toBeLoaded.set('down','hellclwn/Tricky/Down');
+                    toBeLoaded.set('idle','hellclwn/Tricky/Idle');
+                    toBeLoaded.set('grem','fourth/mech/HP GREMLIN');
+                    toBeLoaded.set('cln','fourth/Clone');
+                case "shared":
+                    toBeLoaded.set('shit','shit');
+                    toBeLoaded.set('bad','bad');
+                    toBeLoaded.set('good','good');
+                    toBeLoaded.set('sick','sick');
+                    toBeLoaded.set('combo','combo');
+
+                    toBeLoaded.set('num0','num0');
+                    toBeLoaded.set('num1','num1');
+                    toBeLoaded.set('num2','num2');
+                    toBeLoaded.set('num3','num3');
+                    toBeLoaded.set('num4','num4');
+                    toBeLoaded.set('num5','num5');
+                    toBeLoaded.set('num6','num6');
+                    toBeLoaded.set('num7','num7');
+                    toBeLoaded.set('num8','num8');
+                    toBeLoaded.set('num9','num9');
+                case "week6":
+                    toBeLoaded.set('shit-pixel',	'weeb/pixelUI/shit-pixel');
+                    toBeLoaded.set('bad-pixel',		'weeb/pixelUI/bad-pixel');
+                    toBeLoaded.set('good-pixel',	'weeb/pixelUI/good-pixel');
+                    toBeLoaded.set('sick-pixel',	'weeb/pixelUI/sick-pixel');
+                    toBeLoaded.set('combo-pixel',	'weeb/pixelUI/combo-pixel');
+                    
+                    toBeLoaded.set('num0-pixel',	'weeb/pixelUI/num0-pixel');
+                    toBeLoaded.set('num1-pixel',	'weeb/pixelUI/num1-pixel');
+                    toBeLoaded.set('num2-pixel',	'weeb/pixelUI/num2-pixel');
+                    toBeLoaded.set('num3-pixel',	'weeb/pixelUI/num3-pixel');
+                    toBeLoaded.set('num4-pixel',	'weeb/pixelUI/num4-pixel');
+                    toBeLoaded.set('num5-pixel',	'weeb/pixelUI/num5-pixel');
+                    toBeLoaded.set('num6-pixel',	'weeb/pixelUI/num6-pixel');
+                    toBeLoaded.set('num7-pixel',	'weeb/pixelUI/num7-pixel');
+                    toBeLoaded.set('num8-pixel',	'weeb/pixelUI/num8-pixel');
+                    toBeLoaded.set('num9-pixel',	'weeb/pixelUI/num9-pixel');
             }
             // all the big sprites
             var numba = 0;
@@ -138,7 +160,6 @@ class CachedFrames
                 numba++;
                 progress = HelperFunctions.truncateFloat(numba / Lambda.count(toBeLoaded) * 100,2);
             }
-            trace('loaded everythin');
             loaded = true;
             callback();
         });
