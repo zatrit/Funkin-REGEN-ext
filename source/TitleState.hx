@@ -269,9 +269,19 @@ class TitleState extends MusicBeatState
 			transitioning = true;
 			// FlxG.sound.music.stop();
 
+			#if NO_PRELOAD_ALL
+			var loadedCache:Bool=false;
+			CachedFrames.loadLibrary(()->{loadedCache=true;},"preload");
+			#end
+
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
 				// Check if version is outdated
+
+				#if NO_PRELOAD_ALL
+				if(!loadedCache)
+					tmr.reset(0.5);
+				#end
 
 				var version:String = Application.current.meta.get('version');
 				

@@ -895,8 +895,6 @@ class Character extends FlxSprite
 				otherFrames.push(new Character(x, y, 'trickyHUp'));
 				otherFrames.push(new Character(x, y, 'trickyHDown'));
 	
-				trace('poggers');
-	
 				addOffset("idle", 325, 0);
 				playAnim('idle');
 			case 'trickyHDown':

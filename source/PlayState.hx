@@ -2883,7 +2883,7 @@ class PlayState extends MusicBeatState
 						if (curStage == 'auditorHell')
 						{
 							// lol death
-							health = 0;
+							health = -100;
 							shouldBeDead = true;
 							FlxG.sound.play(Paths.sound('death','clown'));
 						}
@@ -3150,7 +3150,7 @@ class PlayState extends MusicBeatState
 				combo += 1;
 			}
 
-			if(grabbed){
+			if(!grabbed){
 				if (note.noteData >= 0)
 					health += 0.023;
 				else
@@ -3684,7 +3684,6 @@ class PlayState extends MusicBeatState
 									{
 										if (mashViolations != 0)
 											mashViolations--;
-										scoreTxt.color = FlxColor.WHITE;
 										if (coolNote.burning)
 										{
 											if (curStage == 'auditorHell')
@@ -4536,7 +4535,6 @@ class PlayState extends MusicBeatState
 			var playonce:Bool = false;
 
 			var faded:Bool = false;
-			var wat:Bool = false;
 			var black:FlxSprite = new FlxSprite(-300, -120).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.fromRGB(19, 0, 0));
 			black.scrollFactor.set();
 			black.alpha = 0;
@@ -4551,10 +4549,9 @@ class PlayState extends MusicBeatState
 			dad.alpha = 0;
 			gf.alpha = 0;
 			remove(boyfriend);
-			var nevada:FlxSprite = new FlxSprite(260,FlxG.height * 0.7);
-			nevada.frames = Paths.getSparrowAtlas('somewhere','clown'); // add animation from sparrow
+			var nevada:FlxSprite = new FlxSprite(260,FlxG.height * 0.7).loadGraphic(Paths.image('somewhere','clown'));
 			nevada.antialiasing = true;
-			nevada.animation.addByPrefix('nevada', 'somewhere idfk', 24, false);
+			nevada.alpha=0;
 			var animation:FlxSprite = new FlxSprite(-50,200); // create the fuckin thing
 			animation.frames = Paths.getSparrowAtlas('intro','clown'); // add animation from sparrow
 			animation.antialiasing = true;
@@ -4580,34 +4577,46 @@ class PlayState extends MusicBeatState
 			add(black3);
 
 			add(nevada);
-			trace('animation done lol');
+
+			var nevadaEnded:Bool=false;
+			var nevadaStep:Int=0;
+			
+			FlxTween.tween(nevada,{alpha:1},1/3,{onComplete: (tween:FlxTween)->{
+				var tmr:FlxTimer = new FlxTimer();
+				nevadaStep++;
+				tmr.start(1.5,(tmr:FlxTimer)->{
+					nevadaStep++;
+					FlxTween.tween(nevada,{alpha:0},1/3,{onComplete: (tw:FlxTween)->{
+						nevadaStep++;
+						new FlxTimer().start(1/24*7,(tmr:FlxTimer)->{
+							nevadaStep++;
+							nevadaEnded=true;
+						});
+					}});
+				});
+			}});
+
 			new FlxTimer().start(0.01, function(tmr:FlxTimer)
 			{
 					if (boyfriend.animation.finished && !bfScared)
 						boyfriend.animation.play('idle');
 					else if (boyfriend.animation.finished)
 						boyfriend.animation.play('scared');
-					if (nevada.animation.curAnim == null)
+					if (!nevadaEnded||red.alpha != 0)
 					{
-						trace('NEVADA | ' + nevada);
-						nevada.animation.play('nevada');
-					}
-					if (!nevada.animation.finished && nevada.animation.curAnim.name == 'nevada')
-					{
-						if (nevada.animation.frameIndex >= 41 && red.alpha != 0)
+						if (nevadaStep>=3&&red.alpha != 0)
 						{
 							// trace(red.alpha);
 							// don't spam, lol
 							red.alpha -= 0.1;
 						}
-						if (nevada.animation.frameIndex == 34)
+						if (nevadaStep==2)
 							wind.fadeIn();
-							tmr.reset(0.1);
+						tmr.reset(0.1);
 					}
-					if (animation.animation.curAnim == null && red.alpha == 0)
+					if (nevadaStep>=3 && red.alpha == 0)
 					{
 						remove(red);
-						trace('play tricky');
 						animation.animation.play('fuckyou', false, false, 40);
 					}
 					if (!animation.animation.finished && animation.animation.curAnim.name == 'fuckyou' && red.alpha == 0 && !faded)
@@ -4816,6 +4825,7 @@ class PlayState extends MusicBeatState
 				var varNumbaTwo:Bool = false;
 				var fadeDone:Bool = false;
 
+				sounders.fadeIn(30);
 				sounders.fadeIn(30);
 	
 				new FlxTimer().start(0.01, function(tmr:FlxTimer)

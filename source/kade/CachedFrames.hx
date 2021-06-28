@@ -32,6 +32,7 @@ class CachedFrames
         loadLibrary(callback2.add("shared"),"shared");
         loadLibrary(callback2.add("clown"),"clown");
         loadLibrary(callback2.add("week6"),"week6");
+        loadLibrary(callback2.add("preload"),"preload");
     }
 
     // so it doesn't brick your computer lol!
@@ -109,7 +110,7 @@ class CachedFrames
             var toBeLoaded:Map<String,String> = new Map<String,String>();
             switch (lib){
                 case "clown":
-                    toBeLoaded.set('sign','fourth/mech/Sign_Post_Mechanic');
+                    #if PRELOAD_ALL
                     toBeLoaded.set('left','hellclwn/Tricky/Left');
                     toBeLoaded.set('right','hellclwn/Tricky/right');
                     toBeLoaded.set('up','hellclwn/Tricky/Up');
@@ -117,13 +118,28 @@ class CachedFrames
                     toBeLoaded.set('idle','hellclwn/Tricky/Idle');
                     toBeLoaded.set('grem','fourth/mech/HP GREMLIN');
                     toBeLoaded.set('cln','fourth/Clone');
+                    toBeLoaded.set('sign','fourth/mech/Sign_Post_Mechanic');
+                    #else
+                    if(PlayState.SONG.song.toLowerCase()=="expurgation"){
+                        toBeLoaded.set('grem','fourth/mech/HP GREMLIN');
+                        toBeLoaded.set('cln','fourth/Clone');
+                        toBeLoaded.set('sign','fourth/mech/Sign_Post_Mechanic');
+                    }
+                    else{
+                        toBeLoaded.set('left','hellclwn/Tricky/Left');
+                        toBeLoaded.set('right','hellclwn/Tricky/right');
+                        toBeLoaded.set('up','hellclwn/Tricky/Up');
+                        toBeLoaded.set('down','hellclwn/Tricky/Down');
+                        toBeLoaded.set('idle','hellclwn/Tricky/Idle');
+                    }
+                    #end
                 case "shared":
                     toBeLoaded.set('shit','shit');
                     toBeLoaded.set('bad','bad');
                     toBeLoaded.set('good','good');
                     toBeLoaded.set('sick','sick');
                     toBeLoaded.set('combo','combo');
-
+                case "preload":
                     toBeLoaded.set('num0','num0');
                     toBeLoaded.set('num1','num1');
                     toBeLoaded.set('num2','num2');
