@@ -15,6 +15,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [Smoke 'Em Out Struggle](https://github.com/Rageminer996/Smoke-Em-Out-Struggle-Mod)
 - [Vs. Whitty](https://github.com/KadeDev/vswhitty-public)
 - [VS. KAPI - Arcade Showdown](https://gamebanana.com/mods/44683)
+- [The Full-Ass Tricky Mod](https://gamebanana.com/mods/44334)
 
 ## Credits / shoutouts
 
@@ -26,6 +27,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [KadeDev](https://github.com/KadeDev) - Whitty author
 - [paperkitty](https://gamebanana.com/members/1838959) - Kapi author
 - Mr. Game & Watch and Flatzone are owned by Nintendo
+- [Cval](https://github.com/cvalbrown) and [Rozebud](https://github.com/ThatRozebudDude) - Tricky authors
 
 This game was made with love to Newgrounds and it's community. Extra love to Tom Fulp.
 
