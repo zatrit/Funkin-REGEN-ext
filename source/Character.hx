@@ -897,6 +897,13 @@ class Character extends FlxSprite
 	
 				addOffset("idle", 325, 0);
 				playAnim('idle');
+
+				this.x += width/2;
+				this.y += height/2;
+
+				setGraphicSize(Std.int(width*2),Std.int(height*2));
+				updateHitbox();
+
 			case 'trickyHDown':
 				tex = CachedFrames.cachedInstance.fromSparrow('down','hellclwn/Tricky/Down');
 	
@@ -913,6 +920,9 @@ class Character extends FlxSprite
 				x -= 1400;
 	
 				playAnim('idle');
+				
+				setGraphicSize(Std.int(width*2),Std.int(height*2));
+				updateHitbox();
 			case 'trickyHUp':
 				tex = CachedFrames.cachedInstance.fromSparrow('up','hellclwn/Tricky/Up');
 	
@@ -930,6 +940,9 @@ class Character extends FlxSprite
 				x -= 1400;
 	
 				playAnim('idle');
+
+				setGraphicSize(Std.int(width*2),Std.int(height*2));
+				updateHitbox();
 			case 'trickyHRight':
 				tex = CachedFrames.cachedInstance.fromSparrow('right','hellclwn/Tricky/right');
 	
@@ -946,6 +959,9 @@ class Character extends FlxSprite
 				x -= 1400;
 	
 				playAnim('idle');
+
+				setGraphicSize(Std.int(width*2),Std.int(height*2));
+				updateHitbox();
 			case 'trickyHLeft':
 				tex = CachedFrames.cachedInstance.fromSparrow('left','hellclwn/Tricky/Left');
 	
@@ -962,6 +978,9 @@ class Character extends FlxSprite
 				x -= 1400;
 					
 				playAnim('idle');
+
+				setGraphicSize(Std.int(width*2),Std.int(height*2));
+				updateHitbox();
 		}
 
 		dance();

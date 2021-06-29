@@ -130,6 +130,12 @@ class LoadingState extends MusicBeatState
 				#end
 			});
 		}
+		#if NO_PRELOAD_ALL
+		else{
+			var loadCached=callbacks.add("loadCached: "+library);
+			CachedFrames.loadLibrary(loadCached,library);
+		}
+		#end
 	}
 	
 	override function beatHit()

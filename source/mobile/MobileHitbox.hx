@@ -37,5 +37,8 @@ class MobileHitbox extends Control{
         }
         pressedBefore=pressed;
     }
+    override function draw() {
+        super.draw();
+    }
 }
 #end

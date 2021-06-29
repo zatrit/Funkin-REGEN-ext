@@ -28,7 +28,7 @@ class MenuBGSelectorSubState extends MusicBeatSubstate
 			optionText.ID = i;
 			optionText.isMenuItem = true;
 			#if mobile
-			optionText.targetY=(i-2)*DIST_BEETWEN_ITEMS;
+			optionText.targetY=(i-2.5)*DIST_BEETWEN_ITEMS;
 			#end
 
 			grpOptions.add(optionText);

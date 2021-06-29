@@ -95,10 +95,12 @@ class CachedFrames
 
     public function load(id:String, path:String,lib:String="clown")
     {
-        var graph = FlxGraphic.fromAssetKey(Paths.image(path,lib));
-        graph.persist = true;
-        graph.destroyOnNoUse = false;
-        cachedGraphics.set(id,graph);
+        if(cachedGraphics.get(id)==null){
+            var graph = FlxGraphic.fromAssetKey(Paths.image(path,lib));
+            graph.persist = true;
+            graph.destroyOnNoUse = false;
+            cachedGraphics.set(id,graph);
+        }
     }
 
 

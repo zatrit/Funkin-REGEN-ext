@@ -859,8 +859,9 @@ class PlayState extends MusicBeatState
 					tstatic.alpha = 0;
 	
 					var bg:FlxSprite = new FlxSprite(-350, -300).loadGraphic(Paths.image('red','clown'));
-					// bg.setGraphicSize(Std.int(bg.width * 2.5));
-					// bg.updateHitbox();
+					bg.setGraphicSize(Std.int(bg.width * 2));
+					bg.updateHitbox();
+
 					bg.antialiasing = true;
 					bg.scrollFactor.set(0.9, 0.9);
 					var stageFront:FlxSprite;
@@ -903,7 +904,7 @@ class PlayState extends MusicBeatState
 					var bg:FlxSprite = new FlxSprite(-1000, -1000).loadGraphic(Paths.image('fourth/bg','clown'));
 					bg.antialiasing = true;
 					bg.scrollFactor.set(0.9, 0.9);
-					bg.setGraphicSize(Std.int(bg.width * 5));
+					bg.setGraphicSize(Std.int(bg.width * 10));
 					bg.active = false;
 					add(bg);
 	
@@ -937,15 +938,15 @@ class PlayState extends MusicBeatState
 
 					tstatic.alpha = 0;
 
-					cover = new FlxSprite(-180,755).loadGraphic(Paths.image('fourth/cover','clown'));
-					hole = new FlxSprite(50,530).loadGraphic(Paths.image('fourth/Spawnhole_Ground_BACK','clown'));
-					converHole = new FlxSprite(7,578).loadGraphic(Paths.image('fourth/Spawnhole_Ground_COVER','clown'));
+					cover = new FlxSprite(-55,755).loadGraphic(Paths.image('fourth/cover','clown'));
+					hole = new FlxSprite(21.5,530).loadGraphic(Paths.image('fourth/Spawnhole_Ground_BACK','clown'));
+					converHole = new FlxSprite(-21.5,578).loadGraphic(Paths.image('fourth/Spawnhole_Ground_COVER','clown'));
 
 					var bg:FlxSprite = new FlxSprite(-10, -10).loadGraphic(Paths.image('fourth/bg','clown'));
 					bg.antialiasing = true;
 					bg.scrollFactor.set(0.9, 0.9);
 					bg.active = false;
-					bg.setGraphicSize(Std.int(bg.width * 4));
+					bg.setGraphicSize(Std.int(bg.width * 8));
 					add(bg);
 
 					hole.antialiasing = true;
@@ -961,11 +962,15 @@ class PlayState extends MusicBeatState
 					cover.setGraphicSize(Std.int(cover.width * 1.55));
 
 					var energyWall:FlxSprite = new FlxSprite(1350,-690).loadGraphic(Paths.image("fourth/Energywall","clown"));
+					//energyWall.x+=energyWall.width/2;
+					//energyWall.y+=energyWall.height/2;
+					energyWall.setGraphicSize(Std.int(energyWall.width*2),Std.int(energyWall.height*2));
+					energyWall.updateHitbox();
 					energyWall.antialiasing = true;
 					energyWall.scrollFactor.set(0.9, 0.9);
 					add(energyWall);
 			
-					var stageFront:FlxSprite = new FlxSprite(-350, -355).loadGraphic(Paths.image('fourth/daBackground','clown'));
+					var stageFront:FlxSprite = new FlxSprite(-225, -355).loadGraphic(Paths.image('fourth/daBackground','clown'));
 					stageFront.antialiasing = true;
 					stageFront.scrollFactor.set(0.9, 0.9);
 					stageFront.setGraphicSize(Std.int(stageFront.width * 1.55));
@@ -1079,7 +1084,7 @@ class PlayState extends MusicBeatState
 				dad.x -= 1400;
 				gf.x -= 380;
 			case 'exTricky':
-				dad.x -= 250;
+				dad.x -= 300;
 				dad.y -= 365;
 				gf.x += 345;
 				gf.y -= 25;
@@ -1130,6 +1135,12 @@ class PlayState extends MusicBeatState
 				// add(evilTrail);
 				// evilTrail.scrollFactor.set(1.1, 1.1);
 				boyfriend.x += 50;
+			case 'nevada':
+				boyfriend.y -= 0;
+				boyfriend.x += 260;
+			case 'auditorHell':
+				boyfriend.y -= 160;
+				boyfriend.x += 350;
 		}
 
 		add(gf);
@@ -1169,6 +1180,13 @@ class PlayState extends MusicBeatState
 
 		add(boyfriend);
 		
+		if (dad.curCharacter == 'trickyH')
+		{
+			gf.setGraphicSize(Std.int(gf.width * 0.8));
+			boyfriend.setGraphicSize(Std.int(boyfriend.width * 0.8));
+			gf.x += 220;
+		}
+
 		if (curStage == 'garAlleyDead')
 		{
 			var smoke:FlxSprite = new FlxSprite(0, 0);
@@ -1411,7 +1429,7 @@ class PlayState extends MusicBeatState
 					startCountdown();
 				case 'expurgation':
 					camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-					var spawnAnim = new FlxSprite(-150,-380);
+					var spawnAnim = new FlxSprite(-200,-380);
 					spawnAnim.frames = Paths.getSparrowAtlas('fourth/EXENTER','clown');
 		
 					spawnAnim.animation.addByPrefix('start','Entrance',24,false);
@@ -1816,93 +1834,91 @@ class PlayState extends MusicBeatState
 	private function generateSong(dataPath:String):Void
 	{
 		// FlxG.log.add(ChartParser.parse());
-
+	
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
-
+	
 		curSong = songData.song;
-
+	
 		if (SONG.needsVoices)
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 		else
 			vocals = new FlxSound();
-
+	
 		FlxG.sound.list.add(vocals);
-
+	
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
-
+	
 		var noteData:Array<SwagSection>;
-
+	
 		// NEW SHIT
 		noteData = songData.notes;
-
-		var playerCounter:Int = 0;
-
+	
+	
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 		for (section in noteData)
 		{
-			var coolSection:Int = Std.int(section.lengthInSteps / 4);
-
+			var playerNotes:Array<Int> = [0, 1, 2, 3, 8, 9, 10, 11];
+	
 			for (songNotes in section.sectionNotes)
 			{
 				var daStrumTime:Float = songNotes[0];
-				var daNoteData:Int = songNotes[1];
-
+				var daNoteData:Int = Std.int(songNotes[1]);
+	
 				var gottaHitNote:Bool = section.mustHitSection;
-
-				if (songNotes[1] > 3)
+	
+				if (!playerNotes.contains(songNotes[1]))
 				{
 					gottaHitNote = !section.mustHitSection;
 				}
-
+	
 				var oldNote:Note;
 				if (unspawnNotes.length > 0)
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 				else
 					oldNote = null;
-
+	
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
-
+	
 				var susLength:Float = swagNote.sustainLength;
-
+	
 				susLength = susLength / Conductor.stepCrochet;
 				unspawnNotes.push(swagNote);
-
+	
 				for (susNote in 0...Math.floor(susLength))
 				{
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-
+	
 					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true);
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
-
+	
 					sustainNote.mustPress = gottaHitNote;
-
+	
 					if (sustainNote.mustPress)
 					{
 						sustainNote.x += FlxG.width / 2; // general offset
 					}
 				}
-
+	
 				swagNote.mustPress = gottaHitNote;
-
+	
 				if (swagNote.mustPress)
 				{
 					swagNote.x += FlxG.width / 2; // general offset
 				}
-				else {}
 			}
 			daBeats += 1;
 		}
-
+	
 		// trace(unspawnNotes.length);
 		// playerCounter += 1;
-
+	
 		unspawnNotes.sort(sortByShit);
-
+	
 		generatedMusic = true;
 	}
 
@@ -2409,9 +2425,10 @@ class PlayState extends MusicBeatState
 				daNote.visible = daNote.y <= FlxG.height;
 				daNote.active = daNote.y <= FlxG.height;
 
+
 				daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
 
-				daNote.y -= (daNote.burning ? ((curStage != 'auditorHell') ? 185 : 65 ) : 0);
+				daNote.y -= (daNote.burning ? 185 : 0);
 
 				// i am so fucking sorry for this if condition
 				if (daNote.isSustainNote
@@ -2591,10 +2608,14 @@ class PlayState extends MusicBeatState
 					transOut = FlxTransitionableState.defaultTransOut;
 				}
 
+				#if !mobile
 				if(SONG.song.toLowerCase()!="hellclown")
+				#end
 					FlxG.switchState(new StoryMenuState());
+				#if !mobile
 				else
 					LoadingState.loadAndSwitchState(new VideoState(Paths.getVideo("TricksterMan"),new MainMenuState()));
+				#end
 
 				if (SONG.validScore)
 				{
@@ -2637,10 +2658,12 @@ class PlayState extends MusicBeatState
 				if(!FlxG.save.data.skipCutscenes)
 					switch(SONG.song.toLowerCase())
 					{
+						#if !mobile
 						case 'improbable-outset':
 							LoadingState.loadAndSwitchState(new VideoState(Paths.getVideo("HankFuckingShootsTricky"), new PlayState()));
 						case 'madness':
 							LoadingState.loadAndSwitchState(new VideoState(Paths.getVideo("HELLCLOWN_ENGADGED"),new PlayState()));
+						#end
 						default:
 							LoadingState.loadAndSwitchState(new PlayState());
 					}
@@ -3120,14 +3143,17 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
-		if (leftP)
-			noteMiss(0);
-		if (downP)
-			noteMiss(1);
-		if (upP)
-			noteMiss(2);
-		if (rightP)
-			noteMiss(3);
+		
+		if (!FlxG.save.data.ghost){
+			if (leftP)
+				noteMiss(0);
+			if (downP)
+				noteMiss(1);
+			if (upP)
+				noteMiss(2);
+			if (rightP)
+				noteMiss(3);
+		}
 	}
 
 	function noteCheck(keyP:Bool, note:Note):Void

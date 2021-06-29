@@ -13,6 +13,7 @@ using StringTools;
 
 class VideoState extends MusicBeatState
 {
+	#if !mobile
 	public var leSource:String = "";
 	public var transClass:FlxState;
 	public var txt:FlxText;
@@ -40,7 +41,6 @@ class VideoState extends MusicBeatState
 	
 	override function create()
 	{
-		#if !android
 		super.create();
 		trace(leSource);
 
@@ -105,12 +105,10 @@ class VideoState extends MusicBeatState
 				doShit = true;
 			//}, 1);
 		}
-		#end
 	}
 	
 	override function update(elapsed:Float)
 	{
-		#if !android
 		super.update(elapsed);
 		
 		if (useSound)
@@ -202,9 +200,9 @@ class VideoState extends MusicBeatState
 		GlobalVideo.get().played = false;
 		GlobalVideo.get().stopped = false;
 		GlobalVideo.get().ended = false;
-		#end
 	}
 	override function onBack() {
 		skip=true;
 	}
+	#end
 }

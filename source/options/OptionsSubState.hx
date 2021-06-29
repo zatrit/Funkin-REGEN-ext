@@ -5,13 +5,14 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class OptionsSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = [#if mobile 'Controls', #end 'kade input: off','skip cutscenes: off','Menu background selector', 'About'];
+	var textMenuItems:Array<String> = [#if mobile 'Controls', #end 'kade input: off','skip cutscenes: off','ghost tap: off','Menu background selector', 'About'];
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	var curSelected:Int = 0;
 
 	final KADE_INPUT_NUMBER = #if mobile 1 #else 0 #end;
 	final SKIP_CUTSCENES_NUMBER = #if mobile 2 #else 1 #end;
+	final GHOST_NUMBER = #if mobile 3 #else 2 #end;
 
 	#if mobile
 	final DIST_BEETWEN_ITEMS = 0.7;
@@ -27,6 +28,8 @@ class OptionsSubState extends MusicBeatSubstate
 			textMenuItems[KADE_INPUT_NUMBER]='kade input: on';
 		if(FlxG.save.data.skipCutscenes)
 			textMenuItems[SKIP_CUTSCENES_NUMBER]='skip cutscenes: on';
+		if(FlxG.save.data.ghost)
+			textMenuItems[GHOST_NUMBER]='ghost tap: on';
 
 
 		this.parent=parent;
@@ -90,47 +93,24 @@ class OptionsSubState extends MusicBeatSubstate
 					{
 						var kadeInput:Bool=FlxG.save.data.kadeInput;
 
-						FlxG.save.data.kadeInput=!kadeInput;
+						FlxG.save.data.kadeInput=toggleOption(KADE_INPUT_NUMBER,"kade input",kadeInput);
 						FlxG.save.flush();
-
-						var oldAlphabet=grpOptions.members[KADE_INPUT_NUMBER];
-
-						textMenuItems[KADE_INPUT_NUMBER]='kade input: ' + (kadeInput ? 'off' : 'on');
-					
-						var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[KADE_INPUT_NUMBER], true, false);
-						alphabet.ID = KADE_INPUT_NUMBER;
-						alphabet.isMenuItem = true;
-
-						alphabet.x=oldAlphabet.x;
-						alphabet.y=oldAlphabet.y;
-						alphabet.targetY=oldAlphabet.targetY;
-
-						grpOptions.replace(oldAlphabet,alphabet);
-
-						FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 					}
 				case 'skip cutscenes: off' | 'skip cutscenes: on':
 					{
 						var skipCutscenes:Bool=FlxG.save.data.skipCutscenes;
 						
-						FlxG.save.data.skipCutscenes=!skipCutscenes;
+						FlxG.save.data.skipCutscenes=toggleOption(SKIP_CUTSCENES_NUMBER,"skip cutscenes",skipCutscenes);
 						FlxG.save.flush();
-
-						var oldAlphabet=grpOptions.members[SKIP_CUTSCENES_NUMBER];
-	
-						textMenuItems[SKIP_CUTSCENES_NUMBER]='skip cutscenes: ' + (skipCutscenes ? 'off' : 'on');
-						
-						var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[SKIP_CUTSCENES_NUMBER], true, false);
-						alphabet.ID = SKIP_CUTSCENES_NUMBER;
-						alphabet.isMenuItem = true;
-	
-						alphabet.x=oldAlphabet.x;
-						alphabet.y=oldAlphabet.y;
-						alphabet.targetY=oldAlphabet.targetY;
-	
-						grpOptions.replace(oldAlphabet,alphabet);
-						FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-						}
+					}
+				
+				case 'ghost tap: off' | 'ghost tap: on':
+					{
+						var ghost:Bool=FlxG.save.data.ghost;
+		
+						FlxG.save.data.ghost=toggleOption(GHOST_NUMBER,"ghost tap",ghost);
+						FlxG.save.flush();
+					}
 			}
 		}
 	}
@@ -168,5 +148,26 @@ class OptionsSubState extends MusicBeatSubstate
 			}
 		}
 		#end
+	}
+	function toggleOption(num:Int=0,text:String="",oldVal:Bool=false):Bool{
+		var oldAlphabet=grpOptions.members[num];
+
+		var newVal=!oldVal;
+		
+		textMenuItems[num]='$text: ' + (newVal ? 'on' : 'off');
+			
+		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], true, false);
+		alphabet.ID = num;
+		alphabet.isMenuItem = true;
+
+		alphabet.x=oldAlphabet.x;
+		alphabet.y=oldAlphabet.y;
+		alphabet.targetY=oldAlphabet.targetY;
+
+		grpOptions.replace(oldAlphabet,alphabet);
+
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+
+		return newVal;
 	}
 }

@@ -1,6 +1,6 @@
 # Friday Night Funkin
 
-**IF YOU TRY TO LAUNCH IT ON A MOBILE AND IT DOESN'T WORK, CHECK THE CHARACTERISTICS OF THE DEVICE, BECAUSE TO START WITHOUT PROBLEMS, AT LEAST 3 GB RAM IS NEEDED TO START WITHOUT PROBLEMS.**
+**IF YOU TRY TO LAUNCH IT ON A MOBILE AND IT DOESN'T WORK, MOST OF ALL YOU DO NOT HAVE ENOUGH RAM, BECAUSE FRIDAY NIGHT FUNKIN' IS A VERY PERFORMANCE REQUIRED GAME, ESPECIALLY TRICKY MOD**
 
 This is the repository for Friday Night Funkin REGEN ext, a game originally made for Ludum Dare 47 "Stuck In a Loop".
 
@@ -61,7 +61,7 @@ You'll also need to install a couple things that involve Gits. To do this, you n
 2. Follow instructions to install the application properly.
 3. Run `haxelib git polymod https://github.com/larsiusprime/polymod.git` to install Polymod.
 4. Run `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc` to install Discord RPC.
-5. Run `haxelib git extension-webm https://github.com/zatrit/extension-webm` and `lime rebuild extension-webm windows` to install Extension WebM
+5. Run `haxelib git extension-webm https://github.com/KadeDev/extension-webm` and `lime rebuild extension-webm cpp` to install Extension WebM
 
 You should have everything ready for compiling the game! Follow the guide below to continue!
 
@@ -96,7 +96,6 @@ For run it on Android, you need install:
 * Android NDK (21.4.7075529)
 * Android Build Tools (30.0.3)
 * AdoptOpenJDK 11 (or any JDK)
-* `haxelib install extension-android-media`
 
 Then run `lime setup android`, go to `Settings` -> `About phone` and click `Build number` several times, then go to `Settings` -> `System` -> `Developer options` and enable `USB Debugging`.
 For start the game, run `lime test android` or `lime test android -D MOD_ONLY` for lite version (connect phone to PC via USB)

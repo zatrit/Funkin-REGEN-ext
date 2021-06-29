@@ -103,7 +103,9 @@ class FreeplayState extends MusicBeatState
 		if (StoryMenuState.weekUnlocked(11) || isDebug)
 			addWeek(['Improbable-Outset','Madness','Hellclown'], 11, ['trickyMask','tricky','trickyH']);
 
+		#if !UNLOCK
 		if (Highscore.getWeekScore(11,2)>0 || isDebug)
+		#end
 			addWeek(['expurgation'], 11, ['exTricky']);
 
 		// LOAD MUSIC

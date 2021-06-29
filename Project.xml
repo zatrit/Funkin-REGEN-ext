@@ -44,7 +44,7 @@
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg|*.mp4" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3|*.mp4" if="desktop"/>
-	<assets path="assets/preload" rename="assets" exclude="*.mp3|*.webm|*.mp4" if="mobile"/>
+	<assets path="assets/preload" rename="assets" exclude="*.mp3|*.webm|*.mp4|videos/*" if="mobile"/>
 
 	<assets path="assets/modSongs" rename="assets/songs" exclude="*.ogg" if="web"/>
 	<assets path="assets/modSongs" rename="assets/songs" exclude="*.mp3" unless="web"/>

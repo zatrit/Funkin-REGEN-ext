@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas imagePath="Down.png">
 <!-- Created with Kades Custom Converter -->
-<SubTexture name="Proper Down0000" x="0" y="0" width="2060" height="2241" frameX="-49" frameY="-143" frameWidth="2214" frameHeight="2384"/>
-<SubTexture name="Proper Down0001" x="2085" y="0" width="2054" height="2219" frameX="-66" frameY="-65" frameWidth="2214" frameHeight="2384"/>
-<SubTexture name="Proper Down0002" x="4164" y="0" width="2071" height="2095" frameX="-110" frameY="-137" frameWidth="2214" frameHeight="2384"/>
-<SubTexture name="Proper Down0003" x="0" y="2266" width="2214" height="2132" frameX="-0" frameY="-88" frameWidth="2214" frameHeight="2384"/>
-<SubTexture name="Proper Down0004" x="2239" y="2266" width="1985" height="2221" frameX="-87" frameY="-0" frameWidth="2214" frameHeight="2384"/>
-<SubTexture name="Proper Down0005" x="4249" y="2266" width="2027" height="2205" frameX="-64" frameY="-0" frameWidth="2214" frameHeight="2384"/>
+<SubTexture name="Proper Down0000" x="0" y="0" width="1030" height="1120" frameX="-24" frameY="-76" frameWidth="1107" frameHeight="1192"/>
+<SubTexture name="Proper Down0001" x="1042" y="0" width="1027" height="1109" frameX="-33" frameY="-32" frameWidth="1107" frameHeight="1192"/>
+<SubTexture name="Proper Down0002" x="2082" y="0" width="1035" height="1047" frameX="-55" frameY="-68" frameWidth="1107" frameHeight="1192"/>
+<SubTexture name="Proper Down0003" x="0" y="1133" width="1107" height="1066" frameX="-0" frameY="-44" frameWidth="1107" frameHeight="1192"/>
+<SubTexture name="Proper Down0004" x="1119" y="1133" width="992" height="1110" frameX="-43" frameY="-0" frameWidth="1107" frameHeight="1192"/>
+<SubTexture name="Proper Down0005" x="2124" y="1133" width="1013" height="1102" frameX="-32" frameY="-0" frameWidth="1107" frameHeight="1192"/>
 </TextureAtlas>
