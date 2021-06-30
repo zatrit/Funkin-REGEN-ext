@@ -37,8 +37,9 @@ class FreeplayState extends MusicBeatState
 	#if mobile
 	var grpMobileButtons:MobileControls;
 	#end
-
+        #if PRELOAD_ALL
 	var timer:FlxTimer;
+        #end
 
 	override function create()
 	{
@@ -315,16 +316,6 @@ class FreeplayState extends MusicBeatState
 		timer.start(1,(timer)->{
 			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		});
-		#else
-		if(timer!=null)
-			timer.cancel();
-		else
-			timer=new FlxTimer(FlxTimer.globalManager);
-
-		timer.start(3,(timer)->{
-			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
-		});
-		#end
 		
 		var bullShit:Int = 0;
 
