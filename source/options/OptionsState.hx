@@ -27,26 +27,9 @@ class OptionsState extends MusicBeatState
 		menuBG.antialiasing = true;
 		add(menuBG);
 
-		/* 
-			grpControls = new FlxTypedGroup<Alphabet>();
-			add(grpControls);
-
-			for (i in 0...controlsStrings.length)
-			{
-				if (controlsStrings[i].indexOf('set') != -1)
-				{
-					var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i].substring(3) + ': ' + controlsStrings[i + 1], true, false);
-					controlLabel.isMenuItem = true;
-					controlLabel.targetY = i;
-					grpControls.add(controlLabel);
-				}
-				// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
-			}
-		 */
-
 		super.create();
 
-		openSubState(new OptionsSubState(this));
+		openSubState(new MainOptionsSubState(this));
 	}
 
 	override function update(elapsed:Float)
@@ -92,44 +75,15 @@ class OptionsState extends MusicBeatState
 		}
 	}
 
-	function changeSelection(change:Int = 0)
-	{
-		#if (!switch&&!mobile)
-		NGio.logEvent('Fresh');
-		#end
-
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-
-		curSelected += change;
-
-		if (curSelected < 0)
-			curSelected = grpControls.length - 1;
-		if (curSelected >= grpControls.length)
-			curSelected = 0;
-
-		// selector.y = (70 * curSelected) + 30;
-
-		var bullShit:Int = 0;
-
-		for (item in grpControls.members)
-		{
-			item.targetY = bullShit - curSelected;
-			bullShit++;
-
-			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
-
-			if (item.targetY == 0)
-			{
-				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
-			}
-		}
-	}
 	override function onBack() {
-		FlxG.switchState(new MainMenuState());
+		if((subState is MainOptionsSubState)){
+			FlxG.switchState(new MainMenuState());
+		}
+		else
+			openSubState(new MainOptionsSubState(this));
 	}
 	override function closeSubState() {
-		openSubState(new OptionsSubState(this));
+		if(subState==null)
+			openSubState(new MainOptionsSubState(this));
 	}
 }

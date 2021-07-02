@@ -41,17 +41,17 @@ class Character extends FlxSprite
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('GF_assets');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
+				quickAnimAdd('cheer', 'GF Cheer', 24, false);
+				quickAnimAdd('singLEFT', 'GF left note', 24, false);
+				quickAnimAdd('singRIGHT', 'GF Right Note', 24, false);
+				quickAnimAdd('singUP', 'GF Up Note', 24, false);
+				quickAnimAdd('singDOWN', 'GF Down Note', 24, false);
 				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
+				quickAnimAdd('scared', 'GF FEAR', 24,true);
 
 				addOffset('cheer');
 				addOffset('sad', -2, -2);
@@ -72,11 +72,11 @@ class Character extends FlxSprite
 			case 'gf-hell':
 				tex = Paths.getSparrowAtlas('hellclwn/GF/gf_phase_3','clown');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
+				quickAnimAdd('cheer', 'GF Cheer');
+				quickAnimAdd('scared', 'GF FEAR', 24, true);
 				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
 	
 				addOffset('cheer');
 				addOffset('sad', -2, -2);
@@ -119,17 +119,17 @@ class Character extends FlxSprite
 			case 'gf-christmas':
 				tex = Paths.getSparrowAtlas('christmas/gfChristmas');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
+				quickAnimAdd('cheer', 'GF Cheer');
+				quickAnimAdd('singLEFT', 'GF left note');
+				quickAnimAdd('singRIGHT', 'GF Right Note');
+				quickAnimAdd('singUP', 'GF Up Note');
+				quickAnimAdd('singDOWN', 'GF Down Note');
+				quickAnimAdd('scared', 'GF FEAR', 24,true);
 				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
 
 				addOffset('cheer');
 				addOffset('sad', -2, -2);
@@ -178,10 +178,10 @@ class Character extends FlxSprite
 			case 'gf-whitty':
 				tex = Paths.getSparrowAtlas('GF_Standing_Sway', 'bonusWeek');
 				frames = tex;
-				animation.addByPrefix('sad', 'Sad', 24, false);
-				animation.addByPrefix('danceLeft', 'Idle Left', 24, false);
-				animation.addByPrefix('danceRight', 'Idle Right', 24, false);
-				animation.addByPrefix('scared', 'Scared', 24, false);
+				quickAnimAdd('sad', 'Sad');
+				quickAnimAdd('danceLeft', 'Idle Left');
+				quickAnimAdd('danceRight', 'Idle Right');
+				quickAnimAdd('scared', 'Scared');
 
 				addOffset('sad', -140, -153);
 				addOffset('danceLeft', -140, -153);
@@ -192,10 +192,10 @@ class Character extends FlxSprite
 			case 'gf-whitty-zoom':
 				tex = Paths.getSparrowAtlas('GF_Standing_ZOOOOOOOOOOOOOOM', 'bonusWeek');
 				frames = tex;
-				animation.addByPrefix('sad', 'Sad', 24, false);
-				animation.addByPrefix('danceLeft', 'Idle Left', 24, false);
-				animation.addByPrefix('danceRight', 'Idle Right', 24, false);
-				animation.addByPrefix('scared', 'Scared', 24, false);
+				quickAnimAdd('sad', 'Sad');
+				quickAnimAdd('danceLeft', 'Idle Left');
+				quickAnimAdd('danceRight', 'Idle Right');
+				quickAnimAdd('scared', 'Scared');
 	
 				addOffset('sad', -140, -153);
 				addOffset('danceLeft', -140, -153);
@@ -208,11 +208,11 @@ class Character extends FlxSprite
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('DADDY_DEAREST');
 				frames = tex;
-				animation.addByPrefix('idle', 'Dad idle dance', 24);
-				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
-				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24);
-				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24);
-				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24);
+				quickAnimAdd('idle', 'Dad idle dance', 24,true);
+				quickAnimAdd('singUP', 'Dad Sing Note UP', 24,true);
+				quickAnimAdd('singRIGHT', 'Dad Sing Note RIGHT', 24,true);
+				quickAnimAdd('singDOWN', 'Dad Sing Note DOWN', 24,true);
+				quickAnimAdd('singLEFT', 'Dad Sing Note LEFT', 24,true);
 
 				addOffset('idle');
 				addOffset("singUP", -6, 50);
@@ -226,11 +226,11 @@ class Character extends FlxSprite
 				// GARCELLO ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('garcello_assets',"weekG");
 				frames = tex;
-				animation.addByPrefix('idle', 'garcello idle dance', 24);
-				animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
-				animation.addByPrefix('singRIGHT', 'garcello Sing Note RIGHT', 24);
-				animation.addByPrefix('singDOWN', 'garcello Sing Note DOWN', 24);
-				animation.addByPrefix('singLEFT', 'garcello Sing Note LEFT', 24);
+				quickAnimAdd('idle', 'garcello idle dance', 24, true);
+				quickAnimAdd('singUP', 'garcello Sing Note UP', 24, true);
+				quickAnimAdd('singRIGHT', 'garcello Sing Note RIGHT', 24, true);
+				quickAnimAdd('singDOWN', 'garcello Sing Note DOWN', 24, true);
+				quickAnimAdd('singLEFT', 'garcello Sing Note LEFT', 24, true);
 
 				addOffset('idle');
 				addOffset("singUP", 0, 0);
@@ -244,16 +244,16 @@ class Character extends FlxSprite
 				// GARCELLO TIRED ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('garcellotired_assets','weekG');
 				frames = tex;
-				animation.addByPrefix('idle', 'garcellotired idle dance', 24, false);
-				animation.addByPrefix('singUP', 'garcellotired Sing Note UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'garcellotired Sing Note RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'garcellotired Sing Note DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'garcellotired Sing Note LEFT', 24, false);
+				quickAnimAdd('idle', 'garcellotired idle dance');
+				quickAnimAdd('singUP', 'garcellotired Sing Note UP');
+				quickAnimAdd('singRIGHT', 'garcellotired Sing Note RIGHT');
+				quickAnimAdd('singDOWN', 'garcellotired Sing Note DOWN');
+				quickAnimAdd('singLEFT', 'garcellotired Sing Note LEFT');
 
-				animation.addByPrefix('singUP-alt', 'garcellotired Sing Note UP', 24, false);
-				animation.addByPrefix('singRIGHT-alt', 'garcellotired Sing Note RIGHT', 24, false);
-				animation.addByPrefix('singLEFT-alt', 'garcellotired Sing Note LEFT', 24, false);
-				animation.addByPrefix('singDOWN-alt', 'garcellotired cough', 24, false);
+				quickAnimAdd('singUP-alt', 'garcellotired Sing Note UP');
+				quickAnimAdd('singRIGHT-alt', 'garcellotired Sing Note RIGHT');
+				quickAnimAdd('singLEFT-alt', 'garcellotired Sing Note LEFT');
+				quickAnimAdd('singDOWN-alt', 'garcellotired cough');
 
 				addOffset('idle');
 				addOffset("singUP", 0, 0);
@@ -312,10 +312,10 @@ class Character extends FlxSprite
 			case 'spooky':
 				tex = Paths.getSparrowAtlas('spooky_kids_assets');
 				frames = tex;
-				animation.addByPrefix('singUP', 'spooky UP NOTE', 24, false);
-				animation.addByPrefix('singDOWN', 'spooky DOWN note', 24, false);
-				animation.addByPrefix('singLEFT', 'note sing left', 24, false);
-				animation.addByPrefix('singRIGHT', 'spooky sing right', 24, false);
+				quickAnimAdd('singUP', 'spooky UP NOTE');
+				quickAnimAdd('singDOWN', 'spooky DOWN note');
+				quickAnimAdd('singLEFT', 'note sing left');
+				quickAnimAdd('singRIGHT', 'spooky sing right');
 				animation.addByIndices('danceLeft', 'spooky dance idle', [0, 2, 6], "", 12, false);
 				animation.addByIndices('danceRight', 'spooky dance idle', [8, 10, 12, 14], "", 12, false);
 
@@ -970,7 +970,7 @@ class Character extends FlxSprite
 				graphic.persist = true;
 				graphic.destroyOnNoUse = false;
 	
-				animation.addByPrefix('idle','Proper Left', 24);
+				quickAnimAdd('idle','Proper Left', 24,true);
 	
 				addOffset("idle", 516, 25);
 	
@@ -1074,6 +1074,8 @@ class Character extends FlxSprite
 						playAnim('danceRight');
 					else
 						playAnim('danceLeft');
+				case 'mrgame':
+					playAnim('danceRight');
 				default:
 					playAnim('idle');
 			}
@@ -1196,5 +1198,8 @@ class Character extends FlxSprite
 			else
 				offset.set(0, 0);
 		}
+	}
+	public function quickAnimAdd(name:String="",prefix:String="",fps:Int=24,looped:Bool=false) {
+		animation.addByPrefix(name,prefix,fps,looped);
 	}
 }

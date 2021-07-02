@@ -21,9 +21,6 @@ class MusicBeatState extends FlxUIState
 	{
 		Gc.run(false);
 
-		if (transIn != null)
-			trace('reg ' + transIn.region);
-
 		super.create();
 	}
 

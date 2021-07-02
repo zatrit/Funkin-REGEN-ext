@@ -70,6 +70,6 @@ class MusicBeatSubstate extends FlxSubState
 		//do literally nothing dumbass
 	}
 	public function onBack():Void{
-		FlxG.switchState(new MainMenuState());
+		close();
 	}
 }

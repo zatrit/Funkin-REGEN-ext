@@ -71,19 +71,19 @@ class LoadingState extends MusicBeatState
 					case 0:
 						checkLibrary("tutorial");
 
-					case 7:
+					case 8:
 						checkLibrary("weekG");
 
-					case 8:
+					case 9:
 						checkLibrary("bonusWeek");
 
-					case 9:
+					case 10:
 						checkLibrary("kapiWeek");
 						
-					case 10:
+					case 11:
 						checkLibrary("g3wWeek");
 						
-					case 11:
+					case 12:
 						checkLibrary("clown");
 						
 					default:

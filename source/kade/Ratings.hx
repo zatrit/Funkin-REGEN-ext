@@ -40,4 +40,13 @@ class Ratings
             return "miss";
         return "sick";
     }
+    public static function CalculateRanking(score:Int,health:Float,accuracy:Float):String
+    {
+        return
+        (
+         (FlxG.save.data.scoreDisplay ? 'Score: $score' : "") + 		                                        // Score
+         (FlxG.save.data.healthDisplay ? (" | Health: " + Std.int(health/2*100)+"%") : "") +   // Health
+         (FlxG.save.data.accuracyDisplay ? 
+         " | Accuracy: " + (accuracy==0 ? "N/A" : Std.int(HelperFunctions.truncateFloat(accuracy, 2)) + " %") : "")); 	// Accuracy																	// 	Letter Rank
+    }
 }

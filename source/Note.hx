@@ -46,6 +46,10 @@ class Note extends FlxSprite
 		this.strumTime = strumTime;
 
 		burning = _noteData > 7;
+
+		if(isSustainNote && FlxG.save.data.downscroll)
+			flipY = true;
+		
 		this.noteData = _noteData % 4;
 
 		if(isSustainNote && prevNote.burning) { 
@@ -117,10 +121,21 @@ class Note extends FlxSprite
 					else
 					{
 						frames = Paths.getSparrowAtlas('NOTE_fire', "clown");
-						animation.addByPrefix('blueScroll', 'blue fire');
-						animation.addByPrefix('greenScroll', 'green fire');
+
+						if(!FlxG.save.data.downscroll){
+							animation.addByPrefix('blueScroll', 'blue fire');
+							animation.addByPrefix('greenScroll', 'green fire');
+						}
+						else{
+							animation.addByPrefix('greenScroll', 'blue fire');
+							animation.addByPrefix('blueScroll', 'green fire');
+						}
+
 						animation.addByPrefix('redScroll', 'red fire');
 						animation.addByPrefix('purpleScroll', 'purple fire');
+
+						if(FlxG.save.data.downscroll)
+							flipY = true;
 						
 						x -= 50;
 					}

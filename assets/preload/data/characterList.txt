@@ -31,3 +31,5 @@ trickyEx
 bf-hell
 gf-hell
 gf-tied
+tord
+tordbot

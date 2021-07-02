@@ -33,6 +33,7 @@ class StoryMenuState extends MusicBeatState
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns'],
 		#end
+		['Ugh', 'Guns', 'Stress'],
 		['Headache', 'Nerves', 'Release','Fading'],
 		['Lo-fight', 'Overhead', 'Ballistic'],
 		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'],		
@@ -51,6 +52,7 @@ class StoryMenuState extends MusicBeatState
 		['parents-christmas', 'bf', 'gf'],
 		['senpai', 'bf', 'gf'],
 		#end
+		['tankman', 'bf', 'gf'],
 		['garcello', 'bf', 'gf'],
 		['whitty', 'bf', 'gf'],
 		['kapi', 'bf', 'gf'],
@@ -68,6 +70,7 @@ class StoryMenuState extends MusicBeatState
 		"RED SNOW",
 		"hating simulator ft. moawling",
 		#end
+		"Tankman",
 		"SMOKE 'EM OUT STRUGGLE",
 		"Back Alley Blitz",
 		"B-B-BREAK DOWN!",
@@ -290,7 +293,9 @@ class StoryMenuState extends MusicBeatState
 
 		grpLocks.forEach(function(lock:FlxSprite)
 		{
-			lock.y = grpWeekText.members[lock.ID].y;
+			var text=grpWeekText.members[lock.ID];
+			lock.y = text.y;
+			lock.visible = lock.y>yellowBG.y+yellowBG.height/2;
 		});
 
 		var touchLeft:Bool=false;
@@ -397,7 +402,7 @@ class StoryMenuState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
-		if(#if !MOD_ONLY curWeek==9||curWeek==10 #else curWeek==3||curWeek==4 #end)
+		if(#if !MOD_ONLY curWeek==10||curWeek==11 #else curWeek==4||curWeek==5 #end)
 			curDifficulty = 2;
 
 		sprDifficulty.offset.x = 0;
@@ -431,12 +436,17 @@ class StoryMenuState extends MusicBeatState
 	{
 		curWeek += change;
 
+		if(!weekUnlocked(curWeek)&&change>=0)
+			curWeek++;
+		if(!weekUnlocked(curWeek)&&change<0)
+			curWeek--;
+
 		if (curWeek >= weekData.length)
-			curWeek = 0;
+			curWeek = 0 + (change-1);
 		if (curWeek < 0)
 			curWeek = weekData.length - 1;
 
-		if(#if !MOD_ONLY curWeek==9||curWeek==10 #else curWeek==3||curWeek==4 #end){
+		if(#if !MOD_ONLY curWeek==10||curWeek==11 #else curWeek==4||curWeek==5 #end){
 			curDifficulty=2;
 			changeDifficulty();
 		}
@@ -467,9 +477,11 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.text = "Tracks\n";
 
 		grpWeekCharacters.members[0].visible=curWeek!=0;
+
+		var visible:Bool=#if !MOD_ONLY (curWeek!=10&&curWeek!=11) #else (curWeek!=4&&curWeek!=5) #end;
 		
-		grpWeekCharacters.members[1].visible=#if !MOD_ONLY (curWeek!=9&&curWeek!=10) #else (curWeek!=3&&curWeek!=4) #end;
-		grpWeekCharacters.members[2].visible=#if !MOD_ONLY (curWeek!=9&&curWeek!=10) #else (curWeek!=3&&curWeek!=4) #end;
+		grpWeekCharacters.members[1].visible=visible;
+		grpWeekCharacters.members[2].visible=visible;
 
 		switch (grpWeekCharacters.members[0].animation.curAnim.name)
 		{
@@ -544,6 +556,6 @@ class StoryMenuState extends MusicBeatState
 		}
 	}
 	public static function weekUnlocked(id:Int=0):Bool{
-		return true;
+		return id!=7;
 	}
 }

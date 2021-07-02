@@ -1,5 +1,6 @@
 package;
 
+import options.DefaultOptions;
 import kade.CachedFrames;
 #if desktop
 import Discord.DiscordClient;
@@ -194,6 +195,8 @@ class TitleState extends MusicBeatState
 
 		FlxG.mouse.useSystemCursor=true;
 		FlxG.mouse.visible = false;
+
+		DefaultOptions.setOptionsDefaults();
 
 		if (initialized)
 			skipIntro();
