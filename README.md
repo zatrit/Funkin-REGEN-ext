@@ -16,6 +16,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [Vs. Whitty](https://github.com/KadeDev/vswhitty-public)
 - [VS. KAPI - Arcade Showdown](https://gamebanana.com/mods/44683)
 - [The Full-Ass Tricky Mod](https://gamebanana.com/mods/44334)
+- [Vs. Tord Mod REMASTERED](https://gamebanana.com/mods/183165)
 
 ## Credits / shoutouts
 
@@ -28,6 +29,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [paperkitty](https://gamebanana.com/members/1838959) - Kapi author
 - Mr. Game & Watch and Flatzone are owned by Nintendo
 - [Cval](https://github.com/cvalbrown) and [Rozebud](https://github.com/ThatRozebudDude) - Tricky authors
+- [Bbpanzu](https://github.com/bbpanzu) and [Jason The Art Kid](https://gamebanana.com/members/1864663) - Tord authors
 
 This game was made with love to Newgrounds and it's community. Extra love to Tom Fulp.
 

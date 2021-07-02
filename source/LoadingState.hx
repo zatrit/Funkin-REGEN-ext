@@ -85,6 +85,9 @@ class LoadingState extends MusicBeatState
 						
 					case 12:
 						checkLibrary("clown");
+
+					case 13:
+						checkLibrary("tord");
 						
 					default:
 						checkLibrary("week" + PlayState.storyWeek);

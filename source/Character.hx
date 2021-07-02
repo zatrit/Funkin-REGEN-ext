@@ -1,5 +1,6 @@
 package;
 
+import flixel.addons.effects.FlxTrail;
 import flixel.animation.FlxAnimationController;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -21,6 +22,9 @@ class Character extends FlxSprite
 
 	public var exSpikes:FlxSprite;
 	public var otherFrames:Array<Character>;
+
+	var garTrailTarget:FlxSprite;
+	var garTrail:FlxTrail;
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -285,6 +289,21 @@ class Character extends FlxSprite
 				addOffset("singLEFT", 0, 0);
 				addOffset("singDOWN", 0, 0);
 				addOffset("garTightBars", 0, 0);
+
+				garTrailTarget = new FlxSprite(x,y);
+				garTrailTarget.graphic=graphic;
+				garTrailTarget.frames=frames;
+
+				garTrailTarget.animation.addByPrefix('idle', 'garcello idle dance', 24);
+				garTrailTarget.animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
+				garTrailTarget.animation.addByPrefix('singRIGHT', 'garcello Sing Note RIGHT', 24);
+				garTrailTarget.animation.addByPrefix('singDOWN', 'garcello Sing Note DOWN', 24);
+				garTrailTarget.animation.addByPrefix('singLEFT', 'garcello Sing Note LEFT', 24);
+
+				garTrail=new FlxTrail(garTrailTarget,null,8,0,0.2,0.25);
+				garTrail.scrollFactor.set(1.1,1.1);
+
+				PlayState.staticVar.add(garTrail);
 
 				playAnim('idle');
 
@@ -981,6 +1000,43 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width*2),Std.int(height*2));
 				updateHitbox();
+			case 'tord':
+				tex = Paths.getSparrowAtlas('tord_assets','tord');
+				frames = tex;
+	
+				trace("got texture");
+				animation.addByPrefix('idle', "tord idle", 24, false);
+				animation.addByPrefix('singUP', "tord up", 24, false);
+				animation.addByPrefix('singDOWN', "tord down", 24, false);
+				animation.addByPrefix('singLEFT', 'tord left', 24, false);
+				animation.addByPrefix('singRIGHT', 'tord right', 24, false);
+	
+				trace("got anims");
+				addOffset('idle');
+				addOffset("singDOWN",-4,-21);
+				addOffset("singRIGHT",-30,-13);
+				addOffset("singUP",9,21);
+				addOffset("singLEFT",20,-17);
+	
+				playAnim('idle');
+			case 'tordbot':
+				tex = Paths.getSparrowAtlas('tordbot_assets','tord');
+				frames = tex;
+				trace("got texture");
+				animation.addByPrefix('idle', "tordbot idle", 24, false);
+				animation.addByPrefix('singUP', "tordbot up", 24, false);
+				animation.addByPrefix('singDOWN', "tordbot down", 24, false);
+				animation.addByPrefix('singLEFT', 'tordbot left', 24, false);
+				animation.addByPrefix('singRIGHT', 'tordbot right', 24, false);
+	
+				trace("got anims");
+				addOffset('idle');
+				addOffset("singRIGHT",-20,-20);
+				addOffset("singDOWN",-10,-90);
+				addOffset("singLEFT",-90);
+				addOffset("singUP",-30,29);
+	
+				playAnim('idle');
 		}
 
 		dance();
@@ -1088,6 +1144,7 @@ class Character extends FlxSprite
 			otherFramesAnim(AnimName,Force,Reversed,Frame);
 		else
 		{
+			
 			animation.play(AnimName, Force, Reversed, Frame);
 
 			var daOffset = animOffsets.get(AnimName);
@@ -1113,6 +1170,10 @@ class Character extends FlxSprite
 				{
 					danced = !danced;
 				}
+			}
+			if(curCharacter=="garcellodead"){
+				garTrailTarget.offset.set(daOffset[0], daOffset[1]);
+				garTrailTarget.animation.play(AnimName);
 			}
 			if(curCharacter=="exTricky"){
 				if (AnimName == 'singUP')

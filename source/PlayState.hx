@@ -202,6 +202,8 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		Conductor.recalculateTimings();
+
 		staticVar=this;
 
 		if(firstTry)
@@ -981,6 +983,42 @@ class PlayState extends MusicBeatState
 					stageFront.scrollFactor.set(0.9, 0.9);
 					stageFront.setGraphicSize(Std.int(stageFront.width * 1.55));
 					add(stageFront);
+				case 'norway' | 'tordbot':
+					curStage = 'eddhouse';
+					var sky:FlxSprite = new FlxSprite( -162.1, -386.1);
+					sky.frames = Paths.getSparrowAtlas("sky",'tord');
+					sky.animation.addByPrefix("bg_sky1", "bg_sky1");
+					sky.animation.addByPrefix("bg_sky2", "bg_sky2");
+					if(SONG.song.toLowerCase() == 'norway' ){
+						sky.animation.play("bg_sky1");
+					}else{
+						sky.animation.play("bg_sky2");
+					}
+				
+				
+					var bg:FlxSprite = new FlxSprite( -162.1, -386.1);
+					bg.frames = Paths.getSparrowAtlas("bgFront",'tord');
+					bg.animation.addByPrefix("bg_normal", "bg_normal");
+					bg.animation.addByPrefix("bg_destroy", "bg_destroy");
+					if(SONG.song.toLowerCase() == 'norway'){
+						bg.animation.play("bg_normal");
+					}else{
+						bg.animation.play("bg_destroy");
+					}
+				
+				
+					bg.antialiasing = true;
+					bg.scrollFactor.set(0.9, 0.9);
+					sky.scrollFactor.set(0.5, 0);
+					if(SONG.song.toLowerCase() == 'tordbot')
+						sky.scrollFactor.set();
+					bg.active = false;
+					sky.active = false;
+					//bg.setGraphicSize(Std.int(bg.width * 0.8));
+					bg.updateHitbox();
+					sky.updateHitbox();
+					add(sky);
+					add(bg);
 		          default:
 		          {
 		                  defaultCamZoom = 0.9;
@@ -1095,6 +1133,15 @@ class PlayState extends MusicBeatState
 				gf.x += 345;
 				gf.y -= 25;
 				dad.visible = false;
+
+			case 'tord':
+				dad.x = 214.2;
+				dad.y = 55.4;
+				camPos.set(218.75, 25.7);
+			case 'tordbot':
+				dad.x = -429.05;
+				dad.y = -1424.75;
+				camPos.set(391.2, -1094.15);
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -1133,13 +1180,7 @@ class PlayState extends MusicBeatState
 				boyfriend.y += 220;
 				gf.x += 180;
 				gf.y += 300;
-			case 'garAlley':
-				boyfriend.x += 50;
-			case 'garAlleyDead':
-				// evilTrail.changeValuesEnabled(false, false, false, false);
-				// evilTrail.changeGraphic()
-				// add(evilTrail);
-				// evilTrail.scrollFactor.set(1.1, 1.1);
+			case 'garAlleyDead'|'garAlleyDip':
 				boyfriend.x += 50;
 			case 'nevada':
 				boyfriend.y -= 0;
@@ -1147,6 +1188,10 @@ class PlayState extends MusicBeatState
 			case 'auditorHell':
 				boyfriend.y -= 160;
 				boyfriend.x += 350;
+			case 'eddhouse':
+				boyfriend.x = 1096.1;
+				boyfriend.y = 271.7;
+				gf.visible=false;
 		}
 
 		add(gf);
@@ -1227,6 +1272,8 @@ class PlayState extends MusicBeatState
 		// startCountdown();
 
 		generateSong(SONG.song);
+
+		notes.sort(FlxSort.byY, (useDownscroll ? FlxSort.ASCENDING : FlxSort.DESCENDING));
 
 		// add(strumLine);
 
@@ -1906,6 +1953,7 @@ class PlayState extends MusicBeatState
 		
 					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true);
 					sustainNote.scrollFactor.set();
+					
 					unspawnNotes.push(sustainNote);
 		
 					sustainNote.mustPress = gottaHitNote;
@@ -1915,6 +1963,11 @@ class PlayState extends MusicBeatState
 						sustainNote.x += FlxG.width / 2; // general offset
 					}
 				}
+
+				if(useDownscroll)
+					for (note in unspawnNotes)
+						if(note.animation.name.endsWith("end"))
+							note.offset.y=-2;
 		
 				swagNote.mustPress = gottaHitNote;
 		
@@ -2282,7 +2335,11 @@ class PlayState extends MusicBeatState
 
 			if (camFollow.x != dad.getMidpoint().x + 150 && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
 			{
-				camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+				if(SONG.player2 != "tordbot")
+					camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+				else
+					camFollow.setPosition(dad.x + 1000, dad.y + 300);
+				//camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
 				// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
 
 				switch (dad.curCharacter)
@@ -2304,7 +2361,7 @@ class PlayState extends MusicBeatState
 				if (dad.curCharacter == 'mom')
 					vocals.volume = 1;
 
-				if (SONG.song.toLowerCase() == 'tutorial')
+				if (SONG.song.toLowerCase() == 'tutorial'||SONG.song.toLowerCase() == 'tordbot')
 				{
 					tweenCamIn();
 				}

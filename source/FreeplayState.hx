@@ -112,6 +112,9 @@ class FreeplayState extends MusicBeatState
 		#end
 			addWeek(['expurgation'], 12, ['exTricky']);
 
+		if (StoryMenuState.weekUnlocked(13) || isDebug)
+			addWeek(['Norway','Tordbot'], 13, ['tord','tordbot']);
+
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS
@@ -319,6 +322,7 @@ class FreeplayState extends MusicBeatState
 		timer.start(1,(timer)->{
 			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		});
+		#end
 		
 		var bullShit:Int = 0;
 

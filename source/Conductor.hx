@@ -24,7 +24,7 @@ class Conductor
 	public static var offset:Float = 0;
 
 	public static var safeFrames:Int = 10;
-	public static var safeZoneOffset:Float = (safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
+	public static var safeZoneOffset:Float = Math.floor((safeFrames / 60) * 1000); // is calculated in create(), is safeFrames in milliseconds
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
@@ -32,6 +32,13 @@ class Conductor
 
 	public function new()
 	{
+	}
+
+	public static function recalculateTimings()
+	{
+		Conductor.safeFrames = 10;
+		Conductor.safeZoneOffset = Math.floor((Conductor.safeFrames / 60) * 1000);
+		Conductor.timeScale = Conductor.safeZoneOffset / 166;
 	}
 
 	public static function mapBPMChanges(song:SwagSong)

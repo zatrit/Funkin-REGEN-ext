@@ -2,6 +2,8 @@ package;
 
 import flixel.FlxSprite;
 
+import StringTools;
+
 class HealthIcon extends FlxSprite
 {
 	/**
@@ -14,7 +16,6 @@ class HealthIcon extends FlxSprite
 		super();
 		loadGraphic(Paths.image('iconGrid'), true, 150, 150);
 
-		antialiasing = true;
 		animation.add('bf', [0, 1], 0, false, isPlayer);
 		animation.add('bf-car', [0, 1], 0, false, isPlayer);
 		animation.add('bf-hell', [0, 1], 0, false, isPlayer);
@@ -54,7 +55,13 @@ class HealthIcon extends FlxSprite
 		animation.add('exTricky', [43, 44], 0, false, isPlayer);
 		animation.add('trickyH', [45, 46], 0, false, isPlayer);
 
+		animation.add('tord', [47, 48], 0, false, isPlayer);
+		animation.add('tordbot', [49, 50], 0, false, isPlayer);
+
 		animation.play(char);
+
+		antialiasing=!(char=="senpai"||char=="senpai-angry"||char=="spirit");
+
 		scrollFactor.set();
 	}
 

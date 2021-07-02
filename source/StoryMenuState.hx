@@ -39,6 +39,7 @@ class StoryMenuState extends MusicBeatState
 		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'],		
 		['Flatzone'],
 		['Improbable-Outset', 'Madness', 'Hellclown'],
+		['Norway', 'Tordbot']
 	];
 	var curDifficulty:Int = 1;
 
@@ -58,6 +59,7 @@ class StoryMenuState extends MusicBeatState
 		['kapi', 'bf', 'gf'],
 		['mrgame', 'bf', 'gf'],
 		['trickyMask', 'bf', 'gf'],
+		['tord', 'bf', 'gf'],
 	];
 
 	var weekNames:Array<String> = [
@@ -76,6 +78,7 @@ class StoryMenuState extends MusicBeatState
 		"B-B-BREAK DOWN!",
 		"Please nerf up-b...",
 		"Madness",
+		"Tord",
 	];
 
 	var txtWeekTitle:FlxText;

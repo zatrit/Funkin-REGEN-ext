@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app file="Funkin"  main="Main" version="0.2.8.8-ext" company="ninjamuffin99 and zatrit" />
+	<app file="Funkin"  main="Main" version="0.2.8.9-ext" company="ninjamuffin99 and zatrit" />
 	<app if="debug" packageName="com.zatrit.funkin_dev" package="com.zatrit.funkin_ext" title="(DEV) Friday Night Funkin' REGEN EXT"/>
 	<app unless="debug" packageName="com.zatrit.funkin" package="com.zatrit.funkin_ext" title="Friday Night Funkin' REGEN EXT"/>
 	<!--Switch Export with Unique ApplicationID and Icon-->
@@ -73,6 +73,7 @@
 		<library name="kapiWeek"    preload="true" />
 		<library name="g3wWeek"    preload="true" />
 		<library name="clown"    preload="true" />
+		<library name="tord"    preload="true" />
 
 		<library name="menuBackgrounds"    preload="true" />
 	</section>
@@ -97,6 +98,7 @@
 		<library name="kapiWeek"    preload="false" />
 		<library name="g3wWeek"    preload="false" />
 		<library name="clown"    preload="false" />
+		<library name="tord"    preload="false" />
 
 		<!-- It's not all, LOL -->
 		<library name="menuBackgrounds"    preload="true" />
@@ -138,6 +140,9 @@
 	<!-- Tricky -->
 	<assets path="assets/clown"    library="clown"    exclude="*.ogg" if="web"/>
 	<assets path="assets/clown"    library="clown"    exclude="*.mp3" unless="web"/>
+	<!-- Tord -->
+	<assets path="assets/tord"    library="tord"    exclude="*.ogg" if="web"/>
+	<assets path="assets/tord"    library="tord"    exclude="*.mp3" unless="web"/>
 
 	<assets path="assets/menuBackgrounds" library="menuBackgrounds"/>
 	

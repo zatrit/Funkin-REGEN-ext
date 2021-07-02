@@ -15,4 +15,5 @@
 	<SubTexture name="10week 0000" x="0" y="926" width="443" height="82"/>
 	<SubTexture name="11week 0000" x="0" y="1008" width="359" height="89"/>
 	<SubTexture name="12week 0000" x="0" y="1097" width="351" height="92"/>
+	<SubTexture name="13week 0000" x="0" y="1189" width="359" height="89"/>
 </TextureAtlas>
