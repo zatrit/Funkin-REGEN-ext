@@ -407,45 +407,48 @@ class TitleState extends MusicBeatState
 				createCoolText(['Krinkels','GWebDev','Tsuraran']);
 			case 10:
 				deleteCoolText();
-				createCoolText(['In association', 'with']);
+				createCoolText(['bbpanzu','Eddsworld','Jason The Art Kid']);
 			case 11:
+				deleteCoolText();
+				createCoolText(['In association', 'with']);
+			case 12:
 				addMoreText('newgrounds');
 				ngSpr.visible = true;
 			// credTextShit.text += '\nNewgrounds';
-			case 12:
+			case 13:
 				deleteCoolText();
 				ngSpr.visible = false;
 			// credTextShit.visible = false;
 
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
-			case 13:
+			case 14:
 				createCoolText([curWacky[0]]);
 			// credTextShit.visible = true;
-			case 14:
+			case 15:
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
-			case 15:
+			case 16:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
-			case 16:
+			case 17:
 				addMoreText('Friday');
 			// credTextShit.visible = true;
-			case 17:
+			case 18:
 				addMoreText('Night');
 			// credTextShit.text += '\nNight';
-			case 18:
+			case 19:
 				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
-			case 19:
+			case 20:
 				addMoreText('REGEN'); // credTextShit.text += '\nFunkin';
 
-			case 20:
+			case 21:
 				addMoreText('EXT'); // credTextShit.text += '\nFunkin';
 
-			case 22:
+			case 23:
 				skipIntro();
 		}
 	}
