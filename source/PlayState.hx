@@ -876,10 +876,10 @@ class PlayState extends MusicBeatState
 					if (SONG.song.toLowerCase() != 'madness')
 					{
 						add(bg);
-						stageFront = new FlxSprite(-1100, -460).loadGraphic(Paths.image('island_but_dumb','clown'));
+						stageFront = new FlxSprite(-422, 207).loadGraphic(Paths.image('island_but_dumb','clown'));
 					}
 					else
-						stageFront = new FlxSprite(-1100, -460).loadGraphic(Paths.image('island_but_rocks_float','clown'));
+						stageFront = new FlxSprite(-456, -460).loadGraphic(Paths.image('island_but_rocks_float','clown'));
 	
 					stageFront.setGraphicSize(Std.int(stageFront.width * 1.4));
 					stageFront.antialiasing = true;
@@ -916,7 +916,7 @@ class PlayState extends MusicBeatState
 					bg.active = false;
 					add(bg);
 	
-					var stageFront:FlxSprite = new FlxSprite(-2000, -400).loadGraphic(Paths.image('hellclwn/island_but_red','clown'));
+					var stageFront:FlxSprite = new FlxSprite(-1050, -550).loadGraphic(Paths.image('hellclwn/island_but_red','clown'));
 					stageFront.setGraphicSize(Std.int(stageFront.width * 2.6));
 					stageFront.antialiasing = true;
 					stageFront.scrollFactor.set(0.9, 0.9);

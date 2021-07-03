@@ -26,7 +26,9 @@ class OptionsSubState extends MusicBeatSubstate
 		this.parent=parent;
 		this.textMenuItems=items;
 		this.itemHighlightOnMobile=itemHighlightOnMobile;
+		#if mobile
 		this.itemDiff=itemDiff;
+		#end
 
 		createItems();
 		changeSelection();
