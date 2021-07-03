@@ -14,6 +14,8 @@ class MobileControls extends FlxTypedGroup<FlxSprite>{
 	public var up:Control;
 	public var down:Control;
 
+	public var pressable(get, set):Bool;
+
 	var x:Int;
 	var y:Int;
 	var camHUD:FlxCamera;
@@ -134,6 +136,18 @@ class MobileControls extends FlxTypedGroup<FlxSprite>{
 		this.up=upHitbox;
 		this.down=downHitbox;
 
+	}
+
+	public function set_pressable(val:Bool) : Bool {
+		left.pressable=val;
+		down.pressable=val;
+		up.pressable=val;
+		right.pressable=val;
+
+		return this.pressable;
+	}
+	public function get_pressable() : Bool {
+		return left.pressable&&down.pressable&&up.pressable&&right.pressable;
 	}
 }
 #end

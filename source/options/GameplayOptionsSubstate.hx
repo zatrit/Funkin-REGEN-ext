@@ -21,7 +21,7 @@ class GameplayOptionsSubstate extends OptionsSubState {
 			#if mobile
 			case "Controls":
 				FlxG.state.closeSubState();
-				FlxG.state.openSubState(new MobileControlsSubState());
+				FlxG.state.openSubState(new MobileControlsSubState(parent));
 			#end
 			case 'kade input: off' | 'kade input: on':
 				{

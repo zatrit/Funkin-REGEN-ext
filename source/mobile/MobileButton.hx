@@ -39,6 +39,7 @@ class MobileButton extends Control{
         this.justPressed=false;
         this.justReleased=true;
         
+        if(pressable)
         for(touch in FlxG.touches.list)
         {
             var point:FlxPoint=touch.getScreenPosition(cameras[0]);

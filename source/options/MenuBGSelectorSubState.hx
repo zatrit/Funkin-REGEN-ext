@@ -7,11 +7,12 @@ class MenuBGSelectorSubState extends OptionsSubState
 {
 	public function new(parent:OptionsState)
 	{
-		final items:Array<String> = ['default', 'garcello', 'whitty', 'kapi','tricky','tricky amogus'];
+		final items:Array<String> = ['default', 'garcello', 'whitty', 'kapi','tricky','tricky amogus','tord'];
 
-		super(parent,items);
+		super(parent,items,true,0.6);
 
 		curSelected=textMenuItems.indexOf(MainMenuState.bgStyle);
+		changeSelection();
 	}
 
 	override function onSelect(value:String = "", number:Int = 0) {
@@ -22,10 +23,6 @@ class MenuBGSelectorSubState extends OptionsSubState
 		MainMenuState.bgStyle=bgStyle;
 		FlxG.save.data.bgStyle=bgStyle;
 		FlxG.save.flush();
-		
-		FlxG.sound.play(Paths.sound('confirmMenu'));
-
-		close();
 	}
 	
 	override function changeSelection(change:Int = 0)

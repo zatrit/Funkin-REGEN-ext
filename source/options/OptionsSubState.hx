@@ -8,20 +8,24 @@ class OptionsSubState extends MusicBeatSubstate
 	var textMenuItems:Array<String>;
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
+	var itemHighlightOnMobile:Bool;
+
 	var curSelected:Int = 0;
+	var oldCurSelected:Int = 0;
 
 	#if mobile
-	final DIST_BEETWEN_ITEMS = 0.8;
+	var itemDiff = 0.8;
 	#end
 
 	public var parent:OptionsState;
 
-	public function new(parent:OptionsState, items:Array<String>)
+	public function new(parent:OptionsState, items:Array<String>,itemHighlightOnMobile:Bool=false,itemDiff:Float=0.8)
 	{
 		super();
 
 		this.parent=parent;
 		this.textMenuItems=items;
+		this.itemHighlightOnMobile=itemHighlightOnMobile;
 
 		createItems();
 		changeSelection();
@@ -36,7 +40,7 @@ class OptionsSubState extends MusicBeatSubstate
 		#if mobile
 		for (item in grpOptions.members)
 			for(touch in FlxG.touches.list){
-				if(touch.overlaps(item)&&touch.justPressed){
+				if(touch.overlaps(item)&&touch.pressed){
 					curSelected=item.ID;
 					changeSelection();
 					accept=true;
@@ -60,7 +64,6 @@ class OptionsSubState extends MusicBeatSubstate
 	{
 	
 		// NGio.logEvent('Fresh');
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 	
 		curSelected += change;
 	
@@ -69,26 +72,36 @@ class OptionsSubState extends MusicBeatSubstate
 		if (curSelected >= textMenuItems.length)
 			curSelected = 0;
 	
+		if(curSelected!=oldCurSelected)
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+
 		// selector.y = (70 * curSelected) + 30;
 	
 		var bullShit:Int = 0;
 
-		#if !mobile
 		for (item in grpOptions.members)
 		{
+			#if !mobile
 			item.targetY = bullShit - curSelected;
 			bullShit++;
+			#end
 
-			item.alpha = 0.6;
+			if(itemHighlightOnMobile)
+				item.alpha = 0.6;
 			// item.setGraphicSize(Std.int(item.width * 0.8));
 	
+			#if !mobile
 			if (item.targetY == 0)
+			#else
+			if (item.ID==curSelected&&itemHighlightOnMobile)
+			#end
 			{
 				item.alpha = 1;
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
-		#end
+
+		oldCurSelected=curSelected;
 	}
 	function toggleOption(num:Int=0,text:String="",oldVal:Bool=false,on:String='on',off:String='off'):Bool{
 		var oldAlphabet=grpOptions.members[num];
@@ -106,7 +119,6 @@ class OptionsSubState extends MusicBeatSubstate
 		alphabet.targetY=oldAlphabet.targetY;
 
 		grpOptions.replace(oldAlphabet,alphabet);
-
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		return newVal;
@@ -126,7 +138,7 @@ class OptionsSubState extends MusicBeatSubstate
 			optionText.ID = i;
 			optionText.isMenuItem = true;
 			#if mobile
-			optionText.targetY=(i-(textMenuItems.length/2))*DIST_BEETWEN_ITEMS;
+			optionText.targetY=(i-(textMenuItems.length/2))*itemDiff;
 			#end
 
 			grpOptions.add(optionText);

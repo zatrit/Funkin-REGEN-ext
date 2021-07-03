@@ -93,16 +93,16 @@ class FreeplayState extends MusicBeatState
 		//	addWeek(['Ugh', 'Guns', 'Stress'], 7, ['tankman']);
 
 		if (StoryMenuState.weekUnlocked(8) || isDebug)
-			addWeek(['Headache', 'Nerves', 'Release'#if (debug&&desktop) , 'Fading' #end], 7, ['garcello', 'garcellotired', 'garcellodead' #if (debug&&desktop) , 'garcelloghosty' #end]);
+			addWeek(['Headache', 'Nerves', 'Release'#if (debug&&desktop) , 'Fading' #end], 8, ['garcello', 'garcellotired', 'garcellodead' #if (debug&&desktop) , 'garcelloghosty' #end]);
 		
 		if (StoryMenuState.weekUnlocked(9) || isDebug)
-			addWeek(['Lo-Fight', 'Overhead', 'Ballistic'], 8, ['whitty', 'whitty', 'whittyCrazy']);
+			addWeek(['Lo-Fight', 'Overhead', 'Ballistic'], 9, ['whitty', 'whitty', 'whittyCrazy']);
 
 		if (StoryMenuState.weekUnlocked(10) || isDebug)
-			addWeek(['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], 9, ['kapi', 'kapi', 'kapi-angry','kapi']);
+			addWeek(['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], 10, ['kapi', 'kapi', 'kapi-angry','kapi']);
 
 		if (StoryMenuState.weekUnlocked(11) || isDebug)
-			addWeek(['Flatzone'], 10, ['mrgame']);
+			addWeek(['Flatzone'], 11, ['mrgame']);
 
 		if (StoryMenuState.weekUnlocked(12) || isDebug)
 			addWeek(['Improbable-Outset','Madness','Hellclown'], 12, ['trickyMask','tricky','trickyH']);

@@ -10,6 +10,8 @@ class Control extends FlxSprite{
     public var justReleased:Bool=false;
     public var pressedBefore:Bool=false;
 
+    public var pressable:Bool=true;
+
     public function new(x:Float=0,y:Float=0){
         super(x,y);
 

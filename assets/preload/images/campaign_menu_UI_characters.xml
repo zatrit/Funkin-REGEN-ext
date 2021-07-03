@@ -210,4 +210,21 @@
 	<SubTexture name="tricky week0022" x="1237" y="4259" width="620" height="643" frameX="0" frameY="-13" frameWidth="626" frameHeight="656"/>
 	<SubTexture name="tricky week0023" x="1867" y="4259" width="615" height="654" frameX="-11" frameY="-2" frameWidth="626" frameHeight="656"/>
 	<SubTexture name="tricky week0024" x="2492" y="4259" width="620" height="643" frameX="0" frameY="-13" frameWidth="626" frameHeight="656"/>
+
+	<SubTexture name="Tord idle dance BLACK LINE0000" x="1300" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0001" x="1300" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0002" x="1655" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0003" x="1655" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0004" x="2010" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0005" x="2010" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0006" x="2365" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0007" x="2365" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0008" x="2720" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0009" x="2720" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0010" x="2720" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0011" x="2720" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0012" x="2720" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0013" x="2720" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0014" x="2720" y="4950" width="355" height="717"/>
+	<SubTexture name="Tord idle dance BLACK LINE0015" x="2720" y="4950" width="355" height="717"/>
 </TextureAtlas>
