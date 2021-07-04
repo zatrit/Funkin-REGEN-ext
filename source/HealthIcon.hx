@@ -58,6 +58,10 @@ class HealthIcon extends FlxSprite
 		animation.add('tord', [47, 48], 0, false, isPlayer);
 		animation.add('tordbot', [49, 50], 0, false, isPlayer);
 
+		animation.add('agoti', [51, 52], 0, false, isPlayer);
+		animation.add('agoti-micless', [51, 52], 0, false, isPlayer);
+		animation.add('agoti-crazy', [53, 52], 0, false, isPlayer);
+
 		animation.play(char);
 
 		antialiasing=!(char=="senpai"||char=="senpai-angry"||char=="spirit");

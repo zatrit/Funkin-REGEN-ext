@@ -39,7 +39,8 @@ class StoryMenuState extends MusicBeatState
 		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'],		
 		['Flatzone'],
 		['Improbable-Outset', 'Madness', 'Hellclown'],
-		['Norway', 'Tordbot']
+		['Norway', 'Tordbot'],
+		['Screenplay', 'Parasite', 'A.G.O.T.I'],
 	];
 	var curDifficulty:Int = 1;
 
@@ -60,6 +61,7 @@ class StoryMenuState extends MusicBeatState
 		['mrgame', 'bf', 'gf'],
 		['trickyMask', 'bf', 'gf'],
 		['tord', 'bf', 'gf'],
+		['agoti', 'bf', 'gf']
 	];
 
 	var weekNames:Array<String> = [
@@ -79,6 +81,7 @@ class StoryMenuState extends MusicBeatState
 		"Please nerf up-b...",
 		"Madness",
 		"Tord",
+		"Prisoner of the Void",
 	];
 
 	var txtWeekTitle:FlxText;

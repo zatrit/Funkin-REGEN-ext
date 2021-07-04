@@ -89,7 +89,9 @@ class OptionsSubState extends MusicBeatSubstate
 			bullShit++;
 			#end
 
+			#if mobile
 			if(itemHighlightOnMobile)
+			#end
 				item.alpha = 0.6;
 			// item.setGraphicSize(Std.int(item.width * 0.8));
 	
@@ -106,12 +108,34 @@ class OptionsSubState extends MusicBeatSubstate
 
 		oldCurSelected=curSelected;
 	}
-	function toggleOption(num:Int=0,text:String="",oldVal:Bool=false,on:String='on',off:String='off'):Bool{
+	function toggleBoolOption(num:Int=0,text:String="",oldVal:Bool=false,on:String='on',off:String='off'):Bool{
 		var oldAlphabet=grpOptions.members[num];
 
 		var newVal=!oldVal;
 		
 		textMenuItems[num]=text + (newVal ? on : off);
+			
+		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], true, false);
+		alphabet.ID = num;
+		alphabet.isMenuItem = true;
+
+		alphabet.x=oldAlphabet.x;
+		alphabet.y=oldAlphabet.y;
+		alphabet.targetY=oldAlphabet.targetY;
+
+		grpOptions.replace(oldAlphabet,alphabet);
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+
+		return newVal;
+	}
+	function toggleIntOption(num:Int=0,text:String="",oldVal:Int=0,values:Array<String>):Int{
+		var oldAlphabet=grpOptions.members[num];
+
+		var newVal=oldVal+1;
+		if(newVal>=values.length)
+			newVal=0;
+		
+		textMenuItems[num]=text + values[newVal];
 			
 		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], true, false);
 		alphabet.ID = num;

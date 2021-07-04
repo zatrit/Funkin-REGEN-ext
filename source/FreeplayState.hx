@@ -115,6 +115,10 @@ class FreeplayState extends MusicBeatState
 		if (StoryMenuState.weekUnlocked(13) || isDebug)
 			addWeek(['Norway','Tordbot'], 13, ['tord','tordbot']);
 
+		if (StoryMenuState.weekUnlocked(14) || isDebug)
+			addWeek(['Screenplay','Parasite','A.G.O.T.I','Guns'], 14, ['agoti','agoti','agoti-crazy','agoti']);
+
+
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS

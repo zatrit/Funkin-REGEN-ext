@@ -47,6 +47,15 @@ class DialogueBox extends FlxSpriteGroup
 			case 'fading':
 				FlxG.sound.playMusic(Paths.music('city_ambience','weekG'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
+			case 'screenplay':
+				FlxG.sound.playMusic(Paths.music('screenplaydialogue', 'agoti'), 0);
+				FlxG.sound.music.fadeIn(1, 0, 0.45);
+			case 'parasite':
+				FlxG.sound.playMusic(Paths.music('prisonbreak', 'agoti'), 0);
+				FlxG.sound.music.fadeIn(1, 0, 0.45);
+			case 'a.g.o.t.i':
+				FlxG.sound.playMusic(Paths.music('void', 'agoti'), 0);
+				FlxG.sound.music.fadeIn(1, 0, 1);
 		}
 
 		bgFade = new FlxSprite(-200, -200).makeGraphic(Std.int(FlxG.width * 1.3), Std.int(FlxG.height * 1.3), 0xFFB3DFd8);
@@ -128,6 +137,16 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear instance', 24, false);
 				box.animation.addByPrefix('normal', 'Text Box Appear instance', 24, false);
 				box.antialiasing = true;
+			case 'screenplay' | 'parasite' | 'a.g.o.t.i':
+				hasDialog = true;
+
+				box.frames = Paths.getSparrowAtlas('Dialogue_Box', 'agoti');
+				box.width = 200;
+				box.height = 200;
+				box.x = -100;
+				box.y = 375;
+				box.animation.addByPrefix('normal', 'P5_Box', 24, true);
+				box.animation.addByIndices('normalOpen', 'P5_Box', [4], "", 24, false);
 		}
 
 		switch(PlayState.SONG.song.toLowerCase()){
@@ -135,11 +154,17 @@ class DialogueBox extends FlxSpriteGroup
 				box.flipX=true;
 				box.x=40;
 				box.y = FlxG.height - 340;
-			default:
-				box.y = FlxG.height - 340;
 			case 'wocky'|'beathoven'|'hairball'|'nyaw':
 				box.y=0;
 				box.screenCenter(X);
+			case 'screenplay' | 'parasite' | 'a.g.o.t.i':
+				box.flipX=true;
+				box.scale.set(1.25,1.25);
+				box.updateHitbox();
+				box.screenCenter(X);
+				box.y = FlxG.height - 400;
+			default:
+				box.y = FlxG.height - 340;
 		}
 
 		this.dialogueList = dialogueList;
@@ -210,6 +235,21 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft.scrollFactor.set();
 				add(portraitLeft);
 				portraitLeft.visible = false;
+			case 'screenplay' | 'parasite' | 'a.g.o.t.i':
+				portraitLeft = new FlxSprite();
+				portraitLeft.frames = Paths.getSparrowAtlas('Agoti_Dialogue', 'agoti');
+				portraitLeft.animation.addByPrefix('normal', 'Agoti_Dialogue_A', 24, false);
+				portraitLeft.animation.addByPrefix('angry', 'Agoti_Dialogue_B', 24, false);
+				portraitLeft.animation.addByPrefix('scared', 'Agoti_Dialogue_C', 24, false);
+				portraitLeft.animation.addByPrefix('crazy', 'Agoti_Dialogue_D', 24, false);
+				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				portraitLeft.screenCenter(X);
+				portraitLeft.y += 125;
+				portraitLeft.x -= 275;
+				add(portraitLeft);
+				portraitLeft.visible = false;
 		}
 
 		switch(PlayState.SONG.song.toLowerCase()){
@@ -249,6 +289,16 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.scrollFactor.set();
 				add(portraitRight);
 				portraitRight.visible = false;
+			case 'screenplay' | 'parasite' | 'a.g.o.t.i':
+				portraitRight = new FlxSprite(700, 200);
+				portraitRight.frames = Paths.getSparrowAtlas('BF_Dialogue', 'agoti');
+				portraitRight.animation.addByPrefix('normal', 'BF_Dialogue_A', 24, false);
+				portraitRight.animation.addByPrefix('scared', 'BF_Dialogue_B', 24, false);
+				portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
 		}
 
 		switch(PlayState.SONG.song.toLowerCase()){
@@ -268,7 +318,7 @@ class DialogueBox extends FlxSpriteGroup
 		add(box);
 
 
-		if(!['lo-fight','overhead','ballistic','wocky','beathoven','hairball','nyaw'].contains(PlayState.SONG.song.toLowerCase())){
+		if(!['lo-fight','overhead','ballistic','wocky','beathoven','hairball','nyaw','screenplay','parasite','a.g.o.t.i'].contains(PlayState.SONG.song.toLowerCase())){
 			box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			box.screenCenter(X);
 		}
@@ -285,6 +335,10 @@ class DialogueBox extends FlxSpriteGroup
 		if(['wocky','beathoven','hairball','nyaw'].contains(PlayState.SONG.song.toLowerCase())){
 			font='Delfino';
 			size=48;
+		}
+		if(['a.g.o.t.i','screenplay','parasite'].contains(PlayState.SONG.song.toLowerCase())){
+			font='p5hatty';
+			size=65;
 		}
 
 		dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", size);
@@ -322,8 +376,11 @@ class DialogueBox extends FlxSpriteGroup
 			case 'fading':
 				swagDialogue.color = 0xFF0DF07E;
 				dropText.color = FlxColor.BLACK;
-			case 'wocky' | 'beathoven' | 'hairball' | 'nyaw':
-				swagDialogue.color = 0xFFFFFFFF;
+			case 'parasite' | 'screenplay' | 'a.g.o.t.i':
+				swagDialogue.color = FlxColor.fromRGB(30, 30, 30);
+				dropText.color = FlxColor.fromRGB(90, 90, 90);
+			default:
+				swagDialogue.color = 0xFF000000;
 				dropText.color = FlxColor.BLACK;
 		}
 
@@ -400,6 +457,7 @@ class DialogueBox extends FlxSpriteGroup
 	function startDialogue():Void
 	{
 		cleanDialog();
+
 		// var theDialog:Alphabet = new Alphabet(0, 70, dialogueList[0], false, true);
 		// dialogue = theDialog;
 		// add(theDialog);
@@ -502,6 +560,41 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					portraitMiddle.visible = true;
 					portraitMiddle.animation.play('enter');
+				}
+			case 'bf-scared':
+				portraitLeft.visible = false;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('boyfriendText', 'agoti'), 0.6)];
+				if (!portraitRight.visible)
+				{
+					portraitRight.visible = true;
+				}
+			case 'agoti':
+				portraitRight.visible = false;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiText', 'agoti'), 0.6)];
+				if (!portraitLeft.visible)
+				{
+					portraitLeft.visible = true;
+				}
+			case 'agoti-angry':
+				portraitRight.visible = false;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiAngryText', 'agoti'), 0.6)];
+				if (!portraitLeft.visible)
+				{
+					portraitLeft.visible = true;
+				}
+			case 'agoti-scared':
+				portraitRight.visible = false;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiScaredText', 'agoti'), 0.6)];
+				if (!portraitLeft.visible)
+				{
+					portraitLeft.visible = true;
+				}
+			case 'agoti-crazy':
+				portraitRight.visible = false;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiScaredText', 'agoti'), 0.6)];
+				if (!portraitLeft.visible)
+				{
+					portraitLeft.visible = true;
 				}
 		}
 	}

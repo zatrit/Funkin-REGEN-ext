@@ -27,7 +27,7 @@ class GameplayOptionsSubstate extends OptionsSubState {
 				{
 					var kadeInput:Bool=FlxG.save.data.kadeInput;
 
-                    FlxG.save.data.kadeInput=toggleOption(KADE_INPUT_NUMBER,"kade input: ",kadeInput);
+                    FlxG.save.data.kadeInput=toggleBoolOption(KADE_INPUT_NUMBER,"kade input: ",kadeInput);
 					FlxG.save.flush();
 				}
 				
@@ -35,7 +35,7 @@ class GameplayOptionsSubstate extends OptionsSubState {
 				{
 					var ghost:Bool=FlxG.save.data.ghost;
 		
-					FlxG.save.data.ghost=toggleOption(GHOST_NUMBER,"ghost tap: ",ghost);
+					FlxG.save.data.ghost=toggleBoolOption(GHOST_NUMBER,"ghost tap: ",ghost);
 					FlxG.save.flush();
 				}
 		}

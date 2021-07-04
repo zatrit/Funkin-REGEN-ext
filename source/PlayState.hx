@@ -200,9 +200,18 @@ class PlayState extends MusicBeatState
 	var beatOfFuck:Int = 0;
 	// TIKY LOVE COOKIES
 
+	var bgRocks:FlxSprite;
+	var speaker:FlxSprite;
+	var dadMicless:Character;
+	var bgpillar:FlxSprite;
+
+	var useAgotiArrows:Bool;
+
 	override public function create()
 	{
 		Conductor.recalculateTimings();
+
+		useAgotiArrows=['guns','a.g.o.t.i','parasite','screenplay'].contains(SONG.song.toLowerCase());
 
 		staticVar=this;
 
@@ -264,6 +273,13 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('nyaw/dialogue'));
 			case 'beathoven':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('beathoven/dialogue'));
+
+			case 'screenplay':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('screenplay/subscribe'));
+			case 'parasite':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('parasite/to'));
+			case 'a.g.o.t.i':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('a.g.o.t.i/brightfyre'));
 		}
 
 		#if desktop
@@ -1019,6 +1035,89 @@ class PlayState extends MusicBeatState
 					sky.updateHitbox();
 					add(sky);
 					add(bg);
+					case 'screenplay' | 'parasite' | 'guns':
+					{
+						defaultCamZoom = 0.55;
+						curStage = 'void';
+			
+						var white:FlxSprite = new FlxSprite().makeGraphic(FlxG.width * 5, FlxG.height * 5, FlxColor.WHITE);
+						white.screenCenter();
+						white.scrollFactor.set();
+						add(white);
+			
+						var void:FlxSprite = new FlxSprite(0, 0);
+						void.frames = Paths.getSparrowAtlas('The_void', 'agoti');
+						void.animation.addByPrefix('move', 'VoidShift', 50, true);
+						void.animation.play('move');
+						void.setGraphicSize(Std.int(void.width * 2.5));
+						void.screenCenter();
+						void.y += 250;
+						void.x += 55;
+						void.antialiasing = true;
+						void.scrollFactor.set(0.7, 0.7);
+						add(void);
+						
+						bgpillar = new FlxSprite(-1000, -700);
+						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG_Stage', 'agoti');
+						bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, true);
+						bgpillar.setGraphicSize(Std.int(bgpillar.width * 1.5));
+						bgpillar.antialiasing = true;
+						bgpillar.scrollFactor.set(0.7, 0.7);
+						bgpillar.alpha=0;
+						add(bgpillar);
+			
+						bgRocks = new FlxSprite(-1000, -700).loadGraphic(Paths.image('Void_Back', 'agoti'));
+						bgRocks.setGraphicSize(Std.int(bgRocks.width * 0.5));
+						bgRocks.antialiasing = true;
+						bgRocks.scrollFactor.set(0.7, 0.7);
+						add(bgRocks);
+			
+						var frontRocks:FlxSprite = new FlxSprite(-1000, -600).loadGraphic(Paths.image('Void_Front', 'agoti'));
+						//frontRocks.setGraphicSize(Std.int(frontRocks.width * 3));
+						frontRocks.updateHitbox();
+						frontRocks.antialiasing = true;
+						frontRocks.scrollFactor.set(0.9, 0.9);
+						add(frontRocks);
+					}
+					case 'a.g.o.t.i':
+					{
+						defaultCamZoom = 0.55;
+						curStage = 'pillars';
+			
+						var white:FlxSprite = new FlxSprite().makeGraphic(FlxG.width * 5, FlxG.height * 5, FlxColor.fromRGB(255, 230, 230));
+						white.screenCenter();
+						white.scrollFactor.set();
+						add(white);
+			
+						var void:FlxSprite = new FlxSprite(0, 0);
+						void.frames = Paths.getSparrowAtlas('The_void', 'agoti');
+						void.animation.addByPrefix('move', 'VoidShift', 50, true);
+						void.animation.play('move');
+						void.setGraphicSize(Std.int(void.width * 2.5));
+						void.screenCenter();
+						void.y += 250;
+						void.x += 55;
+						void.antialiasing = true;
+						void.scrollFactor.set(0.7, 0.7);
+						add(void);
+			
+						bgpillar = new FlxSprite(-1000, -700);
+						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG_Stage', 'agoti');
+						bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, true);
+						bgpillar.animation.play('move');
+						bgpillar.setGraphicSize(Std.int(bgpillar.width * 1.25));
+						bgpillar.antialiasing = true;
+						bgpillar.scrollFactor.set(0.7, 0.7);
+						add(bgpillar);
+			
+						speaker = new FlxSprite(-650, 600);
+						speaker.frames = Paths.getSparrowAtlas('LoudSpeaker_Moving', 'agoti');
+						speaker.animation.addByPrefix('bop', 'StereoMoving', 24, false);
+						speaker.updateHitbox();
+						speaker.antialiasing = true;
+						speaker.scrollFactor.set(0.9, 0.9);
+						add(speaker);
+					}
 		          default:
 		          {
 		                  defaultCamZoom = 0.9;
@@ -1066,10 +1165,17 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-hell';
 			case 'auditorHell':
 				gfVersion = 'gf-tied';
+			case 'void'|'pillars':
+				gfVersion = 'gf-rocks';
 		}
 
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
+		
+		if (curStage == 'void' || curStage == 'pillars')
+		{
+			gf.scrollFactor.set(0.8, 0.8);
+		}
 
 		dad = new Character(100, 100, SONG.player2);
 
@@ -1142,6 +1248,16 @@ class PlayState extends MusicBeatState
 				dad.x = -429.05;
 				dad.y = -1424.75;
 				camPos.set(391.2, -1094.15);
+			case 'agoti':
+				camPos.x += 400;
+				dad.y += 100;
+				dad.x -= 100;
+				gf.y -= 250;
+			case 'agoti-crazy':
+				camPos.x += 400;
+				dad.y += 200;
+				dad.x -= 100;
+				gf.y -= 250;
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -1192,6 +1308,9 @@ class PlayState extends MusicBeatState
 				boyfriend.x = 1096.1;
 				boyfriend.y = 271.7;
 				gf.visible=false;
+			case 'void' | 'pillars':
+				boyfriend.y += 50;
+				boyfriend.x += 100; 
 		}
 
 		add(gf);
@@ -1228,6 +1347,14 @@ class PlayState extends MusicBeatState
 			add(converHole);
 			add(dad.exSpikes);
 		}
+		
+		dadMicless = new Character(dad.x, dad.y, 'agoti-micless');
+		if (SONG.song.toLowerCase() == 'screenplay' && isStoryMode)
+		{
+			dadMicless.alpha = 1;
+			dad.alpha = 0;
+			add(dadMicless);
+		}
 
 		add(boyfriend);
 		
@@ -1254,6 +1381,11 @@ class PlayState extends MusicBeatState
 		// doof.y = FlxG.height * 0.5;
 		doof.scrollFactor.set();
 		doof.finishThing = startCountdown;
+
+		if (SONG.song.toLowerCase() == 'screenplay')
+		{
+			doof.finishThing = agotiIntro;
+		}
 
 		Conductor.songPosition = -5000;
 
@@ -1313,6 +1445,10 @@ class PlayState extends MusicBeatState
 		if(SONG.song.toLowerCase()=='headache' || SONG.song.toLowerCase()=='nerves' || SONG.song.toLowerCase()=='release' || SONG.song.toLowerCase()=='fading'  )
 		{
 			healthBar.createFilledBar(0xFF8E40A5, 0xFF66FF33);
+		}
+		if(['a.g.o.t.i','parasite','screenplay','guns'].contains(SONG.song.toLowerCase()))
+		{
+			healthBar.createFilledBar(0xFF494949,0xFF66FF33);
 		}
 
 		// healthBar
@@ -1473,6 +1609,8 @@ class PlayState extends MusicBeatState
 				case 'improbable-outset':
 					camFollow.setPosition(boyfriend.getMidpoint().x + 70, boyfriend.getMidpoint().y - 50);
 					trickyCutscene();
+				case 'screenplay' | 'parasite' | 'a.g.o.t.i':
+					agotiIntroDialogue(doof);
 				default:
 					startCountdown();
 			}
@@ -1870,8 +2008,15 @@ class PlayState extends MusicBeatState
 
 		if (!paused)
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
-		if (SONG.song.toLowerCase().contains('madness') && isStoryMode && !FlxG.save.data.skipCutscenes)
-			FlxG.sound.music.onComplete = trickySecondCutscene;
+		if (isStoryMode && !FlxG.save.data.skipCutscenes)
+			switch(SONG.song.toLowerCase()){
+				case 'madness':
+					FlxG.sound.music.onComplete = trickySecondCutscene;
+				case 'parasite':
+					FlxG.sound.music.onComplete = agotiCrazy;
+				default:
+					FlxG.sound.music.onComplete = endSong;
+			}
 		else
 			FlxG.sound.music.onComplete = endSong;
 		vocals.play();
@@ -2039,6 +2184,8 @@ class PlayState extends MusicBeatState
 				default:
 					if(['wocky','beathoven','hairball','nyaw'].contains(SONG.song.toLowerCase()))
 						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets','kapiWeek');
+					else if(useAgotiArrows)
+							babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets','agoti');
 					else
 						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets','shared');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
@@ -2090,7 +2237,7 @@ class PlayState extends MusicBeatState
 			{
 				playerStrums.add(babyArrow);
 			}
-			if (player == 0)
+			if (player == 0&&FlxG.save.data.botArrowsAnim!=2)
 			{
 				babyArrow.animation.finishCallback=(name:String)->{
 					if(name=="confirm"){
@@ -2236,6 +2383,18 @@ class PlayState extends MusicBeatState
 					}
 				}
 				// phillyCityLights.members[curLight].alpha -= (Conductor.crochet / 1000) * FlxG.elapsed;
+			case 'void':
+				new FlxTimer().start(0.2, function(tmr:FlxTimer)
+				{
+					bgRocks.y = -700 + Math.sin((Conductor.songPosition / 1000)*(Conductor.bpm/60) * 2.0) * 3.0;
+				});
+
+				gf.y = -120 + Math.sin((Conductor.songPosition / 1000)*(Conductor.bpm/60) * 2.0) * 5.0;
+			case 'pillars':
+				FlxG.camera.angle = Math.sin((Conductor.songPosition / 1000)*(Conductor.bpm/60) * -1.0) * 1.5;
+				camHUD.angle = Math.sin((Conductor.songPosition / 1000)*(Conductor.bpm/60) * 1.0) * 2.0;
+
+				gf.y = -120 + Math.sin((Conductor.songPosition / 1000)*(Conductor.bpm/60) * 2.0) * 5.0;
 		}
 
 		super.update(elapsed);
@@ -2561,11 +2720,15 @@ class PlayState extends MusicBeatState
 							dad.playAnim('singRIGHT' + altAnim, true);
 					}
 
-					strum.animation.play("confirm",true);
+					if(FlxG.save.data.botArrowsAnim!=2)
+						strum.animation.play("confirm",true);
+
+					if(!daNote.isSustainNote&&useAgotiArrows&&FlxG.save.data.botArrowsAnim==0)
+						new FlxTimer().start(0.2,(tmr)->{strum.animation.play('static');tmr.destroy();});
 
 					switch(dad.curCharacter)
 					{
-						case 'trickyMask': // 1% chance
+						case 'trickyMask': // 1% chance 
 							if (FlxG.random.bool(1) && !spookyRendered && !daNote.isSustainNote) // create spooky text :flushed:
 							{
 								createSpookyText(TrickyLinesSing[FlxG.random.int(0,TrickyLinesSing.length)]);
@@ -2643,14 +2806,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 		for(strum in dadStrums){
-			if (strum.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
-			{
-				strum.centerOffsets();
-				strum.offset.x -= 13;
-				strum.offset.y -= 13;
-			}
-			else
-				strum.centerOffsets();
+			updateArrowOffsets(strum,strum.ID);
 		}
 
 		if (!inCutscene)
@@ -3169,14 +3325,7 @@ class PlayState extends MusicBeatState
 						spr.animation.play('static');
 			}
 
-			if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
-			{
-				spr.centerOffsets();
-				spr.offset.x -= 13;
-				spr.offset.y -= 13;
-			}
-			else
-				spr.centerOffsets();
+			updateArrowOffsets(spr,spr.ID);
 		});
 	}
 
@@ -3699,6 +3848,10 @@ class PlayState extends MusicBeatState
 					trainCooldown = FlxG.random.int(-4, 0);
 					trainStart();
 				}
+			case 'pillars':
+				{
+					speaker.animation.play('bop');
+				}
 		}
 
 		if (isHalloween && FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
@@ -3972,14 +4125,7 @@ class PlayState extends MusicBeatState
 				if (!holdArray[spr.ID])
 					spr.animation.play('static');
 	 
-				if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
-				{
-					spr.centerOffsets();
-					spr.offset.x -= 13;
-					spr.offset.y -= 13;
-				}
-				else
-					spr.centerOffsets();
+				updateArrowOffsets(spr,spr.ID);
 			});
 		}
 		function updateAccuracy() 
@@ -5340,4 +5486,187 @@ class PlayState extends MusicBeatState
 				}});
 			});
 		}
+//A.G.O.T.I
+	function agotiCrazy():Void
+	{
+		canPause = false;
+		FlxG.sound.music.volume = 0;
+		vocals.volume = 0;
+
+		healthBarBG.visible = false;
+		healthBar.visible = false;
+		iconP1.visible = false;
+		iconP2.visible = false;
+		scoreTxt.visible = false;
+
+		dadStrums.visible=false;
+		playerStrums.visible=false;
+		strumLineNotes.visible=false;
+
+		inCutscene = true;
+
+		var pillarFG:FlxSprite = new FlxSprite(0, 0);
+		pillarFG.frames=Paths.getSparrowAtlas("Pillar_FG","agoti");
+		pillarFG.animation.addByPrefix("move","Pillar_FG",24,false);
+		pillarFG.setGraphicSize(Std.int(pillarFG.width * 1.5));
+		pillarFG.antialiasing = true;
+		pillarFG.scrollFactor.set(1.1, 1.1);
+		pillarFG.alpha=0;
+
+		var agotiSummon:FlxSprite = new FlxSprite(dad.x, dad.y);
+		agotiSummon.frames = Paths.getSparrowAtlas('Agoti_Cutscene_B', 'agoti');
+		agotiSummon.animation.addByPrefix('move', 'Agoti_Cut_B', 24, false);
+		agotiSummon.setGraphicSize(Std.int(agotiSummon.width * 1.5));
+		//agotiSummon.scrollFactor.set();
+		agotiSummon.updateHitbox();
+		agotiSummon.screenCenter();
+		agotiSummon.antialiasing = true;
+		//agotiSummon.x -= 750;
+		////agotiSummon.y -= 90;
+
+		agotiSummon.x -= 450;
+		agotiSummon.y += 250;
+		agotiSummon.alpha = 0;
+
+		add(agotiSummon);
+		add(pillarFG);
+
+		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+		black.setGraphicSize(Std.int(black.width * 5));
+		black.scrollFactor.set();
+		add(black);
+		black.alpha = 0;
+
+		var offsetX = 0;
+		var offsetY = 0;
+
+
+		camFollow.setPosition(boyfriend.getMidpoint().x - 100 + offsetX, boyfriend.getMidpoint().y - 100 + offsetY);
+
+		new FlxTimer().start(2, function(deadTime:FlxTimer)
+		{
+			dad.alpha = 0;
+			agotiSummon.alpha = 1;
+			FlxG.sound.play(Paths.sound('outrocut', 'agoti'));
+			new FlxTimer().start(0.01, function(deadTime:FlxTimer)
+			{
+				agotiSummon.animation.play('move');
+					
+				new FlxTimer().start(2.5,(tmr) -> {
+					bgpillar.alpha=1;
+					bgpillar.animation.play('move',true);
+				});
+
+				new FlxTimer().start(4, function(deadTime:FlxTimer)
+				{
+					FlxTween.tween(black,{alpha: 1},1);
+					new FlxTimer().start(0.5,(tmr) -> {
+						pillarFG.alpha=1;
+						pillarFG.animation.play('move');
+					});
+
+					new FlxTimer().start(1.5, function(deadTime:FlxTimer)
+					{
+						dad.alpha = 1;
+						remove(agotiSummon);
+						endSong();
+					});
+				});
+			});
+		});
+	}
+	function agotiIntro():Void
+	{	
+		trace('agoti intro');
+
+		inCutscene = true;
+		canPause = false;
+		var agotiIntro:FlxSprite = new FlxSprite(dad.x, dad.y);
+		agotiIntro.frames = Paths.getSparrowAtlas('Agoti_Cutscene_A', 'agoti');
+		agotiIntro.animation.addByPrefix('move', 'Agoti_Cut_A', 24, false);
+		agotiIntro.setGraphicSize(Std.int(agotiIntro.width * 1.35));
+		agotiIntro.scrollFactor.set();
+		agotiIntro.updateHitbox();
+		agotiIntro.screenCenter();
+		agotiIntro.antialiasing = true;
+		agotiIntro.x -= 690;
+		agotiIntro.y -= 185;
+		agotiIntro.alpha = 0;
+
+		healthBarBG.visible = false;
+		healthBar.visible = false;
+		iconP1.visible = false;
+		iconP2.visible = false;
+		scoreTxt.visible = false;
+
+		add(agotiIntro);
+		new FlxTimer().start(0.4, function(deadTime:FlxTimer)
+		{
+			dad.alpha = 0;
+			dadMicless.alpha = 0;
+			agotiIntro.alpha = 1;
+			FlxG.sound.play(Paths.sound('introcut', 'agoti'));
+			new FlxTimer().start(0.01, function(deadTime:FlxTimer)
+			{
+				agotiIntro.animation.play('move');
+				new FlxTimer().start(3.75, function(deadTime:FlxTimer)
+				{
+					dad.alpha = 1;
+					dadMicless.alpha = 0;
+					remove(agotiIntro);
+					startCountdown();
+				});
+			});
+		});
+	}
+	function agotiIntroDialogue(?dialogueBox:DialogueBox):Void
+	{
+		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+		black.setGraphicSize(Std.int(black.width * 5));
+		black.scrollFactor.set();
+		add(black);
+	
+		healthBarBG.visible = false;
+		healthBar.visible = false;
+		iconP1.visible = false;
+		iconP2.visible = false;
+		scoreTxt.visible = false;
+	
+		new FlxTimer().start(0.3, function(tmr:FlxTimer)
+		{
+			black.alpha -= 0.15;
+	
+			if (black.alpha > 0)
+			{
+				tmr.reset(0.3);
+			}
+			else
+			{
+				if (dialogueBox != null)
+				{
+					inCutscene = true;
+
+					add(dialogueBox);
+				}
+				else
+					startCountdown();
+	
+				remove(black);
+			}
+		});
+	}
+	function updateArrowOffsets(arrow:FlxSprite,id:Int) {
+		if (arrow.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
+			{
+				arrow.centerOffsets();
+				arrow.offset.x -= 13;
+				arrow.offset.y -= 13;
+				if(useAgotiArrows)
+					arrow.offset.y -= 5;
+				if(useAgotiArrows&&id==2)
+					arrow.offset.y -= 5;
+			}
+			else
+				arrow.centerOffsets();
+	}
 }

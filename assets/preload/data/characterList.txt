@@ -33,3 +33,5 @@ gf-hell
 gf-tied
 tord
 tordbot
+agoti
+agoti-crazy

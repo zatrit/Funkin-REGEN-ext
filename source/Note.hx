@@ -90,6 +90,8 @@ class Note extends FlxSprite
 			default:
 				if(['arcade','arcadeclosed'].contains(daStage))
 					frames = Paths.getSparrowAtlas('NOTE_assets','kapiWeek');
+				else if(['void','pillars'].contains(daStage))
+					frames = Paths.getSparrowAtlas('NOTE_assets','agoti');
 				else
 					frames = Paths.getSparrowAtlas('NOTE_assets','shared');
 
