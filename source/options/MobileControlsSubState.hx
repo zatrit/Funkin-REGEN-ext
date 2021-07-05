@@ -3,7 +3,6 @@ package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import mobile.MobileControls;
 
 class MobileControlsSubState extends OptionsSubState
 {

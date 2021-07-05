@@ -189,6 +189,7 @@
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="actuate" />
 	<haxelib name="extension-webm" if="desktop"/>
+	<haxelib name="androidhx" if="android"/>
 
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
 	
@@ -243,4 +244,6 @@
 	<haxedef name="NG_LOGIN" if="newgrounds" />
 
 	<architecture name="x86" if="android" />
+
+	<certificate path="keys.jks" alias="funkin-regen-ext" if="SIGN android"/>
 </project>

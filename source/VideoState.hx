@@ -7,7 +7,7 @@ import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.system.FlxSound;
-import openfl.utils.Assets; 
+import openfl.utils.Assets;
 
 using StringTools;
 

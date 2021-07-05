@@ -267,7 +267,7 @@ class TitleState extends MusicBeatState
 				titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
-			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+			FlxG.sound.play(Paths.sound('titleShoot'), 0.7);
 
 			transitioning = true;
 			// FlxG.sound.music.stop();
@@ -407,48 +407,51 @@ class TitleState extends MusicBeatState
 				createCoolText(['Krinkels','GWebDev','Tsuraran']);
 			case 10:
 				deleteCoolText();
-				createCoolText(['bbpanzu','Eddsworld','Jason The Art Kid']);
+				createCoolText(['bbpanzu','Eddsworld','Jason The Art Kid','MashProTato']);
 			case 11:
+					deleteCoolText();
+					createCoolText(['A.G.O.T.I','BrightFyre','SugarRatio','Kullix','iVorare']);
+			case 12:
 				deleteCoolText();
 				createCoolText(['In association', 'with']);
-			case 12:
+			case 13:
 				addMoreText('newgrounds');
 				ngSpr.visible = true;
 			// credTextShit.text += '\nNewgrounds';
-			case 13:
+			case 14:
 				deleteCoolText();
 				ngSpr.visible = false;
 			// credTextShit.visible = false;
 
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
-			case 14:
+			case 15:
 				createCoolText([curWacky[0]]);
 			// credTextShit.visible = true;
-			case 15:
+			case 16:
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
-			case 16:
+			case 17:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
-			case 17:
+			case 18:
 				addMoreText('Friday');
 			// credTextShit.visible = true;
-			case 18:
+			case 19:
 				addMoreText('Night');
 			// credTextShit.text += '\nNight';
-			case 19:
+			case 20:
 				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
-			case 20:
+			case 21:
 				addMoreText('REGEN'); // credTextShit.text += '\nFunkin';
 
-			case 21:
+			case 22:
 				addMoreText('EXT'); // credTextShit.text += '\nFunkin';
 
-			case 23:
+			case 24:
 				skipIntro();
 		}
 	}

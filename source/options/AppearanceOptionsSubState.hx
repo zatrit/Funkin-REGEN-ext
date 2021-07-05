@@ -16,7 +16,7 @@ class AppearanceOptionsSubState extends OptionsSubState {
             'healthbar appearance',
             'skip cutscenes: '+(FlxG.save.data.skipCutscenes ? 'on' : 'off'),
             (FlxG.save.data.downscroll ? 'downscroll' : 'upscroll'),
-            "bot arrows anim: "+BOT_ARROWS_ANIM_VALUES[FlxG.save.data.botArrowsAnim],];
+            "arrows anim: "+BOT_ARROWS_ANIM_VALUES[FlxG.save.data.botArrowsAnim],];
 
         super(parent,items);
     }
@@ -48,11 +48,11 @@ class AppearanceOptionsSubState extends OptionsSubState {
 					FlxG.save.data.downscroll=toggleBoolOption(DOWNSCROLL_NUMBER,"",downscroll,'downscroll','upscroll');
 					FlxG.save.flush();
                 }
-            case 'bot arrows anim: default'|'bot arrows anim: advanced'|'bot arrows anim: none'|'bot arrows anim: null':
+            case "arrows anim: advanced" | "arrows anim: none" | "arrows anim: optimized":
                 {
 					var botArrowsAnim:Int=FlxG.save.data.botArrowsAnim;
                     
-					FlxG.save.data.botArrowsAnim=toggleIntOption(BOT_ARROWS_ANIM_NUMBER,"bot arrows anim: ",botArrowsAnim,BOT_ARROWS_ANIM_VALUES);
+					FlxG.save.data.botArrowsAnim=toggleIntOption(BOT_ARROWS_ANIM_NUMBER,"arrows anim: ",botArrowsAnim,BOT_ARROWS_ANIM_VALUES);
 					FlxG.save.flush();
                 }
         }

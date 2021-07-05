@@ -46,6 +46,8 @@ class OptionsSubState extends MusicBeatSubstate
 				if(touch.overlaps(item)&&touch.pressed){
 					curSelected=item.ID;
 					changeSelection();
+				}
+				if(touch.overlaps(item)&&touch.justReleased){
 					accept=true;
 				}
 			}

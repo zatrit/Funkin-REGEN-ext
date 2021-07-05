@@ -29,10 +29,7 @@ class CachedFrames
 
     public static function loadEverything(callback:Void->Void){
         var callback2:MultiCallback = new MultiCallback(callback);
-        loadLibrary(callback2.add("shared"),"shared");
         loadLibrary(callback2.add("clown"),"clown");
-        loadLibrary(callback2.add("week6"),"week6");
-        loadLibrary(callback2.add("preload"),"preload");
     }
 
     // so it doesn't brick your computer lol!
@@ -135,40 +132,6 @@ class CachedFrames
                         toBeLoaded.set('idle','hellclwn/Tricky/Idle');
                     }
                     #end
-                case "shared":
-                    toBeLoaded.set('shit','shit');
-                    toBeLoaded.set('bad','bad');
-                    toBeLoaded.set('good','good');
-                    toBeLoaded.set('sick','sick');
-                    toBeLoaded.set('combo','combo');
-                case "preload":
-                    toBeLoaded.set('num0','num0');
-                    toBeLoaded.set('num1','num1');
-                    toBeLoaded.set('num2','num2');
-                    toBeLoaded.set('num3','num3');
-                    toBeLoaded.set('num4','num4');
-                    toBeLoaded.set('num5','num5');
-                    toBeLoaded.set('num6','num6');
-                    toBeLoaded.set('num7','num7');
-                    toBeLoaded.set('num8','num8');
-                    toBeLoaded.set('num9','num9');
-                case "week6":
-                    toBeLoaded.set('shit-pixel',	'weeb/pixelUI/shit-pixel');
-                    toBeLoaded.set('bad-pixel',		'weeb/pixelUI/bad-pixel');
-                    toBeLoaded.set('good-pixel',	'weeb/pixelUI/good-pixel');
-                    toBeLoaded.set('sick-pixel',	'weeb/pixelUI/sick-pixel');
-                    toBeLoaded.set('combo-pixel',	'weeb/pixelUI/combo-pixel');
-                    
-                    toBeLoaded.set('num0-pixel',	'weeb/pixelUI/num0-pixel');
-                    toBeLoaded.set('num1-pixel',	'weeb/pixelUI/num1-pixel');
-                    toBeLoaded.set('num2-pixel',	'weeb/pixelUI/num2-pixel');
-                    toBeLoaded.set('num3-pixel',	'weeb/pixelUI/num3-pixel');
-                    toBeLoaded.set('num4-pixel',	'weeb/pixelUI/num4-pixel');
-                    toBeLoaded.set('num5-pixel',	'weeb/pixelUI/num5-pixel');
-                    toBeLoaded.set('num6-pixel',	'weeb/pixelUI/num6-pixel');
-                    toBeLoaded.set('num7-pixel',	'weeb/pixelUI/num7-pixel');
-                    toBeLoaded.set('num8-pixel',	'weeb/pixelUI/num8-pixel');
-                    toBeLoaded.set('num9-pixel',	'weeb/pixelUI/num9-pixel');
             }
             // all the big sprites
             var numba = 0;

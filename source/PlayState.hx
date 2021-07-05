@@ -76,6 +76,7 @@ class PlayState extends MusicBeatState
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
 	private var dadStrums:FlxTypedGroup<FlxSprite>;
+	private var dadStrumsTimers:Array<FlxTimer>=new Array<FlxTimer>();
 
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
@@ -1072,7 +1073,7 @@ class PlayState extends MusicBeatState
 						bgRocks.scrollFactor.set(0.7, 0.7);
 						add(bgRocks);
 			
-						var frontRocks:FlxSprite = new FlxSprite(-1000, -600).loadGraphic(Paths.image('Void_Front', 'agoti'));
+						var frontRocks:FlxSprite = new FlxSprite(-1000, 676).loadGraphic(Paths.image('Void_Front', 'agoti'));
 						//frontRocks.setGraphicSize(Std.int(frontRocks.width * 3));
 						frontRocks.updateHitbox();
 						frontRocks.antialiasing = true;
@@ -1348,7 +1349,8 @@ class PlayState extends MusicBeatState
 			add(dad.exSpikes);
 		}
 		
-		dadMicless = new Character(dad.x, dad.y, 'agoti-micless');
+		if(isStoryMode)
+			dadMicless = new Character(dad.x, dad.y, 'agoti-micless');
 		if (SONG.song.toLowerCase() == 'screenplay' && isStoryMode)
 		{
 			dadMicless.alpha = 1;
@@ -1862,6 +1864,8 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = true;
 		iconP1.visible = true;
 		iconP2.visible = true;
+
+		canPause = true;
 		
 		#if mobile
 		var controlType=1;
@@ -2246,6 +2250,8 @@ class PlayState extends MusicBeatState
 					}
 				}
 				dadStrums.add(babyArrow);
+
+				dadStrumsTimers[i]=new FlxTimer().start(0,(tmr)->{babyArrow.animation.play('static');});
 			}
 
 			babyArrow.animation.play('static');
@@ -2724,7 +2730,7 @@ class PlayState extends MusicBeatState
 						strum.animation.play("confirm",true);
 
 					if(!daNote.isSustainNote&&useAgotiArrows&&FlxG.save.data.botArrowsAnim==0)
-						new FlxTimer().start(0.2,(tmr)->{strum.animation.play('static');tmr.destroy();});
+						dadStrumsTimers[noteData].reset(0.2);
 
 					switch(dad.curCharacter)
 					{
@@ -2984,7 +2990,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 
-		rating.loadGraphic(CachedFrames.cachedInstance.get(daRating + pixelShitPart2));
+		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
 		rating.y -= 60;
@@ -3026,7 +3032,7 @@ class PlayState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(CachedFrames.cachedInstance.get('num' + Std.int(i) + pixelShitPart2));
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1+'num' + Std.int(i) + pixelShitPart2));
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
@@ -4310,7 +4316,7 @@ class PlayState extends MusicBeatState
 							pixelShitPart2 = '-pixel';
 						}
 				
-						rating.loadGraphic(CachedFrames.cachedInstance.get(daRating + pixelShitPart2));
+						rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
 						rating.screenCenter();
 						rating.y -= 50;
 						rating.x = coolText.x - 125;
@@ -4365,7 +4371,7 @@ class PlayState extends MusicBeatState
 						var daLoop:Int = 0;
 						for (i in seperatedScore)
 						{
-							var numScore:FlxSprite = new FlxSprite().loadGraphic(CachedFrames.cachedInstance.get('num' + Std.int(i) + pixelShitPart2));
+							var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1+'num' + Std.int(i) + pixelShitPart2));
 							numScore.screenCenter();
 							numScore.x = rating.x + (43 * daLoop) - 50;
 							numScore.y = rating.y + 100;
