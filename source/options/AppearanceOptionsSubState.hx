@@ -7,10 +7,9 @@ class AppearanceOptionsSubState extends OptionsSubState {
 	final SKIP_CUTSCENES_NUMBER = 2;
 	final DOWNSCROLL_NUMBER = 3;
 	final BOT_ARROWS_ANIM_NUMBER = 4;
-	final GRAPHICS_NUMBER = 5;
+	final ANIM_EVENTS_NUMBER = 5;
 
     final BOT_ARROWS_ANIM_VALUES:Array<String>=['advanced','optimized','none'];
-    final GRAPHICS_VALUES:Array<String>=['none','fast','fancy'];
 
     public function new(parent:OptionsState) {
         var items:Array<String> = [
@@ -19,7 +18,7 @@ class AppearanceOptionsSubState extends OptionsSubState {
             'skip cutscenes: '+(FlxG.save.data.skipCutscenes ? 'on' : 'off'),
             (FlxG.save.data.downscroll ? 'downscroll' : 'upscroll'),
             "arrows anim: "+BOT_ARROWS_ANIM_VALUES[FlxG.save.data.botArrowsAnim],
-            "graphics: "+GRAPHICS_VALUES[FlxG.save.data.graphicsQuality]
+            "animated events: "+(FlxG.save.data.animEvents ? "on" : "off")
         ];
 
         super(parent,items);
@@ -59,11 +58,11 @@ class AppearanceOptionsSubState extends OptionsSubState {
 					FlxG.save.data.botArrowsAnim=toggleIntOption(BOT_ARROWS_ANIM_NUMBER,"arrows anim: ",botArrowsAnim,BOT_ARROWS_ANIM_VALUES);
 					FlxG.save.flush();
                 }
-            case 'graphics: none' | 'graphics: fast' | 'graphics: fancy':
+            case 'animated events: on' | 'animated events: off':
                 {
-				    var graphicsQuality:Int=FlxG.save.data.graphicsQuality;
+				    var animEvents:Bool=FlxG.save.data.animEvents;
                    
-					FlxG.save.data.graphicsQuality=toggleIntOption(GRAPHICS_NUMBER,"arrows anim: ",graphicsQuality,GRAPHICS_VALUES);
+					FlxG.save.data.animEvents=toggleBoolOption(ANIM_EVENTS_NUMBER,"animated events: ",animEvents);
 					FlxG.save.flush();
                 }
         }

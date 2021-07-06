@@ -13,8 +13,8 @@ class DefaultOptions{
         if(FlxG.save.data.accuracyDisplay==null)
             FlxG.save.data.accuracyDisplay=false;
 
-        if(FlxG.save.data.graphicsQuality==null)
-            FlxG.save.data.graphicsQuality=2;
+        if(FlxG.save.data.animEvents==null)
+            FlxG.save.data.animEvents=true;
 
         FlxG.save.flush();
     }
