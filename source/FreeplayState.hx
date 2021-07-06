@@ -10,7 +10,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-
 #if mobile
 import mobile.MobileControls;
 #end
@@ -37,9 +36,9 @@ class FreeplayState extends MusicBeatState
 	#if mobile
 	var grpMobileButtons:MobileControls;
 	#end
-        #if PRELOAD_ALL
+	#if PRELOAD_ALL
 	var timer:FlxTimer;
-        #end
+	#end
 
 	override function create()
 	{
@@ -74,7 +73,7 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Bopeebo', 'Fresh', 'Dadbattle'], 1, ['dad']);
 
 		if (StoryMenuState.weekUnlocked(2) || isDebug)
-			addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky','spooky','monster']);
+			addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky', 'spooky', 'monster']);
 
 		if (StoryMenuState.weekUnlocked(3) || isDebug)
 			addWeek(['Pico', 'Philly', 'Blammed'], 3, ['pico']);
@@ -89,41 +88,46 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
 		#end
 
-		//if (StoryMenuState.weekUnlocked(7) || isDebug)
+		// if (StoryMenuState.weekUnlocked(7) || isDebug)
 		//	addWeek(['Ugh', 'Guns', 'Stress'], 7, ['tankman']);
 
 		if (StoryMenuState.weekUnlocked(8) || isDebug)
-			addWeek(['Headache', 'Nerves', 'Release'#if (debug&&desktop) , 'Fading' #end], 8, ['garcello', 'garcellotired', 'garcellodead' #if (debug&&desktop) , 'garcelloghosty' #end]);
-		
+			addWeek(['Headache', 'Nerves', 'Release' #if (debug && desktop), 'Fading' #end], 8, [
+				'garcello',
+				'garcellotired',
+				'garcellodead'
+				#if (debug && desktop), 'garcelloghosty'
+				#end
+			]);
+
 		if (StoryMenuState.weekUnlocked(9) || isDebug)
 			addWeek(['Lo-Fight', 'Overhead', 'Ballistic'], 9, ['whitty', 'whitty', 'whittyCrazy']);
 
 		if (StoryMenuState.weekUnlocked(10) || isDebug)
-			addWeek(['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], 10, ['kapi', 'kapi', 'kapi-angry','kapi']);
+			addWeek(['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], 10, ['kapi', 'kapi', 'kapi-angry', 'kapi']);
 
 		if (StoryMenuState.weekUnlocked(11) || isDebug)
 			addWeek(['Flatzone'], 11, ['mrgame']);
 
 		if (StoryMenuState.weekUnlocked(12) || isDebug)
-			addWeek(['Improbable-Outset','Madness','Hellclown'], 12, ['trickyMask','tricky','trickyH']);
+			addWeek(['Improbable-Outset', 'Madness', 'Hellclown'], 12, ['trickyMask', 'tricky', 'trickyH']);
 
 		#if !UNLOCK
-		if (Highscore.getWeekScore(12,2)>0 || isDebug)
+		if (Highscore.getWeekScore(12, 2) > 0 || isDebug)
 		#end
-			addWeek(['expurgation'], 12, ['exTricky']);
+		addWeek(['expurgation'], 12, ['exTricky']);
 
 		if (StoryMenuState.weekUnlocked(13) || isDebug)
-			addWeek(['Norway','Tordbot'], 13, ['tord','tordbot']);
+			addWeek(['Norway', 'Tordbot'], 13, ['tord', 'tordbot']);
 
 		if (StoryMenuState.weekUnlocked(14) || isDebug)
-			addWeek(['Screenplay','Parasite','A.G.O.T.I','Guns'], 14, ['agoti','agoti','agoti-crazy','agoti']);
-
+			addWeek(['Screenplay', 'Parasite', 'A.G.O.T.I', 'Guns'], 14, ['agoti', 'agoti', 'agoti-crazy', 'agoti']);
 
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.bgStyle+'/menuBGBlue','menuBackgrounds'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.bgStyle + '/menuBGBlue', 'menuBackgrounds'));
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.screenCenter();
 		add(bg);
@@ -172,9 +176,9 @@ class FreeplayState extends MusicBeatState
 		// FlxG.sound.music.fadeIn(2, 0, 0.8);
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
-		
+
 		#if mobile
-		grpMobileButtons=new MobileControls(FlxG.camera,FlxG.camera.width-510,FlxG.camera.height-410,1);
+		grpMobileButtons = new MobileControls(FlxG.camera, FlxG.camera.width - 510, FlxG.camera.height - 410, 1);
 		add(grpMobileButtons);
 		#end
 
@@ -223,16 +227,17 @@ class FreeplayState extends MusicBeatState
 		var rightP = controls.RIGHT_P;
 		var accepted = controls.ACCEPT;
 		#if mobile
-		if(FlxG.touches.justReleased().length>0){
-			accepted=accepted||FlxG.touches.getFirst().overlaps(grpSongs,camera);
+		if (FlxG.touches.justReleased().length > 0)
+		{
+			accepted = accepted || FlxG.touches.getFirst().overlaps(grpSongs, camera);
 		}
 		#end
 
 		#if mobile
-		upP=upP||grpMobileButtons.up.justPressed;
-		downP=downP||grpMobileButtons.down.justPressed;
-		leftP=leftP||grpMobileButtons.left.justPressed;
-		rightP=rightP||grpMobileButtons.right.justPressed;
+		upP = upP || grpMobileButtons.up.justPressed;
+		downP = downP || grpMobileButtons.down.justPressed;
+		leftP = leftP || grpMobileButtons.left.justPressed;
+		rightP = rightP || grpMobileButtons.right.justPressed;
 		#end
 
 		if (upP)
@@ -249,7 +254,7 @@ class FreeplayState extends MusicBeatState
 			changeDiff(1);
 		if (accepted)
 		{
-			PlayState.firstTry=true;
+			PlayState.firstTry = true;
 
 			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 
@@ -274,8 +279,8 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
-		if(isOnlyHard())
-			curDifficulty=2;
+		if (isOnlyHard())
+			curDifficulty = 2;
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
@@ -294,7 +299,6 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-
 		// NGio.logEvent('Fresh');
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
@@ -305,8 +309,9 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		if(isOnlyHard()){
-			curDifficulty=2;
+		if (isOnlyHard())
+		{
+			curDifficulty = 2;
 			changeDiff();
 		}
 
@@ -318,16 +323,17 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		#if (PRELOAD_ALL)
-		if(timer!=null)
+		if (timer != null)
 			timer.cancel();
 		else
-			timer=new FlxTimer(FlxTimer.globalManager);
+			timer = new FlxTimer(FlxTimer.globalManager);
 
-		timer.start(1,(timer)->{
+		timer.start(1, (timer) ->
+		{
 			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		});
 		#end
-		
+
 		var bullShit:Int = 0;
 
 		for (i in 0...iconArray.length)
@@ -352,8 +358,10 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 	}
-	function isOnlyHard() : Bool {
-		return songs[curSelected].week==9||songs[curSelected].week==10||songs[curSelected].songName.toLowerCase()=="expurgation";
+
+	function isOnlyHard():Bool
+	{
+		return songs[curSelected].week == 9 || songs[curSelected].week == 10 || songs[curSelected].songName.toLowerCase() == "expurgation";
 	}
 }
 

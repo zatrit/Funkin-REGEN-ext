@@ -12,7 +12,6 @@ import openfl.events.Event;
 import webm.WebmPlayer;
 #elseif android
 #end
-
 class Main extends Sprite
 {
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
@@ -58,7 +57,7 @@ class Main extends Sprite
 
 	private function setupGame():Void
 	{
-		MAIN=this;
+		MAIN = this;
 
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
@@ -70,8 +69,8 @@ class Main extends Sprite
 			zoom = Math.min(ratioX, ratioY);
 			#if mobile
 			/*
-			Zoom and game size values are taken from here https://github.com/luckydog7/Funkin-android
-			*/
+				Zoom and game size values are taken from here https://github.com/luckydog7/Funkin-android
+			 */
 			zoom = 1;
 			#else
 			gameWidth = Math.ceil(stageWidth / zoom);
@@ -79,37 +78,37 @@ class Main extends Sprite
 			#end
 		}
 
-		Assets.cache.enabled=false;
+		Assets.cache.enabled = false;
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
-		var fps:FPS=new FPS(10, 3, 0xFFFFFF);
-		fps.setTextFormat(new TextFormat(null,#if mobile 24 #else 12 #end));
+		var fps:FPS = new FPS(10, 3, 0xFFFFFF);
+		fps.setTextFormat(new TextFormat(null, #if mobile 24 #else 12 #end));
 
 		addChild(fps);
 
 		var ourSource:String = Paths.getVideo("dontDelete");
 
-		//haxelib git extension-webm https://github.com/zatrit/extension-webm
+		// haxelib git extension-webm https://github.com/zatrit/extension-webm
 
 		#if web
-        var str1:String = "HTML";
-        var vHandler = new VideoHandler();
-        vHandler.init1();
-        vHandler.video.name = str1;
-        addChild(vHandler.video);
-        vHandler.init2();
-        GlobalVideo.setVid(vHandler);
-        vHandler.source(ourSource);
+		var str1:String = "HTML";
+		var vHandler = new VideoHandler();
+		vHandler.init1();
+		vHandler.video.name = str1;
+		addChild(vHandler.video);
+		vHandler.init2();
+		GlobalVideo.setVid(vHandler);
+		vHandler.source(ourSource);
 		#elseif desktop
-		WebmPlayer.SKIP_STEP_LIMIT = 90; //haxelib git extension-webm https://github.com/ThatRozebudDude/extension-webm
-        var str1:String = "WEBM"; 
-        var webmHandle = new WebmHandler();
-        webmHandle.source(ourSource);
-        webmHandle.makePlayer();
-        webmHandle.webm.name = str1;
-        addChild(webmHandle.webm);
-        GlobalVideo.setWebm(webmHandle);
+		WebmPlayer.SKIP_STEP_LIMIT = 90; // haxelib git extension-webm https://github.com/ThatRozebudDude/extension-webm
+		var str1:String = "WEBM";
+		var webmHandle = new WebmHandler();
+		webmHandle.source(ourSource);
+		webmHandle.makePlayer();
+		webmHandle.webm.name = str1;
+		addChild(webmHandle.webm);
+		GlobalVideo.setWebm(webmHandle);
 		#elseif android
 		#end
 	}

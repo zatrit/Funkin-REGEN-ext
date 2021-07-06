@@ -6,40 +6,48 @@ import flixel.FlxG;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
 
-class MobileHitbox extends Control{
-    public function new(x:Float=0,width:Float=0,color:FlxColor=FlxColor.LIME,alpha:Float=0.15){
-        this.alpha=alpha;
+class MobileHitbox extends Control
+{
+	public function new(x:Float = 0, width:Float = 0, color:FlxColor = FlxColor.LIME, alpha:Float = 0.15)
+	{
+		this.alpha = alpha;
 
-        super(x,0);
+		super(x, 0);
 
-        this.visible=true;
-        this.makeGraphic(Std.int(width),Std.int(FlxG.height),color);
-    }
-    override function update(elapsed:Float) {
-        super.update(elapsed);
+		this.visible = true;
+		this.makeGraphic(Std.int(width), Std.int(FlxG.height), color);
+	}
 
-        this.pressed=false;
-        this.justPressed=false;
-        this.justReleased=true;
-        
-        if(pressable)
-        for(touch in FlxG.touches.list)
-        {
-            var point:FlxPoint=touch.getScreenPosition(cameras[0]);
-            if(overlapsPoint(point,true,cameras[0])){
-                this.alpha=0.15;
-                this.pressed=true;
-                this.justPressed=touch.justPressed||this.justPressed||!this.pressedBefore;
-                this.justReleased=(touch.released&&this.justReleased);
-            }
-        }
-        if(!pressed){
-            this.alpha=0;
-        }
-        pressedBefore=pressed;
-    }
-    override function draw() {
-        super.draw();
-    }
+	override function update(elapsed:Float)
+	{
+		super.update(elapsed);
+
+		this.pressed = false;
+		this.justPressed = false;
+		this.justReleased = true;
+
+		if (pressable)
+			for (touch in FlxG.touches.list)
+			{
+				var point:FlxPoint = touch.getScreenPosition(cameras[0]);
+				if (overlapsPoint(point, true, cameras[0]))
+				{
+					this.alpha = 0.15;
+					this.pressed = true;
+					this.justPressed = touch.justPressed || this.justPressed || !this.pressedBefore;
+					this.justReleased = (touch.released && this.justReleased);
+				}
+			}
+		if (!pressed)
+		{
+			this.alpha = 0;
+		}
+		pressedBefore = pressed;
+	}
+
+	override function draw()
+	{
+		super.draw();
+	}
 }
 #end

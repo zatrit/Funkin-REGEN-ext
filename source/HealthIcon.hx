@@ -1,7 +1,6 @@
 package;
 
 import flixel.FlxSprite;
-
 import StringTools;
 
 class HealthIcon extends FlxSprite
@@ -42,7 +41,6 @@ class HealthIcon extends FlxSprite
 		animation.add('garcelloghosty', [29, 29], 0, false, isPlayer);
 		animation.add('parents-christmas', [17], 0, false, isPlayer);
 
-
 		animation.add('whitty', [30, 31], 0, false, isPlayer);
 		animation.add('whittyCrazy', [32, 33], 0, false, isPlayer);
 
@@ -64,7 +62,7 @@ class HealthIcon extends FlxSprite
 
 		animation.play(char);
 
-		antialiasing=!(char=="senpai"||char=="senpai-angry"||char=="spirit");
+		antialiasing = !(char == "senpai" || char == "senpai-angry" || char == "spirit");
 
 		scrollFactor.set();
 	}

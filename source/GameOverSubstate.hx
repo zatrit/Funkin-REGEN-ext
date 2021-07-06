@@ -14,8 +14,8 @@ class GameOverSubstate extends MusicBeatSubstate
 	var camFollow:FlxObject;
 
 	var stageSuffix:String = "";
-	var arcade:Bool=false;
-	var clown:Bool=false;
+	var arcade:Bool = false;
+	var clown:Bool = false;
 
 	var bfThought:FlxSprite;
 
@@ -30,10 +30,10 @@ class GameOverSubstate extends MusicBeatSubstate
 				daBf = 'bf-pixel-dead';
 			case 'arcade' | 'arcadeclosed':
 				daBf = 'bf';
-				arcade=true;
+				arcade = true;
 			case 'auditorHell' | 'nevada' | 'nevadaSpook':
 				daBf = 'signDeath';
-				clown=true;
+				clown = true;
 			default:
 				daBf = 'bf';
 		}
@@ -48,13 +48,15 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
-		if(!clown){
+		if (!clown)
+		{
 			FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix));
 			Conductor.changeBPM(100);
 		}
-		else{
-			FlxG.sound.play(Paths.sound('BF_Deathsound','clown'));
-			FlxG.sound.play(Paths.sound('Micdrop','clown'));
+		else
+		{
+			FlxG.sound.play(Paths.sound('BF_Deathsound', 'clown'));
+			FlxG.sound.play(Paths.sound('Micdrop', 'clown'));
 			Conductor.changeBPM(200);
 		}
 
@@ -62,14 +64,15 @@ class GameOverSubstate extends MusicBeatSubstate
 		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
-		
-		if(!arcade)
+
+		if (!arcade)
 			bf.playAnim('firstDeath');
-		else{
+		else
+		{
 			bf.playAnim('arcadeDeath');
 
-			bfThought=new FlxSprite(bf.x-bf.width-200,30).loadGraphic(Paths.image('bfThought','kapiWeek'));
-			bfThought.flipX=true;
+			bfThought = new FlxSprite(bf.x - bf.width - 200, 30).loadGraphic(Paths.image('bfThought', 'kapiWeek'));
+			bfThought.flipX = true;
 			add(bfThought);
 		}
 	}
@@ -78,16 +81,12 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
-		if (controls.ACCEPT
-			#if mobile
-			|| FlxG.touches.justStarted().length>0
-			#end
-			)
+		if (controls.ACCEPT #if mobile || FlxG.touches.justStarted().length > 0 #end)
 		{
 			endBullshit();
 		}
 
-		var firstDeath=(bf.animation.curAnim.name == 'firstDeath' || bf.animation.curAnim.name == 'arcadeDeath');
+		var firstDeath = (bf.animation.curAnim.name == 'firstDeath' || bf.animation.curAnim.name == 'arcadeDeath');
 
 		if (firstDeath && bf.animation.curAnim.curFrame == 12)
 		{
@@ -96,7 +95,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (firstDeath && bf.animation.curAnim.finished)
 		{
-			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix,clown ? "clown" : "shared"));
+			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix, clown ? "clown" : "shared"));
 		}
 
 		if (FlxG.sound.music.playing)
@@ -117,27 +116,30 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (!isEnding)
 		{
 			isEnding = true;
-			if(!arcade)
+			if (!arcade)
 				bf.playAnim('deathConfirm', true);
-			else{
-				bf.playAnim('arcadeDeathConfirm',true);
+			else
+			{
+				bf.playAnim('arcadeDeathConfirm', true);
 			}
 			FlxG.sound.music.stop();
-			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix,clown ? "clown" : "shared"));
-			if(bfThought!=null)
-				FlxTween.tween(bfThought,{alpha: 0},0.7);
+			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix, clown ? "clown" : "shared"));
+			if (bfThought != null)
+				FlxTween.tween(bfThought, {alpha: 0}, 0.7);
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
-					PlayState.firstTry=false;
+					PlayState.firstTry = false;
 					PlayState.attempt++;
 					LoadingState.loadAndSwitchState(new PlayState());
-				});	
+				});
 			});
 		}
 	}
-	override function onBack() {
+
+	override function onBack()
+	{
 		FlxG.sound.music.stop();
 
 		if (PlayState.isStoryMode)

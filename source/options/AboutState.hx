@@ -1,5 +1,4 @@
-//Source: https://github.com/luckydog7/Funkin-android
-
+// Source: https://github.com/luckydog7/Funkin-android
 package options;
 
 import lime.app.Application;
@@ -20,8 +19,8 @@ class AboutState extends MusicBeatState
 	{
 		// LOAD MUSIC
 		// LOAD CHARACTERS
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.bgStyle+'/menuBGBlue','menuBackgrounds'));
-		
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.bgStyle + '/menuBGBlue', 'menuBackgrounds'));
+
 		logoBl = new FlxSprite(-150, -100);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = true;
@@ -31,19 +30,21 @@ class AboutState extends MusicBeatState
 		logoBl.screenCenter();
 		logoBl.y = logoBl.y - 100;
 
-		text = new FlxText(0, 0, 0, 
-		"version "+ Application.current.meta.get('version')  + 
-		"\n" #if mobile + "ported by zatrit" + "\n" #end + "about screen(OMG, it's awesome) by luckydog7", 16);
+		text = new FlxText(0, 0, 0, "version "
+			+ Application.current.meta.get('version')
+			+ "\n"
+			#if mobile + "ported by zatrit" + "\n" #end
+			+ "about screen(OMG, it's awesome) by luckydog7", 16);
 
 		text.setFormat("Delfino", 24, FlxColor.WHITE, CENTER);
-		text.antialiasing=true;
+		text.antialiasing = true;
 		text.screenCenter();
 		text.y = text.y + 150;
 
 		add(bg);
 		add(logoBl);
 		add(text);
- 
+
 		super.create();
 	}
 
@@ -56,7 +57,9 @@ class AboutState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 	}
-	override function onBack() {
+
+	override function onBack()
+	{
 		FlxG.switchState(new OptionsState());
 	}
 }

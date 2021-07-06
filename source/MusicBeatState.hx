@@ -26,7 +26,7 @@ class MusicBeatState extends FlxUIState
 
 	override function update(elapsed:Float)
 	{
-		//everyStep();
+		// everyStep();
 		var oldStep:Int = curStep;
 
 		updateCurStep();
@@ -35,11 +35,7 @@ class MusicBeatState extends FlxUIState
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
 
-		if (controls.BACK
-			#if mobile
-			||FlxG.android.justReleased.BACK
-			#end
-			)
+		if (controls.BACK #if mobile || FlxG.android.justReleased.BACK #end)
 			onBack();
 
 		if (FlxG.keys.justPressed.F)
@@ -79,14 +75,18 @@ class MusicBeatState extends FlxUIState
 
 	public function beatHit():Void
 	{
-		//do literally nothing dumbass
+		// do literally nothing dumbass
 	}
-	public function onBack():Void{
+
+	public function onBack():Void
+	{
 		FlxG.switchState(new MainMenuState());
 	}
-	override function finishTransOut() {
+
+	override function finishTransOut()
+	{
 		super.finishTransOut();
-		
+
 		Gc.run(true);
 	}
 }

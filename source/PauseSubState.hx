@@ -9,7 +9,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-
 #if mobile
 import mobile.MobileButton;
 import mobile.MobileControls;
@@ -26,7 +25,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	final DIST_BEETWEN_ITEMS = #if !mobile 1 #else 0.9 #end;
 
-	var isChangeDiffMenu:Bool=false;
+	var isChangeDiffMenu:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{
@@ -57,8 +56,8 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
 
-		var blueBalled:FlxText = new FlxText(20, 15 +64, 0, "", 32);
-		blueBalled.text += "Blue balled: "+PlayState.attempt;
+		var blueBalled:FlxText = new FlxText(20, 15 + 64, 0, "", 32);
+		blueBalled.text += "Blue balled: " + PlayState.attempt;
 		blueBalled.scrollFactor.set();
 		blueBalled.setFormat(Paths.font("vcr.ttf"), 32);
 		blueBalled.updateHitbox();
@@ -68,14 +67,14 @@ class PauseSubState extends MusicBeatSubstate
 		blueBalled.alpha = 0;
 		FlxTween.tween(blueBalled, {alpha: 1, y: blueBalled.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
 
-		#if (mobile&&debug)
-		var controlTypeID:Int=1;
-		
-		if(FlxG.save.data.mobileControlsType!=null)
-			controlTypeID=FlxG.save.data.mobileControlsType;
+		#if (mobile && debug)
+		var controlTypeID:Int = 1;
 
-		var controlType:FlxText = new FlxText(20, 15 +96, 0, "", 32);
-		controlType.text += "Control type: "+controlTypeID;
+		if (FlxG.save.data.mobileControlsType != null)
+			controlTypeID = FlxG.save.data.mobileControlsType;
+
+		var controlType:FlxText = new FlxText(20, 15 + 96, 0, "", 32);
+		controlType.text += "Control type: " + controlTypeID;
 		controlType.scrollFactor.set();
 		controlType.setFormat(Paths.font("vcr.ttf"), 32);
 		controlType.updateHitbox();
@@ -102,9 +101,9 @@ class PauseSubState extends MusicBeatSubstate
 		for (i in 0...menuItems.length)
 		{
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
-			songText.ID=i;
+			songText.ID = i;
 			songText.isMenuItem = true;
-			songText.targetY = (i-(menuItems.length/2)+0.5)*DIST_BEETWEN_ITEMS;
+			songText.targetY = (i - (menuItems.length / 2) + 0.5) * DIST_BEETWEN_ITEMS;
 			grpMenuShit.add(songText);
 		}
 
@@ -125,13 +124,17 @@ class PauseSubState extends MusicBeatSubstate
 		var accepted = controls.ACCEPT;
 
 		#if mobile
-		if(FlxG.touches.justReleased().length>0){
-		for (touch in FlxG.touches.list) {
-				for (item in grpMenuShit.members) {
-					if(item.overlapsPoint(touch.getWorldPosition(camera))){
-						curSelected=item.ID;
+		if (FlxG.touches.justReleased().length > 0)
+		{
+			for (touch in FlxG.touches.list)
+			{
+				for (item in grpMenuShit.members)
+				{
+					if (item.overlapsPoint(touch.getWorldPosition(camera)))
+					{
+						curSelected = item.ID;
 						changeSelection();
-						accepted=true;
+						accepted = true;
 					}
 				}
 			}
@@ -156,12 +159,12 @@ class PauseSubState extends MusicBeatSubstate
 				case "Resume":
 					close();
 				case "Restart Song":
-					PlayState.firstTry=false;
+					PlayState.firstTry = false;
 					FlxG.resetState();
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
 				case "Change difficulty":
-					
+
 				case "Charting editor":
 					FlxG.switchState(new ChartingState());
 			}
@@ -186,11 +189,10 @@ class PauseSubState extends MusicBeatSubstate
 
 		var bullShit:Int = 0;
 
-
 		for (item in grpMenuShit.members)
 		{
 			#if !mobile
-			item.targetY = (bullShit - curSelected)*DIST_BEETWEN_ITEMS;
+			item.targetY = (bullShit - curSelected) * DIST_BEETWEN_ITEMS;
 			bullShit++;
 
 			item.alpha = 0.6;
@@ -206,7 +208,9 @@ class PauseSubState extends MusicBeatSubstate
 			#end
 		}
 	}
-	override function onBack() {
+
+	override function onBack()
+	{
 		close();
 	}
 }

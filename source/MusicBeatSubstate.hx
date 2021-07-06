@@ -23,14 +23,10 @@ class MusicBeatSubstate extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.BACK
-			#if mobile
-			||FlxG.android.justReleased.BACK
-			#end
-			)
+		if (controls.BACK #if mobile || FlxG.android.justReleased.BACK #end)
 			onBack();
 
-		//everyStep();
+		// everyStep();
 		var oldStep:Int = curStep;
 
 		updateCurStep();
@@ -38,7 +34,6 @@ class MusicBeatSubstate extends FlxSubState
 
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
-
 
 		super.update(elapsed);
 	}
@@ -67,9 +62,11 @@ class MusicBeatSubstate extends FlxSubState
 
 	public function beatHit():Void
 	{
-		//do literally nothing dumbass
+		// do literally nothing dumbass
 	}
-	public function onBack():Void{
+
+	public function onBack():Void
+	{
 		close();
 	}
 }

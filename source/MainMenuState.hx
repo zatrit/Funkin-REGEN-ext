@@ -13,7 +13,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-#if (!switch&&!mobile)
+#if (!switch && !mobile)
 import io.newgrounds.NG;
 #end
 import lime.app.Application;
@@ -36,14 +36,14 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
-	public static var bgStyle='default';
+	public static var bgStyle = 'default';
 
 	override function create()
 	{
 		#if NO_PRELOAD_ALL
 		LoadingState.unloadAll();
 		#end
-		
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
@@ -59,10 +59,10 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		if(FlxG.save.data.bgStyle!=null)
-			bgStyle=FlxG.save.data.bgStyle;
+		if (FlxG.save.data.bgStyle != null)
+			bgStyle = FlxG.save.data.bgStyle;
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image(bgStyle+'/menuBG','menuBackgrounds'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image(bgStyle + '/menuBG', 'menuBackgrounds'));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.18;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -74,7 +74,7 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image(bgStyle+'/menuDesat','menuBackgrounds'));
+		magenta = new FlxSprite(-80).loadGraphic(Paths.image(bgStyle + '/menuDesat', 'menuBackgrounds'));
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.18;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
@@ -148,21 +148,24 @@ class MainMenuState extends MusicBeatState
 				changeItem(1);
 			}
 
-			var touch:Bool=false;
+			var touch:Bool = false;
 
 			#if mobile
-			menuItems.forEach(function(spr:FlxSprite){
-			if(FlxG.touches.justStarted().length>0){
-				var _touch:Bool=FlxG.touches.getFirst().overlaps(spr,camera);
-				if(_touch){
-					curSelected=spr.ID;
-					changeItem();
+			menuItems.forEach(function(spr:FlxSprite)
+			{
+				if (FlxG.touches.justStarted().length > 0)
+				{
+					var _touch:Bool = FlxG.touches.getFirst().overlaps(spr, camera);
+					if (_touch)
+					{
+						curSelected = spr.ID;
+						changeItem();
+					}
+					touch = _touch || touch;
 				}
-				touch=_touch||touch;
-			}
 			});
 			#end
-			if (controls.ACCEPT||touch)
+			if (controls.ACCEPT || touch)
 			{
 				if (optionShit[curSelected] == 'donate')
 				{

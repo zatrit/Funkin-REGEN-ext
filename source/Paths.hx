@@ -114,7 +114,9 @@ class Paths
 	{
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
 	}
-	inline static public function getVideo(key:String) {
+
+	inline static public function getVideo(key:String)
+	{
 		#if !mobile
 		return getLibraryPath('videos/$key.webm', "preload");
 		#else

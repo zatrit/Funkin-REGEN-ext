@@ -2,7 +2,6 @@ package;
 
 import flixel.FlxState;
 import flixel.FlxG;
-
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
@@ -27,18 +26,18 @@ class VideoState extends MusicBeatState
 	public var defaultText:String = "";
 	public var doShit:Bool = false;
 	public var pauseText:String = "Press P To Pause/Unpause";
-	public var skip:Bool=false;
+	public var skip:Bool = false;
 
 	public function new(source:String, toTrans:FlxState)
 	{
 		super();
-		
+
 		leSource = source;
 		transClass = toTrans;
 
 		FlxG.switchState(transClass);
 	}
-	
+
 	override function create()
 	{
 		super.create();
@@ -46,20 +45,18 @@ class VideoState extends MusicBeatState
 
 		FlxG.autoPause = false;
 		doShit = false;
-		
+
 		if (GlobalVideo.isWebm)
 		{
 			videoFrames = Std.parseInt(Assets.getText(leSource.replace(".webm", ".txt")));
 		}
-		
+
 		fuckingVolume = FlxG.sound.music.volume;
 		FlxG.sound.music.volume = 0;
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
-		txt = new FlxText(0, 0, FlxG.width,
-			defaultText,
-			32);
+		txt = new FlxText(0, 0, FlxG.width, defaultText, 32);
 		txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
 		add(txt);
@@ -83,39 +80,40 @@ class VideoState extends MusicBeatState
 		if (GlobalVideo.isWebm)
 		{
 			GlobalVideo.get().restart();
-		} 
-		else {
+		}
+		else
+		{
 			GlobalVideo.get().play();
 		}
-		
+
 		if (useSound)
 		{
-			//vidSound = FlxG.sound.play(leSource.replace(".webm", ".ogg"));
-		
+			// vidSound = FlxG.sound.play(leSource.replace(".webm", ".ogg"));
+
 			/*new FlxTimer().start(0.1, function(tmr:FlxTimer)
-			{*/
-				vidSound.time = vidSound.length * soundMultiplier;
-				/*new FlxTimer().start(1.2, function(tmr:FlxTimer)
+				{ */
+			vidSound.time = vidSound.length * soundMultiplier;
+			/*new FlxTimer().start(1.2, function(tmr:FlxTimer)
 				{
 					if (useSound)
 					{
 						vidSound.time = vidSound.length * soundMultiplier;
 					}
-				}, 0);*/
-				doShit = true;
-			//}, 1);
+			}, 0);*/
+			doShit = true;
+			// }, 1);
 		}
 	}
-	
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		
+
 		if (useSound)
 		{
 			var wasFuckingHit = GlobalVideo.get().webm.wasHitOnce;
 			soundMultiplier = GlobalVideo.get().webm.renderedCount / videoFrames;
-			
+
 			if (soundMultiplier > 1)
 			{
 				soundMultiplier = 1;
@@ -127,29 +125,32 @@ class VideoState extends MusicBeatState
 			if (doShit)
 			{
 				var compareShit:Float = 50;
-				if (vidSound.time >= (vidSound.length * soundMultiplier) + compareShit || vidSound.time <= (vidSound.length * soundMultiplier) - compareShit)
+				if (vidSound.time >= (vidSound.length * soundMultiplier) + compareShit
+					|| vidSound.time <= (vidSound.length * soundMultiplier) - compareShit)
 					vidSound.time = vidSound.length * soundMultiplier;
 			}
 			if (wasFuckingHit)
 			{
-			if (soundMultiplier == 0)
-			{
-				if (prevSoundMultiplier != 0)
+				if (soundMultiplier == 0)
 				{
-					vidSound.pause();
-					vidSound.time = 0;
+					if (prevSoundMultiplier != 0)
+					{
+						vidSound.pause();
+						vidSound.time = 0;
+					}
 				}
-			} else {
-				if (prevSoundMultiplier == 0)
+				else
 				{
-					vidSound.resume();
-					vidSound.time = vidSound.length * soundMultiplier;
+					if (prevSoundMultiplier == 0)
+					{
+						vidSound.resume();
+						vidSound.time = vidSound.length * soundMultiplier;
+					}
 				}
-			}
-			prevSoundMultiplier = soundMultiplier;
+				prevSoundMultiplier = soundMultiplier;
 			}
 		}
-		
+
 		if (notDone)
 		{
 			FlxG.sound.music.volume = 0;
@@ -160,7 +161,7 @@ class VideoState extends MusicBeatState
 		{
 			GlobalVideo.get().restart();
 		}
-		
+
 		if (FlxG.keys.justPressed.P)
 		{
 			txt.text = pauseText;
@@ -169,19 +170,21 @@ class VideoState extends MusicBeatState
 			if (GlobalVideo.get().paused)
 			{
 				GlobalVideo.get().alpha();
-			} else {
+			}
+			else
+			{
 				GlobalVideo.get().unalpha();
 				txt.text = defaultText;
 			}
 		}
-		
+
 		if ((controls.ACCEPT || skip) || GlobalVideo.get().ended || GlobalVideo.get().stopped)
 		{
 			txt.visible = false;
 			GlobalVideo.get().hide();
 			GlobalVideo.get().stop();
 		}
-		
+
 		if ((controls.ACCEPT || skip) || GlobalVideo.get().ended)
 		{
 			notDone = false;
@@ -190,19 +193,21 @@ class VideoState extends MusicBeatState
 			FlxG.autoPause = true;
 			FlxG.switchState(transClass);
 		}
-		
+
 		if (GlobalVideo.get().played || GlobalVideo.get().restarted)
 		{
 			GlobalVideo.get().show();
 		}
-		
+
 		GlobalVideo.get().restarted = false;
 		GlobalVideo.get().played = false;
 		GlobalVideo.get().stopped = false;
 		GlobalVideo.get().ended = false;
 	}
-	override function onBack() {
-		skip=true;
+
+	override function onBack()
+	{
+		skip = true;
 	}
 	#end
 }

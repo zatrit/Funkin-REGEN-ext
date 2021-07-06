@@ -27,7 +27,7 @@ class Note extends FlxSprite
 	public static var GREEN_NOTE:Int = 2;
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
-	
+
 	public var rating:String = "shit";
 
 	public function new(strumTime:Float, _noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
@@ -47,15 +47,15 @@ class Note extends FlxSprite
 
 		burning = _noteData > 7;
 
-		if(isSustainNote && FlxG.save.data.downscroll)
+		if (isSustainNote && FlxG.save.data.downscroll)
 			flipY = true;
-		
+
 		this.noteData = _noteData % 4;
 
-		if(isSustainNote && prevNote.burning) { 
+		if (isSustainNote && prevNote.burning)
+		{
 			burning = true;
 		}
-
 
 		var daStage:String = PlayState.curStage;
 
@@ -88,12 +88,12 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				if(['arcade','arcadeclosed'].contains(daStage)||FlxG.save.data.arrowsStyle==2)
-					frames = Paths.getSparrowAtlas('NOTE_assets','kapiWeek');
-				else if(['void','pillars'].contains(daStage)||FlxG.save.data.arrowsStyle==1)
-					frames = Paths.getSparrowAtlas('NOTE_assets','agoti');
+				if (['arcade', 'arcadeclosed'].contains(daStage) || FlxG.save.data.arrowsStyle == 2)
+					frames = Paths.getSparrowAtlas('NOTE_assets', 'kapiWeek');
+				else if (['void', 'pillars'].contains(daStage) || FlxG.save.data.arrowsStyle == 1)
+					frames = Paths.getSparrowAtlas('NOTE_assets', 'agoti');
 				else
-					frames = Paths.getSparrowAtlas('NOTE_assets','shared');
+					frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');
@@ -110,7 +110,8 @@ class Note extends FlxSprite
 				animation.addByPrefix('redhold', 'red hold piece');
 				animation.addByPrefix('bluehold', 'blue hold piece');
 
-				if(burning){
+				if (burning)
+				{
 					if (daStage == 'auditorHell')
 					{
 						frames = Paths.getSparrowAtlas('fourth/mech/ALL_deathnotes', "clown");
@@ -124,11 +125,13 @@ class Note extends FlxSprite
 					{
 						frames = Paths.getSparrowAtlas('NOTE_fire', "clown");
 
-						if(!FlxG.save.data.downscroll){
+						if (!FlxG.save.data.downscroll)
+						{
 							animation.addByPrefix('blueScroll', 'blue fire');
 							animation.addByPrefix('greenScroll', 'green fire');
 						}
-						else{
+						else
+						{
 							animation.addByPrefix('greenScroll', 'blue fire');
 							animation.addByPrefix('blueScroll', 'green fire');
 						}
@@ -136,9 +139,9 @@ class Note extends FlxSprite
 						animation.addByPrefix('redScroll', 'red fire');
 						animation.addByPrefix('purpleScroll', 'purple fire');
 
-						if(FlxG.save.data.downscroll)
+						if (FlxG.save.data.downscroll)
 							flipY = true;
-						
+
 						x -= 50;
 					}
 				}
@@ -220,7 +223,7 @@ class Note extends FlxSprite
 	{
 		super.update(elapsed);
 
-		this.flipY=tooLate;
+		this.flipY = tooLate;
 
 		if (mustPress)
 		{

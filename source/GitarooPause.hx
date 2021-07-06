@@ -54,11 +54,13 @@ class GitarooPause extends MusicBeatState
 		if (controls.LEFT_P || controls.RIGHT_P)
 			changeThing();
 		#if mobile
-		for(touch in FlxG.touches.list){
-			if(touch.justPressed){
-				if(touch.overlaps(replayButton))
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				if (touch.overlaps(replayButton))
 					FlxG.switchState(new PlayState());
-				if(touch.overlaps(cancelButton))
+				if (touch.overlaps(cancelButton))
 					FlxG.switchState(new MainMenuState());
 			}
 		}

@@ -19,13 +19,14 @@ class OutdatedSubState extends MusicBeatState
 		var http = new haxe.Http("https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/version.downloadMe");
 		var githubVersion:String;
 		var ver = Application.current.meta.get('version');
-			
-		http.onData = function (data:String)
+
+		http.onData = function(data:String)
 		{
-			githubVersion=data;
+			githubVersion = data;
 		}
-		http.onError = (msg:String)->{
-			githubVersion="";
+		http.onError = (msg:String) ->
+		{
+			githubVersion = "";
 			trace(msg);
 		};
 		http.request();
@@ -34,13 +35,7 @@ class OutdatedSubState extends MusicBeatState
 			"HEY! You're running an outdated version of the game!\nCurrent version is "
 			+ ver
 			+ " while the most recent version is "
-			+ githubVersion
-			#if !mobile
-			+ "! Press SPACE to go to github repo, or ESCAPE to ignore this!!"
-			#else
-			+ "! Touch screen to ignore this!!"
-			#end
-			,32);
+			+ githubVersion #if !mobile + "! Press SPACE to go to github repo, or ESCAPE to ignore this!!" #else + "! Touch screen to ignore this!!" #end, 32);
 		txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
 		add(txt);
@@ -48,7 +43,7 @@ class OutdatedSubState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.ACCEPT#if mobile || FlxG.touches.justStarted().length>0 #end)
+		if (controls.ACCEPT #if mobile || FlxG.touches.justStarted().length > 0 #end)
 		{
 			#if !mobile
 			FlxG.openURL("https://github.com/zatrit/Funkin-REGEN-ext");

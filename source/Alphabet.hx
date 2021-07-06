@@ -94,7 +94,7 @@ class Alphabet extends FlxSpriteGroup
 				{
 					letter.createLetter(character);
 				}
-				
+
 				letter.updateHitbox();
 				add(letter);
 
@@ -225,13 +225,15 @@ class Alphabet extends FlxSpriteGroup
 
 		super.update(elapsed);
 	}
-	public function fullClear() {
+
+	public function fullClear()
+	{
 		super.clear();
-		lastSprite=null;
-		lastWasSpace=false;
+		lastSprite = null;
+		lastWasSpace = false;
 		xPosResetted = false;
 		splitWords = [];
-		_finalText=text;
+		_finalText = text;
 	}
 }
 

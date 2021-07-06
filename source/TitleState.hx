@@ -21,7 +21,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-#if (!switch&&!mobile)
+#if (!switch && !mobile)
 import io.newgrounds.NG;
 #end
 import lime.app.Application;
@@ -59,7 +59,7 @@ class TitleState extends MusicBeatState
 		// DEBUG BULLSHIT
 
 		super.create();
-		#if (!switch&&!mobile)
+		#if (!switch && !mobile)
 		NGio.noLogin(APIStuff.API);
 		#end
 
@@ -73,7 +73,7 @@ class TitleState extends MusicBeatState
 		Highscore.load();
 
 		#if PRELOAD_ALL
-		CachedFrames.loadEverything(()->{});
+		CachedFrames.loadEverything(() -> {});
 		#end
 
 		#if FREEPLAY
@@ -89,10 +89,11 @@ class TitleState extends MusicBeatState
 
 		#if desktop
 		DiscordClient.initialize();
-		
-		Application.current.onExit.add (function (exitCode) {
+
+		Application.current.onExit.add(function(exitCode)
+		{
 			DiscordClient.shutdown();
-		 });
+		});
 		#end
 	}
 
@@ -193,7 +194,7 @@ class TitleState extends MusicBeatState
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
-		FlxG.mouse.useSystemCursor=true;
+		FlxG.mouse.useSystemCursor = true;
 		FlxG.mouse.visible = false;
 
 		DefaultOptions.setOptionsDefaults();
@@ -256,14 +257,14 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			#if (!switch&&!mobile)
+			#if (!switch && !mobile)
 			NGio.unlockMedal(60960);
 
 			// If it's Friday according to da clock
 			if (Date.now().getDay() == 5)
 				NGio.unlockMedal(61034);
 			#end
-			if(titleText!=null)
+			if (titleText != null)
 				titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -273,8 +274,11 @@ class TitleState extends MusicBeatState
 			// FlxG.sound.music.stop();
 
 			#if NO_PRELOAD_ALL
-			var loadedCache:Bool=false;
-			CachedFrames.loadLibrary(()->{loadedCache=true;},"preload");
+			var loadedCache:Bool = false;
+			CachedFrames.loadLibrary(() ->
+			{
+				loadedCache = true;
+			}, "preload");
 			#end
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
@@ -282,28 +286,29 @@ class TitleState extends MusicBeatState
 				// Check if version is outdated
 
 				#if NO_PRELOAD_ALL
-				if(!loadedCache)
+				if (!loadedCache)
 					tmr.reset(0.5);
 				#end
 
 				var version:String = Application.current.meta.get('version');
-				
+
 				#if !debug
 				var http = new haxe.Http("https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/version.downloadMe");
 				var githubVersion:String;
-				
-				http.onData = function (data:String)
+
+				http.onData = function(data:String)
 				{
-					githubVersion=data.trim();
+					githubVersion = data.trim();
 				}
-				http.onError = (msg:String)->{
-					githubVersion="";
+				http.onError = (msg:String) ->
+				{
+					githubVersion = "";
 					trace(msg);
 				};
-				
+
 				http.request();
 
-				if (version.trim() != githubVersion && !OutdatedSubState.leftState&&githubVersion!="")
+				if (version.trim() != githubVersion && !OutdatedSubState.leftState && githubVersion != "")
 				{
 					FlxG.switchState(new OutdatedSubState());
 					trace('OLD VERSION!');
@@ -378,7 +383,7 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er','zatrit']);
+				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er', 'zatrit']);
 			// credTextShit.visible = true;
 			case 3:
 				addMoreText('present');
@@ -398,19 +403,19 @@ class TitleState extends MusicBeatState
 				addMoreText('Paperkitty');
 			case 7:
 				deleteCoolText();
-				createCoolText(['MikeGeno','Tenaxis','bbpanzu','Banbuds','Cval']);
+				createCoolText(['MikeGeno', 'Tenaxis', 'bbpanzu', 'Banbuds', 'Cval']);
 			case 8:
 				deleteCoolText();
-				createCoolText(['Rozebud','MORO','YingYang','Jads','Tom Fulp']);
+				createCoolText(['Rozebud', 'MORO', 'YingYang', 'Jads', 'Tom Fulp']);
 			case 9:
 				deleteCoolText();
-				createCoolText(['Krinkels','GWebDev','Tsuraran']);
+				createCoolText(['Krinkels', 'GWebDev', 'Tsuraran']);
 			case 10:
 				deleteCoolText();
-				createCoolText(['bbpanzu','Eddsworld','Jason The Art Kid','MashProTato']);
+				createCoolText(['bbpanzu', 'Eddsworld', 'Jason The Art Kid', 'MashProTato']);
 			case 11:
-					deleteCoolText();
-					createCoolText(['A.G.O.T.I','BrightFyre','SugarRatio','Kullix','iVorare']);
+				deleteCoolText();
+				createCoolText(['A.G.O.T.I', 'BrightFyre', 'SugarRatio', 'Kullix', 'iVorare']);
 			case 12:
 				deleteCoolText();
 				createCoolText(['In association', 'with']);
@@ -469,5 +474,8 @@ class TitleState extends MusicBeatState
 			skippedIntro = true;
 		}
 	}
-	override function onBack() {}
+
+	override function onBack()
+	{
+	}
 }
