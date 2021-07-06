@@ -16,6 +16,9 @@ class DefaultOptions{
         if(FlxG.save.data.animEvents==null)
             FlxG.save.data.animEvents=true;
 
+        if(FlxG.save.data.arrowsStyle==null)
+            FlxG.save.data.arrowsStyle=0;
+
         FlxG.save.flush();
     }
 }

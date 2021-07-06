@@ -209,7 +209,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 			case 'gf-rocks':
 				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('GF_assets', 'agoti');
+				tex = Paths.getSparrowAtlas('GF_rock', 'agoti');
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
 				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
@@ -238,6 +238,14 @@ class Character extends FlxSprite
 				addOffset('scared', -2, -17);
 	
 				playAnim('danceRight');
+			case 'gf-rocks-scared':
+				// GIRLFRIEND CODE
+				tex = Paths.getSparrowAtlas('GF_rock', 'agoti');
+				frames = tex;
+
+				animation.addByPrefix('idle','GF Dancing Beat Hair blowing',12);
+		
+				addOffset('idle',0,250);
 			#if !MOD_ONLY
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
@@ -1096,12 +1104,12 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'Angry_Agoti_Down', 24);
 				animation.addByPrefix('singLEFT', 'Angry_Agoti_Left', 24);
 		
-				//Offsets source: https://github.com/TheZoroForce240/FNF-Absolute-Rage-Mod/blob/master/source/Character.hx
-				addOffset('idle', 0, 100);
-				addOffset("singUP", 60, 230);
-				addOffset("singRIGHT", 90, 0);
-				addOffset("singLEFT", 0, 130);
-				addOffset("singDOWN", 30, 0);
+				//Offsets source: https://gamebanana.com/mods/288155
+				addOffset('idle', -20, -80);
+				addOffset("singUP", 0, 70);
+				addOffset("singRIGHT", 0, -80);
+				addOffset("singLEFT", 60, -90);
+				addOffset("singDOWN", 0, -180);
 		
 				playAnim('idle');
 	

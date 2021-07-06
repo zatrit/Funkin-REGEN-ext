@@ -227,4 +227,19 @@
 	<SubTexture name="Tord idle dance BLACK LINE0013" x="2720" y="4950" width="355" height="717"/>
 	<SubTexture name="Tord idle dance BLACK LINE0014" x="2720" y="4950" width="355" height="717"/>
 	<SubTexture name="Tord idle dance BLACK LINE0015" x="2720" y="4950" width="355" height="717"/>
+	
+	<SubTexture name="Agoti idle dance BLACK LINE0000" x="3300" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0001" x="3300" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0002" x="3766" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0003" x="3766" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0004" x="4232" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0005" x="4232" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0006" x="4698" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0007" x="4698" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0008" x="5164" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0009" x="5164" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0010" x="5164" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0011" x="5164" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0012" x="5164" y="4960" width="466" height="851"/>
+	<SubTexture name="Agoti idle dance BLACK LINE0013" x="5164" y="4960" width="466" height="851"/>
 </TextureAtlas>

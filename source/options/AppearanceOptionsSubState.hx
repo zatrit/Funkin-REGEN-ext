@@ -7,9 +7,11 @@ class AppearanceOptionsSubState extends OptionsSubState {
 	final SKIP_CUTSCENES_NUMBER = 2;
 	final DOWNSCROLL_NUMBER = 3;
 	final BOT_ARROWS_ANIM_NUMBER = 4;
-	final ANIM_EVENTS_NUMBER = 5;
+	final ARROWS_STYLE_NUMBER = 5;
+	final ANIM_EVENTS_NUMBER = 6;
 
     final BOT_ARROWS_ANIM_VALUES:Array<String>=['advanced','optimized','none'];
+    final ARROWS_STYLES_VALUES:Array<String>=['default','agoti','kapi'];
 
     public function new(parent:OptionsState) {
         var items:Array<String> = [
@@ -18,6 +20,7 @@ class AppearanceOptionsSubState extends OptionsSubState {
             'skip cutscenes: '+(FlxG.save.data.skipCutscenes ? 'on' : 'off'),
             (FlxG.save.data.downscroll ? 'downscroll' : 'upscroll'),
             "arrows anim: "+BOT_ARROWS_ANIM_VALUES[FlxG.save.data.botArrowsAnim],
+            "arrows style: "+ARROWS_STYLES_VALUES[FlxG.save.data.arrowsStyle],
             "animated events: "+(FlxG.save.data.animEvents ? "on" : "off")
         ];
 
@@ -57,6 +60,13 @@ class AppearanceOptionsSubState extends OptionsSubState {
                     
 					FlxG.save.data.botArrowsAnim=toggleIntOption(BOT_ARROWS_ANIM_NUMBER,"arrows anim: ",botArrowsAnim,BOT_ARROWS_ANIM_VALUES);
 					FlxG.save.flush();
+                }
+            case "arrows style: default" | "arrows style: agoti" | "arrows style: kapi":
+                {
+                    var arrowsStyle:Int=FlxG.save.data.arrowsStyle;
+                     
+                    FlxG.save.data.arrowsStyle=toggleIntOption(ARROWS_STYLE_NUMBER,"arrows style: ",arrowsStyle,ARROWS_STYLES_VALUES);
+                    FlxG.save.flush();
                 }
             case 'animated events: on' | 'animated events: off':
                 {

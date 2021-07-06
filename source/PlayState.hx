@@ -207,12 +207,17 @@ class PlayState extends MusicBeatState
 	var bgpillar:FlxSprite;
 
 	var useAgotiArrows:Bool;
+	var useKapiArrows:Bool;
 
 	override public function create()
 	{
 		Conductor.recalculateTimings();
 
 		useAgotiArrows=['guns','a.g.o.t.i','parasite','screenplay'].contains(SONG.song.toLowerCase());
+		useAgotiArrows=(useAgotiArrows&&FlxG.save.data.arrowsStyle==0)||FlxG.save.data.arrowsStyle==1;
+		
+		useKapiArrows=['wocky','beathoven','hairball','nyaw'].contains(SONG.song.toLowerCase());
+		useKapiArrows=(useKapiArrows&&FlxG.save.data.arrowsStyle==0)||FlxG.save.data.arrowsStyle==2;
 
 		staticVar=this;
 
@@ -1168,8 +1173,10 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-hell';
 			case 'auditorHell':
 				gfVersion = 'gf-tied';
-			case 'void'|'pillars':
+			case 'void':
 				gfVersion = 'gf-rocks';
+			case 'pillars':
+				gfVersion = 'gf-rocks-scared';
 		}
 
 		gf = new Character(400, 130, gfVersion);
@@ -1258,7 +1265,7 @@ class PlayState extends MusicBeatState
 				gf.y -= 250;
 			case 'agoti-crazy':
 				camPos.x += 400;
-				dad.y += 200;
+				dad.y += 50;
 				dad.x -= 100;
 				gf.y -= 250;
 		}
@@ -2189,7 +2196,7 @@ class PlayState extends MusicBeatState
 					}
 
 				default:
-					if(['wocky','beathoven','hairball','nyaw'].contains(SONG.song.toLowerCase()))
+					if(useKapiArrows)
 						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets','kapiWeek');
 					else if(useAgotiArrows)
 							babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets','agoti');
@@ -2404,6 +2411,10 @@ class PlayState extends MusicBeatState
 				camHUD.angle = Math.sin((Conductor.songPosition / 1000)*(Conductor.bpm/60) * 1.0) * 2.0;
 
 				gf.y = -120 + Math.sin((Conductor.songPosition / 1000)*(Conductor.bpm/60) * 2.0) * 5.0;
+
+				for(i in 0...strumLineNotes.length){
+					strumLineNotes.members[i].y+=Math.sin((Conductor.songPosition / 1000)*(Conductor.bpm/60) * 2.0+strumLineNotes.members[i].ID);
+				}
 		}
 
 		super.update(elapsed);

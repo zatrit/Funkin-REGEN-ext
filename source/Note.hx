@@ -88,9 +88,9 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				if(['arcade','arcadeclosed'].contains(daStage))
+				if(['arcade','arcadeclosed'].contains(daStage)||FlxG.save.data.arrowsStyle==2)
 					frames = Paths.getSparrowAtlas('NOTE_assets','kapiWeek');
-				else if(['void','pillars'].contains(daStage))
+				else if(['void','pillars'].contains(daStage)||FlxG.save.data.arrowsStyle==1)
 					frames = Paths.getSparrowAtlas('NOTE_assets','agoti');
 				else
 					frames = Paths.getSparrowAtlas('NOTE_assets','shared');
