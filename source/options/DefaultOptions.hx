@@ -13,6 +13,9 @@ class DefaultOptions{
         if(FlxG.save.data.accuracyDisplay==null)
             FlxG.save.data.accuracyDisplay=false;
 
+        if(FlxG.save.data.graphicsQuality==null)
+            FlxG.save.data.graphicsQuality=2;
+
         FlxG.save.flush();
     }
 }

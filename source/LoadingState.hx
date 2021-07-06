@@ -291,7 +291,7 @@ class LoadingState extends MusicBeatState
 		return promise.future;
 	}
 	public static inline function unloadAll(){
-		var libs:Array<String>=['week1','week2','week3','week4','week5','week6','weekG','bonusWeek','kapiWeek'];
+		var libs:Array<String>=['week1','week2','week3','week4','week5','week6','weekG','bonusWeek','kapiWeek','g3wweek','clown','tord','agoti'];
 
 		for(lib in libs){
 			Assets.unloadLibrary(lib);

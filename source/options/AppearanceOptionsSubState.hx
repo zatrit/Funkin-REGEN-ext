@@ -7,8 +7,10 @@ class AppearanceOptionsSubState extends OptionsSubState {
 	final SKIP_CUTSCENES_NUMBER = 2;
 	final DOWNSCROLL_NUMBER = 3;
 	final BOT_ARROWS_ANIM_NUMBER = 4;
+	final GRAPHICS_NUMBER = 5;
 
     final BOT_ARROWS_ANIM_VALUES:Array<String>=['advanced','optimized','none'];
+    final GRAPHICS_VALUES:Array<String>=['none','fast','fancy'];
 
     public function new(parent:OptionsState) {
         var items:Array<String> = [
@@ -16,7 +18,9 @@ class AppearanceOptionsSubState extends OptionsSubState {
             'healthbar appearance',
             'skip cutscenes: '+(FlxG.save.data.skipCutscenes ? 'on' : 'off'),
             (FlxG.save.data.downscroll ? 'downscroll' : 'upscroll'),
-            "arrows anim: "+BOT_ARROWS_ANIM_VALUES[FlxG.save.data.botArrowsAnim],];
+            "arrows anim: "+BOT_ARROWS_ANIM_VALUES[FlxG.save.data.botArrowsAnim],
+            "graphics: "+GRAPHICS_VALUES[FlxG.save.data.graphicsQuality]
+        ];
 
         super(parent,items);
     }
@@ -53,6 +57,13 @@ class AppearanceOptionsSubState extends OptionsSubState {
 					var botArrowsAnim:Int=FlxG.save.data.botArrowsAnim;
                     
 					FlxG.save.data.botArrowsAnim=toggleIntOption(BOT_ARROWS_ANIM_NUMBER,"arrows anim: ",botArrowsAnim,BOT_ARROWS_ANIM_VALUES);
+					FlxG.save.flush();
+                }
+            case 'graphics: none' | 'graphics: fast' | 'graphics: fancy':
+                {
+				    var graphicsQuality:Int=FlxG.save.data.graphicsQuality;
+                   
+					FlxG.save.data.graphicsQuality=toggleIntOption(GRAPHICS_NUMBER,"arrows anim: ",graphicsQuality,GRAPHICS_VALUES);
 					FlxG.save.flush();
                 }
         }

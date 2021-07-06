@@ -9,6 +9,7 @@ class OptionsSubState extends MusicBeatSubstate
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	var itemHighlightOnMobile:Bool;
+	public var values:Array<Int>=new Array<Int>();
 
 	var curSelected:Int = 0;
 	var oldCurSelected:Int = 0;

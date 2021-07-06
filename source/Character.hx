@@ -321,20 +321,22 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, 0);
 				addOffset("garTightBars", 0, 0);
 
-				garTrailTarget = new FlxSprite(x,y);
-				garTrailTarget.graphic=graphic;
-				garTrailTarget.frames=frames;
+				if(FlxG.save.data.graphicsQuality>1){
+					garTrailTarget = new FlxSprite(x,y);
+					garTrailTarget.graphic=graphic;
+					garTrailTarget.frames=frames;
 
-				garTrailTarget.animation.addByPrefix('idle', 'garcello idle dance', 24);
-				garTrailTarget.animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
-				garTrailTarget.animation.addByPrefix('singRIGHT', 'garcello Sing Note RIGHT', 24);
-				garTrailTarget.animation.addByPrefix('singDOWN', 'garcello Sing Note DOWN', 24);
-				garTrailTarget.animation.addByPrefix('singLEFT', 'garcello Sing Note LEFT', 24);
+					garTrailTarget.animation.addByPrefix('idle', 'garcello idle dance', 24);
+					garTrailTarget.animation.addByPrefix('singUP', 'garcello Sing Note UP', 24);
+					garTrailTarget.animation.addByPrefix('singRIGHT', 'garcello Sing Note RIGHT', 24);
+					garTrailTarget.animation.addByPrefix('singDOWN', 'garcello Sing Note DOWN', 24);
+					garTrailTarget.animation.addByPrefix('singLEFT', 'garcello Sing Note LEFT', 24);
 
-				garTrail=new FlxTrail(garTrailTarget,null,8,0,0.2,0.25);
-				garTrail.scrollFactor.set(1.1,1.1);
+					garTrail=new FlxTrail(garTrailTarget,null,8,24,0.2,0.25);
+					garTrail.scrollFactor.set(1.1,1.1);
 
-				PlayState.staticVar.add(garTrail);
+					PlayState.staticVar.add(garTrail);
+				}
 
 				playAnim('idle');
 
@@ -1094,11 +1096,12 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'Angry_Agoti_Down', 24);
 				animation.addByPrefix('singLEFT', 'Angry_Agoti_Left', 24);
 		
-				addOffset('idle', 0, -30);
-				addOffset("singUP", 60, 100);
-				addOffset("singRIGHT", 90, -130);
-				addOffset("singLEFT", 0, 0);
-				addOffset("singDOWN", 30, -130);
+				//Offsets source: https://github.com/TheZoroForce240/FNF-Absolute-Rage-Mod/blob/master/source/Character.hx
+				addOffset('idle', 0, 100);
+				addOffset("singUP", 60, 230);
+				addOffset("singRIGHT", 90, 0);
+				addOffset("singLEFT", 0, 130);
+				addOffset("singDOWN", 30, 0);
 		
 				playAnim('idle');
 	
@@ -1244,7 +1247,7 @@ class Character extends FlxSprite
 					danced = !danced;
 				}
 			}
-			if(curCharacter=="garcellodead"){
+			if(curCharacter=="garcellodead"&&FlxG.save.data.graphicsQuality>1){
 				garTrailTarget.offset.set(daOffset[0], daOffset[1]);
 				garTrailTarget.animation.play(AnimName);
 			}
