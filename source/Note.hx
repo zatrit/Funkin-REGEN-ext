@@ -89,11 +89,11 @@ class Note extends FlxSprite
 
 			default:
 				if (['arcade', 'arcadeclosed'].contains(daStage) || FlxG.save.data.arrowsStyle == 2)
-					frames = Paths.getSparrowAtlas('NOTE_assets', 'kapiWeek');
+					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-kapi', 'shared');
 				else if (['void', 'pillars'].contains(daStage) || FlxG.save.data.arrowsStyle == 1)
-					frames = Paths.getSparrowAtlas('NOTE_assets', 'agoti');
+					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-agoti', 'shared');
 				else
-					frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
+					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets', 'shared');
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');

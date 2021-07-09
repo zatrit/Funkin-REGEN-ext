@@ -35,7 +35,7 @@ class MusicBeatState extends FlxUIState
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
 
-		if (controls.BACK #if mobile || FlxG.android.justReleased.BACK #end)
+		if (controls.BACK #if android || FlxG.android.justReleased.BACK #end)
 			onBack();
 
 		if (FlxG.keys.justPressed.F)

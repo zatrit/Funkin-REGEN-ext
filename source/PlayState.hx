@@ -227,6 +227,9 @@ class PlayState extends MusicBeatState
 	var useAgotiArrows:Bool;
 	var useKapiArrows:Bool;
 
+	var pixelShitPart2:String = '';
+	var pixelShitPart1:String = '';
+
 	override public function create()
 	{
 		Conductor.recalculateTimings();
@@ -1288,7 +1291,7 @@ class PlayState extends MusicBeatState
 				gf.y -= 250;
 			case 'agoti-crazy':
 				camPos.x += 400;
-				dad.y += 50;
+				dad.y += 130;
 				dad.x -= 100;
 				gf.y -= 250;
 		}
@@ -1695,6 +1698,13 @@ class PlayState extends MusicBeatState
 					startCountdown();
 			}
 		}
+
+		if (curStage.startsWith('school'))
+		{
+			pixelShitPart1 = 'weeb/pixelUI/';
+			pixelShitPart2 = '-pixel';
+		}
+		pixelShitPart1 += FlxG.save.data.useKadeRatings ? 'kade/' : '';
 
 		super.create();
 	}
@@ -2227,11 +2237,11 @@ class PlayState extends MusicBeatState
 
 				default:
 					if (useKapiArrows)
-						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets', 'kapiWeek');
+						babyArrow.frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-kapi', 'shared');
 					else if (useAgotiArrows)
-						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets', 'agoti');
+						babyArrow.frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-agoti', 'shared');
 					else
-						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
+						babyArrow.frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets', 'shared');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -2844,7 +2854,7 @@ class PlayState extends MusicBeatState
 								health -= 0.075;
 								totalDamageTaken += 0.075;
 								interupt = true;
-								if (!FlxG.save.data.kadeInput)
+								if (!FlxG.save.data.newInput)
 									noteMiss(daNote.noteData);
 								else
 									kadeNoteMiss(daNote);
@@ -2873,7 +2883,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if (!inCutscene)
-			if (FlxG.save.data.kadeInput)
+			if (FlxG.save.data.newInput)
 				kadeKeyShit();
 			else
 				keyShit();
@@ -3040,15 +3050,6 @@ class PlayState extends MusicBeatState
 				daRating = 'bad';
 		 */
 
-		var pixelShitPart2:String = '';
-		var pixelShitPart1:String = '';
-
-		if (curStage.startsWith('school'))
-		{
-			pixelShitPart1 = 'weeb/pixelUI/';
-			pixelShitPart2 = '-pixel';
-		}
-
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
@@ -3091,7 +3092,10 @@ class PlayState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+			var numScore:FlxSprite = new FlxSprite();
+			numScore.frames=Paths.getSparrowAtlas(pixelShitPart1.replace('kade/','') + 'nums' + pixelShitPart2);
+			numScore.animation.addByPrefix('num','num'+ Std.int(i));
+			numScore.animation.play('num');
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
@@ -4372,15 +4376,6 @@ class PlayState extends MusicBeatState
 					daRating = 'bad';
 			 */
 
-			var pixelShitPart1:String = "";
-			var pixelShitPart2:String = '';
-
-			if (curStage.startsWith('school'))
-			{
-				pixelShitPart1 = 'weeb/pixelUI/';
-				pixelShitPart2 = '-pixel';
-			}
-
 			rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
 			rating.screenCenter();
 			rating.y -= 50;
@@ -4436,7 +4431,10 @@ class PlayState extends MusicBeatState
 			var daLoop:Int = 0;
 			for (i in seperatedScore)
 			{
-				var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+				var numScore:FlxSprite = new FlxSprite();
+				numScore.frames=Paths.getSparrowAtlas(pixelShitPart1.replace('kade/','') + 'nums' + pixelShitPart2);
+				numScore.animation.addByPrefix('num','num'+ Std.int(i));
+				numScore.animation.play('num');
 				numScore.screenCenter();
 				numScore.x = rating.x + (43 * daLoop) - 50;
 				numScore.y = rating.y + 100;
@@ -5543,7 +5541,6 @@ class PlayState extends MusicBeatState
 							if (interupt && !onc && !persist)
 							{
 								onc = true;
-								trace('oh shit');
 								gramlan.animation.play('release');
 								gramlan.animation.finishCallback = function(pog:String)
 								{

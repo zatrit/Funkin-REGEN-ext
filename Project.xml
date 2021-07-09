@@ -75,8 +75,6 @@
 		<library name="clown"    preload="true" />
 		<library name="tord"    preload="true" />
 		<library name="agoti"    preload="true" />
-
-		<library name="menuBackgrounds"    preload="true" />
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
@@ -103,7 +101,6 @@
 		<library name="agoti"    preload="false" />
 
 		<!-- It's not all, LOL -->
-		<library name="menuBackgrounds"    preload="true" />
 	</section>
 	<assets path="assets/shared"   library="shared"   exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"   library="shared"   exclude="*.mp3" unless="web"/>
@@ -148,8 +145,6 @@
 	<!-- A.G.O.T.I -->
 	<assets path="assets/agoti"    library="agoti"    exclude="*.ogg" if="web"/>
 	<assets path="assets/agoti"    library="agoti"    exclude="*.mp3" unless="web"/>
-
-	<assets path="assets/menuBackgrounds" library="menuBackgrounds"/>
 	
 	<assets path='example_mods' rename='mods' embed='false'/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
@@ -211,7 +206,7 @@
 	<!--Optimise inputs, be careful you will get null errors if you don't use conditionals in your game-->
 	<!-- <haxedef name="FLX_NO_MOUSE" if="mobile" /> -->
 	<!-- <haxedef name="FLX_NO_KEYBOARD" if="mobile" /> -->
-	<!-- <haxedef name="FLX_NO_TOUCH" if="desktop" /> -->
+	<haxedef name="FLX_NO_TOUCH" if="desktop" />
 	<!--<haxedef name="FLX_NO_GAMEPAD" />-->
 
 	<!--Disable the Flixel core sound tray-->

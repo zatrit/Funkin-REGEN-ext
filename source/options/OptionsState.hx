@@ -19,7 +19,7 @@ class OptionsState extends MusicBeatState
 
 	override function create()
 	{
-		menuBG.loadGraphic(Paths.image(MainMenuState.bgStyle + '/menuDesat', 'menuBackgrounds'));
+		menuBG.loadGraphic(Paths.image('menuBG/${MainMenuState.bgStyle}/menuDesat', 'preload'));
 		controlsStrings = CoolUtil.coolTextFile(Paths.txt('controls'));
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

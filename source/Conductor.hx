@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import Song.SwagSong;
 
 /**
@@ -35,7 +36,7 @@ class Conductor
 
 	public static function recalculateTimings()
 	{
-		Conductor.safeFrames = 10;
+		Conductor.safeFrames = FlxG.save.data.safeFrames;
 		Conductor.safeZoneOffset = Math.floor((Conductor.safeFrames / 60) * 1000);
 		Conductor.timeScale = Conductor.safeZoneOffset / 166;
 	}

@@ -1,5 +1,8 @@
 package options;
 
+#if mobile
+import mobile.MobileControls;
+#end
 import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
@@ -16,24 +19,39 @@ class OptionsSubState extends MusicBeatSubstate
 	var oldCurSelected:Int = 0;
 
 	#if mobile
-	var itemDiff = 0.8;
+	var itemDiff = 0.7;
 	#end
+
+	var enableScrolling:Bool = false;
+	var scroll:Float = 1;
+	#if mobile
+	var mobileControls:MobileControls;
+	#end
+	var acceptNonReleased:Bool = false;
 
 	public var parent:OptionsState;
 
-	public function new(parent:OptionsState, items:Array<String>, itemHighlightOnMobile:Bool = false, itemDiff:Float = 0.8)
+	public function new(parent:OptionsState, items:Array<String>, itemHighlightOnMobile:Bool = false, enableScrolling = false)
 	{
 		super();
 
 		this.parent = parent;
 		this.textMenuItems = items;
 		this.itemHighlightOnMobile = itemHighlightOnMobile;
-		#if mobile
-		this.itemDiff = itemDiff;
-		#end
+		this.enableScrolling = enableScrolling;
 
 		createItems();
 		changeSelection();
+
+		#if mobile
+		if (enableScrolling)
+		{
+			this.mobileControls = new MobileControls(camera, camera.width - 510, camera.height - 410, 1);
+			mobileControls.left.visible = false;
+			mobileControls.right.visible = false;
+			add(mobileControls);
+		}
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -43,19 +61,35 @@ class OptionsSubState extends MusicBeatSubstate
 		var accept:Bool = controls.ACCEPT;
 
 		#if mobile
-		for (item in grpOptions.members)
-			for (touch in FlxG.touches.list)
+		if ((enableScrolling && !(mobileControls.up.pressed || mobileControls.down.pressed)) || !enableScrolling)
+			for (item in grpOptions.members)
+				for (touch in FlxG.touches.list)
+				{
+					if (touch.overlaps(item) && touch.pressed)
+					{
+						curSelected = item.ID;
+						changeSelection();
+						if (acceptNonReleased)
+							accept = true;
+					}
+					if (touch.overlaps(item) && touch.justReleased && !acceptNonReleased)
+					{
+						accept = true;
+					}
+				}
+		if (enableScrolling)
+		{
+			if (mobileControls.down.justPressed)
 			{
-				if (touch.overlaps(item) && touch.pressed)
-				{
-					curSelected = item.ID;
-					changeSelection();
-				}
-				if (touch.overlaps(item) && touch.justReleased)
-				{
-					accept = true;
-				}
+				scroll--;
+				changeSelection();
 			}
+			if (mobileControls.up.justPressed)
+			{
+				scroll++;
+				changeSelection();
+			}
+		}
 		#end
 
 		if (controls.UP_P)
@@ -72,9 +106,12 @@ class OptionsSubState extends MusicBeatSubstate
 
 	function changeSelection(change:Int = 0)
 	{
-		// NGio.logEvent('Fresh');
+		// NGio.logEvent('Fresh');\
 
 		curSelected += change;
+
+		// if(scroll<2.5)
+		//	scroll=-2.5;
 
 		if (curSelected < 0)
 			curSelected = textMenuItems.length - 1;
@@ -90,9 +127,22 @@ class OptionsSubState extends MusicBeatSubstate
 
 		for (item in grpOptions.members)
 		{
-			#if !mobile
-			item.targetY = bullShit - curSelected;
-			bullShit++;
+			#if mobile
+			if (enableScrolling)
+			{
+				if (scroll > 1)
+					scroll = 1;
+				if (scroll < -textMenuItems.length + 4)
+					scroll = -textMenuItems.length + 4;
+			#end
+				#if !mobile
+				item.targetY = bullShit - curSelected;
+				#else
+				item.targetY = bullShit + scroll - 2;
+				#end
+				bullShit++;
+			#if mobile
+			}
 			#end
 
 			#if mobile

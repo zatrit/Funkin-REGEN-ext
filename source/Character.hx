@@ -1102,11 +1102,11 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'Angry_Agoti_Left', 24);
 
 				// Offsets source: https://gamebanana.com/mods/288155
-				addOffset('idle', -20, -80);
-				addOffset("singUP", 0, 70);
-				addOffset("singRIGHT", 0, -80);
-				addOffset("singLEFT", 60, -90);
-				addOffset("singDOWN", 0, -180);
+				addOffset('idle', -20, 20);
+				addOffset("singUP", 40, 170);
+				addOffset("singRIGHT", 0, 0);
+				addOffset("singLEFT", 100, -10);
+				addOffset("singDOWN", 0, -100);
 
 				playAnim('idle');
 
@@ -1176,7 +1176,6 @@ class Character extends FlxSprite
 			case 'exTricky':
 				if (exSpikes.animation.frameIndex >= 3 && animation.curAnim.name == 'singUP')
 				{
-					trace('paused');
 					exSpikes.animation.pause();
 				}
 		}
@@ -1261,7 +1260,6 @@ class Character extends FlxSprite
 			{
 				if (AnimName == 'singUP')
 				{
-					trace('spikes');
 					exSpikes.visible = true;
 					if (exSpikes.animation.finished)
 						exSpikes.animation.play('spike');
@@ -1269,10 +1267,8 @@ class Character extends FlxSprite
 				else if (!exSpikes.animation.finished)
 				{
 					exSpikes.animation.resume();
-					trace('go back spikes');
 					exSpikes.animation.finishCallback = function(pog:String)
 					{
-						trace('finished');
 						exSpikes.visible = false;
 						exSpikes.animation.finishCallback = null;
 					}

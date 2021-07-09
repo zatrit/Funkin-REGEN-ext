@@ -7,9 +7,19 @@ class MenuBGSelectorSubState extends OptionsSubState
 {
 	public function new(parent:OptionsState)
 	{
-		final items:Array<String> = ['default', 'garcello', 'whitty', 'kapi', 'tricky', 'tricky amogus', 'tord'];
+		final items:Array<String> = [
+			'default',
+			'garcello',
+			'whitty',
+			'kapi',
+			'tricky',
+			'tricky amogus',
+			'tord',
+			'agoti'
+		];
 
-		super(parent, items, true, 0.6);
+		super(parent, items, true, true);
+		acceptNonReleased = true;
 
 		curSelected = textMenuItems.indexOf(MainMenuState.bgStyle);
 		changeSelection();
@@ -31,6 +41,6 @@ class MenuBGSelectorSubState extends OptionsSubState
 		super.changeSelection(change);
 
 		var bgStyle:String = textMenuItems[curSelected];
-		parent.menuBG.loadGraphic(Paths.image(bgStyle + '/menuDesat', 'menuBackgrounds'));
+		parent.menuBG.loadGraphic(Paths.image('menuBG/${bgStyle}/menuDesat', 'preload'));
 	}
 }

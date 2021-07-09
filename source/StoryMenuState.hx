@@ -25,49 +25,24 @@ class StoryMenuState extends MusicBeatState
 
 	var weekData:Array<Dynamic> = [
 		['Tutorial'],
-		#if !MOD_ONLY
-		['Bopeebo', 'Fresh', 'Dadbattle'], ['Spookeez', 'South', "Monster"], ['Pico', 'Philly', "Blammed"], ['Satin-Panties', "High", "Milf"],
-		['Cocoa', 'Eggnog', 'Winter-Horrorland'], ['Senpai', 'Roses', 'Thorns'],
-		#end
-		['Ugh', 'Guns', 'Stress'],
-		['Headache', 'Nerves', 'Release', 'Fading'],
-		['Lo-fight', 'Overhead', 'Ballistic'],
-		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'],
-		['Flatzone'],
-		['Improbable-Outset', 'Madness', 'Hellclown'],
-		['Norway', 'Tordbot'],
+		#if !MOD_ONLY ['Bopeebo', 'Fresh', 'Dadbattle'], ['Spookeez', 'South', "Monster"], ['Pico', 'Philly', "Blammed"], ['Satin-Panties', "High", "Milf"],
+		['Cocoa', 'Eggnog', 'Winter-Horrorland'], ['Senpai', 'Roses', 'Thorns'], #end
+		['Ugh', 'Guns', 'Stress'], ['Headache', 'Nerves', 'Release', 'Fading'], ['Lo-fight', 'Overhead', 'Ballistic'],
+		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], ['Flatzone'], ['Improbable-Outset', 'Madness', 'Hellclown'], ['Norway', 'Tordbot'],
 		['Screenplay', 'Parasite', 'A.G.O.T.I'],
 	];
 	var curDifficulty:Int = 1;
 
 	var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf'],
-		#if !MOD_ONLY
-		['dad', 'bf', 'gf'], ['spooky', 'bf', 'gf'], ['pico', 'bf', 'gf'], ['mom', 'bf', 'gf'], ['parents-christmas', 'bf', 'gf'], ['senpai', 'bf', 'gf'],
-		#end
-		['tankman', 'bf', 'gf'],
-		['garcello', 'bf', 'gf'],
-		['whitty', 'bf', 'gf'],
-		['kapi', '', ''],
-		['mrgame', '', ''],
-		['trickyMask', 'bf', 'gf'],
-		['tord', 'bf', 'gf'],
-		['agoti', 'bf', 'gf']
-	];
+		#if !MOD_ONLY ['dad', 'bf', 'gf'], ['spooky', 'bf', 'gf'], ['pico', 'bf', 'gf'], ['mom', 'bf', 'gf'], ['parents-christmas', 'bf', 'gf'],
+		['senpai', 'bf', 'gf'], #end
+		['tankman', 'bf', 'gf'], ['garcello', 'bf', 'gf'], ['whitty', 'bf', 'gf'], ['kapi', '', ''], ['mrgame', '', ''], ['trickyMask', 'bf', 'gf'],
+		['tord', 'bf', 'gf'], ['agoti', 'bf', 'gf']];
 
 	var weekNames:Array<String> = [
-		"",
-		#if !MOD_ONLY
-		"Daddy Dearest", "Spooky Month", "PICO", "MOMMY MUST MURDER", "RED SNOW", "hating simulator ft. moawling",
-		#end
-		"Tankman",
-		"SMOKE 'EM OUT STRUGGLE",
-		"Back Alley Blitz",
-		"B-B-BREAK DOWN!",
-		"Please nerf up-b...",
-		"Madness",
-		"Tord",
-		"Prisoner of the Void",
+		"", #if !MOD_ONLY "Daddy Dearest", "Spooky Month", "PICO", "MOMMY MUST MURDER", "RED SNOW", "hating simulator ft. moawling", #end "Tankman",
+		"SMOKE 'EM OUT STRUGGLE", "Back Alley Blitz", "B-B-BREAK DOWN!", "Please nerf up-b...", "Madness", "Tord", "Prisoner of the Void",
 	];
 
 	var txtWeekTitle:FlxText;

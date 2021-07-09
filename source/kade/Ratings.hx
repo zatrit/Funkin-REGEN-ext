@@ -18,26 +18,32 @@ class Ratings
 
 		// trace('Hit Info\nDifference: ' + noteDiff + '\nZone: ' + Conductor.safeZoneOffset * 1.5 + "\nTS: " + customTimeScale + "\nLate: " + 155 * customTimeScale);
 
-		if (FlxG.save.data.botplay)
-			return "good"; // FUNNY
+		// if (FlxG.save.data.botplay)
+		//	return "sick"; // FUNNY
 
-		if (noteDiff > 166 * customTimeScale) // so god damn early its a miss
-			return "miss";
-		if (noteDiff > 135 * customTimeScale) // way early
-			return "shit";
-		else if (noteDiff > 90 * customTimeScale) // early
-			return "bad";
-		else if (noteDiff > 45 * customTimeScale) // your kinda there
-			return "good";
-		else if (noteDiff < -45 * customTimeScale) // little late
-			return "good";
-		else if (noteDiff < -90 * customTimeScale) // late
-			return "bad";
-		else if (noteDiff < -135 * customTimeScale) // late as fuck
-			return "shit";
-		else if (noteDiff < -166 * customTimeScale) // so god damn late its a miss
-			return "miss";
-		return "sick";
+		var rating = checkRating(noteDiff, customTimeScale);
+
+		return rating;
+	}
+
+	public static function checkRating(ms:Float, ts:Float)
+	{
+		var rating = "sick";
+		if (ms <= 166 * ts && ms >= 135 * ts)
+			rating = "shit";
+		if (ms < 135 * ts && ms >= 90 * ts)
+			rating = "bad";
+		if (ms < 90 * ts && ms >= 45 * ts)
+			rating = "good";
+		if (ms < 45 * ts && ms >= -45 * ts)
+			rating = "sick";
+		if (ms > -90 * ts && ms <= -45 * ts)
+			rating = "good";
+		if (ms > -135 * ts && ms <= -90 * ts)
+			rating = "bad";
+		if (ms > -166 * ts && ms <= -135 * ts)
+			rating = "shit";
+		return rating;
 	}
 
 	public static function CalculateRanking(score:Int, health:Float, accuracy:Float):String

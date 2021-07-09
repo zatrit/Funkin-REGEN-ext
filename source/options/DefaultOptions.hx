@@ -21,6 +21,18 @@ class DefaultOptions
 		if (FlxG.save.data.arrowsStyle == null)
 			FlxG.save.data.arrowsStyle = 0;
 
+		if (FlxG.save.data.newInput == null)
+			FlxG.save.data.newInput = true;
+
+		if (FlxG.save.data.ghost == null)
+			FlxG.save.data.ghost = true;
+
+		if (FlxG.save.data.safeFrames == null)
+			FlxG.save.data.safeFrames = 10;
+		
+		if (FlxG.save.data.useKadeRatings == null)
+			FlxG.save.data.useKadeRatings = true;
+
 		FlxG.save.flush();
 	}
 }

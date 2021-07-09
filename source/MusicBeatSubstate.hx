@@ -23,7 +23,7 @@ class MusicBeatSubstate extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.BACK #if mobile || FlxG.android.justReleased.BACK #end)
+		if (controls.BACK #if android || FlxG.android.justReleased.BACK #end)
 			onBack();
 
 		// everyStep();
