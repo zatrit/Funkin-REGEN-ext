@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:3cc4b576b136519bd65a4bf3b3d634a3:bfcb3ff5589a8c63d888ac501c6df9ff:ae0cff2f1685f9a11948d632373d5fae$ -->
+<TextureAtlas imagePath="nums.png" width="988" height="135">
+    <SubTexture name="num0" x="0" y="0" width="94" height="119"/>
+    <SubTexture name="num1" x="94" y="0" width="98" height="120"/>
+    <SubTexture name="num2" x="192" y="0" width="105" height="129"/>
+    <SubTexture name="num3" x="297" y="0" width="102" height="134"/>
+    <SubTexture name="num4" x="399" y="0" width="98" height="130"/>
+    <SubTexture name="num5" x="497" y="0" width="111" height="135"/>
+    <SubTexture name="num6" x="608" y="0" width="108" height="134"/>
+    <SubTexture name="num7" x="716" y="0" width="91" height="111"/>
+    <SubTexture name="num8" x="807" y="0" width="90" height="115"/>
+    <SubTexture name="num9" x="897" y="0" width="91" height="124"/>
+</TextureAtlas>
