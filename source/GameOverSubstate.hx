@@ -95,7 +95,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (firstDeath && bf.animation.curAnim.finished)
 		{
-			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix, clown ? "clown" : "shared"));
+			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix, clown ? "clown" : null));
 		}
 
 		if (FlxG.sound.music.playing)
@@ -123,7 +123,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				bf.playAnim('arcadeDeathConfirm', true);
 			}
 			FlxG.sound.music.stop();
-			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix, clown ? "clown" : "shared"));
+			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix, clown ? "clown" : null));
 			if (bfThought != null)
 				FlxTween.tween(bfThought, {alpha: 0}, 0.7);
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)

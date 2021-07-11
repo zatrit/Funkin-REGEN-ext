@@ -1,8 +1,8 @@
 package kade;
 
+import flixel.FlxG;
 import LoadingState.MultiCallback;
 import openfl.utils.Assets;
-import lime.utils.Assets as LimeAssets;
 #if haxe4
 import haxe.xml.Access;
 #else
@@ -33,6 +33,7 @@ class CachedFrames
 	{
 		var callback2:MultiCallback = new MultiCallback(callback);
 		loadLibrary(callback2.add("clown"), "clown");
+		loadLibrary(callback2.add("agoti"), "agoti");
 	}
 
 	// so it doesn't brick your computer lol!
@@ -40,7 +41,7 @@ class CachedFrames
 
 	public var loaded = false;
 
-	public function fromSparrow(id:String, xmlName:String)
+	public function fromSparrow(id:String, xmlName:String, lib:String = 'clown')
 	{
 		var graphic = get(id);
 		// No need to parse data again
@@ -49,7 +50,7 @@ class CachedFrames
 			return frames;
 
 		frames = new FlxAtlasFrames(graphic);
-		var Description = Assets.getText(Paths.file('images/$xmlName.xml', 'clown'));
+		var Description = Assets.getText(Paths.file('images/$xmlName.xml', lib));
 
 		var data:Access = new Access(Xml.parse(Description).firstElement());
 
@@ -108,8 +109,10 @@ class CachedFrames
 
 	public function loadFrames(callback:Void->Void, lib:String = "clown")
 	{
+		#if cpp
 		sys.thread.Thread.create(() ->
 		{
+		#end
 			var toBeLoaded:Map<String, String> = new Map<String, String>();
 			switch (lib)
 			{
@@ -139,6 +142,9 @@ class CachedFrames
 						toBeLoaded.set('idle', 'hellclwn/Tricky/Idle');
 					}
 					#end
+				case "agoti":
+					if(FlxG.save.data.animEvents)
+					toBeLoaded.set('void', 'The_void');
 			}
 			// all the big sprites
 			var numba = 0;
@@ -150,6 +156,8 @@ class CachedFrames
 			}
 			loaded = true;
 			callback();
+		#if cpp
 		});
+		#end
 	}
 }

@@ -1,5 +1,8 @@
 package;
 
+import flixel.util.FlxGradient;
+import flixel.effects.particles.FlxParticle;
+import flixel.effects.particles.FlxEmitter.FlxTypedEmitter;
 import kade.EtternaFunctions;
 import kade.CachedFrames;
 import kade.Ratings;
@@ -179,13 +182,13 @@ class PlayState extends MusicBeatState
 
 	public var hank:FlxSprite;
 
-	public var trickyCutsceneText:Array<String> = ["OMFG CLOWN!!!!", "YOU DO NOT KILL CLOWN", "CLOWN KILLS YOU!!!!!!"];
+	public final trickyCutsceneText:Array<String> = ["OMFG CLOWN!!!!", "YOU DO NOT KILL CLOWN", "CLOWN KILLS YOU!!!!!!"];
 
-	public var TrickyLinesSing:Array<String> = [
+	public final TrickyLinesSing:Array<String> = [
 		"SUFFER", "INCORRECT", "INCOMPLETE", "INSUFFICIENT", "INVALID", "CORRECTION", "MISTAKE", "REDUCE", "ERROR", "ADJUSTING", "IMPROBABLE", "IMPLAUSIBLE",
 		"MISJUDGED"
 	];
-	public var ExTrickyLinesSing:Array<String> = [
+	public final ExTrickyLinesSing:Array<String> = [
 		"YOU AREN'T HANK",
 		"WHERE IS HANK",
 		"HANK???",
@@ -196,7 +199,7 @@ class PlayState extends MusicBeatState
 		"SYSTEM UNRESPONSIVE",
 		"WHY CAN'T I KILL?????"
 	];
-	public var TrickyLinesMiss:Array<String> = [
+	public final TrickyLinesMiss:Array<String> = [
 		"TERRIBLE", "WASTE", "MISS CALCULTED", "PREDICTED", "FAILURE", "DISGUSTING", "ABHORRENT", "FORESEEN", "CONTEMPTIBLE", "PROGNOSTICATE", "DISPICABLE",
 		"REPREHENSIBLE"
 	];
@@ -915,6 +918,8 @@ class PlayState extends MusicBeatState
 				tstatic.alpha = 0;
 
 				var bg:FlxSprite = new FlxSprite(-350, -300).loadGraphic(Paths.image('red', 'clown'));
+				//var bg:FlxSprite = new FlxSprite(-350,-300);
+				
 				bg.setGraphicSize(Std.int(bg.width * 2));
 				bg.updateHitbox();
 
@@ -935,13 +940,14 @@ class PlayState extends MusicBeatState
 				stageFront.active = false;
 				add(stageFront);
 
-				MAINLIGHT = new FlxSprite(-470, -150).loadGraphic(Paths.image('hue', 'clown'));
-				MAINLIGHT.alpha - 0.3;
-				MAINLIGHT.setGraphicSize(Std.int(MAINLIGHT.width * 0.9));
+				//MAINLIGHT = new FlxSprite(-470, -150).loadGraphic(Paths.image('hue', 'clown'));
+				MAINLIGHT = new FlxSprite().makeGraphic(FlxG.width,FlxG.height,0xAA0000);
+				MAINLIGHT.alpha = 33/255;
 				MAINLIGHT.blend = "screen";
-				MAINLIGHT.updateHitbox();
+				MAINLIGHT.screenCenter();
 				MAINLIGHT.antialiasing = true;
-				MAINLIGHT.scrollFactor.set(1.2, 1.2);
+				MAINLIGHT.scrollFactor.set(0,0);
+				add(MAINLIGHT);
 			case 'hellclown':
 				// trace("line 538");
 				defaultCamZoom = 0.35;
@@ -970,13 +976,15 @@ class PlayState extends MusicBeatState
 				stageFront.active = false;
 				add(stageFront);
 
-				hank = new FlxSprite(60, -170);
-				hank.frames = Paths.getSparrowAtlas('hellclwn/Hank', 'clown');
-				hank.animation.addByPrefix('dance', 'Hank', 24);
-				hank.animation.play('dance');
-				hank.scrollFactor.set(0.9, 0.9);
-				hank.setGraphicSize(Std.int(hank.width * 1.55));
-				hank.antialiasing = true;
+				if(FlxG.save.data.animEvents){
+					hank = new FlxSprite(60, -170);
+					hank.frames = Paths.getSparrowAtlas('hellclwn/Hank', 'clown');
+					hank.animation.addByPrefix('dance', 'Hank', 24);
+					hank.animation.play('dance');
+					hank.scrollFactor.set(0.9, 0.9);
+					hank.setGraphicSize(Std.int(hank.width * 1.55));
+					hank.antialiasing = true;
+				}
 
 				add(hank);
 			case 'expurgation':
@@ -996,13 +1004,14 @@ class PlayState extends MusicBeatState
 				hole = new FlxSprite(21.5, 530).loadGraphic(Paths.image('fourth/Spawnhole_Ground_BACK', 'clown'));
 				converHole = new FlxSprite(-21.5, 578).loadGraphic(Paths.image('fourth/Spawnhole_Ground_COVER', 'clown'));
 
-				var bg:FlxSprite = new FlxSprite(-10, -10).loadGraphic(Paths.image('fourth/bg', 'clown'));
-				bg.antialiasing = true;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = false;
-				bg.setGraphicSize(Std.int(bg.width * 8));
-				add(bg);
-
+				if(FlxG.save.data.animEvents){
+					var bg:FlxSprite = new FlxSprite(-10, -10).loadGraphic(Paths.image('fourth/bg', 'clown'));
+					bg.antialiasing = true;
+					bg.scrollFactor.set(0.9, 0.9);
+					bg.active = false;
+					bg.setGraphicSize(Std.int(bg.width * 8));
+					add(bg);
+				}
 				hole.antialiasing = true;
 				hole.scrollFactor.set(0.9, 0.9);
 
@@ -1015,14 +1024,16 @@ class PlayState extends MusicBeatState
 				cover.scrollFactor.set(0.9, 0.9);
 				cover.setGraphicSize(Std.int(cover.width * 1.55));
 
-				var energyWall:FlxSprite = new FlxSprite(1350, -690).loadGraphic(Paths.image("fourth/Energywall", "clown"));
-				// energyWall.x+=energyWall.width/2;
-				// energyWall.y+=energyWall.height/2;
-				energyWall.setGraphicSize(Std.int(energyWall.width * 2), Std.int(energyWall.height * 2));
-				energyWall.updateHitbox();
-				energyWall.antialiasing = true;
-				energyWall.scrollFactor.set(0.9, 0.9);
-				add(energyWall);
+				if(FlxG.save.data.animEvents){
+					var energyWall:FlxSprite = new FlxSprite(1350, -690).loadGraphic(Paths.image("fourth/Energywall", "clown"));
+					// energyWall.x+=energyWall.width/2;
+					// energyWall.y+=energyWall.height/2;
+					energyWall.setGraphicSize(Std.int(energyWall.width * 2), Std.int(energyWall.height * 2));
+					energyWall.updateHitbox();
+					energyWall.antialiasing = true;
+					energyWall.scrollFactor.set(0.9, 0.9);
+					add(energyWall);
+				}
 
 				var stageFront:FlxSprite = new FlxSprite(-225, -355).loadGraphic(Paths.image('fourth/daBackground', 'clown'));
 				stageFront.antialiasing = true;
@@ -1079,26 +1090,29 @@ class PlayState extends MusicBeatState
 					white.scrollFactor.set();
 					add(white);
 
-					var void:FlxSprite = new FlxSprite(0, 0);
-					void.frames = Paths.getSparrowAtlas('The_void', 'agoti');
-					void.animation.addByPrefix('move', 'VoidShift', 50, true);
-					void.animation.play('move');
-					void.setGraphicSize(Std.int(void.width * 2.5));
-					void.screenCenter();
-					void.y += 250;
-					void.x += 55;
-					void.antialiasing = true;
-					void.scrollFactor.set(0.7, 0.7);
-					add(void);
+					if(FlxG.save.data.animEvents)
+					{
+						var void:FlxSprite = new FlxSprite(0, 0);
+						void.frames = CachedFrames.cachedInstance.fromSparrow('void','The_void','agoti');
+						void.animation.addByPrefix('move', 'VoidShift', 50, true);
+						void.animation.play('move');
+						void.setGraphicSize(Std.int(void.width * 2.5));
+						void.screenCenter();
+						void.y += 250;
+						void.x += 55;
+						void.antialiasing = true;
+						void.scrollFactor.set(0.7, 0.7);
+						add(void);
 
-					bgpillar = new FlxSprite(-1000, -700);
-					bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG_Stage', 'agoti');
-					bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, true);
-					bgpillar.setGraphicSize(Std.int(bgpillar.width * 1.5));
-					bgpillar.antialiasing = true;
-					bgpillar.scrollFactor.set(0.7, 0.7);
-					bgpillar.alpha = 0;
-					add(bgpillar);
+						bgpillar = new FlxSprite(-1000, -700);
+						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG_Stage', 'agoti');
+						bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, true);
+						bgpillar.setGraphicSize(Std.int(bgpillar.width * 1.5));
+						bgpillar.antialiasing = true;
+						bgpillar.scrollFactor.set(0.7, 0.7);
+						bgpillar.alpha = 0;
+						add(bgpillar);
+					}
 
 					bgRocks = new FlxSprite(-1000, -700).loadGraphic(Paths.image('Void_Back', 'agoti'));
 					bgRocks.setGraphicSize(Std.int(bgRocks.width * 0.5));
@@ -1123,7 +1137,7 @@ class PlayState extends MusicBeatState
 					white.scrollFactor.set();
 					add(white);
 
-					var void:FlxSprite = new FlxSprite(0, 0);
+					/*var void:FlxSprite = new FlxSprite(0, 0);
 					void.frames = Paths.getSparrowAtlas('The_void', 'agoti');
 					void.animation.addByPrefix('move', 'VoidShift', 0, true);
 					void.animation.play('move');
@@ -1133,16 +1147,18 @@ class PlayState extends MusicBeatState
 					void.x += 55;
 					void.antialiasing = true;
 					void.scrollFactor.set(0.7, 0.7);
-					add(void);
+					add(void);*/
 
-					bgpillar = new FlxSprite(-1000, -700);
-					bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG_Stage', 'agoti');
-					bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, true);
-					bgpillar.animation.play('move');
-					bgpillar.setGraphicSize(Std.int(bgpillar.width * 1.25));
-					bgpillar.antialiasing = true;
-					bgpillar.scrollFactor.set(0.7, 0.7);
-					add(bgpillar);
+					if(FlxG.save.data.animEvents){
+						bgpillar = new FlxSprite(-1000, -700);
+						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG_Stage', 'agoti');
+						bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, true);
+						bgpillar.animation.play('move');
+						bgpillar.setGraphicSize(Std.int(bgpillar.width * 1.25));
+						bgpillar.antialiasing = true;
+						bgpillar.scrollFactor.set(0.7, 0.7);
+						add(bgpillar);
+					}
 
 					speaker = new FlxSprite(-650, 600);
 					speaker.frames = Paths.getSparrowAtlas('LoudSpeaker_Moving', 'agoti');
@@ -1383,11 +1399,10 @@ class PlayState extends MusicBeatState
 			add(converHole);
 			add(dad.exSpikes);
 		}
-
-		if (isStoryMode)
-			dadMicless = new Character(dad.x, dad.y, 'agoti-micless');
+		
 		if (SONG.song.toLowerCase() == 'screenplay' && isStoryMode)
 		{
+			dadMicless = new Character(dad.x, dad.y, 'agoti-micless');
 			dadMicless.alpha = 1;
 			dad.alpha = 0;
 			add(dadMicless);
@@ -2459,7 +2474,7 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...strumLineNotes.length)
 				{
-					strumLineNotes.members[i].y += Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) * 2.0 + strumLineNotes.members[i].ID);
+					strumLineNotes.members[i].y += Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID) / 2;
 				}
 		}
 
@@ -3696,7 +3711,7 @@ class PlayState extends MusicBeatState
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);
 
-		if (curStage == 'nevedaSpook')
+		if (curStage == 'nevedaSpook'&&FlxG.save.data.animEvents)
 			hank.animation.play('dance');
 
 		if (curStage == 'auditorHell')
@@ -5646,6 +5661,7 @@ class PlayState extends MusicBeatState
 			{
 				agotiSummon.animation.play('move');
 
+				if(FlxG.save.data.animEvents)
 				new FlxTimer().start(2.5, (tmr) ->
 				{
 					bgpillar.alpha = 1;
@@ -5655,7 +5671,7 @@ class PlayState extends MusicBeatState
 				new FlxTimer().start(4, function(deadTime:FlxTimer)
 				{
 					FlxTween.tween(black, {alpha: 1}, 1);
-					new FlxTimer().start(0.5, (tmr) ->
+					new FlxTimer().start(0.25, (tmr) ->
 					{
 						pillarFG.alpha = 1;
 						pillarFG.animation.play('move');

@@ -2,7 +2,7 @@ package;
 
 import options.DefaultOptions;
 import kade.CachedFrames;
-#if desktop
+#if (cpp&&desktop)
 import Discord.DiscordClient;
 import sys.thread.Thread;
 #end

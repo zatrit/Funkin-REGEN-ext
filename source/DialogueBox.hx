@@ -356,7 +356,7 @@ class DialogueBox extends FlxSpriteGroup
 
 		swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", size);
 		swagDialogue.font = font;
-		swagDialogue.color = 0xFF3F2021;
+		//swagDialogue.color = 0xFF3F2021;
 		swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
 		add(swagDialogue);
 		// dialogue.x = 90;
@@ -370,8 +370,11 @@ class DialogueBox extends FlxSpriteGroup
 	{
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'roses':
+			case 'roses' | 'senpai':
 				portraitLeft.visible = false;
+
+				dropText.color = 0xFFD89494;
+				swagDialogue.color = 0xFF3F2021;
 			case 'thorns':
 				portraitLeft.color = FlxColor.BLACK;
 				swagDialogue.color = FlxColor.WHITE;

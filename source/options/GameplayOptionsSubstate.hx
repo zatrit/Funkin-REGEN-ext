@@ -20,7 +20,7 @@ class GameplayOptionsSubstate extends OptionsSubState
 			(FlxG.save.data.newInput ? 'new input' : 'old input'),
 			'ghost tap: ' + (FlxG.save.data.ghost ? 'on' : 'off'),
 			'skip cutscenes: ' + (FlxG.save.data.skipCutscenes ? 'on' : 'off'),
-			'safe frames: ' + FlxG.save.data.safeFrames,
+			//'safe frames: ' + FlxG.save.data.safeFrames,
 		];
 
 		super(parent, items);
@@ -59,10 +59,6 @@ class GameplayOptionsSubstate extends OptionsSubState
 				}
 			case 'safeFrames:':
 				{
-					var skipCutscenes:Bool = FlxG.save.data.skipCutscenes;
-
-					FlxG.save.data.skipCutscenes = toggleBoolOption(SKIP_CUTSCENES_NUMBER, "skip cutscenes: ", skipCutscenes);
-					FlxG.save.flush();
 				}
 		}
 	}

@@ -1,6 +1,7 @@
 // This was made by GWebDev lol btw this uses actuate
 package;
 
+import openfl.net.NetConnection;
 import openfl.events.AsyncErrorEvent;
 import openfl.events.NetStatusEvent;
 import openfl.media.Video;

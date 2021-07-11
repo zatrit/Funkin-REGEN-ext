@@ -1,7 +1,9 @@
 package;
 
 import kade.CachedFrames;
+#if cpp
 import cpp.vm.Gc;
+#end
 import lime.app.Promise;
 import lime.app.Future;
 import flixel.FlxG;
@@ -302,9 +304,11 @@ class LoadingState extends MusicBeatState
 			Assets.unloadLibrary(lib);
 		}
 
+		#if cpp
 		Gc.enable(true);
 		Gc.compact();
 		Gc.run(true);
+		#end
 		Assets.cache.clear();
 	}
 }

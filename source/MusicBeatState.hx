@@ -1,6 +1,8 @@
 package;
 
+#if cpp
 import cpp.vm.Gc;
+#end
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -19,7 +21,9 @@ class MusicBeatState extends FlxUIState
 
 	override function create()
 	{
+		#if cpp
 		Gc.run(false);
+		#end
 
 		super.create();
 	}
@@ -87,6 +91,8 @@ class MusicBeatState extends FlxUIState
 	{
 		super.finishTransOut();
 
+		#if cpp
 		Gc.run(true);
+		#end
 	}
 }
