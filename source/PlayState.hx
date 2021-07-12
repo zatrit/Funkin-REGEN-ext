@@ -1928,9 +1928,6 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = true;
 		iconP1.visible = true;
 		iconP2.visible = true;
-		#if mobile
-		grpMobileButtons.visible=true;
-		#end
 
 		canPause = true;
 
@@ -5615,10 +5612,6 @@ class PlayState extends MusicBeatState
 		dadStrums.visible = false;
 		playerStrums.visible = false;
 		strumLineNotes.visible = false;
-
-		#if mobile
-		grpMobileButtons.visible=false;
-		#end
 
 		inCutscene = true;
 
