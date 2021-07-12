@@ -1104,9 +1104,9 @@ class PlayState extends MusicBeatState
 						void.scrollFactor.set(0.7, 0.7);
 						add(void);
 
-						bgpillar = new FlxSprite(-1000, -700);
-						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG_Stage', 'agoti');
-						bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, true);
+						bgpillar = new FlxSprite(-150, -100);
+						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG', 'agoti');
+						bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, false);
 						bgpillar.setGraphicSize(Std.int(bgpillar.width * 1.5));
 						bgpillar.antialiasing = true;
 						bgpillar.scrollFactor.set(0.7, 0.7);
@@ -1928,6 +1928,9 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = true;
 		iconP1.visible = true;
 		iconP2.visible = true;
+		#if mobile
+		grpMobileButtons.visible=true;
+		#end
 
 		canPause = true;
 
@@ -2474,7 +2477,7 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...strumLineNotes.length)
 				{
-					strumLineNotes.members[i].y += Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID) / 2;
+					strumLineNotes.members[i].y += Math.cos((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID*2)/1.5;
 				}
 		}
 
@@ -5613,12 +5616,16 @@ class PlayState extends MusicBeatState
 		playerStrums.visible = false;
 		strumLineNotes.visible = false;
 
+		#if mobile
+		grpMobileButtons.visible=false;
+		#end
+
 		inCutscene = true;
 
-		var pillarFG:FlxSprite = new FlxSprite(0, 0);
+		var pillarFG:FlxSprite = new FlxSprite(-50, 0);
 		pillarFG.frames = Paths.getSparrowAtlas("Pillar_FG", "agoti");
 		pillarFG.animation.addByPrefix("move", "Pillar_FG", 24, false);
-		pillarFG.setGraphicSize(Std.int(pillarFG.width * 1.5));
+		pillarFG.setGraphicSize(Std.int(pillarFG.width * 2));
 		pillarFG.antialiasing = true;
 		pillarFG.scrollFactor.set(1.1, 1.1);
 		pillarFG.alpha = 0;
@@ -5662,20 +5669,21 @@ class PlayState extends MusicBeatState
 				agotiSummon.animation.play('move');
 
 				if(FlxG.save.data.animEvents)
-				new FlxTimer().start(2.5, (tmr) ->
+				new FlxTimer().start(2, (tmr) ->
 				{
 					bgpillar.alpha = 1;
 					bgpillar.animation.play('move', true);
 				});
 
+				new FlxTimer().start(3.75,(t)->{
+					pillarFG.alpha = 1;
+					pillarFG.animation.play('move');
+				});
+
 				new FlxTimer().start(4, function(deadTime:FlxTimer)
 				{
+
 					FlxTween.tween(black, {alpha: 1}, 1);
-					new FlxTimer().start(0.25, (tmr) ->
-					{
-						pillarFG.alpha = 1;
-						pillarFG.animation.play('move');
-					});
 
 					new FlxTimer().start(1.5, function(deadTime:FlxTimer)
 					{
@@ -5711,6 +5719,9 @@ class PlayState extends MusicBeatState
 		iconP1.visible = false;
 		iconP2.visible = false;
 		scoreTxt.visible = false;
+		#if mobile
+		grpMobileButtons.visible=false;
+		#end
 
 		add(agotiIntro);
 		new FlxTimer().start(0.4, function(deadTime:FlxTimer)

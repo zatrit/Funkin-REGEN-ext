@@ -57,9 +57,9 @@ class GameplayOptionsSubstate extends OptionsSubState
 					FlxG.save.data.skipCutscenes = toggleBoolOption(SKIP_CUTSCENES_NUMBER, "skip cutscenes: ", skipCutscenes);
 					FlxG.save.flush();
 				}
-			case 'safeFrames:':
-				{
-				}
+			//case 'safeFrames:':
+			//	{
+			//	}
 		}
 	}
 }

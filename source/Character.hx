@@ -242,7 +242,7 @@ class Character extends FlxSprite
 				tex = Paths.getSparrowAtlas('GF_rock', 'agoti');
 				frames = tex;
 
-				animation.addByPrefix('idle', 'GF Dancing Beat Hair blowing', 12);
+				animation.addByPrefix('idle', 'GF Dancing Beat Hair blowing', 20);
 
 				addOffset('idle', 0, 250);
 			#if !MOD_ONLY

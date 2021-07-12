@@ -589,6 +589,7 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					portraitLeft.visible = true;
 				}
+				portraitLeft.animation.play('normal');
 			case 'agoti-angry':
 				portraitRight.visible = false;
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiAngryText', 'agoti'), 0.6)];
@@ -596,6 +597,7 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					portraitLeft.visible = true;
 				}
+				portraitLeft.animation.play('angry');
 			case 'agoti-scared':
 				portraitRight.visible = false;
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiScaredText', 'agoti'), 0.6)];
@@ -603,6 +605,7 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					portraitLeft.visible = true;
 				}
+				portraitLeft.animation.play('scared');
 			case 'agoti-crazy':
 				portraitRight.visible = false;
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiScaredText', 'agoti'), 0.6)];
@@ -610,6 +613,7 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					portraitLeft.visible = true;
 				}
+				portraitLeft.animation.play('crazy');
 		}
 	}
 
