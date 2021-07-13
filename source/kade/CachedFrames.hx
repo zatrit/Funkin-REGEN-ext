@@ -33,7 +33,7 @@ class CachedFrames
 	{
 		var callback2:MultiCallback = new MultiCallback(callback);
 		loadLibrary(callback2.add("clown"), "clown");
-		loadLibrary(callback2.add("agoti"), "agoti");
+		//loadLibrary(callback2.add("agoti"), "agoti");
 	}
 
 	// so it doesn't brick your computer lol!
@@ -142,9 +142,6 @@ class CachedFrames
 						toBeLoaded.set('idle', 'hellclwn/Tricky/Idle');
 					}
 					#end
-				case "agoti":
-					if(FlxG.save.data.animEvents)
-					toBeLoaded.set('void', 'The_void');
 			}
 			// all the big sprites
 			var numba = 0;

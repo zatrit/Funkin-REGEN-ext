@@ -1,5 +1,6 @@
 package;
 
+import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.util.FlxGradient;
 import flixel.effects.particles.FlxParticle;
 import flixel.effects.particles.FlxEmitter.FlxTypedEmitter;
@@ -615,8 +616,8 @@ class PlayState extends MusicBeatState
 				{
 					curStage = 'schoolEvil';
 
-					var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
-					var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
+					//var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
+					//var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
 
 					var posX = 400;
 					var posY = 200;
@@ -1092,17 +1093,27 @@ class PlayState extends MusicBeatState
 
 					if(FlxG.save.data.animEvents)
 					{
+						var wave:FlxWaveEffect = new FlxWaveEffect(FlxWaveMode.ALL,4,0.5,2.5,15);
+
 						var void:FlxSprite = new FlxSprite(0, 0);
-						void.frames = CachedFrames.cachedInstance.fromSparrow('void','The_void','agoti');
+						void.frames = Paths.getSparrowAtlas('The_void','agoti');
 						void.animation.addByPrefix('move', 'VoidShift', 50, true);
 						void.animation.play('move');
-						void.setGraphicSize(Std.int(void.width * 2.5));
+						//void.setGraphicSize(Std.int(void.width * 2.5));
 						void.screenCenter();
 						void.y += 250;
 						void.x += 55;
-						void.antialiasing = true;
-						void.scrollFactor.set(0.7, 0.7);
-						add(void);
+						//void.antialiasing = true;
+						//void.scrollFactor.set(0.7, 0.7);
+						//add(void);
+
+						var voidWave:FlxEffectSprite = new FlxEffectSprite(void,[wave]);
+						voidWave.scale.set(2.5,2.5);
+						voidWave.updateHitbox();
+						voidWave.setPosition(void.x,void.y);
+						voidWave.scrollFactor.set(0.7, 0.7);
+						voidWave.antialiasing = true;
+						add(voidWave);
 
 						bgpillar = new FlxSprite(-150, -100);
 						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG', 'agoti');
@@ -1137,7 +1148,7 @@ class PlayState extends MusicBeatState
 					white.scrollFactor.set();
 					add(white);
 
-					/*var void:FlxSprite = new FlxSprite(0, 0);
+					var void:FlxSprite = new FlxSprite(0, 0);
 					void.frames = Paths.getSparrowAtlas('The_void', 'agoti');
 					void.animation.addByPrefix('move', 'VoidShift', 0, true);
 					void.animation.play('move');
@@ -1147,7 +1158,7 @@ class PlayState extends MusicBeatState
 					void.x += 55;
 					void.antialiasing = true;
 					void.scrollFactor.set(0.7, 0.7);
-					add(void);*/
+					add(void);
 
 					if(FlxG.save.data.animEvents){
 						bgpillar = new FlxSprite(-1000, -700);
@@ -1504,7 +1515,7 @@ class PlayState extends MusicBeatState
 		}
 		if (['a.g.o.t.i', 'parasite', 'screenplay', 'guns'].contains(SONG.song.toLowerCase()))
 		{
-			healthBar.createFilledBar(0xFF494949, 0xFF66FF33);
+			healthBar.createFilledBar(0xFF494949, 0xFF31B0D1);
 		}
 
 		// healthBar
@@ -2474,7 +2485,7 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...strumLineNotes.length)
 				{
-					strumLineNotes.members[i].y += Math.cos((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID*2)/1.5;
+					strumLineNotes.members[i].y += Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID/2)/2;
 				}
 		}
 
