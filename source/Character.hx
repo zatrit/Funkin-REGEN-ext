@@ -1250,7 +1250,7 @@ class Character extends FlxSprite
 					danced = !danced;
 				}
 			}
-			if (curCharacter == "garcellodead" && FlxG.save.data.graphicsQuality > 1)
+			if (curCharacter == "garcellodead" && FlxG.save.data.animEvents)
 			{
 				garTrailTarget.offset.set(daOffset[0], daOffset[1]);
 				garTrailTarget.animation.play(AnimName);
