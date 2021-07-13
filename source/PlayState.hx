@@ -163,12 +163,13 @@ class PlayState extends MusicBeatState
 	public static var firstTry:Bool = true;
 	public static var attempt:Int = 0;
 
-	// Kapi vars
 	var wstageFront:FlxSprite;
 	var wBg:FlxSprite;
 	var nwBg:FlxSprite;
 	var funneEffect:FlxSprite;
+	var theFunneNumber:Float = 1;
 
+	// Kapi vars
 	var littleGuys:FlxSprite;
 
 	// Tricky vars
@@ -293,7 +294,7 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('lo-fight/pleaseSubscribe'));
 			case 'overhead':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('overhead/pleaseSubscribe'));
-			case 'ballistic':
+			case 'ballistic'|'ballistic-old':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('ballistic/pleaseSubscribe'));
 
 			case 'wocky':
@@ -746,12 +747,12 @@ class PlayState extends MusicBeatState
 					corpse.active = false;
 					add(corpse);
 				}
-			case 'lo-fight' | 'overhead' | 'ballistic':
+			case 'lo-fight' | 'overhead' | 'ballistic'|'ballistic-old':
 				{
 					defaultCamZoom = 0.9;
 					curStage = 'alley';
 
-					if (SONG.song.toLowerCase() == 'ballistic')
+					if (SONG.song.toLowerCase() == 'ballistic'||SONG.song.toLowerCase() == 'ballistic-old')
 						curStage = 'ballisticAlley';
 
 					wBg = new FlxSprite(-500, -300).loadGraphic(Paths.image('whittyBack', 'bonusWeek'));
@@ -1634,7 +1635,7 @@ class PlayState extends MusicBeatState
 				case 'nerves' | "release" | "fading":
 					garIntro(doof);
 
-				case 'lo-fight' | 'overhead' | 'ballistic':
+				case 'lo-fight' | 'overhead' | 'ballistic'|'ballistic-old':
 					whittyAnimation(doof);
 
 				case 'wocky' | 'beathoven' | 'nyaw':
@@ -1686,10 +1687,20 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'ballistic':
-					trace('Skipping ballistic background animation');
+				case 'ballistic'|'ballistic-old':
+					wBg.alpha = 0;
 					nwBg.alpha = 1;
+					funneEffect = new FlxSprite(-600, -200).loadGraphic(Paths.image('thefunnyeffect', 'bonusWeek'));
+					funneEffect.alpha = 0.5;
+					funneEffect.scrollFactor.set();
+					funneEffect.visible = true;
+					add(funneEffect);
+				
+					funneEffect.cameras = [camHUD];
+
+					trace('funne: ' + funneEffect);
 					nwBg.animation.play("gameButMove");
+					remove(wstageFront);
 					startCountdown();
 				case 'expurgation':
 					camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
@@ -3884,10 +3895,25 @@ class PlayState extends MusicBeatState
 		if (curBeat % 2 == 0 && curSong == 'Beathoven')
 			littleGuys.animation.play('bop', true);
 
-		if (curSong.toLowerCase() == 'ballistic')
+		if (curSong.toLowerCase() == 'ballistic'||curSong.toLowerCase() == 'ballistic-old')
 		{
 			if (gf.animation.name != 'scared')
 				gf.playAnim('scared');
+		}
+		if (curStage == 'ballisticAlley' && health != 2)
+		{
+			funneEffect.alpha = health - 0.3;
+			if (theFunneNumber < 0.7)
+				theFunneNumber = 0.7;
+			else if (theFunneNumber > 1.2)
+				theFunneNumber = 1.2;
+
+			if (theFunneNumber < 1)
+				funneEffect.y = -300;
+			else
+				funneEffect.y = -200;
+
+			funneEffect.setGraphicSize(Std.int(funneEffect.width * theFunneNumber));
 		}
 
 		if (!boyfriend.animation.curAnim.name.startsWith("sing"))
@@ -4531,7 +4557,7 @@ class PlayState extends MusicBeatState
 		black2.alpha = 0;
 		var black3:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
 		black3.scrollFactor.set();
-		if (curSong.toLowerCase() != 'ballistic')
+		if (curSong.toLowerCase() != 'ballistic'||curSong.toLowerCase() == 'ballistic-old')
 			add(black);
 
 		var epic:Bool = false;
@@ -4548,7 +4574,7 @@ class PlayState extends MusicBeatState
 
 		switch (curSong.toLowerCase()) // WHITTY ANIMATION CODE LMAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 		{
-			case 'ballistic':
+			case 'ballistic'|'ballistic-old':
 				trace('funny ballistic!!!');
 				add(white);
 				trace(white);

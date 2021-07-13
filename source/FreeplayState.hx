@@ -101,7 +101,7 @@ class FreeplayState extends MusicBeatState
 			]);
 
 		if (StoryMenuState.weekUnlocked(9) || isDebug)
-			addWeek(['Lo-Fight', 'Overhead', 'Ballistic'], 9, ['whitty', 'whitty', 'whittyCrazy']);
+			addWeek(['Lo-Fight', 'Overhead', 'Ballistic','Ballistic-Old'], 9, ['whitty', 'whitty', 'whittyCrazy', 'whittyCrazy']);
 
 		if (StoryMenuState.weekUnlocked(10) || isDebug)
 			addWeek(['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], 10, ['kapi', 'kapi', 'kapi-angry', 'kapi']);
