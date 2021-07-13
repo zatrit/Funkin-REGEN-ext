@@ -328,7 +328,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, 0);
 				addOffset("garTightBars", 0, 0);
 
-				if (FlxG.save.data.graphicsQuality > 1)
+				if (FlxG.save.data.animEvents)
 				{
 					garTrailTarget = new FlxSprite(x, y);
 					garTrailTarget.graphic = graphic;

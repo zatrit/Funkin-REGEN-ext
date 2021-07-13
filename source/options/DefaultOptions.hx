@@ -31,7 +31,7 @@ class DefaultOptions
 			FlxG.save.data.safeFrames = 10;
 		
 		if (FlxG.save.data.useKadeRatings == null)
-			FlxG.save.data.useKadeRatings = true;
+			FlxG.save.data.useKadeRatings = false;
 
 		FlxG.save.flush();
 	}
