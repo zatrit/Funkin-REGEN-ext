@@ -17,6 +17,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [VS. KAPI - Arcade Showdown](https://gamebanana.com/mods/44683)
 - [The Full-Ass Tricky Mod](https://gamebanana.com/mods/44334)
 - [Vs. Tord Mod REMASTERED](https://gamebanana.com/mods/183165)
+- [Vs. AGOTI](https://gamebanana.com/mods/284934)
 
 ## Credits / shoutouts
 
@@ -25,11 +26,12 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [Kawaisprite](https://twitter.com/kawaisprite) - Musician
 - [zatrit](https://twitter.com/zatrit) - Mod author
 - [Rageminer996](https://github.com/Rageminer996) and [atsuover](https://www.youtube.com/user/EnergeticShadow) - Garcello authors
-- [KadeDev](https://github.com/KadeDev) - Whitty author
+- [KadeDev](https://github.com/KadeDev) - Programmer whose code i used
 - [paperkitty](https://gamebanana.com/members/1838959) - Kapi author
 - Mr. Game & Watch and Flatzone are owned by Nintendo
 - [Cval](https://github.com/cvalbrown) and [Rozebud](https://github.com/ThatRozebudDude) - Tricky authors
 - [Bbpanzu](https://github.com/bbpanzu) and [Jason The Art Kid](https://gamebanana.com/members/1864663) - Tord authors
+- [A.G.O.T.I](https://gamebanana.com/members/1805341), [Brightfyre](https://gamebanana.com/members/1800180), [SugarRatio](https://gamebanana.com/members/1771573), [Kullix](https://gamebanana.com/members/1782132), [MashProTato](https://gamebanana.com/members/1784170) and iVorare - A.G.O.T.I authors 
 
 This game was made with love to Newgrounds and it's community. Extra love to Tom Fulp.
 

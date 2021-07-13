@@ -408,7 +408,7 @@ class TitleState extends MusicBeatState
 				createCoolText(['Rozebud', 'MORO', 'YingYang', 'Jads', 'Tom Fulp']);
 			case 9:
 				deleteCoolText();
-				createCoolText(['Krinkels', 'GWebDev', 'Tsuraran']);
+				createCoolText(['Krinkels', 'GWebDev', 'Tsuraran','Sock.clip','Nate Anim8']);
 			case 10:
 				deleteCoolText();
 				createCoolText(['bbpanzu', 'Eddsworld', 'Jason The Art Kid', 'MashProTato']);
