@@ -1115,7 +1115,7 @@ class PlayState extends MusicBeatState
 						voidWave.antialiasing = true;
 						add(voidWave);
 
-						bgpillar = new FlxSprite(-150, -100);
+						bgpillar = new FlxSprite(0, -100);
 						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG', 'agoti');
 						bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, false);
 						bgpillar.setGraphicSize(Std.int(bgpillar.width * 1.5));
@@ -2485,7 +2485,7 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...strumLineNotes.length)
 				{
-					strumLineNotes.members[i].y += Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID/2)/2;
+					strumLineNotes.members[i].y += Math.cos((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID/2);
 				}
 		}
 
@@ -5723,9 +5723,6 @@ class PlayState extends MusicBeatState
 		iconP1.visible = false;
 		iconP2.visible = false;
 		scoreTxt.visible = false;
-		#if mobile
-		grpMobileButtons.visible=false;
-		#end
 
 		add(agotiIntro);
 		new FlxTimer().start(0.4, function(deadTime:FlxTimer)
