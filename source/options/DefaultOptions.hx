@@ -29,7 +29,7 @@ class DefaultOptions
 
 		if (FlxG.save.data.safeFrames == null)
 			FlxG.save.data.safeFrames = 10;
-		
+
 		if (FlxG.save.data.useKadeRatings == null)
 			FlxG.save.data.useKadeRatings = false;
 

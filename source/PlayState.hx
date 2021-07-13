@@ -14,7 +14,6 @@ import Discord.DiscordClient;
 #end
 import Section.SwagSection;
 import Song.SwagSong;
-import WiggleEffect.WiggleEffectType;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -2496,7 +2495,7 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...strumLineNotes.length)
 				{
-					strumLineNotes.members[i].y += Math.cos((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID/2);
+					strumLineNotes.members[i].y += Math.cos((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID*2)/2;
 				}
 		}
 

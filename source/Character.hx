@@ -1100,7 +1100,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Angry_Agoti_Right', 24);
 				animation.addByPrefix('singDOWN', 'Angry_Agoti_Down', 24);
 				animation.addByPrefix('singLEFT', 'Angry_Agoti_Left', 24);
-				
+
 				addOffset('idle', -20, 20);
 				addOffset("singUP", 40, 170);
 				addOffset("singRIGHT", 0, 0);
