@@ -570,7 +570,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-car':
-				var tex = Paths.getSparrowAtlas('bfCar', PlayState.storyWeek == 5 ? "week5" : "agoti");
+				var tex = Paths.getSparrowAtlas('bfCar', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);

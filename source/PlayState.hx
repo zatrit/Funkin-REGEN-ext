@@ -5654,7 +5654,7 @@ class PlayState extends MusicBeatState
 		var pillarFG:FlxSprite = new FlxSprite(-50, 0);
 		pillarFG.frames = Paths.getSparrowAtlas("Pillar_FG", "agoti");
 		pillarFG.animation.addByPrefix("move", "Pillar_FG", 24, false);
-		pillarFG.setGraphicSize(Std.int(pillarFG.width * 2));
+		pillarFG.setGraphicSize(Std.int(pillarFG.width * 4));
 		pillarFG.antialiasing = true;
 		pillarFG.scrollFactor.set(1.1, 1.1);
 		pillarFG.alpha = 0;
@@ -5704,7 +5704,7 @@ class PlayState extends MusicBeatState
 					bgpillar.animation.play('move', true);
 				});
 
-				new FlxTimer().start(3.75,(t)->{
+				new FlxTimer().start(3.60,(t)->{
 					pillarFG.alpha = 1;
 					pillarFG.animation.play('move');
 				});
