@@ -47,9 +47,6 @@ class Note extends FlxSprite
 
 		burning = _noteData > 7;
 
-		if (isSustainNote && FlxG.save.data.downscroll)
-			flipY = true;
-
 		this.noteData = _noteData % 4;
 
 		if (isSustainNote && prevNote.burning)
@@ -191,6 +188,10 @@ class Note extends FlxSprite
 					animation.play('purpleholdend');
 			}
 
+			if(FlxG.save.data.downscroll){
+				flipY=false;
+			}
+
 			updateHitbox();
 
 			x -= width / 2;
@@ -211,6 +212,9 @@ class Note extends FlxSprite
 					case 3:
 						prevNote.animation.play('redhold');
 				}
+				
+				if(FlxG.save.data.downscroll)
+					flipY=true;
 
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
 				prevNote.updateHitbox();
@@ -222,8 +226,6 @@ class Note extends FlxSprite
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
-		this.flipY = tooLate;
 
 		if (mustPress)
 		{

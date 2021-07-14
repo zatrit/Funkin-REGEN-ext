@@ -2202,7 +2202,7 @@ class PlayState extends MusicBeatState
 				if (useDownscroll)
 					for (note in unspawnNotes)
 						if (note.animation.name.endsWith("end"))
-							note.offset.y = -2;
+							note.offset.y = curStage.startsWith('school') ? -2 : -5;
 
 				swagNote.mustPress = gottaHitNote;
 
