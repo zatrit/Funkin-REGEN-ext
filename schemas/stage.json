@@ -8,9 +8,10 @@
         {
             "name": "stage",
             "camZoom": "0.9",
-            "library": "shared",
             "objects": [
                 {
+                    "library": "shared",
+                    "file": "stageback",
                     "name": "bg",
                     "position": {
                         "x": 0.0,
@@ -42,7 +43,6 @@
     "required": [
         "name",
         "camZoom",
-        "library",
         "objects"
     ],
     "properties": {
@@ -64,15 +64,6 @@
                 "0.9"
             ]
         },
-        "library": {
-            "$id": "#/properties/library",
-            "type": "string",
-            "title": "The library schema",
-            "default": "",
-            "examples": [
-                "shared"
-            ]
-        },
         "objects": {
             "$id": "#/properties/objects",
             "type": "array",
@@ -81,6 +72,8 @@
             "examples": [
                 [
                     {
+                        "library": "shared",
+                        "file": "stageback",
                         "name": "bg",
                         "position": {
                             "x": 0.0,
@@ -119,6 +112,8 @@
                         "default": {},
                         "examples": [
                             {
+                                "library": "shared",
+                                "file": "stageback",
                                 "name": "bg",
                                 "position": {
                                     "x": 0.0,
@@ -146,6 +141,8 @@
                             }
                         ],
                         "required": [
+                            "library",
+                            "file",
                             "name",
                             "position",
                             "scrollFactor",
@@ -156,6 +153,24 @@
                             "scale"
                         ],
                         "properties": {
+                            "library": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/library",
+                                "type": "string",
+                                "title": "The library schema",
+                                "default": "",
+                                "examples": [
+                                    "shared"
+                                ]
+                            },
+                            "file": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/file",
+                                "type": "string",
+                                "title": "The file schema",
+                                "default": "",
+                                "examples": [
+                                    "stageback"
+                                ]
+                            },
                             "name": {
                                 "$id": "#/properties/objects/items/anyOf/0/properties/name",
                                 "type": "string",
