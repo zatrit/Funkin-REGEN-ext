@@ -22,6 +22,7 @@
         "objects":{
             "type":"array",
             "description": "Array of objects",
+            "required":["name","map","position","defaultAnimation","animations"],
             "additionalItems": {
                 "properties": {
                     "name":{
@@ -33,10 +34,18 @@
                         "type":"boolean",
                         "default":"false"
                     },
+                    "position":{
+                        "type":"array",
+                        "default":["0","0"]
+                    },
+                    "defaultAnimation":{
+                        "default":"",
+                        "type":"string"
+                    },
                     "animations":{
                         "description": "Animation",
                         "type":"array",
-                        "items": {
+                        "additionalItems": {
                             "properties": {
                                 "fps":{
                                     "type":"integer",
@@ -52,7 +61,8 @@
                                     "description": "Animation name"
                                 }
                             }
-                        }
+                        },
+                        "required":["fps","prefix","name"]
                     }
                 }
             }
