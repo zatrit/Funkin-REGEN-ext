@@ -242,4 +242,19 @@
 	<SubTexture name="Agoti idle dance BLACK LINE0011" x="5164" y="4960" width="466" height="851"/>
 	<SubTexture name="Agoti idle dance BLACK LINE0012" x="5164" y="4960" width="466" height="851"/>
 	<SubTexture name="Agoti idle dance BLACK LINE0013" x="5164" y="4960" width="466" height="851"/>
+<!-- pivotX="-246.8" pivotY="22.55" -->
+	<SubTexture name="Tabi Lines0000" x="5700" y="4910" width="452" height="779" frameX="-7" frameY="0" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0001" x="5700" y="4910" width="452" height="779" frameX="-7" frameY="0" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0002" x="6152" y="4910" width="465" height="764" frameX="0" frameY="-14" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0003" x="6152" y="4910" width="465" height="764" frameX="0" frameY="-14" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0004" x="6617" y="4910" width="460" height="768" frameX="-3" frameY="-10" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0005" x="6617" y="4910" width="460" height="768" frameX="-3" frameY="-10" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0006" x="7077" y="4910" width="447" height="777" frameX="-9" frameY="-2" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0007" x="7077" y="4910" width="447" height="777" frameX="-9" frameY="-2" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0008" x="5700" y="5689" width="447" height="779" frameX="-9" frameY="0" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0009" x="5700" y="5689" width="447" height="779" frameX="-9" frameY="0" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0010" x="6147" y="5689" width="452" height="779" frameX="-7" frameY="0" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0011" x="6147" y="5689" width="452" height="779" frameX="-7" frameY="0" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0012" x="6147" y="5689" width="452" height="779" frameX="-7" frameY="0" frameWidth="465" frameHeight="779"/>
+	<SubTexture name="Tabi Lines0013" x="6147" y="5689" width="452" height="779" frameX="-7" frameY="0" frameWidth="465" frameHeight="779"/>
 </TextureAtlas>

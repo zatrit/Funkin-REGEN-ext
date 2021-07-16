@@ -40,7 +40,8 @@ class MenuCharacter extends FlxSprite
 		'mrgame' => new CharacterSetting(0, -15),
 		'trickyMask' => new CharacterSetting(75, 120, 1.6),
 		'tord' => new CharacterSetting(0, 160, false),
-		'agoti' => new CharacterSetting(0, 150)
+		'agoti' => new CharacterSetting(0, 150),
+		'tabi' => new CharacterSetting(150, 200)
 	];
 
 	public function new(x:Float, y:Float, scale:Float, flipped:Bool)
@@ -69,6 +70,7 @@ class MenuCharacter extends FlxSprite
 		animation.addByPrefix('trickyMask', 'tricky week', 24);
 		animation.addByPrefix('tord', 'Tord idle dance BLACK LINE', 24);
 		animation.addByPrefix('agoti', 'Agoti idle dance BLACK LINE', 24);
+		animation.addByPrefix('tabi', "Tabi Lines", 24);
 		// Parent Christmas Idle
 
 		setGraphicSize(Std.int(width * scale));

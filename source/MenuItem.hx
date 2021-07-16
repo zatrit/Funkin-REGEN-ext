@@ -12,7 +12,9 @@ class MenuItem extends FlxSpriteGroup
 	public var week:FlxSprite;
 	public var flashingInt:Int = 0;
 
-	public function new(x:Float, y:Float, weekNum:Int = 0)
+	var weekColor:FlxColor;
+
+	public function new(x:Float, y:Float, weekNum:Int = 0, color:FlxColor = 0xFF33ffff)
 	{
 		super(x, y);
 		week = new FlxSprite();
@@ -21,6 +23,8 @@ class MenuItem extends FlxSpriteGroup
 		week.animation.play("idle");
 		week.updateHitbox();
 		add(week);
+
+		weekColor = color;
 	}
 
 	private var isFlashing:Bool = false;
@@ -45,7 +49,7 @@ class MenuItem extends FlxSpriteGroup
 			flashingInt += 1;
 
 		if (flashingInt % fakeFramerate >= Math.floor(fakeFramerate / 2))
-			week.color = 0xFF33ffff;
+			week.color = weekColor;
 		else
 			week.color = FlxColor.WHITE;
 	}

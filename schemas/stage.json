@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "REGEN stage",
+    "items": {"properties": {
+        "name":{
+            "type":"string",
+            "description": "Stage name",
+            "default":"stage"
+        },
+        "camZoom":{
+            "type":"number",
+            "minimum": 0,
+            "description": "Camera Zoom",
+            "default":"0.9"
+        },
+        "library":{
+            "type":"string",
+            "description": "Assets library",
+            "default":"shared"
+        },
+        "objects":{
+            "type":"array",
+            "description": "Array of objects",
+            "items": {
+                "properties": {
+                    "name":{
+                        "description": "Object name",
+                        "type":"string"
+                    },
+                    "map":{
+                        "description": "Add to objects map",
+                        "type":"boolean",
+                        "default":"false"
+                    },
+                    "animations":{
+                        "description": "Animation",
+                        "type":"array",
+                        "items": {
+                            "properties": {
+                                "fps":{
+                                    "type":"integer",
+                                    "default":"24",
+                                    "description": "Framerate of animation"
+                                },
+                                "prefix":{
+                                    "type":"string",
+                                    "description": "Animation prefix"
+                                },
+                                "name":{
+                                    "type":"string",
+                                    "description": "Animation name"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }},
+   "required": ["name", "camZoom", "library","objects"]
+}

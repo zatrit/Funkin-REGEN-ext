@@ -60,6 +60,11 @@ class HealthIcon extends FlxSprite
 		animation.add('agoti-micless', [51, 52], 0, false, isPlayer);
 		animation.add('agoti-crazy', [53, 52], 0, false, isPlayer);
 
+		animation.add('bf-tabi', [0, 1], 0, false, isPlayer);
+		animation.add('bf-tabi-crazy', [0, 1], 0, false, isPlayer);
+		animation.add('tabi', [54, 55], 0, false, isPlayer);
+		animation.add('tabi-crazy', [56, 57], 0, false, isPlayer);
+
 		animation.play(char);
 
 		antialiasing = !(char == "senpai" || char == "senpai-angry" || char == "spirit" || char == "bf-pixel");

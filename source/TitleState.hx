@@ -2,7 +2,7 @@ package;
 
 import options.DefaultOptions;
 import kade.CachedFrames;
-#if (cpp&&desktop)
+#if (cpp && desktop)
 import Discord.DiscordClient;
 import sys.thread.Thread;
 #end
@@ -45,7 +45,10 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
+		polymod.Polymod.init({
+			modRoot: "mods",
+			dirs: ['introMod']
+		});
 		#end
 		#if android
 		FlxG.android.preventDefaultKeys = [BACK];
@@ -408,7 +411,7 @@ class TitleState extends MusicBeatState
 				createCoolText(['Rozebud', 'MORO', 'YingYang', 'Jads', 'Tom Fulp']);
 			case 9:
 				deleteCoolText();
-				createCoolText(['Krinkels', 'GWebDev', 'Tsuraran','Sock.clip','Nate Anim8']);
+				createCoolText(['Krinkels', 'GWebDev', 'Tsuraran', 'Sock.clip', 'Nate Anim8']);
 			case 10:
 				deleteCoolText();
 				createCoolText(['bbpanzu', 'Eddsworld', 'Jason The Art Kid', 'MashProTato']);

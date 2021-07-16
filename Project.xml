@@ -75,6 +75,7 @@
 		<library name="clown"    preload="true" />
 		<library name="tord"    preload="true" />
 		<library name="agoti"    preload="true" />
+		<library name="curse"    preload="true" />
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
@@ -99,6 +100,7 @@
 		<library name="clown"    preload="false" />
 		<library name="tord"    preload="false" />
 		<library name="agoti"    preload="false" />
+		<library name="curse"    preload="false" />
 
 		<!-- It's not all, LOL -->
 	</section>
@@ -145,6 +147,9 @@
 	<!-- A.G.O.T.I -->
 	<assets path="assets/agoti"    library="agoti"    exclude="*.ogg" if="web"/>
 	<assets path="assets/agoti"    library="agoti"    exclude="*.mp3" unless="web"/>
+	<!-- Tabi -->
+	<assets path="assets/curse"    library="curse"    exclude="*.ogg" if="web"/>
+	<assets path="assets/curse"    library="curse"    exclude="*.mp3" unless="web"/>
 	
 	<assets path='example_mods' rename='mods' embed='false'/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />

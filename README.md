@@ -29,7 +29,7 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [KadeDev](https://github.com/KadeDev) - Programmer whose code i used
 - [paperkitty](https://gamebanana.com/members/1838959) - Kapi author
 - Mr. Game & Watch and Flatzone are owned by Nintendo
-- [Cval](https://github.com/cvalbrown) and [Rozebud](https://github.com/ThatRozebudDude) - Tricky authors
+- [Cval](https://github.com/cvalbrown), [GWebDev](https://gamebanana.com/members/1799048) and [Rozebud](https://github.com/ThatRozebudDude) - Tricky authors
 - [Bbpanzu](https://github.com/bbpanzu) and [Jason The Art Kid](https://gamebanana.com/members/1864663) - Tord authors
 - [A.G.O.T.I](https://gamebanana.com/members/1805341), [Brightfyre](https://gamebanana.com/members/1800180), [SugarRatio](https://gamebanana.com/members/1771573), [Kullix](https://gamebanana.com/members/1782132), [MashProTato](https://gamebanana.com/members/1784170) and iVorare - A.G.O.T.I authors 
 

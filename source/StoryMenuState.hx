@@ -29,8 +29,7 @@ class StoryMenuState extends MusicBeatState
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'], ['Senpai', 'Roses', 'Thorns'], #end
 		['Ugh', 'Guns', 'Stress'], ['Headache', 'Nerves', 'Release', 'Fading'], ['Lo-fight', 'Overhead', 'Ballistic'],
 		['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], ['Flatzone'], ['Improbable-Outset', 'Madness', 'Hellclown'], ['Norway', 'Tordbot'],
-		['Screenplay', 'Parasite', 'A.G.O.T.I'],
-	];
+		['Screenplay', 'Parasite', 'A.G.O.T.I'], ['My-Battle', 'Last-Chance', 'Genocide']];
 	var curDifficulty:Int = 1;
 
 	var weekCharacters:Array<Dynamic> = [
@@ -38,11 +37,22 @@ class StoryMenuState extends MusicBeatState
 		#if !MOD_ONLY ['dad', 'bf', 'gf'], ['spooky', 'bf', 'gf'], ['pico', 'bf', 'gf'], ['mom', 'bf', 'gf'], ['parents-christmas', 'bf', 'gf'],
 		['senpai', 'bf', 'gf'], #end
 		['tankman', 'bf', 'gf'], ['garcello', 'bf', 'gf'], ['whitty', 'bf', 'gf'], ['kapi', '', ''], ['mrgame', '', ''], ['trickyMask', 'bf', 'gf'],
-		['tord', 'bf', 'gf'], ['agoti', 'bf', 'gf']];
+		['tord', 'bf', 'gf'], ['agoti', 'bf', 'gf'], ['tabi', 'bf', 'gf']];
 
 	var weekNames:Array<String> = [
-		"", #if !MOD_ONLY "Daddy Dearest", "Spooky Month", "PICO", "MOMMY MUST MURDER", "RED SNOW", "hating simulator ft. moawling", #end "Tankman",
-		"SMOKE 'EM OUT STRUGGLE", "Back Alley Blitz", "B-B-BREAK DOWN!", "Please nerf up-b...", "Madness", "Tord", "Prisoner of the Void",
+		"",
+		#if !MOD_ONLY
+		"Daddy Dearest", "Spooky Month", "PICO", "MOMMY MUST MURDER", "RED SNOW", "hating simulator ft. moawling",
+		#end
+		"Tankman",
+		"SMOKE 'EM OUT STRUGGLE",
+		"Back Alley Blitz",
+		"B-B-BREAK DOWN!",
+		"Please nerf up-b...",
+		"Madness",
+		"Tord",
+		"Prisoner of the Void",
+		"Curse"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -118,7 +128,8 @@ class StoryMenuState extends MusicBeatState
 
 		for (i in 0...weekData.length)
 		{
-			var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, #if !MOD_ONLY i #else i == 0 ? i : i + 6 #end);
+			var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, #if !MOD_ONLY i #else i == 0 ? i : i + 6 #end,
+				i == 15 ? 0xFFff0000 : 0xFF33ffff);
 			weekThing.y += ((weekThing.height + 20) * i);
 			weekThing.targetY = i;
 			grpWeekText.add(weekThing);

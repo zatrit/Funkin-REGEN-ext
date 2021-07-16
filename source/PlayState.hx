@@ -1,5 +1,7 @@
 package;
 
+import openfl.filters.BitmapFilter;
+import tabi.SiniFire;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.util.FlxGradient;
 import flixel.effects.particles.FlxParticle;
@@ -223,11 +225,30 @@ class PlayState extends MusicBeatState
 	var beatOfFuck:Int = 0;
 
 	// TIKY LOVE COOKIES
+	// Agoti
 	var bgRocks:FlxSprite;
 	var speaker:FlxSprite;
 	var dadMicless:Character;
 	var bgpillar:FlxSprite;
+	// end agoti
+	// tabi
+	var siniFireBehind:FlxTypedGroup<SiniFire>;
+	var siniFireFront:FlxTypedGroup<SiniFire>;
 
+	var genocideBG:FlxSprite;
+	var genocideBoard:FlxSprite;
+
+	public var genocideCommands:Array<Array<Dynamic>> = [];
+
+	public var isGenocide:Bool = false;
+	public var minusHealth:Bool = false;
+
+	public var vignette:FlxSprite;
+	
+	var filters:Array<BitmapFilter> = [];
+	var filterList:Array<BitmapFilter> = [];
+	var filterMap:Map<String, {filter:BitmapFilter, ?onUpdate:Void->Void}>;
+	// end tabi
 	var useAgotiArrows:Bool;
 	var useKapiArrows:Bool;
 
@@ -293,7 +314,7 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('lo-fight/pleaseSubscribe'));
 			case 'overhead':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('overhead/pleaseSubscribe'));
-			case 'ballistic'|'ballistic-old':
+			case 'ballistic' | 'ballistic-old':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('ballistic/pleaseSubscribe'));
 
 			case 'wocky':
@@ -311,6 +332,10 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('parasite/to'));
 			case 'a.g.o.t.i':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('a.g.o.t.i/brightfyre'));
+
+			case 'my-battle' | 'last-chance' | 'genocide':
+				dialogue = CoolUtil.coolTextFile(Paths.txt(SONG.song.toLowerCase() + '/' + SONG.song.toLowerCase() + 'Dialogue'));
+				// trace(dialogue);
 		}
 
 		#if desktop
@@ -616,8 +641,8 @@ class PlayState extends MusicBeatState
 				{
 					curStage = 'schoolEvil';
 
-					//var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
-					//var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
+					// var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
+					// var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
 
 					var posX = 400;
 					var posY = 200;
@@ -746,12 +771,12 @@ class PlayState extends MusicBeatState
 					corpse.active = false;
 					add(corpse);
 				}
-			case 'lo-fight' | 'overhead' | 'ballistic'|'ballistic-old':
+			case 'lo-fight' | 'overhead' | 'ballistic' | 'ballistic-old':
 				{
 					defaultCamZoom = 0.9;
 					curStage = 'alley';
 
-					if (SONG.song.toLowerCase() == 'ballistic'||SONG.song.toLowerCase() == 'ballistic-old')
+					if (SONG.song.toLowerCase() == 'ballistic' || SONG.song.toLowerCase() == 'ballistic-old')
 						curStage = 'ballisticAlley';
 
 					wBg = new FlxSprite(-500, -300).loadGraphic(Paths.image('whittyBack', 'bonusWeek'));
@@ -919,8 +944,8 @@ class PlayState extends MusicBeatState
 				tstatic.alpha = 0;
 
 				var bg:FlxSprite = new FlxSprite(-350, -300).loadGraphic(Paths.image('red', 'clown'));
-				//var bg:FlxSprite = new FlxSprite(-350,-300);
-				
+				// var bg:FlxSprite = new FlxSprite(-350,-300);
+
 				bg.setGraphicSize(Std.int(bg.width * 2));
 				bg.updateHitbox();
 
@@ -941,13 +966,13 @@ class PlayState extends MusicBeatState
 				stageFront.active = false;
 				add(stageFront);
 
-				//MAINLIGHT = new FlxSprite(-470, -150).loadGraphic(Paths.image('hue', 'clown'));
-				MAINLIGHT = new FlxSprite().makeGraphic(FlxG.width,FlxG.height,0xAA0000);
-				MAINLIGHT.alpha = 33/255;
+				// MAINLIGHT = new FlxSprite(-470, -150).loadGraphic(Paths.image('hue', 'clown'));
+				MAINLIGHT = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xAA0000);
+				MAINLIGHT.alpha = 33 / 255;
 				MAINLIGHT.blend = "screen";
 				MAINLIGHT.screenCenter();
 				MAINLIGHT.antialiasing = true;
-				MAINLIGHT.scrollFactor.set(0,0);
+				MAINLIGHT.scrollFactor.set(0, 0);
 				add(MAINLIGHT);
 			case 'hellclown':
 				// trace("line 538");
@@ -977,7 +1002,8 @@ class PlayState extends MusicBeatState
 				stageFront.active = false;
 				add(stageFront);
 
-				if(FlxG.save.data.animEvents){
+				if (FlxG.save.data.animEvents)
+				{
 					hank = new FlxSprite(60, -170);
 					hank.frames = Paths.getSparrowAtlas('hellclwn/Hank', 'clown');
 					hank.animation.addByPrefix('dance', 'Hank', 24);
@@ -1005,7 +1031,8 @@ class PlayState extends MusicBeatState
 				hole = new FlxSprite(21.5, 530).loadGraphic(Paths.image('fourth/Spawnhole_Ground_BACK', 'clown'));
 				converHole = new FlxSprite(-21.5, 578).loadGraphic(Paths.image('fourth/Spawnhole_Ground_COVER', 'clown'));
 
-				if(FlxG.save.data.animEvents){
+				if (FlxG.save.data.animEvents)
+				{
 					var bg:FlxSprite = new FlxSprite(-10, -10).loadGraphic(Paths.image('fourth/bg', 'clown'));
 					bg.antialiasing = true;
 					bg.scrollFactor.set(0.9, 0.9);
@@ -1025,7 +1052,8 @@ class PlayState extends MusicBeatState
 				cover.scrollFactor.set(0.9, 0.9);
 				cover.setGraphicSize(Std.int(cover.width * 1.55));
 
-				if(FlxG.save.data.animEvents){
+				if (FlxG.save.data.animEvents)
+				{
 					var energyWall:FlxSprite = new FlxSprite(1350, -690).loadGraphic(Paths.image("fourth/Energywall", "clown"));
 					// energyWall.x+=energyWall.width/2;
 					// energyWall.y+=energyWall.height/2;
@@ -1091,26 +1119,26 @@ class PlayState extends MusicBeatState
 					white.scrollFactor.set();
 					add(white);
 
-					if(FlxG.save.data.animEvents)
+					if (FlxG.save.data.animEvents)
 					{
-						var wave:FlxWaveEffect = new FlxWaveEffect(FlxWaveMode.ALL,4,0.5,2.5,15);
+						var wave:FlxWaveEffect = new FlxWaveEffect(FlxWaveMode.ALL, 4, 0.5, 2.5, 15);
 
 						var void:FlxSprite = new FlxSprite(0, 0);
-						void.frames = Paths.getSparrowAtlas('The_void','agoti');
+						void.frames = Paths.getSparrowAtlas('The_void', 'agoti');
 						void.animation.addByPrefix('move', 'VoidShift', 50, true);
 						void.animation.play('move');
-						//void.setGraphicSize(Std.int(void.width * 2.5));
+						// void.setGraphicSize(Std.int(void.width * 2.5));
 						void.screenCenter();
 						void.y += 250;
 						void.x += 55;
-						//void.antialiasing = true;
-						//void.scrollFactor.set(0.7, 0.7);
-						//add(void);
+						// void.antialiasing = true;
+						// void.scrollFactor.set(0.7, 0.7);
+						// add(void);
 
-						var voidWave:FlxEffectSprite = new FlxEffectSprite(void,[wave]);
-						voidWave.scale.set(2.5,2.5);
+						var voidWave:FlxEffectSprite = new FlxEffectSprite(void, [wave]);
+						voidWave.scale.set(2.5, 2.5);
 						voidWave.updateHitbox();
-						voidWave.setPosition(void.x,void.y);
+						voidWave.setPosition(void.x, void.y);
 						voidWave.scrollFactor.set(0.7, 0.7);
 						voidWave.antialiasing = true;
 						add(voidWave);
@@ -1160,7 +1188,8 @@ class PlayState extends MusicBeatState
 					void.scrollFactor.set(0.7, 0.7);
 					add(void);
 
-					if(FlxG.save.data.animEvents){
+					if (FlxG.save.data.animEvents)
+					{
 						bgpillar = new FlxSprite(-1000, -700);
 						bgpillar.frames = Paths.getSparrowAtlas('Pillar_BG_Stage', 'agoti');
 						bgpillar.animation.addByPrefix('move', 'Pillar_BG', 24, true);
@@ -1179,6 +1208,88 @@ class PlayState extends MusicBeatState
 					speaker.scrollFactor.set(0.9, 0.9);
 					add(speaker);
 				}
+			case 'my-battle' | 'last-chance':
+				defaultCamZoom = 0.8;
+				curStage = 'curse';
+				var bg:FlxSprite = new FlxSprite(-600, -300).loadGraphic(Paths.image('tabi/normal_stage', 'curse'));
+				bg.antialiasing = true;
+				bg.scrollFactor.set(0.9, 0.9);
+				bg.active = false;
+				add(bg);
+			case 'genocide':
+				defaultCamZoom = 0.8;
+				curStage = 'genocide';
+
+				siniFireBehind = new FlxTypedGroup<SiniFire>();
+				siniFireFront = new FlxTypedGroup<SiniFire>();
+
+				// genocideBG = new SequenceBG(-600, -300, shitList, true, 2560, 1400, true);
+				genocideBG = new FlxSprite(-600, -300).loadGraphic(Paths.image('fire/wadsaaa', 'curse'));
+				genocideBG.antialiasing = true;
+				genocideBG.scrollFactor.set(0.9, 0.9);
+				add(genocideBG);
+
+				// Time for sini's amazing fires lol
+				// this one is behind the board
+				// idk how to position this
+				// i guess fuck my life lol
+				for (i in 0...2)
+				{
+					var daFire:SiniFire = new SiniFire(genocideBG.x + (720 + (((95 * 10) / 2) * i)), genocideBG.y + 180, true, false, 30, i * 10, 84);
+					daFire.antialiasing = true;
+					daFire.scrollFactor.set(0.9, 0.9);
+					daFire.scale.set(0.4, 1);
+					daFire.y += 50;
+					siniFireBehind.add(daFire);
+				}
+
+				add(siniFireBehind);
+
+				// genocide board is already in genocidebg but u know shit layering for fire lol
+				genocideBoard = new FlxSprite(genocideBG.x, genocideBG.y).loadGraphic(Paths.image('fire/boards', 'curse'));
+				genocideBoard.antialiasing = true;
+				genocideBoard.scrollFactor.set(0.9, 0.9);
+				add(genocideBoard);
+
+				// front fire shit
+
+				var fire1:SiniFire = new SiniFire(genocideBG.x + (-100), genocideBG.y + 889, true, false, 30);
+				fire1.antialiasing = true;
+				fire1.scrollFactor.set(0.9, 0.9);
+				fire1.scale.set(2.5, 1.5);
+				fire1.y -= fire1.height * 1.5;
+				fire1.flipX = true;
+
+				var fire2:SiniFire = new SiniFire((fire1.x + fire1.width) - 80, genocideBG.y + 889, true, false, 30);
+				fire2.antialiasing = true;
+				fire2.scrollFactor.set(0.9, 0.9);
+				// fire2.scale.set(2.5, 1);
+				fire2.y -= fire2.height * 1;
+
+				var fire3:SiniFire = new SiniFire((fire2.x + fire2.width) - 30, genocideBG.y + 889, true, false, 30);
+				fire3.antialiasing = true;
+				fire3.scrollFactor.set(0.9, 0.9);
+				// fire3.scale.set(2.5, 1);
+				fire3.y -= fire3.height * 1;
+
+				var fire4:SiniFire = new SiniFire((fire3.x + fire3.width) - 10, genocideBG.y + 889, true, false, 30);
+				fire4.antialiasing = true;
+				fire4.scrollFactor.set(0.9, 0.9);
+				fire4.scale.set(1.5, 1.5);
+				fire4.y -= fire4.height * 1.5;
+
+				siniFireFront.add(fire1);
+				siniFireFront.add(fire2);
+				siniFireFront.add(fire3);
+				siniFireFront.add(fire4);
+
+				add(siniFireFront);
+
+				// more layering shit
+				var fuckYouFurniture:FlxSprite = new FlxSprite(genocideBG.x, genocideBG.y).loadGraphic(Paths.image('fire/glowyfurniture'));
+				fuckYouFurniture.antialiasing = true;
+				fuckYouFurniture.scrollFactor.set(0.9, 0.9);
+				add(fuckYouFurniture);
 			default:
 				{
 					defaultCamZoom = 0.9;
@@ -1230,6 +1341,16 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-rocks';
 			case 'pillars':
 				gfVersion = 'gf-rocks-scared';
+			case 'curse':
+				gfVersion = 'gf-tabi';
+			case 'genocide':
+				gfVersion = 'gf-tabi-crazy';
+				var destBoombox:FlxSprite = new FlxSprite(400, 130).loadGraphic(Paths.image('tabi/mad/Destroyed_boombox', 'curse'));
+				destBoombox.y += (destBoombox.height - 648) * -1;
+				destBoombox.y += 150;
+				destBoombox.x -= 110;
+				destBoombox.scale.set(1.2, 1.2);
+				add(destBoombox);
 		}
 
 		gf = new Character(400, 130, gfVersion);
@@ -1374,6 +1495,20 @@ class PlayState extends MusicBeatState
 			case 'void' | 'pillars':
 				boyfriend.y += 50;
 				boyfriend.x += 100;
+			case 'curse':
+				boyfriend.setZoom(1.2);
+				boyfriend.x += 300;
+				gf.setZoom(1.2);
+				gf.y -= 110;
+				gf.x -= 50;
+			case 'genocide':
+				boyfriend.setZoom(1.2);
+				boyfriend.x += 300;
+				gf.setZoom(1);
+				//gf.y -= 20;
+				gf.x += 100;
+				var tabiTrail = new FlxTrail(dad, null, 4, 24, 0.6, 0.9);
+				add(tabiTrail);
 		}
 
 		add(gf);
@@ -1410,7 +1545,7 @@ class PlayState extends MusicBeatState
 			add(converHole);
 			add(dad.exSpikes);
 		}
-		
+
 		if (SONG.song.toLowerCase() == 'screenplay' && isStoryMode)
 		{
 			dadMicless = new Character(dad.x, dad.y, 'agoti-micless');
@@ -1420,6 +1555,22 @@ class PlayState extends MusicBeatState
 		}
 
 		add(boyfriend);
+
+		switch (curStage)
+		{
+			case 'curse':
+				var sumtable:FlxSprite = new FlxSprite(-600, -300).loadGraphic(Paths.image('tabi/sumtable','curse'));
+				sumtable.antialiasing = true;
+				sumtable.scrollFactor.set(0.9, 0.9);
+				sumtable.active = false;
+				add(sumtable);
+			case 'genocide':
+				var sumsticks:FlxSprite = new FlxSprite(-600, -300).loadGraphic(Paths.image('tabi/mad/overlayingsticks','curse'));
+				sumsticks.antialiasing = true;
+				sumsticks.scrollFactor.set(0.9, 0.9);
+				sumsticks.active = false;
+				add(sumsticks);
+		}
 
 		if (dad.curCharacter == 'trickyH')
 		{
@@ -1504,18 +1655,16 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 
-		if (SONG.song.toLowerCase() == 'headache'
-			|| SONG.song.toLowerCase() == 'nerves'
-			|| SONG.song.toLowerCase() == 'release'
-			|| SONG.song.toLowerCase() == 'fading')
-		{
-			healthBar.createFilledBar(0xFF8E40A5, 0xFF66FF33);
-		}
-		if (['a.g.o.t.i', 'parasite', 'screenplay', 'guns'].contains(SONG.song.toLowerCase()))
-		{
-			healthBar.createFilledBar(0xFF494949, 0xFF31B0D1);
+		switch(SONG.song.toLowerCase()){
+			case 'headache' | 'nerves' | 'release' | 'fading':
+				healthBar.createFilledBar(0xFF8E40A5, 0xFF66FF33);
+			case 'a.g.o.t.i' | 'parasite' | 'screenplay' | 'guns':
+				healthBar.createFilledBar(0xFF494949, 0xFF31B0D1);
+			case 'genocide':
+				healthBar.createFilledBar(0xFF333333, 0xFF66FF33);
+			default:
+				healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 		}
 
 		// healthBar
@@ -1634,7 +1783,7 @@ class PlayState extends MusicBeatState
 				case 'nerves' | "release" | "fading":
 					garIntro(doof);
 
-				case 'lo-fight' | 'overhead' | 'ballistic'|'ballistic-old':
+				case 'lo-fight' | 'overhead' | 'ballistic' | 'ballistic-old':
 					whittyAnimation(doof);
 
 				case 'wocky' | 'beathoven' | 'nyaw':
@@ -1686,7 +1835,7 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'ballistic'|'ballistic-old':
+				case 'ballistic' | 'ballistic-old':
 					wBg.alpha = 0;
 					nwBg.alpha = 1;
 					funneEffect = new FlxSprite(-600, -200).loadGraphic(Paths.image('thefunnyeffect', 'bonusWeek'));
@@ -1694,7 +1843,7 @@ class PlayState extends MusicBeatState
 					funneEffect.scrollFactor.set();
 					funneEffect.visible = true;
 					add(funneEffect);
-				
+
 					funneEffect.cameras = [camHUD];
 
 					trace('funne: ' + funneEffect);
@@ -2276,6 +2425,8 @@ class PlayState extends MusicBeatState
 						babyArrow.frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-kapi', 'shared');
 					else if (useAgotiArrows)
 						babyArrow.frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-agoti', 'shared');
+					else if (SONG.song.toLowerCase()=="genocide")
+						babyArrow.frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-genocide', 'shared');
 					else
 						babyArrow.frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets', 'shared');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
@@ -2495,8 +2646,11 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...strumLineNotes.length)
 				{
-					strumLineNotes.members[i].y += Math.cos((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID*2)/2;
+					strumLineNotes.members[i].y += Math.cos((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID * 2) / 2;
 				}
+			case 'genocide':
+				if(storyDifficulty > 0&&health > 0&&minusHealth)
+					health -= 0.001;
 		}
 
 		super.update(elapsed);
@@ -2750,6 +2904,8 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
+			minusHealth=false;
+
 			notes.forEachAlive(function(daNote:Note)
 			{
 				daNote.visible = daNote.y <= FlxG.height;
@@ -2800,6 +2956,8 @@ class PlayState extends MusicBeatState
 						daNote.clipRect = swagRect;
 					}
 				}
+					
+				minusHealth = minusHealth||!daNote.mustPress;
 
 				var noteData = Math.floor(Math.abs(daNote.noteData));
 				var strum = dadStrums.members[noteData];
@@ -3129,8 +3287,8 @@ class PlayState extends MusicBeatState
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite();
-			numScore.frames=Paths.getSparrowAtlas(pixelShitPart1.replace('kade/','') + 'nums' + pixelShitPart2);
-			numScore.animation.addByPrefix('num','num'+ Std.int(i));
+			numScore.frames = Paths.getSparrowAtlas(pixelShitPart1.replace('kade/', '') + 'nums' + pixelShitPart2);
+			numScore.animation.addByPrefix('num', 'num' + Std.int(i));
 			numScore.animation.play('num');
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
@@ -3441,6 +3599,8 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
+			minusHealth = true;
+
 			health -= 0.04;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
@@ -3530,6 +3690,8 @@ class PlayState extends MusicBeatState
 				popUpScore(note.strumTime);
 				combo += 1;
 			}
+
+			minusHealth = false;
 
 			if (!grabbed)
 			{
@@ -3732,7 +3894,7 @@ class PlayState extends MusicBeatState
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);
 
-		if (curStage == 'nevedaSpook'&&FlxG.save.data.animEvents)
+		if (curStage == 'nevedaSpook' && FlxG.save.data.animEvents)
 			hank.animation.play('dance');
 
 		if (curStage == 'auditorHell')
@@ -3894,7 +4056,7 @@ class PlayState extends MusicBeatState
 		if (curBeat % 2 == 0 && curSong == 'Beathoven')
 			littleGuys.animation.play('bop', true);
 
-		if (curSong.toLowerCase() == 'ballistic'||curSong.toLowerCase() == 'ballistic-old')
+		if (curSong.toLowerCase() == 'ballistic' || curSong.toLowerCase() == 'ballistic-old')
 		{
 			if (gf.animation.name != 'scared')
 				gf.playAnim('scared');
@@ -4265,6 +4427,8 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
+			minusHealth = true;
+
 			health -= 0.04;
 			interupt = true;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
@@ -4312,6 +4476,8 @@ class PlayState extends MusicBeatState
 		var noteDiff:Float = Math.abs(Conductor.songPosition - note.strumTime);
 
 		note.rating = Ratings.CalculateRating(noteDiff);
+
+		minusHealth = false;
 
 		if (mashing != 0)
 			mashing = 0;
@@ -4483,8 +4649,8 @@ class PlayState extends MusicBeatState
 			for (i in seperatedScore)
 			{
 				var numScore:FlxSprite = new FlxSprite();
-				numScore.frames=Paths.getSparrowAtlas(pixelShitPart1.replace('kade/','') + 'nums' + pixelShitPart2);
-				numScore.animation.addByPrefix('num','num'+ Std.int(i));
+				numScore.frames = Paths.getSparrowAtlas(pixelShitPart1.replace('kade/', '') + 'nums' + pixelShitPart2);
+				numScore.animation.addByPrefix('num', 'num' + Std.int(i));
 				numScore.animation.play('num');
 				numScore.screenCenter();
 				numScore.x = rating.x + (43 * daLoop) - 50;
@@ -4556,7 +4722,7 @@ class PlayState extends MusicBeatState
 		black2.alpha = 0;
 		var black3:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
 		black3.scrollFactor.set();
-		if (curSong.toLowerCase() != 'ballistic'||curSong.toLowerCase() == 'ballistic-old')
+		if (curSong.toLowerCase() != 'ballistic' || curSong.toLowerCase() == 'ballistic-old')
 			add(black);
 
 		var epic:Bool = false;
@@ -4573,7 +4739,7 @@ class PlayState extends MusicBeatState
 
 		switch (curSong.toLowerCase()) // WHITTY ANIMATION CODE LMAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 		{
-			case 'ballistic'|'ballistic-old':
+			case 'ballistic' | 'ballistic-old':
 				trace('funny ballistic!!!');
 				add(white);
 				trace(white);
@@ -5697,21 +5863,21 @@ class PlayState extends MusicBeatState
 			{
 				agotiSummon.animation.play('move');
 
-				if(FlxG.save.data.animEvents)
-				new FlxTimer().start(2, (tmr) ->
-				{
-					bgpillar.alpha = 1;
-					bgpillar.animation.play('move', true);
-				});
+				if (FlxG.save.data.animEvents)
+					new FlxTimer().start(2, (tmr) ->
+					{
+						bgpillar.alpha = 1;
+						bgpillar.animation.play('move', true);
+					});
 
-				new FlxTimer().start(3.60,(t)->{
+				new FlxTimer().start(3.60, (t) ->
+				{
 					pillarFG.alpha = 1;
 					pillarFG.animation.play('move');
 				});
 
 				new FlxTimer().start(4, function(deadTime:FlxTimer)
 				{
-
 					FlxTween.tween(black, {alpha: 1}, 1);
 
 					new FlxTimer().start(1.5, function(deadTime:FlxTimer)

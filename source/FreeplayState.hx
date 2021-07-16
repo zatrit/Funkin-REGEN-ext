@@ -1,5 +1,7 @@
 package;
 
+import openfl.filters.BitmapFilter;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 #if desktop
 import Discord.DiscordClient;
@@ -27,6 +29,9 @@ class FreeplayState extends MusicBeatState
 	var diffText:FlxText;
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
+	
+	var chromeValue:Float = 0;
+	var filters:Array<BitmapFilter> = [];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -48,6 +53,10 @@ class FreeplayState extends MusicBeatState
 		{
 			songs.push(new SongMetadata(initSonglist[i], 1, 'gf'));
 		}
+
+		filters = [chromaticAberration];
+		FlxG.camera.setFilters(filters);
+		FlxG.camera.filtersEnabled = true;
 
 		/* 
 			if (FlxG.sound.music != null)
@@ -122,6 +131,9 @@ class FreeplayState extends MusicBeatState
 
 		if (StoryMenuState.weekUnlocked(14) || isDebug)
 			addWeek(['Screenplay', 'Parasite', 'A.G.O.T.I', 'Guns'], 14, ['agoti', 'agoti', 'agoti-crazy', 'agoti']);
+
+		if (StoryMenuState.weekUnlocked(15) || isDebug)
+			addWeek(['My-Battle', 'Last-Chance', 'Genocide'], 15, ['tabi', 'tabi', 'tabi-crazy']);
 
 		// LOAD MUSIC
 
@@ -208,6 +220,8 @@ class FreeplayState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		
+		setChrome(chromeValue);
 
 		if (FlxG.sound.music.volume < 0.7)
 		{
@@ -331,6 +345,7 @@ class FreeplayState extends MusicBeatState
 		timer.start(1, (timer) ->
 		{
 			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+			Conductor.changeBPM(Song.loadFromJson(songs[curSelected].songName.toLowerCase(), songs[curSelected].songName.toLowerCase()).bpm);
 		});
 		#end
 
@@ -362,6 +377,23 @@ class FreeplayState extends MusicBeatState
 	function isOnlyHard():Bool
 	{
 		return songs[curSelected].week == 9 || songs[curSelected].week == 10 || songs[curSelected].songName.toLowerCase() == "expurgation";
+	}
+
+	override function beatHit()
+	{
+		super.beatHit();
+		
+		if (['my-battle', 'last-chance', 'genocide'].contains(songs[curSelected].songName.toLowerCase()))
+		{
+			FlxG.camera.zoom += 0.03;
+			FlxTween.tween(FlxG.camera, { zoom: 1 }, 0.1);
+			if (songs[curSelected].songName.toLowerCase() == 'genocide')
+			{
+				FlxG.camera.shake(0.005, 0.1);
+				chromeValue += 6 / 1000;
+				FlxTween.tween(this, { chromeValue: 0 }, 0.15);
+			}
+		}
 	}
 }
 

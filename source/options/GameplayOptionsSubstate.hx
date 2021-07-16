@@ -19,8 +19,7 @@ class GameplayOptionsSubstate extends OptionsSubState
 			#end
 			(FlxG.save.data.newInput ? 'new input' : 'old input'),
 			'ghost tap: ' + (FlxG.save.data.ghost ? 'on' : 'off'),
-			'skip cutscenes: ' + (FlxG.save.data.skipCutscenes ? 'on' : 'off'),
-			// 'safe frames: ' + FlxG.save.data.safeFrames,
+			'skip cutscenes: ' + (FlxG.save.data.skipCutscenes ? 'on' : 'off'), // 'safe frames: ' + FlxG.save.data.safeFrames,
 		];
 
 		super(parent, items);

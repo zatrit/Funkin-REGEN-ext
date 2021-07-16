@@ -12,5 +12,11 @@
 		"doWhile": "next",
 		"tryBody": "next",
 		"tryCatch": "next"
+	},
+	"emptyLines": {
+		"afterPackage": 1
+	},
+	"wrapping":{
+		"arrayMatrixWrap": "matrixWrapWithAlign"
 	}
 }

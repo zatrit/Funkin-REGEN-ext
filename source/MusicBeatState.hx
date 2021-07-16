@@ -1,5 +1,7 @@
 package;
 
+import openfl.filters.ShaderFilter;
+import tabi.ShadersHandler;
 #if cpp
 import cpp.vm.Gc;
 #end
@@ -15,6 +17,11 @@ class MusicBeatState extends FlxUIState
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
 	private var controls(get, never):Controls;
+
+	public var chromaticAberration(get, never):ShaderFilter;
+	
+	inline function get_chromaticAberration():ShaderFilter
+		return ShadersHandler.chromaticAberration;
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
@@ -95,4 +102,7 @@ class MusicBeatState extends FlxUIState
 		Gc.run(true);
 		#end
 	}
+	
+	public function setChrome(daChrome:Float):Void
+		ShadersHandler.setChrome(daChrome);
 }

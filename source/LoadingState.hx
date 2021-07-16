@@ -90,6 +90,9 @@ class LoadingState extends MusicBeatState
 				case 14:
 					checkLibrary("agoti");
 
+				case 15:
+					checkLibrary("curse");
+
 				default:
 					checkLibrary("week" + PlayState.storyWeek);
 			}
@@ -296,7 +299,7 @@ class LoadingState extends MusicBeatState
 	public static inline function unloadAll()
 	{
 		var libs:Array<String> = [
-			'week1', 'week2', 'week3', 'week4', 'week5', 'week6', 'weekG', 'bonusWeek', 'kapiWeek', 'g3wweek', 'clown', 'tord', 'agoti'
+			'week1', 'week2', 'week3', 'week4', 'week5', 'week6', 'weekG', 'bonusWeek', 'kapiWeek', 'g3wweek', 'clown', 'tord', 'agoti', 'curse'
 		];
 
 		for (lib in libs)
@@ -370,5 +373,8 @@ class MultiCallback
 		return fired.copy();
 
 	public function getUnfired()
-		return [for (id in unfired.keys()) id];
+		return [
+			for (id in unfired.keys())
+				id
+		];
 }

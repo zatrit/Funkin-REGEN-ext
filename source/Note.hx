@@ -89,6 +89,8 @@ class Note extends FlxSprite
 					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-kapi', 'shared');
 				else if (['void', 'pillars'].contains(daStage) || FlxG.save.data.arrowsStyle == 1)
 					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-agoti', 'shared');
+				else if (daStage=="genocide")
+					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-genocide', 'shared');
 				else
 					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets', 'shared');
 
@@ -188,8 +190,9 @@ class Note extends FlxSprite
 					animation.play('purpleholdend');
 			}
 
-			if(FlxG.save.data.downscroll){
-				flipY=false;
+			if (FlxG.save.data.downscroll)
+			{
+				flipY = false;
 			}
 
 			updateHitbox();
@@ -212,9 +215,9 @@ class Note extends FlxSprite
 					case 3:
 						prevNote.animation.play('redhold');
 				}
-				
-				if(FlxG.save.data.downscroll)
-					flipY=true;
+
+				if (FlxG.save.data.downscroll)
+					flipY = true;
 
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
 				prevNote.updateHitbox();
