@@ -4,6 +4,36 @@
     "type": "object",
     "title": "The root schema",
     "default": {},
+    "examples": [
+        {
+            "name": "stage",
+            "camZoom": "0.9",
+            "library": "shared",
+            "objects": [
+                {
+                    "name": "bg",
+                    "position": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "scrollFactor": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "active": true,
+                    "animations": [
+                        {
+                            "name": "idle",
+                            "prefix": "bgPrefix",
+                            "fps": 24,
+                            "loop": false
+                        }
+                    ],
+                    "defaultAnimation": "idle"
+                }
+            ]
+        }
+    ],
     "required": [
         "name",
         "camZoom",
@@ -15,25 +45,59 @@
             "$id": "#/properties/name",
             "type": "string",
             "title": "The name schema",
-            "default": ""
+            "default": "",
+            "examples": [
+                "stage"
+            ]
         },
         "camZoom": {
             "$id": "#/properties/camZoom",
             "type": "string",
             "title": "The camZoom schema",
-            "default": ""
+            "default": "",
+            "examples": [
+                "0.9"
+            ]
         },
         "library": {
             "$id": "#/properties/library",
             "type": "string",
             "title": "The library schema",
-            "default": ""
+            "default": "",
+            "examples": [
+                "shared"
+            ]
         },
         "objects": {
             "$id": "#/properties/objects",
             "type": "array",
             "title": "The objects schema",
             "default": [],
+            "examples": [
+                [
+                    {
+                        "name": "bg",
+                        "position": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "scrollFactor": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "active": true,
+                        "animations": [
+                            {
+                                "name": "idle",
+                                "prefix": "bgPrefix",
+                                "fps": 24,
+                                "loop": false
+                            }
+                        ],
+                        "defaultAnimation": "idle"
+                    }
+                ]
+            ],
             "additionalItems": true,
             "items": {
                 "$id": "#/properties/objects/items",
@@ -43,6 +107,29 @@
                         "type": "object",
                         "title": "The first anyOf schema",
                         "default": {},
+                        "examples": [
+                            {
+                                "name": "bg",
+                                "position": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "scrollFactor": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "active": true,
+                                "animations": [
+                                    {
+                                        "name": "idle",
+                                        "prefix": "bgPrefix",
+                                        "fps": 24,
+                                        "loop": false
+                                    }
+                                ],
+                                "defaultAnimation": "idle"
+                            }
+                        ],
                         "required": [
                             "name",
                             "position",
@@ -56,13 +143,22 @@
                                 "$id": "#/properties/objects/items/anyOf/0/properties/name",
                                 "type": "string",
                                 "title": "The name schema",
-                                "default": ""
+                                "default": "",
+                                "examples": [
+                                    "bg"
+                                ]
                             },
                             "position": {
                                 "$id": "#/properties/objects/items/anyOf/0/properties/position",
                                 "type": "object",
                                 "title": "The position schema",
                                 "default": {},
+                                "examples": [
+                                    {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                ],
                                 "required": [
                                     "x",
                                     "y"
@@ -72,13 +168,19 @@
                                         "$id": "#/properties/objects/items/anyOf/0/properties/position/properties/x",
                                         "type": "integer",
                                         "title": "The x schema",
-                                        "default": 0
+                                        "default": 0,
+                                        "examples": [
+                                            0
+                                        ]
                                     },
                                     "y": {
                                         "$id": "#/properties/objects/items/anyOf/0/properties/position/properties/y",
                                         "type": "integer",
                                         "title": "The y schema",
-                                        "default": 0
+                                        "default": 0,
+                                        "examples": [
+                                            0
+                                        ]
                                     }
                                 },
                                 "additionalProperties": true
@@ -88,6 +190,12 @@
                                 "type": "object",
                                 "title": "The scrollFactor schema",
                                 "default": {},
+                                "examples": [
+                                    {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                ],
                                 "required": [
                                     "x",
                                     "y"
@@ -97,13 +205,19 @@
                                         "$id": "#/properties/objects/items/anyOf/0/properties/scrollFactor/properties/x",
                                         "type": "integer",
                                         "title": "The x schema",
-                                        "default": 0
+                                        "default": 0,
+                                        "examples": [
+                                            0
+                                        ]
                                     },
                                     "y": {
                                         "$id": "#/properties/objects/items/anyOf/0/properties/scrollFactor/properties/y",
                                         "type": "integer",
                                         "title": "The y schema",
-                                        "default": 0
+                                        "default": 0,
+                                        "examples": [
+                                            0
+                                        ]
                                     }
                                 },
                                 "additionalProperties": true
@@ -112,13 +226,26 @@
                                 "$id": "#/properties/objects/items/anyOf/0/properties/active",
                                 "type": "boolean",
                                 "title": "The active schema",
-                                "default": false
+                                "default": false,
+                                "examples": [
+                                    true
+                                ]
                             },
                             "animations": {
                                 "$id": "#/properties/objects/items/anyOf/0/properties/animations",
                                 "type": "array",
                                 "title": "The animations schema",
                                 "default": [],
+                                "examples": [
+                                    [
+                                        {
+                                            "name": "idle",
+                                            "prefix": "bgPrefix",
+                                            "fps": 24,
+                                            "loop": false
+                                        }
+                                    ]
+                                ],
                                 "additionalItems": true,
                                 "items": {
                                     "$id": "#/properties/objects/items/anyOf/0/properties/animations/items",
@@ -128,6 +255,14 @@
                                             "type": "object",
                                             "title": "The first anyOf schema",
                                             "default": {},
+                                            "examples": [
+                                                {
+                                                    "name": "idle",
+                                                    "prefix": "bgPrefix",
+                                                    "fps": 24,
+                                                    "loop": false
+                                                }
+                                            ],
                                             "required": [
                                                 "name",
                                                 "prefix",
@@ -139,25 +274,37 @@
                                                     "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0/properties/name",
                                                     "type": "string",
                                                     "title": "The name schema",
-                                                    "default": ""
+                                                    "default": "",
+                                                    "examples": [
+                                                        "idle"
+                                                    ]
                                                 },
                                                 "prefix": {
                                                     "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0/properties/prefix",
                                                     "type": "string",
                                                     "title": "The prefix schema",
-                                                    "default": ""
+                                                    "default": "",
+                                                    "examples": [
+                                                        "bgPrefix"
+                                                    ]
                                                 },
                                                 "fps": {
                                                     "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0/properties/fps",
                                                     "type": "integer",
                                                     "title": "The fps schema",
-                                                    "default": 0
+                                                    "default": 0,
+                                                    "examples": [
+                                                        24
+                                                    ]
                                                 },
                                                 "loop": {
                                                     "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0/properties/loop",
                                                     "type": "boolean",
                                                     "title": "The loop schema",
-                                                    "default": false
+                                                    "default": false,
+                                                    "examples": [
+                                                        false
+                                                    ]
                                                 }
                                             },
                                             "additionalProperties": true
@@ -169,7 +316,10 @@
                                 "$id": "#/properties/objects/items/anyOf/0/properties/defaultAnimation",
                                 "type": "string",
                                 "title": "The defaultAnimation schema",
-                                "default": ""
+                                "default": "",
+                                "examples": [
+                                    "idle"
+                                ]
                             }
                         },
                         "additionalProperties": true
