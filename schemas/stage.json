@@ -32,8 +32,8 @@
                     "defaultAnimation": "idle",
                     "map": false,
                     "scale": {
-                        "x": 0,
-                        "y": 0
+                        "x": 1,
+                        "y": 1
                     }
                 }
             ]
@@ -102,8 +102,8 @@
                         "defaultAnimation": "idle",
                         "map": false,
                         "scale": {
-                            "x": 0,
-                            "y": 0
+                            "x": 1,
+                            "y": 1
                         }
                     }
                 ]
@@ -140,8 +140,8 @@
                                 "defaultAnimation": "idle",
                                 "map": false,
                                 "scale": {
-                                    "x": 0,
-                                    "y": 0
+                                    "x": 1,
+                                    "y": 1
                                 }
                             }
                         ],
@@ -354,8 +354,8 @@
                                 "default": {},
                                 "examples": [
                                     {
-                                        "x": 0,
-                                        "y": 0
+                                        "x": 1,
+                                        "y": 1
                                     }
                                 ],
                                 "required": [
@@ -369,7 +369,7 @@
                                         "title": "The x schema",
                                         "default": 0,
                                         "examples": [
-                                            0
+                                            1
                                         ]
                                     },
                                     "y": {
@@ -378,7 +378,7 @@
                                         "title": "The y schema",
                                         "default": 0,
                                         "examples": [
-                                            0
+                                            1
                                         ]
                                     }
                                 },
