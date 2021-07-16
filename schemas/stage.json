@@ -1,72 +1,182 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/schemas/stage.json",
-    "title": "REGEN stage",
-    "items": {"properties": {
-        "name":{
-            "type":"string",
-            "description": "Stage name",
-            "default":"stage"
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "default": {},
+    "required": [
+        "name",
+        "camZoom",
+        "library",
+        "objects"
+    ],
+    "properties": {
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "title": "The name schema",
+            "default": ""
         },
-        "camZoom":{
-            "type":"number",
-            "minimum": 0,
-            "description": "Camera Zoom",
-            "default":"0.9"
+        "camZoom": {
+            "$id": "#/properties/camZoom",
+            "type": "string",
+            "title": "The camZoom schema",
+            "default": ""
         },
-        "library":{
-            "type":"string",
-            "description": "Assets library",
-            "default":"shared"
+        "library": {
+            "$id": "#/properties/library",
+            "type": "string",
+            "title": "The library schema",
+            "default": ""
         },
-        "objects":{
-            "type":"array",
-            "description": "Array of objects",
-            "required":["name","map","position","defaultAnimation","animations"],
-            "additionalItems": {
-                "properties": {
-                    "name":{
-                        "description": "Object name",
-                        "type":"string"
-                    },
-                    "map":{
-                        "description": "Add to objects map",
-                        "type":"boolean",
-                        "default":"false"
-                    },
-                    "position":{
-                        "type":"array",
-                        "default":["0","0"]
-                    },
-                    "defaultAnimation":{
-                        "default":"",
-                        "type":"string"
-                    },
-                    "animations":{
-                        "description": "Animation",
-                        "type":"array",
-                        "additionalItems": {
-                            "properties": {
-                                "fps":{
-                                    "type":"integer",
-                                    "default":"24",
-                                    "description": "Framerate of animation"
+        "objects": {
+            "$id": "#/properties/objects",
+            "type": "array",
+            "title": "The objects schema",
+            "default": [],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/objects/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/objects/items/anyOf/0",
+                        "type": "object",
+                        "title": "The first anyOf schema",
+                        "default": {},
+                        "required": [
+                            "name",
+                            "position",
+                            "scrollFactor",
+                            "active",
+                            "animations",
+                            "defaultAnimation"
+                        ],
+                        "properties": {
+                            "name": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/name",
+                                "type": "string",
+                                "title": "The name schema",
+                                "default": ""
+                            },
+                            "position": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/position",
+                                "type": "object",
+                                "title": "The position schema",
+                                "default": {},
+                                "required": [
+                                    "x",
+                                    "y"
+                                ],
+                                "properties": {
+                                    "x": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/position/properties/x",
+                                        "type": "integer",
+                                        "title": "The x schema",
+                                        "default": 0
+                                    },
+                                    "y": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/position/properties/y",
+                                        "type": "integer",
+                                        "title": "The y schema",
+                                        "default": 0
+                                    }
                                 },
-                                "prefix":{
-                                    "type":"string",
-                                    "description": "Animation prefix"
+                                "additionalProperties": true
+                            },
+                            "scrollFactor": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/scrollFactor",
+                                "type": "object",
+                                "title": "The scrollFactor schema",
+                                "default": {},
+                                "required": [
+                                    "x",
+                                    "y"
+                                ],
+                                "properties": {
+                                    "x": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/scrollFactor/properties/x",
+                                        "type": "integer",
+                                        "title": "The x schema",
+                                        "default": 0
+                                    },
+                                    "y": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/scrollFactor/properties/y",
+                                        "type": "integer",
+                                        "title": "The y schema",
+                                        "default": 0
+                                    }
                                 },
-                                "name":{
-                                    "type":"string",
-                                    "description": "Animation name"
+                                "additionalProperties": true
+                            },
+                            "active": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/active",
+                                "type": "boolean",
+                                "title": "The active schema",
+                                "default": false
+                            },
+                            "animations": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/animations",
+                                "type": "array",
+                                "title": "The animations schema",
+                                "default": [],
+                                "additionalItems": true,
+                                "items": {
+                                    "$id": "#/properties/objects/items/anyOf/0/properties/animations/items",
+                                    "anyOf": [
+                                        {
+                                            "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0",
+                                            "type": "object",
+                                            "title": "The first anyOf schema",
+                                            "default": {},
+                                            "required": [
+                                                "name",
+                                                "prefix",
+                                                "fps",
+                                                "loop"
+                                            ],
+                                            "properties": {
+                                                "name": {
+                                                    "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0/properties/name",
+                                                    "type": "string",
+                                                    "title": "The name schema",
+                                                    "default": ""
+                                                },
+                                                "prefix": {
+                                                    "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0/properties/prefix",
+                                                    "type": "string",
+                                                    "title": "The prefix schema",
+                                                    "default": ""
+                                                },
+                                                "fps": {
+                                                    "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0/properties/fps",
+                                                    "type": "integer",
+                                                    "title": "The fps schema",
+                                                    "default": 0
+                                                },
+                                                "loop": {
+                                                    "$id": "#/properties/objects/items/anyOf/0/properties/animations/items/anyOf/0/properties/loop",
+                                                    "type": "boolean",
+                                                    "title": "The loop schema",
+                                                    "default": false
+                                                }
+                                            },
+                                            "additionalProperties": true
+                                        }
+                                    ]
                                 }
+                            },
+                            "defaultAnimation": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/defaultAnimation",
+                                "type": "string",
+                                "title": "The defaultAnimation schema",
+                                "default": ""
                             }
                         },
-                        "required":["fps","prefix","name"]
+                        "additionalProperties": true
                     }
-                }
+                ]
             }
         }
-    }},
-   "required": ["name", "camZoom", "library","objects"]
+    },
+    "additionalProperties": true
 }
