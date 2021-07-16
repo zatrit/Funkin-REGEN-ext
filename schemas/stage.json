@@ -22,7 +22,7 @@
         "objects":{
             "type":"array",
             "description": "Array of objects",
-            "items": {
+            "additionalItems": {
                 "properties": {
                     "name":{
                         "description": "Object name",
