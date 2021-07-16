@@ -30,7 +30,11 @@
                         }
                     ],
                     "defaultAnimation": "idle",
-                    "map": false
+                    "map": false,
+                    "scale": {
+                        "x": 0,
+                        "y": 0
+                    }
                 }
             ]
         }
@@ -96,7 +100,11 @@
                             }
                         ],
                         "defaultAnimation": "idle",
-                        "map": false
+                        "map": false,
+                        "scale": {
+                            "x": 0,
+                            "y": 0
+                        }
                     }
                 ]
             ],
@@ -130,7 +138,11 @@
                                     }
                                 ],
                                 "defaultAnimation": "idle",
-                                "map": false
+                                "map": false,
+                                "scale": {
+                                    "x": 0,
+                                    "y": 0
+                                }
                             }
                         ],
                         "required": [
@@ -140,7 +152,8 @@
                             "active",
                             "animations",
                             "defaultAnimation",
-                            "map"
+                            "map",
+                            "scale"
                         ],
                         "properties": {
                             "name": {
@@ -333,6 +346,43 @@
                                 "examples": [
                                     false
                                 ]
+                            },
+                            "scale": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/scale",
+                                "type": "object",
+                                "title": "The scale schema",
+                                "default": {},
+                                "examples": [
+                                    {
+                                        "x": 0,
+                                        "y": 0
+                                    }
+                                ],
+                                "required": [
+                                    "x",
+                                    "y"
+                                ],
+                                "properties": {
+                                    "x": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/scale/properties/x",
+                                        "type": "integer",
+                                        "title": "The x schema",
+                                        "default": 0,
+                                        "examples": [
+                                            0
+                                        ]
+                                    },
+                                    "y": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/scale/properties/y",
+                                        "type": "integer",
+                                        "title": "The y schema",
+                                        "default": 0,
+                                        "examples": [
+                                            0
+                                        ]
+                                    }
+                                },
+                                "additionalProperties": true
                             }
                         },
                         "additionalProperties": true
