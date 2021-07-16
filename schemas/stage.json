@@ -29,7 +29,8 @@
                             "loop": false
                         }
                     ],
-                    "defaultAnimation": "idle"
+                    "defaultAnimation": "idle",
+                    "map": false
                 }
             ]
         }
@@ -94,7 +95,8 @@
                                 "loop": false
                             }
                         ],
-                        "defaultAnimation": "idle"
+                        "defaultAnimation": "idle",
+                        "map": false
                     }
                 ]
             ],
@@ -127,7 +129,8 @@
                                         "loop": false
                                     }
                                 ],
-                                "defaultAnimation": "idle"
+                                "defaultAnimation": "idle",
+                                "map": false
                             }
                         ],
                         "required": [
@@ -136,7 +139,8 @@
                             "scrollFactor",
                             "active",
                             "animations",
-                            "defaultAnimation"
+                            "defaultAnimation",
+                            "map"
                         ],
                         "properties": {
                             "name": {
@@ -319,6 +323,15 @@
                                 "default": "",
                                 "examples": [
                                     "idle"
+                                ]
+                            },
+                            "map": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/map",
+                                "type": "boolean",
+                                "title": "The map schema",
+                                "default": false,
+                                "examples": [
+                                    false
                                 ]
                             }
                         },
