@@ -5968,6 +5968,8 @@ class PlayState extends MusicBeatState
 
 	//Json loader
 	var mappedObjects:Map<String,FlxSprite>;
+	var beatListeners:Map<String,FlxSprite>;
+	var stepListeners:Map<String,FlxSprite>;
 
 	function loadStageJson(file:String="") {
 		var songFileName = '${SONG.song.toLowerCase()}/stage';
@@ -6007,6 +6009,13 @@ class PlayState extends MusicBeatState
 			if(object.map)
 				mappedObjects[object.name]=spr;
 
+			if(object.animationEvents!=null){
+				if(object.animationEvents.onBeat!=null)
+					beatListeners[object.animationEvents.onBeat]=spr;
+				if(object.animationEvents.onStep!=null)
+					stepListeners[object.animationEvents.onStep]=spr;
+			}
+
 			add(spr);
 		}
 	}
@@ -6028,7 +6037,8 @@ typedef JsonStageObject = {
 	map:Bool,
 	active:Bool,
 	library:String,
-	name:String
+	name:String,
+	animationEvents:JsonAnimationEvents
 };
 typedef JsonPoint = {
 	x:Float,
@@ -6039,4 +6049,8 @@ typedef JsonStageAnimation = {
 	fps:Int,
 	prefix:String,
 	name:String
+};
+typedef JsonAnimationEvents = {
+	onBeat:String,
+	onStep:String
 };
