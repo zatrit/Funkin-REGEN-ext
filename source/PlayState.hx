@@ -1,5 +1,8 @@
 package;
 
+import haxe.ds.Map;
+import haxe.Json;
+import lime.utils.Assets;
 import openfl.filters.BitmapFilter;
 import tabi.SiniFire;
 import flixel.addons.effects.chainable.FlxEffectSprite;
@@ -56,8 +59,6 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
-
-	var halloweenLevel:Bool = false;
 
 	private var vocals:FlxSound;
 
@@ -388,7 +389,6 @@ class PlayState extends MusicBeatState
 			case 'spookeez' | 'monster' | 'south':
 				{
 					curStage = 'spooky';
-					halloweenLevel = true;
 
 					var hallowTex = Paths.getSparrowAtlas('halloween_bg');
 
@@ -1292,30 +1292,7 @@ class PlayState extends MusicBeatState
 				add(fuckYouFurniture);
 			default:
 				{
-					defaultCamZoom = 0.9;
-					curStage = 'stage';
-					var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
-					bg.antialiasing = true;
-					bg.scrollFactor.set(0.9, 0.9);
-					bg.active = false;
-					add(bg);
-
-					var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
-					stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-					stageFront.updateHitbox();
-					stageFront.antialiasing = true;
-					stageFront.scrollFactor.set(0.9, 0.9);
-					stageFront.active = false;
-					add(stageFront);
-
-					var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
-					stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-					stageCurtains.updateHitbox();
-					stageCurtains.antialiasing = true;
-					stageCurtains.scrollFactor.set(1.3, 1.3);
-					stageCurtains.active = false;
-
-					add(stageCurtains);
+					loadStageJson();
 				}
 		}
 
@@ -5988,4 +5965,78 @@ class PlayState extends MusicBeatState
 		else
 			arrow.centerOffsets();
 	}
+
+	//Json loader
+	var mappedObjects:Map<String,FlxSprite>;
+
+	function loadStageJson(file:String="") {
+		var songFileName = '${SONG.song.toLowerCase()}/stage';
+
+		if(file==null || file=="")
+			file=Assets.exists(Paths.json(songFileName)) ? songFileName : 'stage';
+		mappedObjects = new Map<String,FlxSprite>();
+
+		var json=Assets.getText(Paths.json(file));
+		var parsedData:JsonStage=Json.parse(json);
+
+		defaultCamZoom = parsedData.camZoom;
+		curStage = parsedData.name;
+
+		var defaultLibrary:String = parsedData.library;
+
+		for(object in parsedData.objects){
+			var lib=object.library==null ? defaultLibrary : object.library;
+
+			var spr:FlxSprite = new FlxSprite(object.position.x,object.position.y);
+			spr.active=object.active;
+			spr.scrollFactor.set(object.scrollFactor.x,object.scrollFactor.y);
+			spr.scale.set(object.scale.x,object.scale.y);
+			spr.updateHitbox();
+			
+			if(object.animations.length>0){
+				spr.frames=Paths.getSparrowAtlas(object.file,lib);
+
+				for(anim in object.animations){
+					spr.animation.addByPrefix(anim.name,anim.prefix,anim.fps,anim.loop);
+				}
+				spr.animation.play(parsedData.library);
+			}else{
+				spr.loadGraphic(Paths.image(object.file,lib));
+			}
+
+			if(object.map)
+				mappedObjects[object.name]=spr;
+
+			add(spr);
+		}
+	}
 }
+
+typedef JsonStage = {
+	objects:Array<JsonStageObject>,
+	camZoom:Float,
+	name:String,
+	library:String
+};
+typedef JsonStageObject = {
+	animations:Array<JsonStageAnimation>,
+	defaultAnimation:String,
+	file:String,
+	position:JsonPoint,
+	scrollFactor:JsonPoint,
+	scale:JsonPoint,
+	map:Bool,
+	active:Bool,
+	library:String,
+	name:String
+};
+typedef JsonPoint = {
+	x:Float,
+	y:Float
+};
+typedef JsonStageAnimation = {
+	loop:Bool,
+	fps:Int,
+	prefix:String,
+	name:String
+};

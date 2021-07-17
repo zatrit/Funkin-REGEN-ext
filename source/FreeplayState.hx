@@ -1,5 +1,6 @@
 package;
 
+import lime.utils.Assets;
 import openfl.filters.BitmapFilter;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
@@ -47,11 +48,22 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
+		var isDebug:Bool = false;
+
+		#if (debug||UNLOCK)
+		isDebug = true;
+		#end
+
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
 
 		for (i in 0...initSonglist.length)
 		{
-			songs.push(new SongMetadata(initSonglist[i], 1, 'gf'));
+			var splitted:Array<String> = initSonglist[i].split(':');
+
+			if(splitted.length<4)
+				addSong(splitted[0],Std.parseInt(splitted[2]),splitted[1]);
+			else if(Highscore.getWeekScore(Std.parseInt(splitted[3]),2)>0||isDebug)
+				addSong(splitted[0],Std.parseInt(splitted[2]),splitted[1]);
 		}
 
 		filters = [chromaticAberration];
@@ -71,13 +83,7 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		var isDebug:Bool = false;
-
-		#if debug
-		isDebug = true;
-		#end
-
-		#if !MOD_ONLY
+		/*#if !MOD_ONLY
 		if (StoryMenuState.weekUnlocked(1) || isDebug)
 			addWeek(['Bopeebo', 'Fresh', 'Dadbattle'], 1, ['dad']);
 
@@ -133,7 +139,7 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Screenplay', 'Parasite', 'A.G.O.T.I', 'Guns'], 14, ['agoti', 'agoti', 'agoti-crazy', 'agoti']);
 
 		if (StoryMenuState.weekUnlocked(15) || isDebug)
-			addWeek(['My-Battle', 'Last-Chance', 'Genocide'], 15, ['tabi', 'tabi', 'tabi-crazy']);
+			addWeek(['My-Battle', 'Last-Chance', 'Genocide'], 15, ['tabi', 'tabi', 'tabi-crazy']);*/
 
 		// LOAD MUSIC
 
@@ -199,7 +205,7 @@ class FreeplayState extends MusicBeatState
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter));
+		songs.push(new SongMetadata(songName, weekNum, songCharacter,getDiffs(songName)));
 	}
 
 	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
@@ -286,6 +292,8 @@ class FreeplayState extends MusicBeatState
 
 	function changeDiff(change:Int = 0)
 	{
+		var oldDiff=curDifficulty;
+
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
@@ -293,8 +301,8 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
-		if (isOnlyHard())
-			curDifficulty = 2;
+		if(!hasDiff(curDifficulty))
+			curDifficulty=oldDiff;
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
@@ -323,10 +331,14 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		if (isOnlyHard())
-		{
-			curDifficulty = 2;
-			changeDiff();
+		if(!hasDiff(curDifficulty)){
+			for(i in 0...3){
+				if(hasDiff(i)){
+					curDifficulty=i;
+					changeDiff();
+					break;
+				}
+			}
 		}
 
 		// selector.y = (70 * curSelected) + 30;
@@ -374,11 +386,6 @@ class FreeplayState extends MusicBeatState
 		}
 	}
 
-	function isOnlyHard():Bool
-	{
-		return songs[curSelected].week == 9 || songs[curSelected].week == 10 || songs[curSelected].songName.toLowerCase() == "expurgation";
-	}
-
 	override function beatHit()
 	{
 		super.beatHit();
@@ -395,6 +402,20 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 	}
+	function hasDiff(diff:Int):Bool
+		return songs[curSelected].diffs.contains(curDifficulty);
+
+	function getDiffs(song:String) : Array<Int> {
+		var diffs:Array<Int> = new Array<Int>();
+
+		var songName = song.toLowerCase();
+
+		for(i in 0...3){
+			if(Assets.exists(Paths.json('$songName/${Highscore.formatSong(song,i)}')))
+				diffs[diffs.length]=i;
+		}
+		return diffs;
+	}
 }
 
 class SongMetadata
@@ -402,11 +423,16 @@ class SongMetadata
 	public var songName:String = "";
 	public var week:Int = 0;
 	public var songCharacter:String = "";
+	public var diffs:Array<Int>;
 
-	public function new(song:String, week:Int, songCharacter:String)
+	public function new(song:String, week:Int, songCharacter:String, ?diffs:Array<Int>)
 	{
 		this.songName = song;
 		this.week = week;
 		this.songCharacter = songCharacter;
+		if(diffs!=null)
+			this.diffs=diffs;
+		else
+			this.diffs=[0,1,2];
 	}
 }

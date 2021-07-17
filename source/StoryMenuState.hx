@@ -350,7 +350,7 @@ class StoryMenuState extends MusicBeatState
 			curDifficulty = 0;
 
 		if (#if !MOD_ONLY curWeek == 10 || curWeek == 11 #else curWeek == 4 || curWeek == 5 #end)
-			curDifficulty = 2;
+			curDifficulty = 1;
 
 		sprDifficulty.offset.x = 0;
 
@@ -395,7 +395,7 @@ class StoryMenuState extends MusicBeatState
 
 		if (#if !MOD_ONLY curWeek == 10 || curWeek == 11 #else curWeek == 4 || curWeek == 5 #end)
 		{
-			curDifficulty = 2;
+			curDifficulty = 1;
 			changeDifficulty();
 		}
 

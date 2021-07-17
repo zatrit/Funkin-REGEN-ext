@@ -31,10 +31,16 @@
                         }
                     ],
                     "defaultAnimation": "idle",
+                    "freeplayAnimation": "idle",
+                    "storyAnimation": "idle",
                     "map": false,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
+                    },
+                    "animationEvents": {
+                        "onBeat": "idle",
+                        "onStep": "idle"
                     }
                 }
             ]
@@ -93,10 +99,16 @@
                             }
                         ],
                         "defaultAnimation": "idle",
+                        "freeplayAnimation": "idle",
+                        "storyAnimation": "idle",
                         "map": false,
                         "scale": {
                             "x": 1.0,
                             "y": 1.0
+                        },
+                        "animationEvents": {
+                            "onBeat": "idle",
+                            "onStep": "idle"
                         }
                     }
                 ]
@@ -133,10 +145,16 @@
                                     }
                                 ],
                                 "defaultAnimation": "idle",
+                                "freeplayAnimation": "idle",
+                                "storyAnimation": "idle",
                                 "map": false,
                                 "scale": {
                                     "x": 1.0,
                                     "y": 1.0
+                                },
+                                "animationEvents": {
+                                    "onBeat": "idle",
+                                    "onStep": "idle"
                                 }
                             }
                         ],
@@ -149,8 +167,11 @@
                             "active",
                             "animations",
                             "defaultAnimation",
+                            "freeplayAnimation",
+                            "storyAnimation",
                             "map",
-                            "scale"
+                            "scale",
+                            "animationEvents"
                         ],
                         "properties": {
                             "library": {
@@ -353,6 +374,24 @@
                                     "idle"
                                 ]
                             },
+                            "freeplayAnimation": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/freeplayAnimation",
+                                "type": "string",
+                                "title": "The freeplayAnimation schema",
+                                "default": "",
+                                "examples": [
+                                    "idle"
+                                ]
+                            },
+                            "storyAnimation": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/storyAnimation",
+                                "type": "string",
+                                "title": "The storyAnimation schema",
+                                "default": "",
+                                "examples": [
+                                    "idle"
+                                ]
+                            },
                             "map": {
                                 "$id": "#/properties/objects/items/anyOf/0/properties/map",
                                 "type": "boolean",
@@ -394,6 +433,43 @@
                                         "default": 0.0,
                                         "examples": [
                                             1.0
+                                        ]
+                                    }
+                                },
+                                "additionalProperties": true
+                            },
+                            "animationEvents": {
+                                "$id": "#/properties/objects/items/anyOf/0/properties/animationEvents",
+                                "type": "object",
+                                "title": "The animationEvents schema",
+                                "default": {},
+                                "examples": [
+                                    {
+                                        "onBeat": "idle",
+                                        "onStep": "idle"
+                                    }
+                                ],
+                                "required": [
+                                    "onBeat",
+                                    "onStep"
+                                ],
+                                "properties": {
+                                    "onBeat": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/animationEvents/properties/onBeat",
+                                        "type": "string",
+                                        "title": "The onBeat schema",
+                                        "default": "",
+                                        "examples": [
+                                            "idle"
+                                        ]
+                                    },
+                                    "onStep": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/animationEvents/properties/onStep",
+                                        "type": "string",
+                                        "title": "The onStep schema",
+                                        "default": "",
+                                        "examples": [
+                                            "idle"
                                         ]
                                     }
                                 },

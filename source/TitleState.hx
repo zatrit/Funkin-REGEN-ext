@@ -1,5 +1,7 @@
 package;
 
+import lime.system.System;
+import sys.FileSystem;
 import options.DefaultOptions;
 import kade.CachedFrames;
 #if (cpp && desktop)
