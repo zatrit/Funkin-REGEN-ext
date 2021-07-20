@@ -107,7 +107,6 @@ class PlayState extends MusicBeatState
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 
-	var halloweenBG:FlxSprite;
 	var isHalloween:Bool = false;
 
 	var phillyCityLights:FlxTypedGroup<FlxSprite>;
@@ -256,9 +255,18 @@ class PlayState extends MusicBeatState
 	var pixelShitPart2:String = '';
 	var pixelShitPart1:String = '';
 
+	var healthLimit:Int = 2;
+
 	override public function create()
 	{
 		Conductor.recalculateTimings();
+
+		minusHealth = false;
+		isGenocide = (SONG.song.toLowerCase() == 'genocide');
+		if(isGenocide){
+			health=2;
+			healthLimit = 3;
+		}
 
 		useAgotiArrows = ['guns', 'a.g.o.t.i', 'parasite', 'screenplay'].contains(SONG.song.toLowerCase());
 		useAgotiArrows = (useAgotiArrows && FlxG.save.data.arrowsStyle == 0) || FlxG.save.data.arrowsStyle == 1;
@@ -388,18 +396,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'spookeez' | 'monster' | 'south':
 				{
-					curStage = 'spooky';
-
-					var hallowTex = Paths.getSparrowAtlas('halloween_bg');
-
-					halloweenBG = new FlxSprite(-200, -100);
-					halloweenBG.frames = hallowTex;
-					halloweenBG.animation.addByPrefix('idle', 'halloweem bg0');
-					halloweenBG.animation.addByPrefix('lightning', 'halloweem bg lightning strike', 24, false);
-					halloweenBG.animation.play('idle');
-					halloweenBG.antialiasing = true;
-					add(halloweenBG);
-
+					loadStageJson("spookeez/stage");
 					isHalloween = true;
 				}
 			case 'pico' | 'blammed' | 'philly':
@@ -922,15 +919,6 @@ class PlayState extends MusicBeatState
 						add(upperBoppers);
 					}
 				}
-			case 'flatzone':
-				curStage = 'gas';
-				var hallowTex = Paths.getSparrowAtlas('gas_bg', 'g3wWeek');
-				halloweenBG = new FlxSprite(-200, -100);
-				halloweenBG.frames = hallowTex;
-				halloweenBG.animation.addByPrefix('idle', 'halloweem bg');
-				halloweenBG.animation.play('idle');
-				halloweenBG.antialiasing = true;
-				add(halloweenBG);
 			case 'improbable-outset' | 'madness':
 				defaultCamZoom = 0.75;
 				curStage = 'nevada';
@@ -1286,7 +1274,7 @@ class PlayState extends MusicBeatState
 				add(siniFireFront);
 
 				// more layering shit
-				var fuckYouFurniture:FlxSprite = new FlxSprite(genocideBG.x, genocideBG.y).loadGraphic(Paths.image('fire/glowyfurniture'));
+				var fuckYouFurniture:FlxSprite = new FlxSprite(genocideBG.x, genocideBG.y).loadGraphic(Paths.image('fire/glowyfurniture','curse'));
 				fuckYouFurniture.antialiasing = true;
 				fuckYouFurniture.scrollFactor.set(0.9, 0.9);
 				add(fuckYouFurniture);
@@ -1419,6 +1407,12 @@ class PlayState extends MusicBeatState
 				dad.y += 130;
 				dad.x -= 100;
 				gf.y -= 250;
+				
+			case 'tabi':
+				dad.x -= 300;
+			case 'tabi-crazy':
+				dad.x -= 300;
+				dad.y += 50;
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -1536,15 +1530,15 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'curse':
-				var sumtable:FlxSprite = new FlxSprite(-600, -300).loadGraphic(Paths.image('tabi/sumtable','curse'));
+				var sumtable:FlxSprite = new FlxSprite(-600, -350).loadGraphic(Paths.image('tabi/sumtable','curse'));
 				sumtable.antialiasing = true;
-				sumtable.scrollFactor.set(0.9, 0.9);
+				sumtable.scrollFactor.set(1.1,1.1);
 				sumtable.active = false;
 				add(sumtable);
 			case 'genocide':
-				var sumsticks:FlxSprite = new FlxSprite(-600, -300).loadGraphic(Paths.image('tabi/mad/overlayingsticks','curse'));
+				var sumsticks:FlxSprite = new FlxSprite(-600, -350).loadGraphic(Paths.image('tabi/mad/overlayingsticks','curse'));
 				sumsticks.antialiasing = true;
-				sumsticks.scrollFactor.set(0.9, 0.9);
+				sumsticks.scrollFactor.set(1.1,1.1);
 				sumsticks.active = false;
 				add(sumsticks);
 		}
@@ -2238,8 +2232,8 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 
-		attempt = 0;
-		firstTry = true;
+		//attempt = 0;
+		//firstTry = true;
 
 		#if desktop
 		// Song duration in a float, useful for the time left feature
@@ -2665,15 +2659,32 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
-		if (health > 2)
+		if(!isGenocide){
+			if (health > 2)
 			health = 2;
+		}
+		else {
+			var p2ToUse:Float = healthBar.x + (healthBar.width * (FlxMath.remapToRange((health / 2 * 100), 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
+			if (iconP2.x - iconP2.width / 2 < healthBar.x && iconP2.x > p2ToUse)
+			{
+				healthBarBG.offset.x = iconP2.x - p2ToUse;
+				healthBar.offset.x = iconP2.x - p2ToUse;
+			} else {
+				healthBarBG.offset.x = 0;
+				healthBar.offset.x = 0;
+			}
+			iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange((health / 2 * 100), 0, 100, 100, 0) * 0.01) - iconOffset);
+			iconP2.x = p2ToUse;
+			if (health > 3)
+				health = 3;
+		}
 
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent > 80)
+		if ((!isGenocide && healthBar.percent > 80) || (isGenocide && (health / 2 * 100) > 100))
 			iconP2.animation.curAnim.curFrame = 1;
 		else
 			iconP2.animation.curAnim.curFrame = 0;
@@ -2832,7 +2843,7 @@ class PlayState extends MusicBeatState
 		}
 
 		// CHEAT = brandon's a pussy
-		if (controls.CHEAT)
+		if (controls.CHEAT #if debug || FlxG.keys.justPressed.TWO #end)
 		{
 			health += 1;
 			trace("User is cheating!");
@@ -3678,6 +3689,13 @@ class PlayState extends MusicBeatState
 					health += 0.004;
 			}
 
+			
+			if (isGenocide)
+			{
+				health += 0.05;
+				camGame.shake(0.008, 0.02, null, true);
+			}
+
 			switch (note.noteData)
 			{
 				case 0:
@@ -3791,7 +3809,7 @@ class PlayState extends MusicBeatState
 	function lightningStrikeShit():Void
 	{
 		FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2));
-		halloweenBG.animation.play('lightning');
+		mappedObjects['halloweenBG'].animation.play('lightning');
 
 		lightningStrikeBeat = curBeat;
 		lightningOffset = FlxG.random.int(8, 24);
@@ -4459,7 +4477,13 @@ class PlayState extends MusicBeatState
 		if (mashing != 0)
 			mashing = 0;
 
-		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition);
+		if (isGenocide)
+		{
+			health += 0.05;
+			camGame.shake(0.008, 0.02, null, true);
+		}
+
+		//var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition);
 
 		if (!resetMashViolation && mashViolations >= 1)
 			mashViolations--;
@@ -4550,10 +4574,10 @@ class PlayState extends MusicBeatState
 				daRating = 'good';
 				score = 200;
 				goods++;
-				if (health < 2 && !grabbed)
+				if (health < healthLimit && !grabbed)
 					health += 0.04;
 			case 'sick':
-				if (health < 2 && !grabbed)
+				if (health < healthLimit && !grabbed)
 					health += 0.1;
 				sicks++;
 		}

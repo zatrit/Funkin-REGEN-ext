@@ -38,6 +38,7 @@ Tordbot:tordbot:13
 Screenplay:agoti:14
 Parasite:agoti:14
 A.G.O.T.I:agoti-crazy:14
+Guns:agoti:14
 My-Battle:tabi:15
 Last-Chance:tabi:15
-Genocide:tabi:15
+Genocide:tabi-crazy:15

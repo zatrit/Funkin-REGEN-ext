@@ -41,7 +41,7 @@ class MenuCharacter extends FlxSprite
 		'trickyMask' => new CharacterSetting(75, 120, 1.6),
 		'tord' => new CharacterSetting(0, 160, false),
 		'agoti' => new CharacterSetting(0, 150),
-		'tabi' => new CharacterSetting(150, 200)
+		'tabi' => new CharacterSetting(0, 125)
 	];
 
 	public function new(x:Float, y:Float, scale:Float, flipped:Bool)

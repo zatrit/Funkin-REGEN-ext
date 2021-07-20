@@ -34,6 +34,8 @@ class GameOverSubstate extends MusicBeatSubstate
 			case 'auditorHell' | 'nevada' | 'nevadaSpook':
 				daBf = 'signDeath';
 				clown = true;
+			case 'genocide':
+				daBf = 'bf-knife';
 			default:
 				daBf = 'bf';
 		}

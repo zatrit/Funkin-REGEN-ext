@@ -5,8 +5,8 @@
    "name": "stage",
    "objects": [
       {
-         "defaultAnimation":"",
-         "active": false,
+         "defaultAnimation":"idle",
+         "active": true,
          "animations": [
             {
                "name": "idle",
@@ -23,11 +23,11 @@
          ],
          "name": "halloweenBG",
          "position": {"x": -200,"y": -100},
-         "scrollFactor": {"x": 0.9,"y": 0.9},
+         "scrollFactor": {"x":1,"y":1},
          "map": true,
          "scale": {
-             "x": 1.1,
-             "y": 1.1
+             "x": 1,
+             "y": 1
          },
          "file":"halloween_bg"
       }

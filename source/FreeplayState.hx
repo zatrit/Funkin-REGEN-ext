@@ -411,7 +411,7 @@ class FreeplayState extends MusicBeatState
 		var songName = song.toLowerCase();
 
 		for(i in 0...3){
-			if(Assets.exists(Paths.json('$songName/${Highscore.formatSong(song,i)}')))
+			if(Assets.exists(Paths.json('$songName/${Highscore.formatSong(songName,i)}')))
 				diffs[diffs.length]=i;
 		}
 		return diffs;

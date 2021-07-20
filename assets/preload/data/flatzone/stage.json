@@ -1,0 +1,21 @@
+{
+   "$schema": "https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/schemas/stage.json",
+   "camZoom": 1.05,
+   "library": "g3wWeek",
+   "name": "gas",
+   "objects": [
+      {
+         "active": false,
+         "animations": [],
+         "name": "bg",
+         "position": {"x": -200,"y": -100},
+         "scrollFactor": {"x":1,"y":1},
+         "map": false,
+         "scale": {
+             "x": 1,
+             "y": 1
+         },
+         "file":"gas_bg"
+      }
+   ]
+}
