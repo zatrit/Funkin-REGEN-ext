@@ -33,7 +33,6 @@ class MenuBGSelectorSubState extends OptionsSubState
 
 		MainMenuState.bgStyle = bgStyle;
 		FlxG.save.data.bgStyle = bgStyle;
-		FlxG.save.flush();
 	}
 
 	override function changeSelection(change:Int = 0)

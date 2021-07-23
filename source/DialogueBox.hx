@@ -394,6 +394,9 @@ class DialogueBox extends FlxSpriteGroup
 			default:
 				swagDialogue.color = 0xFF000000;
 				dropText.color = FlxColor.BLACK;
+			case 'wocky' | 'beathoven' | 'nyaw' | 'hairball':
+				swagDialogue.color = 0xFFFFFFFF;
+				dropText.color = FlxColor.BLACK;
 		}
 
 		dropText.text = swagDialogue.text;

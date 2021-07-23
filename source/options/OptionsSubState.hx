@@ -31,6 +31,8 @@ class OptionsSubState extends MusicBeatSubstate
 
 	public var parent:OptionsState;
 
+	final BOLD:Bool = true;
+
 	public function new(parent:OptionsState, items:Array<String>, itemHighlightOnMobile:Bool = false, enableScrolling = false)
 	{
 		super();
@@ -173,7 +175,7 @@ class OptionsSubState extends MusicBeatSubstate
 
 		textMenuItems[num] = text + (newVal ? on : off);
 
-		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], true, false);
+		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], BOLD, false);
 		alphabet.ID = num;
 		alphabet.isMenuItem = true;
 
@@ -187,7 +189,7 @@ class OptionsSubState extends MusicBeatSubstate
 		return newVal;
 	}
 
-	function toggleIntOption(num:Int = 0, text:String = "", oldVal:Int = 0, values:Array<String>):Int
+	function toggleArrayOption(num:Int = 0, text:String = "", oldVal:Int = 0, values:Array<String>):Int
 	{
 		var oldAlphabet = grpOptions.members[num];
 
@@ -197,7 +199,7 @@ class OptionsSubState extends MusicBeatSubstate
 
 		textMenuItems[num] = text + values[newVal];
 
-		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], true, false);
+		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], BOLD, false);
 		alphabet.ID = num;
 		alphabet.isMenuItem = true;
 
@@ -211,8 +213,41 @@ class OptionsSubState extends MusicBeatSubstate
 		return newVal;
 	}
 
+	function toggleFloatOption(num:Int = 0, text:String = "", oldVal:Float = 0, min:Float=0, max:Float=1, step:Float=0.25):Float
+	{
+		var oldAlphabet = grpOptions.members[num];
+	
+		var newVal = oldVal + step;
+
+		if (newVal > max)
+			newVal = min;
+		if (newVal < min)
+			newVal = max;
+	
+		textMenuItems[num] = text + newVal;
+	
+		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], BOLD, false);
+		alphabet.ID = num;
+		alphabet.isMenuItem = true;
+	
+		alphabet.x = oldAlphabet.x;
+		alphabet.y = oldAlphabet.y;
+		alphabet.targetY = oldAlphabet.targetY;
+	
+		grpOptions.replace(oldAlphabet, alphabet);
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+	
+		return newVal;
+	}
+
 	function onSelect(value:String = "", number:Int = 0)
 	{
+	}
+
+	override function close() {
+		FlxG.save.flush();
+
+		super.close();
 	}
 
 	override function onBack()
@@ -228,7 +263,7 @@ class OptionsSubState extends MusicBeatSubstate
 
 		for (i in 0...textMenuItems.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, (105 * i) + 30, textMenuItems[i], true, false);
+			var optionText:Alphabet = new Alphabet(0, (105 * i) + 30, textMenuItems[i], BOLD, false);
 			optionText.ID = i;
 			optionText.isMenuItem = true;
 			#if mobile

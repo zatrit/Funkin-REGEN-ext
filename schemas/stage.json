@@ -8,6 +8,8 @@
         {
             "name": "stage",
             "camZoom": 0.9,
+            "gfVersion": "gf",
+            "arrowsStyle": 0,
             "objects": [
                 {
                     "library": "shared",
@@ -31,8 +33,6 @@
                         }
                     ],
                     "defaultAnimation": "idle",
-                    "freeplayAnimation": "idle",
-                    "storyAnimation": "idle",
                     "map": false,
                     "scale": {
                         "x": 1.0,
@@ -40,7 +40,9 @@
                     },
                     "animationEvents": {
                         "onBeat": "idle",
-                        "onStep": "idle"
+                        "onStep": "idle",
+                        "freeplay": "idle",
+                        "story": "idle"
                     }
                 }
             ]
@@ -49,6 +51,8 @@
     "required": [
         "name",
         "camZoom",
+        "gfVersion",
+        "arrowsStyle",
         "objects"
     ],
     "properties": {
@@ -68,6 +72,24 @@
             "default": 0.0,
             "examples": [
                 0.9
+            ]
+        },
+        "gfVersion": {
+            "$id": "#/properties/gfVersion",
+            "type": "string",
+            "title": "The gfVersion schema",
+            "default": "",
+            "examples": [
+                "gf"
+            ]
+        },
+        "arrowsStyle": {
+            "$id": "#/properties/arrowsStyle",
+            "type": "integer",
+            "title": "The arrowsStyle schema",
+            "default": 0,
+            "examples": [
+                0
             ]
         },
         "objects": {
@@ -99,8 +121,6 @@
                             }
                         ],
                         "defaultAnimation": "idle",
-                        "freeplayAnimation": "idle",
-                        "storyAnimation": "idle",
                         "map": false,
                         "scale": {
                             "x": 1.0,
@@ -108,7 +128,9 @@
                         },
                         "animationEvents": {
                             "onBeat": "idle",
-                            "onStep": "idle"
+                            "onStep": "idle",
+                            "freeplay": "idle",
+                            "story": "idle"
                         }
                     }
                 ]
@@ -145,8 +167,6 @@
                                     }
                                 ],
                                 "defaultAnimation": "idle",
-                                "freeplayAnimation": "idle",
-                                "storyAnimation": "idle",
                                 "map": false,
                                 "scale": {
                                     "x": 1.0,
@@ -154,7 +174,9 @@
                                 },
                                 "animationEvents": {
                                     "onBeat": "idle",
-                                    "onStep": "idle"
+                                    "onStep": "idle",
+                                    "freeplay": "idle",
+                                    "story": "idle"
                                 }
                             }
                         ],
@@ -167,8 +189,6 @@
                             "active",
                             "animations",
                             "defaultAnimation",
-                            "freeplayAnimation",
-                            "storyAnimation",
                             "map",
                             "scale",
                             "animationEvents"
@@ -374,24 +394,6 @@
                                     "idle"
                                 ]
                             },
-                            "freeplayAnimation": {
-                                "$id": "#/properties/objects/items/anyOf/0/properties/freeplayAnimation",
-                                "type": "string",
-                                "title": "The freeplayAnimation schema",
-                                "default": "",
-                                "examples": [
-                                    "idle"
-                                ]
-                            },
-                            "storyAnimation": {
-                                "$id": "#/properties/objects/items/anyOf/0/properties/storyAnimation",
-                                "type": "string",
-                                "title": "The storyAnimation schema",
-                                "default": "",
-                                "examples": [
-                                    "idle"
-                                ]
-                            },
                             "map": {
                                 "$id": "#/properties/objects/items/anyOf/0/properties/map",
                                 "type": "boolean",
@@ -446,12 +448,16 @@
                                 "examples": [
                                     {
                                         "onBeat": "idle",
-                                        "onStep": "idle"
+                                        "onStep": "idle",
+                                        "freeplay": "idle",
+                                        "story": "idle"
                                     }
                                 ],
                                 "required": [
                                     "onBeat",
-                                    "onStep"
+                                    "onStep",
+                                    "freeplay",
+                                    "story"
                                 ],
                                 "properties": {
                                     "onBeat": {
@@ -467,6 +473,24 @@
                                         "$id": "#/properties/objects/items/anyOf/0/properties/animationEvents/properties/onStep",
                                         "type": "string",
                                         "title": "The onStep schema",
+                                        "default": "",
+                                        "examples": [
+                                            "idle"
+                                        ]
+                                    },
+                                    "freeplay": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/animationEvents/properties/freeplay",
+                                        "type": "string",
+                                        "title": "The freeplay schema",
+                                        "default": "",
+                                        "examples": [
+                                            "idle"
+                                        ]
+                                    },
+                                    "story": {
+                                        "$id": "#/properties/objects/items/anyOf/0/properties/animationEvents/properties/story",
+                                        "type": "string",
+                                        "title": "The story schema",
                                         "default": "",
                                         "examples": [
                                             "idle"

@@ -39,7 +39,6 @@ class GameplayOptionsSubstate extends OptionsSubState
 					var newInput:Bool = FlxG.save.data.newInput;
 
 					FlxG.save.data.newInput = toggleBoolOption(NEW_INPUT_NUMBER, "", newInput, "new input", "old input");
-					FlxG.save.flush();
 				}
 
 			case 'ghost tap: off' | 'ghost tap: on':
@@ -47,14 +46,12 @@ class GameplayOptionsSubstate extends OptionsSubState
 					var ghost:Bool = FlxG.save.data.ghost;
 
 					FlxG.save.data.ghost = toggleBoolOption(GHOST_NUMBER, "ghost tap: ", ghost);
-					FlxG.save.flush();
 				}
 			case 'skip cutscenes: off' | 'skip cutscenes: on':
 				{
 					var skipCutscenes:Bool = FlxG.save.data.skipCutscenes;
 
 					FlxG.save.data.skipCutscenes = toggleBoolOption(SKIP_CUTSCENES_NUMBER, "skip cutscenes: ", skipCutscenes);
-					FlxG.save.flush();
 				}
 				// case 'safeFrames:':
 				//	{

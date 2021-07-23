@@ -1,6 +1,6 @@
 {
    "$schema": "https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/schemas/stage.json",
-   "camZoom": "0.9",
+   "camZoom": 0.9,
    "library": "shared",
    "name": "stage",
    "objects": [

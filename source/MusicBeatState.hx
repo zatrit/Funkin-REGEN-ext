@@ -26,11 +26,25 @@ class MusicBeatState extends FlxUIState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
+	public var brightShader(get, never):ShaderFilter;
+	
+	inline function get_brightShader():ShaderFilter
+		return ShadersHandler.brightShader;
+		
+	public function setBrightness(brightness:Float):Void
+		ShadersHandler.setBrightness(brightness);
+		
+	public function setContrast(contrast:Float):Void
+		ShadersHandler.setContrast(contrast);
+
 	override function create()
 	{
 		#if cpp
 		Gc.run(false);
 		#end
+
+		FlxG.watch.addQuick("curBeat",curBeat);
+		FlxG.watch.addQuick("bpm",Conductor.bpm);
 
 		super.create();
 	}

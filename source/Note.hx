@@ -30,6 +30,13 @@ class Note extends FlxSprite
 
 	public var rating:String = "shit";
 
+	public static final ARROWS_STYLES:Array<String> = [
+		'arrowsStyle/NOTE_assets',
+		'arrowsStyle/NOTE_assets-kapi',
+		'arrowsStyle/NOTE_assets-agoti',
+		'arrowsStyle/NOTE_assets-genocide'
+	];
+
 	public function new(strumTime:Float, _noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
 	{
 		super();
@@ -85,14 +92,9 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				if (['arcade', 'arcadeclosed'].contains(daStage) || FlxG.save.data.arrowsStyle == 2)
-					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-kapi', 'shared');
-				else if (['void', 'pillars'].contains(daStage) || FlxG.save.data.arrowsStyle == 1)
-					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-agoti', 'shared');
-				else if (daStage=="genocide")
-					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets-genocide', 'shared');
-				else
-					frames = Paths.getSparrowAtlas('arrowsStyle/NOTE_assets', 'shared');
+				var arrowsStyle:Int = PlayState.staticVar.arrowsStyle;
+                         
+				frames = Paths.getSparrowAtlas(ARROWS_STYLES[arrowsStyle], 'shared');
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');

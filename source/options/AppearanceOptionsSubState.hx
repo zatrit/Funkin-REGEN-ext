@@ -11,7 +11,7 @@ class AppearanceOptionsSubState extends OptionsSubState
 	final KADE_RATING_NUMBER = 6;
 
 	final BOT_ARROWS_ANIM_VALUES:Array<String> = ['advanced', 'optimized', 'none'];
-	final ARROWS_STYLES_VALUES:Array<String> = ['default', 'agoti', 'kapi'];
+	final ARROWS_STYLES_VALUES:Array<String> = ['default', 'agoti', 'kapi','genocide'];
 
 	public function new(parent:OptionsState)
 	{
@@ -47,35 +47,30 @@ class AppearanceOptionsSubState extends OptionsSubState
 					var downscroll:Bool = FlxG.save.data.downscroll;
 
 					FlxG.save.data.downscroll = toggleBoolOption(DOWNSCROLL_NUMBER, "", downscroll, 'downscroll', 'upscroll');
-					FlxG.save.flush();
 				}
 			case "arrows anim: advanced" | "arrows anim: none" | "arrows anim: optimized":
 				{
 					var botArrowsAnim:Int = FlxG.save.data.botArrowsAnim;
 
-					FlxG.save.data.botArrowsAnim = toggleIntOption(BOT_ARROWS_ANIM_NUMBER, "arrows anim: ", botArrowsAnim, BOT_ARROWS_ANIM_VALUES);
-					FlxG.save.flush();
+					FlxG.save.data.botArrowsAnim = toggleArrayOption(BOT_ARROWS_ANIM_NUMBER, "arrows anim: ", botArrowsAnim, BOT_ARROWS_ANIM_VALUES);
 				}
-			case "arrows style: default" | "arrows style: agoti" | "arrows style: kapi":
+			case "arrows style: default" | "arrows style: agoti" | "arrows style: kapi" | "arrows style: genocide":
 				{
 					var arrowsStyle:Int = FlxG.save.data.arrowsStyle;
 
-					FlxG.save.data.arrowsStyle = toggleIntOption(ARROWS_STYLE_NUMBER, "arrows style: ", arrowsStyle, ARROWS_STYLES_VALUES);
-					FlxG.save.flush();
+					FlxG.save.data.arrowsStyle = toggleArrayOption(ARROWS_STYLE_NUMBER, "arrows style: ", arrowsStyle, ARROWS_STYLES_VALUES);
 				}
 			case 'animated events: on' | 'animated events: off':
 				{
 					var animEvents:Bool = FlxG.save.data.animEvents;
 
 					FlxG.save.data.animEvents = toggleBoolOption(ANIM_EVENTS_NUMBER, "animated events: ", animEvents);
-					FlxG.save.flush();
 				}
 			case 'kade ratings: on' | 'kade ratings: off':
 				{
 					var useKadeRatings:Bool = FlxG.save.data.useKadeRatings;
 
 					FlxG.save.data.useKadeRatings = toggleBoolOption(KADE_RATING_NUMBER, "kade ratings: ", useKadeRatings);
-					FlxG.save.flush();
 				}
 		}
 	}

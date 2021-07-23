@@ -64,8 +64,6 @@ class MobileControlsSubState extends OptionsSubState
 	override function close()
 	{
 		FlxG.save.data.mobileControlsType = curSelected;
-		FlxG.save.flush();
-
 		super.close();
 	}
 	/*
