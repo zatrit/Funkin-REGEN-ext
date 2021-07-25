@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/schemas/stage.json",
+    "camZoom": 0.8,
+    "library": "curse",
+    "name": "genocide",
+    "gfVersion": "gf-tabi-crazy",
+    "arrowsStyle": 3,
+    "objects": []
+ }

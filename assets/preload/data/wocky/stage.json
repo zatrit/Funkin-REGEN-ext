@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/schemas/stage.json",
+    "camZoom": 0.9,
+    "library": "kapiWeek",
+    "name": "arcade",
+    "gfVersion": "gf-arcade",
+    "arrowsStyle": 1,
+    "objects": []
+ }

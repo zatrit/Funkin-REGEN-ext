@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/schemas/stage.json",
+    "camZoom": 0.55,
+    "library": "agoti",
+    "name": "pillars",
+    "gfVersion": "gf-rocks-scared",
+    "arrowsStyle": 2,
+    "objects": []
+ }
