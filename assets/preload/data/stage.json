@@ -3,6 +3,7 @@
    "camZoom": 0.9,
    "library": "shared",
    "name": "stage",
+   "gfVersion": "gf",
    "objects": [
       {
          "defaultAnimation":"",

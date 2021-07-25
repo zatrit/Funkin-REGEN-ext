@@ -11,7 +11,7 @@ class AppearanceOptionsSubState extends OptionsSubState
 	final KADE_RATING_NUMBER = 6;
 
 	final BOT_ARROWS_ANIM_VALUES:Array<String> = ['advanced', 'optimized', 'none'];
-	final ARROWS_STYLES_VALUES:Array<String> = ['default', 'agoti', 'kapi','genocide'];
+	final ARROWS_STYLES_VALUES:Array<String> = ['default', 'kapi', 'agoti', 'genocide'];
 
 	public function new(parent:OptionsState)
 	{

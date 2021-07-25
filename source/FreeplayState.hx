@@ -60,10 +60,16 @@ class FreeplayState extends MusicBeatState
 		{
 			var splitted:Array<String> = initSonglist[i].split(':');
 
-			if(splitted.length<4)
-				addSong(splitted[0],Std.parseInt(splitted[2]),splitted[1]);
-			else if(Highscore.getWeekScore(Std.parseInt(splitted[3]),2)>0||isDebug)
-				addSong(splitted[0],Std.parseInt(splitted[2]),splitted[1]);
+			var hardOnly = false;
+
+			if(splitted.length>3)
+				hardOnly = Std.parseInt(splitted[3]) == 1;
+
+			if(splitted.length<5)
+				addSong(splitted[0],Std.parseInt(splitted[2]),splitted[1], hardOnly);
+			
+			else if(Highscore.getWeekScore(Std.parseInt(splitted[4]),2)>0||isDebug)
+				addSong(splitted[0],Std.parseInt(splitted[2]),splitted[1], hardOnly);
 		}
 
 		filters = [chromaticAberration];
@@ -203,11 +209,11 @@ class FreeplayState extends MusicBeatState
 		super.create();
 	}
 
-	public function addSong(songName:String, weekNum:Int, songCharacter:String)
+	public function addSong(songName:String, weekNum:Int, songCharacter:String, hardOnly:Bool)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter,getDiffs(songName)));
+		songs.push(new SongMetadata(songName, weekNum, songCharacter,hardOnly));
 	}
-
+/*
 	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
 	{
 		if (songCharacters == null)
@@ -222,6 +228,7 @@ class FreeplayState extends MusicBeatState
 				num++;
 		}
 	}
+*/
 
 	override function update(elapsed:Float)
 	{
@@ -301,7 +308,7 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
-		if(!hasDiff(curDifficulty))
+		if(songs[curSelected].isHardOnly)
 			curDifficulty=oldDiff;
 
 		#if !switch
@@ -331,14 +338,9 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		if(!hasDiff(curDifficulty)){
-			for(i in 0...3){
-				if(hasDiff(i)){
-					curDifficulty=i;
-					changeDiff();
-					break;
-				}
-			}
+		if(songs[curSelected].isHardOnly){
+			curDifficulty = 2;
+			changeDiff();
 		}
 
 		// selector.y = (70 * curSelected) + 30;
@@ -356,8 +358,10 @@ class FreeplayState extends MusicBeatState
 
 		timer.start(1, (timer) ->
 		{
+			var song = songs[curSelected];
+
 			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
-			Conductor.changeBPM(Song.loadFromJson(songs[curSelected].songName.toLowerCase(), songs[curSelected].songName.toLowerCase()).bpm);
+			Conductor.changeBPM(Song.loadFromJson(song.songName.toLowerCase()+(song.isHardOnly ? "-hard" : ""), song.songName.toLowerCase()).bpm);
 		});
 		#end
 
@@ -402,20 +406,6 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 	}
-	function hasDiff(diff:Int):Bool
-		return songs[curSelected].diffs.contains(curDifficulty);
-
-	function getDiffs(song:String) : Array<Int> {
-		var diffs:Array<Int> = new Array<Int>();
-
-		var songName = song.toLowerCase();
-
-		for(i in 0...3){
-			if(Assets.exists(Paths.json('$songName/${Highscore.formatSong(songName,i)}')))
-				diffs[diffs.length]=i;
-		}
-		return diffs;
-	}
 }
 
 class SongMetadata
@@ -423,16 +413,14 @@ class SongMetadata
 	public var songName:String = "";
 	public var week:Int = 0;
 	public var songCharacter:String = "";
-	public var diffs:Array<Int>;
+	public var isHardOnly:Bool;
 
-	public function new(song:String, week:Int, songCharacter:String, ?diffs:Array<Int>)
+	public function new(song:String, week:Int, songCharacter:String, hardOnly = false)
 	{
 		this.songName = song;
 		this.week = week;
 		this.songCharacter = songCharacter;
-		if(diffs!=null)
-			this.diffs=diffs;
-		else
-			this.diffs=[0,1,2];
+
+		this.isHardOnly = hardOnly;
 	}
 }

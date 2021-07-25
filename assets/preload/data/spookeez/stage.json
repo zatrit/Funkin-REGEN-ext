@@ -3,6 +3,7 @@
    "camZoom": 1.05,
    "library": "week2",
    "name": "stage",
+   "gfVersion":"gf",
    "objects": [
       {
          "defaultAnimation":"idle",
