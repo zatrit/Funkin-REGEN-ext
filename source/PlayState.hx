@@ -1,5 +1,6 @@
 package;
 
+import playstate.PlayStateCutscenes;
 import tabi.ShadersHandler;
 import haxe.ds.Map;
 import haxe.Json;
@@ -50,7 +51,8 @@ import mobile.MobileControls;
 
 using StringTools;
 
-class PlayState extends MusicBeatState
+@:ripper.spirits(playstate.PlayStateCutscenes)
+class PlayState extends MusicBeatState implements ripper.Body
 {
 	public var useDownscroll = FlxG.save.data.downscroll;
 
@@ -93,17 +95,18 @@ class PlayState extends MusicBeatState
 	private var mashing:Int = 0;
 	private var totalNotesHit:Float = 0;
 
-	private var healthBarBG:FlxSprite;
-	private var healthBar:FlxBar;
+	public var healthBarBG:FlxSprite;
+	public var healthBar:FlxBar;
 
 	public var generatedMusic:Bool = false;
 
 	private var startingSong:Bool = false;
 
-	private var iconP1:HealthIcon;
-	private var iconP2:HealthIcon;
-	private var camHUD:FlxCamera;
-	private var camGame:FlxCamera;
+	public var iconP1:HealthIcon;
+	public var iconP2:HealthIcon;
+
+	public var camHUD:FlxCamera;
+	public var camGame:FlxCamera;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 
@@ -127,7 +130,7 @@ class PlayState extends MusicBeatState
 
 	var talking:Bool = true;
 	var songScore:Int = 0;
-	var scoreTxt:FlxText;
+	public var scoreTxt:FlxText;
 
 	public static var campaignScore:Int = 0;
 
@@ -136,7 +139,7 @@ class PlayState extends MusicBeatState
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
 
-	var inCutscene:Bool = false;
+	public var inCutscene:Bool = false;
 
 	public static var goods:Int = 0;
 	public static var bads:Int = 0;
@@ -255,8 +258,9 @@ class PlayState extends MusicBeatState
 	var filterList:Array<BitmapFilter> = [];
 	var filterMap:Map<String, {filter:BitmapFilter, ?onUpdate:Void->Void}>;
 
-	private var vignetteCamera:FlxCamera;
-	private var camIllusion:FlxCamera;
+	public var vignetteCamera:FlxCamera;
+	public var camIllusion:FlxCamera;
+
 	// end tabi
 	var pixelShitPart2:String = '';
 	var pixelShitPart1:String = '';
@@ -290,26 +294,34 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.stop();
 
 		// var gameCam:FlxCamera = FlxG.camera;
-		
+
 		camIllusion = new FlxCamera();
 		camIllusion.bgColor.alpha = 0;
 
 		camGame = new FlxCamera();
 
+		if(isGenocide){
 		vignetteCamera = new FlxCamera();
 		vignetteCamera.bgColor.alpha = 0;
+		}
 
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
+		if(isGenocide)
 		FlxG.cameras.add(vignetteCamera);
 		FlxG.cameras.add(camIllusion);
 
 		FlxCamera.defaultCameras = [camGame];
 
-		//IT DOESNT END HERE FUCK
+		// IT DOESNT END HERE FUCK		
+		// ChromaHandler.chromaticAberration = new ShaderFilter(new ChromaticAberration());
+		filters.push(ShadersHandler.chromaticAberration);
+		// BrightHandler.brightShader = new ShaderFilter(new Bright());
+		// filters.push(ShadersHandler.brightShader);
+
 		camGame.setFilters(filters);
 		camHUD.setFilters(filters);
 		camGame.filtersEnabled = true;
@@ -1764,60 +1776,57 @@ class PlayState extends MusicBeatState
 									FlxG.sound.music.fadeOut(2.2, 0);
 									remove(introText);
 									camHUD.visible = true;
-									garIntro(doof);
+									this.garIntro(doof);
 								}
 							});
 						});
 					});
 				case 'nerves' | "release" | "fading":
-					garIntro(doof);
+					this.garIntro(doof);
 
 				case 'lo-fight' | 'overhead' | 'ballistic' | 'ballistic-old':
-					whittyAnimation(doof);
+					this.whittyAnimation(doof);
 
 				case 'wocky' | 'beathoven' | 'nyaw':
-					kapiIntro(doof);
+					this.kapiIntro(doof);
 				case 'hairball':
 					var blackScreen:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 					add(blackScreen);
 					blackScreen.scrollFactor.set();
 					camHUD.visible = false;
 
-					if (!FlxG.save.data.skipCutscenes)
-						new FlxTimer().start(0.1, function(tmr:FlxTimer)
+					new FlxTimer().start(0.1, function(tmr:FlxTimer)
+					{
+						remove(blackScreen);
+						FlxG.sound.play(Paths.sound('brokenpad', 'kapiWeek'));
+						camFollow.y = 590;
+						camFollow.x -= 200;
+						FlxG.camera.focusOn(camFollow.getPosition());
+						FlxG.camera.zoom = 1.1;
+						new FlxTimer().start(0.2, function(tmr:FlxTimer)
 						{
+							dad.playAnim('meow', true);
+						});
+						new FlxTimer().start(0.6, function(tmr:FlxTimer)
+						{
+							camHUD.visible = true;
 							remove(blackScreen);
-							FlxG.sound.play(Paths.sound('brokenpad', 'kapiWeek'));
-							camFollow.y = 590;
-							camFollow.x -= 200;
-							FlxG.camera.focusOn(camFollow.getPosition());
-							FlxG.camera.zoom = 1.1;
-							new FlxTimer().start(0.2, function(tmr:FlxTimer)
-							{
-								dad.playAnim('meow', true);
-							});
-							new FlxTimer().start(0.6, function(tmr:FlxTimer)
-							{
-								camHUD.visible = true;
-								remove(blackScreen);
-								FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
-									ease: FlxEase.quadInOut,
-									onComplete: function(twn:FlxTween)
-									{
-										kapiIntro(doof);
-									}
-								});
+							FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
+								ease: FlxEase.quadInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									this.kapiIntro(doof);
+								}
 							});
 						});
-					else
-						kapiIntro(doof);
+					});
 				case 'improbable-outset':
 					camFollow.setPosition(boyfriend.getMidpoint().x + 70, boyfriend.getMidpoint().y - 50);
-					trickyCutscene();
+					this.trickyCutscene();
 				case 'screenplay' | 'parasite' | 'a.g.o.t.i':
-					agotiIntroDialogue(doof);
+					this.agotiIntroDialogue(doof);
 				default:
-					startCountdown();
+					this.startCountdown();
 			}
 		}
 		else
@@ -2018,85 +2027,10 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function garIntro(?dialogueBox:DialogueBox):Void
-	{
-		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-		black.scrollFactor.set();
-		add(black);
-
-		var red:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-		red.scrollFactor.set();
-
-		var sexycutscene:FlxSprite = new FlxSprite();
-		sexycutscene.antialiasing = true;
-		sexycutscene.frames = Paths.getSparrowAtlas('GAR_CUTSCENE', 'weekG');
-		sexycutscene.animation.addByPrefix('video', 'garcutscene', 15, false);
-		sexycutscene.setGraphicSize(Std.int(sexycutscene.width * 2));
-		sexycutscene.scrollFactor.set();
-		sexycutscene.updateHitbox();
-		sexycutscene.screenCenter();
-
-		if (SONG.song.toLowerCase() == 'nerves' || SONG.song.toLowerCase() == 'release')
-		{
-			remove(black);
-
-			if (SONG.song.toLowerCase() == 'release')
-			{
-				add(red);
-			}
-		}
-
-		new FlxTimer().start(0.1, function(tmr:FlxTimer)
-		{
-			black.alpha -= 0.15;
-
-			if (black.alpha > 0)
-			{
-				tmr.reset(0.1);
-			}
-			else
-			{
-				if (dialogueBox != null)
-				{
-					inCutscene = true;
-
-					if (SONG.song.toLowerCase() == 'release')
-					{
-						camHUD.visible = false;
-						add(red);
-						add(sexycutscene);
-						sexycutscene.animation.play('video');
-
-						FlxG.sound.play(Paths.sound('Garcello_Dies', 'weekG'), 1, false, null, true, function()
-						{
-							remove(red);
-							remove(sexycutscene);
-							FlxG.sound.play(Paths.sound('Wind_Fadeout', 'weekG'));
-
-							FlxG.camera.fade(FlxColor.WHITE, 5, true, function()
-							{
-								add(dialogueBox);
-								camHUD.visible = true;
-							}, true);
-						});
-					}
-					else
-					{
-						add(dialogueBox);
-					}
-				}
-				else
-					startCountdown();
-
-				remove(black);
-			}
-		});
-	}
-
 	var startTimer:FlxTimer;
 	var perfectMode:Bool = false;
 
-	function startCountdown():Void
+	public function startCountdown():Void
 	{
 		healthBar.visible = true;
 		healthBarBG.visible = true;
@@ -2631,10 +2565,7 @@ class PlayState extends MusicBeatState
 				}
 			// phillyCityLights.members[curLight].alpha -= (Conductor.crochet / 1000) * FlxG.elapsed;
 			case 'void':
-				new FlxTimer().start(0.2, function(tmr:FlxTimer)
-				{
-					bgRocks.y = -700 + Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) * 2.0) * 3.0;
-				});
+				bgRocks.y = -700 + Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) * 2.0) * 3.0;
 
 				gf.y = -120 + Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) * 2.0) * 5.0;
 			case 'pillars':
@@ -2648,13 +2579,13 @@ class PlayState extends MusicBeatState
 					strumLineNotes.members[i].y += Math.cos((Conductor.songPosition / 1000) * (Conductor.bpm / 60) + strumLineNotes.members[i].ID * 2) / 2;
 				}
 			case 'genocide':
-			if (storyDifficulty > 0 && minusHealth)
-			{
-				if (health > 0)
+				if (storyDifficulty > 0 && minusHealth)
 				{
-					health -= 0.001;
+					if (health > 0)
+					{
+						health -= 0.001;
+					}
 				}
-			}
 		}
 
 		super.update(elapsed);
@@ -2840,8 +2771,8 @@ class PlayState extends MusicBeatState
 			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
 		}
 
-		FlxG.watch.addQuick("beatShit", curBeat);
-		FlxG.watch.addQuick("stepShit", curStep);
+		//FlxG.watch.addQuick("beatShit", curBeat);
+		//FlxG.watch.addQuick("stepShit", curStep);
 
 		if (curSong == 'Fresh')
 		{
@@ -3068,14 +2999,16 @@ class PlayState extends MusicBeatState
 					if (crazyMode)
 					{
 						camGame.shake(0.03, 0.02, null, true);
-						
+
 						if (health > 0 && justDoItMakeYourDreamsComeTrue && FlxG.save.data.newInput)
 						{
 							if (daNote.isSustainNote)
 							{
 								health -= 0.0005;
-							} else {
-								//health -= 0.04;
+							}
+							else
+							{
+								// health -= 0.04;
 								health -= 0.03;
 							}
 						}
@@ -3955,11 +3888,6 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-		// ChromaHandler.chromaticAberration = new ShaderFilter(new ChromaticAberration());
-		filters.push(ShadersHandler.chromaticAberration);
-		// BrightHandler.brightShader = new ShaderFilter(new Bright());
-		//filters.push(ShadersHandler.brightShader);
-
 		if (generatedMusic)
 			notes.sort(FlxSort.byY, (useDownscroll ? FlxSort.ASCENDING : FlxSort.DESCENDING));
 
@@ -4712,7 +4640,7 @@ class PlayState extends MusicBeatState
 			rating.velocity.y -= FlxG.random.int(140, 175);
 			rating.velocity.x -= FlxG.random.int(0, 10);
 
-			var msTiming = HelperFunctions.truncateFloat(noteDiff, 3);
+			//var msTiming = HelperFunctions.truncateFloat(noteDiff, 3);
 
 			var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 			comboSpr.screenCenter();
@@ -4800,7 +4728,7 @@ class PlayState extends MusicBeatState
 				trace(seperatedScore);
 			 */
 
-			coolText.text = Std.string(seperatedScore);
+			//coolText.text = Std.string(seperatedScore);
 			// add(coolText);
 
 			FlxTween.tween(rating, {alpha: 0}, 0.2, {
@@ -6046,43 +5974,6 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function agotiIntroDialogue(?dialogueBox:DialogueBox):Void
-	{
-		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-		black.setGraphicSize(Std.int(black.width * 5));
-		black.scrollFactor.set();
-		add(black);
-
-		healthBarBG.visible = false;
-		healthBar.visible = false;
-		iconP1.visible = false;
-		iconP2.visible = false;
-		scoreTxt.visible = false;
-
-		new FlxTimer().start(0.3, function(tmr:FlxTimer)
-		{
-			black.alpha -= 0.15;
-
-			if (black.alpha > 0)
-			{
-				tmr.reset(0.3);
-			}
-			else
-			{
-				if (dialogueBox != null)
-				{
-					inCutscene = true;
-
-					add(dialogueBox);
-				}
-				else
-					startCountdown();
-
-				remove(black);
-			}
-		});
-	}
-
 	private function altCommand(?command:Int = 0):Void
 	{
 		if (command < 0)
@@ -6124,14 +6015,15 @@ class PlayState extends MusicBeatState
 
 	public function chromaticDance(tabiTurn:Bool):Void
 	{
-		if (isGenocide&&false)
+		if (isGenocide && false)
 		{
-			if (chromeTimer != null)
+			/*if (chromeTimer != null)
 			{
 				chromeTimer.cancel();
 				chromeTimer.destroy();
-			}
-			chromeTimer = new FlxTimer().start(2, resetChromeShit2, 1);
+			}*/
+			//chromeTimer = new FlxTimer().start(2, resetChromeShit2, 1);
+			chromeTimer.reset(2);
 			var chromeOffset:Float = (healthLimit - (health / healthLimit));
 			chromeOffset /= 1000;
 			if (tabiTurn)

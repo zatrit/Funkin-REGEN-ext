@@ -387,81 +387,92 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er', 'zatrit']);
+				createCoolText(['Original game by']);
 			// credTextShit.visible = true;
+			case 2:
+				addMoreText('ninjamuffin99');
+				addMoreText('phantomArcade');
+				addMoreText('kawaisprite');
+				addMoreText('evilsk8er');
 			case 3:
-				addMoreText('present');
+				deleteCoolText();
+			case 4:
+				createCoolText(['Modpack by']);
+			case 5:
+				addMoreText('Zatrit');
+
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
-			case 4:
+			case 6:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
-			case 5:
+			case 7:
 				createCoolText(['Thanks', 'to']);
-			case 6:
+			case 8:
 				addMoreText('KadeDev');
 				addMoreText('atsuover');
 				addMoreText('Rageminer');
 				addMoreText('Paperkitty');
-			case 7:
-				deleteCoolText();
-				createCoolText(['MikeGeno', 'Tenaxis', 'bbpanzu', 'Banbuds', 'Cval']);
-			case 8:
-				deleteCoolText();
-				createCoolText(['Rozebud', 'MORO', 'YingYang', 'Jads', 'Tom Fulp']);
 			case 9:
 				deleteCoolText();
-				createCoolText(['Krinkels', 'GWebDev', 'Tsuraran', 'Sock.clip', 'Nate Anim8']);
+				createCoolText(['MikeGeno', 'Tenaxis', 'bbpanzu', 'Banbuds', 'Cval']);
 			case 10:
 				deleteCoolText();
-				createCoolText(['bbpanzu', 'Eddsworld', 'Jason The Art Kid', 'MashProTato']);
+				createCoolText(['Rozebud', 'MORO', 'YingYang', 'Jads', 'Tom Fulp']);
 			case 11:
 				deleteCoolText();
-				createCoolText(['A.G.O.T.I', 'BrightFyre', 'SugarRatio', 'Kullix', 'iVorare']);
+				createCoolText(['Krinkels', 'GWebDev', 'Tsuraran', 'Sock.clip', 'Nate Anim8']);
 			case 12:
 				deleteCoolText();
-				createCoolText(['In association', 'with']);
+				createCoolText(['bbpanzu', 'Eddsworld', 'Jason The Art Kid', 'MashProTato']);
 			case 13:
+				deleteCoolText();
+				createCoolText(['A.G.O.T.I', 'BrightFyre', 'SugarRatio', 'Kullix', 'iVorare']);
+			case 14:
+				deleteCoolText();
+				createCoolText(['In association', 'with']);
+			case 15:
 				addMoreText('newgrounds');
 				ngSpr.visible = true;
 			// credTextShit.text += '\nNewgrounds';
-			case 14:
+			case 16:
 				deleteCoolText();
 				ngSpr.visible = false;
 			// credTextShit.visible = false;
 
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
-			case 15:
+			case 17:
 				createCoolText([curWacky[0]]);
 			// credTextShit.visible = true;
-			case 16:
+			case 18:
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
-			case 17:
+			case 19:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
-			case 18:
+			case 20:
 				addMoreText('Friday');
 			// credTextShit.visible = true;
-			case 19:
+			case 21:
 				addMoreText('Night');
 			// credTextShit.text += '\nNight';
-			case 20:
+			case 22:
 				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
-			case 21:
+			case 23:
 				addMoreText('REGEN'); // credTextShit.text += '\nFunkin';
 
-			case 22:
+			case 24:
 				addMoreText('EXT'); // credTextShit.text += '\nFunkin';
 
-			case 24:
+			case 26:
 				skipIntro();
+				
 		}
 	}
 

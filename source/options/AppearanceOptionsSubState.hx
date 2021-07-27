@@ -9,6 +9,7 @@ class AppearanceOptionsSubState extends OptionsSubState
 	final ARROWS_STYLE_NUMBER = 4;
 	final ANIM_EVENTS_NUMBER = 5;
 	final KADE_RATING_NUMBER = 6;
+	final PHOTO_NUMBER = 7;
 
 	final BOT_ARROWS_ANIM_VALUES:Array<String> = ['advanced', 'optimized', 'none'];
 	final ARROWS_STYLES_VALUES:Array<String> = ['default', 'kapi', 'agoti', 'genocide'];
@@ -22,7 +23,8 @@ class AppearanceOptionsSubState extends OptionsSubState
 			"arrows anim: " + BOT_ARROWS_ANIM_VALUES[FlxG.save.data.botArrowsAnim],
 			"arrows style: " + ARROWS_STYLES_VALUES[FlxG.save.data.arrowsStyle],
 			"animated events: " + (FlxG.save.data.animEvents ? "on" : "off"),
-			"kade ratings: " + (FlxG.save.data.useKadeRatings ? "on" : "off")
+			"kade ratings: " + (FlxG.save.data.useKadeRatings ? "on" : "off"),
+			"photosens. mode: " + (FlxG.save.data.useKadeRatings ? "on" : "off")
 		];
 
 		super(parent, items, false, true);
@@ -66,11 +68,11 @@ class AppearanceOptionsSubState extends OptionsSubState
 
 					FlxG.save.data.animEvents = toggleBoolOption(ANIM_EVENTS_NUMBER, "animated events: ", animEvents);
 				}
-			case 'kade ratings: on' | 'kade ratings: off':
+			case 'photosens. mode: on' | 'photosens. mode: off':
 				{
-					var useKadeRatings:Bool = FlxG.save.data.useKadeRatings;
+					var photo:Bool = FlxG.save.data.photo;
 
-					FlxG.save.data.useKadeRatings = toggleBoolOption(KADE_RATING_NUMBER, "kade ratings: ", useKadeRatings);
+					FlxG.save.data.photo = toggleBoolOption(PHOTO_NUMBER, "photosens. mode: ", photo);
 				}
 		}
 	}

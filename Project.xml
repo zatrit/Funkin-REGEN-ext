@@ -183,11 +183,12 @@
 	<!--haxelib name="hscript" /-->
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
-	<haxelib name="newgrounds" unless="mobile"/>
+	<haxelib name="newgrounds" unless="mobile || switch"/>
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod" unless="mobile"/>
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="actuate" />
+	<haxelib name="ripper" />
 	<haxelib name="extension-webm" if="desktop cpp"/>
 
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
@@ -245,4 +246,7 @@
 	<architecture name="x86" if="android" />
 
 	<certificate path="keys.jks" alias="funkin-regen-ext" if="SIGN android"/>
+
+	<haxedef name="sneaker_macro_log_level" value="0" unless="debug"/>
+	<haxedef name="no-deprecation-warnings"/>
 </project>
