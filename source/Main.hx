@@ -86,30 +86,5 @@ class Main extends Sprite
 		fps.setTextFormat(new TextFormat(null, #if mobile 24 #else 12 #end));
 
 		addChild(fps);
-
-		var ourSource:String = Paths.getVideo("dontDelete");
-
-		// haxelib git extension-webm https://github.com/zatrit/extension-webm
-
-		#if web
-		var str1:String = "HTML";
-		var vHandler = new VideoHandler();
-		vHandler.init1();
-		vHandler.video.name = str1;
-		addChild(vHandler.video);
-		vHandler.init2();
-		GlobalVideo.setVid(vHandler);
-		vHandler.source(ourSource);
-		#elseif desktop
-		WebmPlayer.SKIP_STEP_LIMIT = 90; // haxelib git extension-webm https://github.com/ThatRozebudDude/extension-webm
-		var str1:String = "WEBM";
-		var webmHandle = new WebmHandler();
-		webmHandle.source(ourSource);
-		webmHandle.makePlayer();
-		webmHandle.webm.name = str1;
-		addChild(webmHandle.webm);
-		GlobalVideo.setWebm(webmHandle);
-		#elseif android
-		#end
 	}
 }

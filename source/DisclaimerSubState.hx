@@ -16,11 +16,13 @@ class DisclaimerSubState extends MusicBeatState
 		add(bg);
 
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"DISCLAIMER\n\n"
-			+ "Some moments in this game can cause epilepsy.\n"
-
-			+ "If you have had epileptic seizures or feeling badly while playing, you better not playю\n"
-			+ "The game developer is not responsible for this. ",
+			"WARNING\n\n"
+			+ "There are a lot of flashing lights in the game.\n"
+			+ "If you have photosensitivity or have had epileptic\n"
+			+ "seizures, it is better not to play this, \n"
+			+ "or at least turn on the Photosensitivity Mode \n"
+			+ "in the game options. "
+			+ "If you feel unwell while playing, \nquit the game immediately. ",
 			32);
 		txt.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();

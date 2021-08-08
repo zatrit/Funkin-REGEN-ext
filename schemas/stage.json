@@ -9,7 +9,7 @@
             "name": "stage",
             "camZoom": 0.9,
             "gfVersion": "gf",
-            "arrowsStyle": 0,
+            "notes": 0,
             "objects": [
                 {
                     "library": "shared",
@@ -53,7 +53,7 @@
         "name",
         "camZoom",
         "gfVersion",
-        "arrowsStyle",
+        "notes",
         "objects"
     ],
     "properties": {
@@ -84,10 +84,10 @@
                 "gf"
             ]
         },
-        "arrowsStyle": {
-            "$id": "#/properties/arrowsStyle",
+        "notes": {
+            "$id": "#/properties/notes",
             "type": "integer",
-            "title": "The arrowsStyle schema",
+            "title": "The notes schema",
             "default": 0,
             "examples": [
                 0

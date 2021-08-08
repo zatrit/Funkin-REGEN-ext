@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -162,7 +163,8 @@ class MainMenuState extends MusicBeatState
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
-				FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+				if (!FlxG.save.data.photo)
+					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 				menuItems.forEach(function(spr:FlxSprite)
 				{
@@ -178,7 +180,7 @@ class MainMenuState extends MusicBeatState
 					}
 					else
 					{
-						FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+						var choise = function(a:Dynamic)
 						{
 							var daChoice:String = optionShit[curSelected];
 
@@ -197,7 +199,12 @@ class MainMenuState extends MusicBeatState
 									FlxTransitionableState.skipNextTransOut = true;
 									FlxG.switchState(new OptionsState());
 							}
-						});
+						};
+
+						if (!FlxG.save.data.photo)
+							FlxFlicker.flicker(spr, 1, 0.06, false, false, choise);
+						else
+							new FlxTimer().start(0.6, choise);
 					}
 				});
 			}

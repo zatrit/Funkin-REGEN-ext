@@ -25,7 +25,7 @@ class Character extends FlxSprite
 
 	var garTrailTarget:FlxSprite;
 	var garTrail:FlxTrail;
-	
+
 	public var daZoom:Float = 1;
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
@@ -1277,12 +1277,12 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'MadTabiLeft', 24, false);
 				animation.addByPrefix('singRIGHT', 'MadTabiRight', 24, false);
 
-				addOffset('idle');
+				addOffset('idle', 0, -45);
 
-				addOffset("singUP", 59, 156);
-				addOffset("singRIGHT", -15, -19);
-				addOffset("singLEFT", 184, -5);
-				addOffset("singDOWN", -5, -30);
+				addOffset("singUP", 50, 95);
+				addOffset("singRIGHT", 135, -25);
+				addOffset("singLEFT", 130, -10);
+				addOffset("singDOWN", 25, -60);
 
 				playAnim('idle');
 		}
@@ -1361,7 +1361,8 @@ class Character extends FlxSprite
 		{
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-whitty' | 'gf-arcade' | 'gf-christmas' | 'gf-car' | 'gf-pixel' | 'gf-hell' | 'gf-tied' | 'gf-rocks' | 'gf-tabi' | 'gf-tabi-crazy':
+				case 'gf' | 'gf-whitty' | 'gf-arcade' | 'gf-christmas' | 'gf-car' | 'gf-pixel' | 'gf-hell' | 'gf-tied' | 'gf-rocks' | 'gf-tabi' |
+					'gf-tabi-crazy':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;
@@ -1514,6 +1515,7 @@ class Character extends FlxSprite
 	{
 		animation.addByPrefix(name, prefix, fps, looped);
 	}
+
 	public function setZoom(?toChange:Float = 1):Void
 	{
 		daZoom = toChange;

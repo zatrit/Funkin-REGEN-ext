@@ -1,5 +1,6 @@
 package;
 
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
@@ -30,11 +31,18 @@ class Note extends FlxSprite
 
 	public var rating:String = "shit";
 
-	public static final ARROWS_STYLES:Array<String> = [
-		'arrowsStyle/NOTE_assets',
-		'arrowsStyle/NOTE_assets-kapi',
-		'arrowsStyle/NOTE_assets-agoti',
-		'arrowsStyle/NOTE_assets-genocide'
+	public static final NOTE_STYLES:Array<String> = [
+		'notes/NOTE_assets',
+		'notes/NOTE_assets-kapi',
+		'notes/NOTE_assets-agoti',
+		'notes/NOTE_assets-genocide'
+	];
+
+	public static final NOTE_SPLASHES:Array<String> = [
+		'notes/noteSplashes',
+		'notes/noteSplashes-kapi',
+		'notes/noteSplashes',
+		'notes/noteSplashes'
 	];
 
 	public function new(strumTime:Float, _noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
@@ -54,7 +62,7 @@ class Note extends FlxSprite
 
 		burning = _noteData > 7;
 
-		this.noteData = _noteData % 4;
+		this.noteData = (_noteData % 4);
 
 		if (isSustainNote && prevNote.burning)
 		{
@@ -92,9 +100,9 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				var arrowsStyle:Int = PlayState.staticVar.arrowsStyle;
-                         
-				frames = Paths.getSparrowAtlas(ARROWS_STYLES[arrowsStyle], 'shared');
+				var notes:Int = PlayState.staticVar.noteSkins;
+
+				frames = Paths.getSparrowAtlas(NOTE_STYLES[notes], 'shared');
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');
@@ -279,5 +287,57 @@ class Note extends FlxSprite
 			if (alpha > 0.3)
 				alpha = 0.3;
 		}
+	}
+
+	public function splash():FlxSprite
+	{
+		var sploosh = new FlxSprite(x, y);
+		switch (PlayState.curStage)
+		{
+			default:
+				var notes:Int = PlayState.staticVar.noteSkins;
+
+				var tex:FlxAtlasFrames = Paths.getSparrowAtlas(NOTE_SPLASHES[notes], 'shared');
+				sploosh.frames = tex;
+
+				sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 purple', 24, false);
+				sploosh.animation.addByPrefix('splash 0 1', 'note impact 1 blue', 24, false);
+				sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 green', 24, false);
+				sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 red', 24, false);
+				sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 purple', 24, false);
+				sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
+				sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 green', 24, false);
+				sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 red', 24, false);
+
+				PlayState.staticVar.add(sploosh);
+				sploosh.cameras = [PlayState.staticVar.noteCam];
+				sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + noteData);
+				sploosh.alpha = 0.6;
+				sploosh.offset.x += 90;
+				sploosh.offset.y += 80;
+				sploosh.animation.finishCallback = function(name) sploosh.kill();
+			case 'school' | 'schoolEvil':
+				sploosh.loadGraphic(Paths.image('weeb/pixelUI/noteSplashes-pixels', 'week6'), true, 50, 50);
+				sploosh.animation.add('splash 0 0', [0, 1, 2, 3], 24, false);
+				sploosh.animation.add('splash 1 0', [4, 5, 6, 7], 24, false);
+				sploosh.animation.add('splash 0 1', [8, 9, 10, 11], 24, false);
+				sploosh.animation.add('splash 1 1', [12, 13, 14, 15], 24, false);
+				sploosh.animation.add('splash 0 2', [16, 17, 18, 19], 24, false);
+				sploosh.animation.add('splash 1 2', [20, 21, 22, 23], 24, false);
+				sploosh.animation.add('splash 0 3', [24, 25, 26, 27], 24, false);
+				sploosh.animation.add('splash 1 3', [28, 29, 30, 31], 24, false);
+
+				sploosh.setGraphicSize(Std.int(sploosh.width * PlayState.daPixelZoom));
+				sploosh.updateHitbox();
+				PlayState.staticVar.add(sploosh);
+				sploosh.cameras = [PlayState.staticVar.noteCam];
+				sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + noteData);
+				sploosh.alpha = 0.6;
+				sploosh.offset.x += 90;
+				sploosh.offset.y += 80;
+				sploosh.animation.finishCallback = function(name) sploosh.kill();
+		}
+
+		return sploosh;
 	}
 }

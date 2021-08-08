@@ -2,12 +2,14 @@ Tutorial:gf:0
 Bopeebo:dad:1
 Fresh:dad:1
 DadBattle:dad:1
+Refresh:dad:1:1:1
 Spookeez:spooky:2
 South:spooky:2
 Monster:monster:2
 Pico:pico:3
 Philly:pico:3
 Blammed:pico:3
+Doodles:pico:3:1:3
 Satin-Panties:mom:4
 High:mom:4
 Milf:mom:4

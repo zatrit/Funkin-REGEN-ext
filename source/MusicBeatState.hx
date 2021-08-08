@@ -19,7 +19,7 @@ class MusicBeatState extends FlxUIState
 	private var controls(get, never):Controls;
 
 	public var chromaticAberration(get, never):ShaderFilter;
-	
+
 	inline function get_chromaticAberration():ShaderFilter
 		return ShadersHandler.chromaticAberration;
 
@@ -27,13 +27,13 @@ class MusicBeatState extends FlxUIState
 		return PlayerSettings.player1.controls;
 
 	public var brightShader(get, never):ShaderFilter;
-	
+
 	inline function get_brightShader():ShaderFilter
 		return ShadersHandler.brightShader;
-		
+
 	public function setBrightness(brightness:Float):Void
 		ShadersHandler.setBrightness(brightness);
-		
+
 	public function setContrast(contrast:Float):Void
 		ShadersHandler.setContrast(contrast);
 
@@ -43,8 +43,8 @@ class MusicBeatState extends FlxUIState
 		Gc.run(false);
 		#end
 
-		FlxG.watch.addQuick("curBeat",curBeat);
-		FlxG.watch.addQuick("bpm",Conductor.bpm);
+		FlxG.watch.addQuick("curBeat", curBeat);
+		FlxG.watch.addQuick("bpm", Conductor.bpm);
 
 		super.create();
 	}
@@ -116,7 +116,7 @@ class MusicBeatState extends FlxUIState
 		Gc.run(true);
 		#end
 	}
-	
+
 	public function setChrome(daChrome:Float):Void
 		ShadersHandler.setChrome(daChrome);
 }

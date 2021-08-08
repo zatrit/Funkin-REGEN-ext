@@ -1,5 +1,8 @@
 package;
 
+import Conductor.ClassConductor;
+import tabi.ShadersHandler;
+import flixel.system.FlxSound;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.text.FlxTypeText;
@@ -31,6 +34,8 @@ class DialogueBox extends FlxSpriteGroup
 
 	var handSelect:FlxSprite;
 	var bgFade:FlxSprite;
+
+	var fadeColor:FlxColor = FlxColor.BLACK;
 
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
@@ -147,6 +152,11 @@ class DialogueBox extends FlxSpriteGroup
 				box.y = 375;
 				box.animation.addByPrefix('normal', 'P5_Box', 24, true);
 				box.animation.addByIndices('normalOpen', 'P5_Box', [4], "", 24, false);
+			case 'my-battle' | 'last-chance' | 'genocide':
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('speech_bubble_talking');
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
 		}
 
 		switch (PlayState.SONG.song.toLowerCase())
@@ -164,6 +174,11 @@ class DialogueBox extends FlxSpriteGroup
 				box.updateHitbox();
 				box.screenCenter(X);
 				box.y = FlxG.height - 400;
+			case 'my-battle' | 'last-chance' | 'genocide':
+				box.x = FlxG.width / 2 - box.width / 2;
+				box.y -= box.height;
+				box.y += 20;
+				box.x += 40;
 			default:
 				box.y = FlxG.height - 340;
 		}
@@ -175,7 +190,7 @@ class DialogueBox extends FlxSpriteGroup
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'senpai' | 'roses' | 'thorns':
+			default:
 				portraitLeft = new FlxSprite(-20, 40);
 				portraitLeft.frames = Paths.getSparrowAtlas('weeb/senpaiPortrait');
 				portraitLeft.animation.addByPrefix('enter', 'Senpai Portrait Enter', 24, false);
@@ -256,7 +271,7 @@ class DialogueBox extends FlxSpriteGroup
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'senpai' | 'roses':
+			default:
 				portraitRight = new FlxSprite(0, 40);
 				portraitRight.frames = Paths.getSparrowAtlas('weeb/bfPortrait');
 				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
@@ -322,7 +337,8 @@ class DialogueBox extends FlxSpriteGroup
 		add(box);
 
 		if (![
-			'lo-fight', 'overhead', 'ballistic', 'wocky', 'beathoven', 'hairball', 'nyaw', 'screenplay', 'parasite', 'a.g.o.t.i'
+			'lo-fight', 'overhead', 'ballistic', 'wocky', 'beathoven', 'hairball', 'nyaw', 'screenplay', 'parasite', 'a.g.o.t.i', 'my-battle', 'last-chance',
+			'genocide'
 		].contains(PlayState.SONG.song.toLowerCase()))
 		{
 			box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
@@ -486,136 +502,76 @@ class DialogueBox extends FlxSpriteGroup
 		switch (curCharacter)
 		{
 			case 'dad':
-				portraitRight.visible = false;
-				if (portraitMiddle != null)
-					portraitMiddle.visible = false;
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-					portraitLeft.animation.play('enter');
-				}
+				hidePortraits();
+				portraitLeft.visible = true;
+				portraitLeft.animation.play('enter');
 			case 'bf':
-				portraitLeft.visible = false;
-				if (portraitMiddle != null)
-					portraitMiddle.visible = false;
-				if (!portraitRight.visible)
-				{
-					portraitRight.visible = true;
-					portraitRight.animation.play('enter');
-				}
+				hidePortraits();
+				portraitRight.visible = true;
+				portraitRight.animation.play('enter');
 			case 'kapimad':
-				portraitRight.visible = false;
-				portraitMiddle.visible = false;
+				hidePortraits();
 				portraitLeft.frames = Paths.getSparrowAtlas('weeb/kapimad', 'kapiWeek');
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-					portraitLeft.animation.play('enter');
-				}
+				portraitLeft.visible = true;
+				portraitLeft.animation.play('enter');
 			case 'kapiconfused':
-				portraitRight.visible = false;
-				portraitMiddle.visible = false;
+				hidePortraits();
 				portraitLeft.frames = Paths.getSparrowAtlas('weeb/kapiconfused', 'kapiWeek');
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-					portraitLeft.animation.play('enter');
-				}
+				portraitLeft.visible = true;
+				portraitLeft.animation.play('enter');
 			case 'kapicute':
-				portraitRight.visible = false;
-				portraitMiddle.visible = false;
+				hidePortraits();
 				portraitLeft.frames = Paths.getSparrowAtlas('weeb/kapicute', 'kapiWeek');
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-					portraitLeft.animation.play('enter');
-				}
+				portraitLeft.visible = true;
+				portraitLeft.animation.play('enter');
 			case 'kapistare':
-				portraitRight.visible = false;
-				portraitMiddle.visible = false;
+				hidePortraits();
 				portraitLeft.frames = Paths.getSparrowAtlas('weeb/kapistare', 'kapiWeek');
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-					portraitLeft.animation.play('enter');
-				}
+				portraitLeft.visible = true;
+				portraitLeft.animation.play('enter');
 			case 'wap':
-				portraitRight.visible = false;
-				portraitMiddle.visible = false;
+				hidePortraits();
 				portraitLeft.frames = Paths.getSparrowAtlas('weeb/wap', 'kapiWeek');
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-					portraitLeft.animation.play('enter');
-				}
+				portraitLeft.visible = true;
+				portraitLeft.animation.play('enter');
 			case 'gf':
-				portraitLeft.visible = false;
-				portraitRight.visible = false;
+				hidePortraits();
 				portraitMiddle.frames = Paths.getSparrowAtlas('weeb/gf', 'kapiWeek');
-
-				if (!portraitMiddle.visible)
-				{
-					portraitMiddle.visible = true;
-					portraitMiddle.animation.play('enter');
-				}
+				portraitMiddle.visible = true;
+				portraitMiddle.animation.play('enter');
 			case 'gfwave':
-				portraitLeft.visible = false;
-				portraitRight.visible = false;
+				hidePortraits();
 				portraitMiddle.frames = Paths.getSparrowAtlas('weeb/gfwave', 'kapiWeek');
-
-				if (!portraitMiddle.visible)
-				{
-					portraitMiddle.visible = true;
-					portraitMiddle.animation.play('enter');
-				}
+				portraitMiddle.visible = true;
+				portraitMiddle.animation.play('enter');
 			case 'gflaugh':
-				portraitLeft.visible = false;
-				portraitRight.visible = false;
+				hidePortraits();
 				portraitMiddle.frames = Paths.getSparrowAtlas('weeb/gflaugh', 'kapiWeek');
-
-				if (!portraitMiddle.visible)
-				{
-					portraitMiddle.visible = true;
-					portraitMiddle.animation.play('enter');
-				}
+				portraitMiddle.visible = true;
+				portraitMiddle.animation.play('enter');
 			case 'bf-scared':
-				portraitLeft.visible = false;
+				hidePortraits();
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('boyfriendText', 'agoti'), 0.6)];
-				if (!portraitRight.visible)
-				{
-					portraitRight.visible = true;
-				}
+				portraitRight.visible = true;
 			case 'agoti':
-				portraitRight.visible = false;
+				hidePortraits();
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiText', 'agoti'), 0.6)];
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-				}
+				portraitLeft.visible = true;
 				portraitLeft.animation.play('normal');
 			case 'agoti-angry':
-				portraitRight.visible = false;
+				hidePortraits();
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiAngryText', 'agoti'), 0.6)];
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-				}
+				portraitLeft.visible = true;
 				portraitLeft.animation.play('angry');
 			case 'agoti-scared':
-				portraitRight.visible = false;
+				hidePortraits();
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiScaredText', 'agoti'), 0.6)];
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-				}
+				portraitLeft.visible = true;
 				portraitLeft.animation.play('scared');
 			case 'agoti-crazy':
-				portraitRight.visible = false;
+				hidePortraits();
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('agotiScaredText', 'agoti'), 0.6)];
-				if (!portraitLeft.visible)
-				{
-					portraitLeft.visible = true;
-				}
+				portraitLeft.visible = true;
 				portraitLeft.animation.play('crazy');
 		}
 	}
@@ -625,5 +581,13 @@ class DialogueBox extends FlxSpriteGroup
 		var splitName:Array<String> = dialogueList[0].split(":");
 		curCharacter = splitName[1];
 		dialogueList[0] = dialogueList[0].substr(splitName[1].length + 2).trim();
+	}
+
+	function hidePortraits():Void
+	{
+		portraitLeft.visible = false;
+		portraitRight.visible = false;
+		if (portraitMiddle != null)
+			portraitRight.visible = false;
 	}
 }

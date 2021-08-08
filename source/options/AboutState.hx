@@ -30,11 +30,9 @@ class AboutState extends MusicBeatState
 		logoBl.screenCenter();
 		logoBl.y = logoBl.y - 100;
 
-		text = new FlxText(0, 0, 0, "version "
-			+ Application.current.meta.get('version')
-			+ "\n"
-			#if mobile + "ported by zatrit" + "\n" #end
-			+ "about screen(OMG, it's awesome) by luckydog7", 16);
+		text = new FlxText(0, 0, 0, "version " + Application.current.meta.get('version') + "\n" #if mobile
+			+ "ported by zatrit"
+			+ "\n" #end + "about screen(OMG, it's awesome) by luckydog7", 16);
 
 		text.setFormat("Delfino", 24, FlxColor.WHITE, CENTER);
 		text.antialiasing = true;

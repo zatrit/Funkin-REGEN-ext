@@ -1,6 +1,5 @@
 package;
 
-import lime.utils.Assets;
 import openfl.filters.BitmapFilter;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
@@ -30,7 +29,7 @@ class FreeplayState extends MusicBeatState
 	var diffText:FlxText;
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
-	
+
 	var chromeValue:Float = 0;
 	var filters:Array<BitmapFilter> = [];
 
@@ -42,7 +41,7 @@ class FreeplayState extends MusicBeatState
 	#if mobile
 	var grpMobileButtons:MobileControls;
 	#end
-	#if PRELOAD_ALL
+	#if (PRELOAD_ALL || mobile)
 	var timer:FlxTimer;
 	#end
 
@@ -50,7 +49,7 @@ class FreeplayState extends MusicBeatState
 	{
 		var isDebug:Bool = false;
 
-		#if (debug||UNLOCK)
+		#if (debug || UNLOCK)
 		isDebug = true;
 		#end
 
@@ -62,19 +61,21 @@ class FreeplayState extends MusicBeatState
 
 			var hardOnly = false;
 
-			if(splitted.length>3)
+			if (splitted.length > 3)
 				hardOnly = Std.parseInt(splitted[3]) == 1;
 
-			if(splitted.length<5)
-				addSong(splitted[0],Std.parseInt(splitted[2]),splitted[1], hardOnly);
-			
-			else if(Highscore.getWeekScore(Std.parseInt(splitted[4]),2)>0||isDebug)
-				addSong(splitted[0],Std.parseInt(splitted[2]),splitted[1], hardOnly);
+			if (splitted.length < 5)
+				addSong(splitted[0], Std.parseInt(splitted[2]), splitted[1], hardOnly);
+			else if (Highscore.getWeekScore(Std.parseInt(splitted[4]), 2) > 0 || isDebug)
+				addSong(splitted[0], Std.parseInt(splitted[2]), splitted[1], hardOnly);
 		}
 
-		filters = [chromaticAberration];
-		FlxG.camera.setFilters(filters);
-		FlxG.camera.filtersEnabled = true;
+		if (!FlxG.save.data.photo)
+		{
+			filters = [chromaticAberration];
+			FlxG.camera.setFilters(filters);
+			FlxG.camera.filtersEnabled = true;
+		}
 
 		/* 
 			if (FlxG.sound.music != null)
@@ -90,62 +91,62 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		/*#if !MOD_ONLY
-		if (StoryMenuState.weekUnlocked(1) || isDebug)
-			addWeek(['Bopeebo', 'Fresh', 'Dadbattle'], 1, ['dad']);
+			if (StoryMenuState.weekUnlocked(1) || isDebug)
+				addWeek(['Bopeebo', 'Fresh', 'Dadbattle'], 1, ['dad']);
 
-		if (StoryMenuState.weekUnlocked(2) || isDebug)
-			addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky', 'spooky', 'monster']);
+			if (StoryMenuState.weekUnlocked(2) || isDebug)
+				addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky', 'spooky', 'monster']);
 
-		if (StoryMenuState.weekUnlocked(3) || isDebug)
-			addWeek(['Pico', 'Philly', 'Blammed'], 3, ['pico']);
+			if (StoryMenuState.weekUnlocked(3) || isDebug)
+				addWeek(['Pico', 'Philly', 'Blammed'], 3, ['pico']);
 
-		if (StoryMenuState.weekUnlocked(4) || isDebug)
-			addWeek(['Satin-Panties', 'High', 'Milf'], 4, ['mom']);
+			if (StoryMenuState.weekUnlocked(4) || isDebug)
+				addWeek(['Satin-Panties', 'High', 'Milf'], 4, ['mom']);
 
-		if (StoryMenuState.weekUnlocked(5) || isDebug)
-			addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
+			if (StoryMenuState.weekUnlocked(5) || isDebug)
+				addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
 
-		if (StoryMenuState.weekUnlocked(6) || isDebug)
-			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
-		#end
+			if (StoryMenuState.weekUnlocked(6) || isDebug)
+				addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
+			#end
 
-		// if (StoryMenuState.weekUnlocked(7) || isDebug)
-		//	addWeek(['Ugh', 'Guns', 'Stress'], 7, ['tankman']);
+			// if (StoryMenuState.weekUnlocked(7) || isDebug)
+			//	addWeek(['Ugh', 'Guns', 'Stress'], 7, ['tankman']);
 
-		if (StoryMenuState.weekUnlocked(8) || isDebug)
-			addWeek(['Headache', 'Nerves', 'Release' #if (debug && desktop), 'Fading' #end], 8, [
-				'garcello',
-				'garcellotired',
-				'garcellodead'
-				#if (debug && desktop), 'garcelloghosty'
-				#end
-			]);
+			if (StoryMenuState.weekUnlocked(8) || isDebug)
+				addWeek(['Headache', 'Nerves', 'Release' #if (debug && desktop), 'Fading' #end], 8, [
+					'garcello',
+					'garcellotired',
+					'garcellodead'
+					#if (debug && desktop), 'garcelloghosty'
+					#end
+				]);
 
-		if (StoryMenuState.weekUnlocked(9) || isDebug)
-			addWeek(['Lo-Fight', 'Overhead', 'Ballistic', 'Ballistic-Old'], 9, ['whitty', 'whitty', 'whittyCrazy', 'whittyCrazy']);
+			if (StoryMenuState.weekUnlocked(9) || isDebug)
+				addWeek(['Lo-Fight', 'Overhead', 'Ballistic', 'Ballistic-Old'], 9, ['whitty', 'whitty', 'whittyCrazy', 'whittyCrazy']);
 
-		if (StoryMenuState.weekUnlocked(10) || isDebug)
-			addWeek(['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], 10, ['kapi', 'kapi', 'kapi-angry', 'kapi']);
+			if (StoryMenuState.weekUnlocked(10) || isDebug)
+				addWeek(['Wocky', 'Beathoven', 'Hairball', 'Nyaw'], 10, ['kapi', 'kapi', 'kapi-angry', 'kapi']);
 
-		if (StoryMenuState.weekUnlocked(11) || isDebug)
-			addWeek(['Flatzone'], 11, ['mrgame']);
+			if (StoryMenuState.weekUnlocked(11) || isDebug)
+				addWeek(['Flatzone'], 11, ['mrgame']);
 
-		if (StoryMenuState.weekUnlocked(12) || isDebug)
-			addWeek(['Improbable-Outset', 'Madness', 'Hellclown'], 12, ['trickyMask', 'tricky', 'trickyH']);
+			if (StoryMenuState.weekUnlocked(12) || isDebug)
+				addWeek(['Improbable-Outset', 'Madness', 'Hellclown'], 12, ['trickyMask', 'tricky', 'trickyH']);
 
-		#if !UNLOCK
-		if (Highscore.getWeekScore(12, 2) > 0 || isDebug)
-		#end
-		addWeek(['expurgation'], 12, ['exTricky']);
+			#if !UNLOCK
+			if (Highscore.getWeekScore(12, 2) > 0 || isDebug)
+			#end
+			addWeek(['expurgation'], 12, ['exTricky']);
 
-		if (StoryMenuState.weekUnlocked(13) || isDebug)
-			addWeek(['Norway', 'Tordbot'], 13, ['tord', 'tordbot']);
+			if (StoryMenuState.weekUnlocked(13) || isDebug)
+				addWeek(['Norway', 'Tordbot'], 13, ['tord', 'tordbot']);
 
-		if (StoryMenuState.weekUnlocked(14) || isDebug)
-			addWeek(['Screenplay', 'Parasite', 'A.G.O.T.I', 'Guns'], 14, ['agoti', 'agoti', 'agoti-crazy', 'agoti']);
+			if (StoryMenuState.weekUnlocked(14) || isDebug)
+				addWeek(['Screenplay', 'Parasite', 'A.G.O.T.I', 'Guns'], 14, ['agoti', 'agoti', 'agoti-crazy', 'agoti']);
 
-		if (StoryMenuState.weekUnlocked(15) || isDebug)
-			addWeek(['My-Battle', 'Last-Chance', 'Genocide'], 15, ['tabi', 'tabi', 'tabi-crazy']);*/
+			if (StoryMenuState.weekUnlocked(15) || isDebug)
+				addWeek(['My-Battle', 'Last-Chance', 'Genocide'], 15, ['tabi', 'tabi', 'tabi-crazy']); */
 
 		// LOAD MUSIC
 
@@ -199,8 +200,6 @@ class FreeplayState extends MusicBeatState
 		// FlxG.sound.playMusic(Paths.music('title'), 0);
 		// FlxG.sound.music.fadeIn(2, 0, 0.8);
 
-		var swag:Alphabet = new Alphabet(1, 0, "swag");
-
 		#if mobile
 		grpMobileButtons = new MobileControls(FlxG.camera, FlxG.camera.width - 510, FlxG.camera.height - 410, 1);
 		add(grpMobileButtons);
@@ -211,29 +210,29 @@ class FreeplayState extends MusicBeatState
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, hardOnly:Bool)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter,hardOnly));
+		songs.push(new SongMetadata(songName, weekNum, songCharacter, hardOnly));
 	}
-/*
-	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
-	{
-		if (songCharacters == null)
-			songCharacters = ['bf'];
 
-		var num:Int = 0;
-		for (song in songs)
+	/*
+		public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
 		{
-			addSong(song, weekNum, songCharacters[num]);
+			if (songCharacters == null)
+				songCharacters = ['bf'];
 
-			if (songCharacters.length != 1)
-				num++;
+			var num:Int = 0;
+			for (song in songs)
+			{
+				addSong(song, weekNum, songCharacters[num]);
+
+				if (songCharacters.length != 1)
+					num++;
+			}
 		}
-	}
-*/
-
+	 */
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		
+
 		setChrome(chromeValue);
 
 		if (FlxG.sound.music.volume < 0.7)
@@ -295,11 +294,13 @@ class FreeplayState extends MusicBeatState
 			trace('CUR WEEK' + PlayState.storyWeek);
 			LoadingState.loadAndSwitchState(new PlayState());
 		}
+
+		Conductor.songPosition = FlxG.sound.music.time;
 	}
 
 	function changeDiff(change:Int = 0)
 	{
-		var oldDiff=curDifficulty;
+		var oldDiff = curDifficulty;
 
 		curDifficulty += change;
 
@@ -308,8 +309,8 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
-		if(songs[curSelected].isHardOnly)
-			curDifficulty=oldDiff;
+		if (songs[curSelected].isHardOnly)
+			curDifficulty = oldDiff;
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
@@ -338,7 +339,8 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		if(songs[curSelected].isHardOnly){
+		if (songs[curSelected].isHardOnly)
+		{
 			curDifficulty = 2;
 			changeDiff();
 		}
@@ -350,7 +352,7 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		#if (PRELOAD_ALL)
+		#if (PRELOAD_ALL || mobile)
 		if (timer != null)
 			timer.cancel();
 		else
@@ -360,8 +362,10 @@ class FreeplayState extends MusicBeatState
 		{
 			var song = songs[curSelected];
 
+			#if (PRELOAD_ALL || mobile)
 			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
-			Conductor.changeBPM(Song.loadFromJson(song.songName.toLowerCase()+(song.isHardOnly ? "-hard" : ""), song.songName.toLowerCase()).bpm);
+			#end
+			Conductor.changeBPM(Song.loadFromJson(song.songName.toLowerCase() + (song.isHardOnly ? "-hard" : ""), song.songName.toLowerCase()).bpm);
 		});
 		#end
 
@@ -393,17 +397,15 @@ class FreeplayState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-		
-		if (['my-battle', 'last-chance', 'genocide'].contains(songs[curSelected].songName.toLowerCase()))
+
+		FlxG.camera.zoom += 0.01;
+		FlxTween.tween(FlxG.camera, {zoom: 1}, 0.1);
+		if (songs[curSelected].songName.toLowerCase() == 'genocide')
 		{
-			FlxG.camera.zoom += 0.03;
-			FlxTween.tween(FlxG.camera, { zoom: 1 }, 0.1);
-			if (songs[curSelected].songName.toLowerCase() == 'genocide')
-			{
+			if (!FlxG.save.data.photo)
 				FlxG.camera.shake(0.005, 0.1);
-				chromeValue += 6 / 1000;
-				FlxTween.tween(this, { chromeValue: 0 }, 0.15);
-			}
+			chromeValue += 6 / 1000;
+			FlxTween.tween(this, {chromeValue: 0}, 0.15);
 		}
 	}
 }

@@ -44,7 +44,6 @@
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg|*.mp4" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3|*.mp4" if="desktop"/>
-	<assets path="assets/preload" rename="assets" exclude="*.mp3|*.webm|*.mp4|videos/*" if="mobile"/>
 
 	<assets path="assets/modSongs" rename="assets/songs" exclude="*.ogg" if="web"/>
 	<assets path="assets/modSongs" rename="assets/songs" exclude="*.mp3" unless="web"/>
@@ -185,11 +184,10 @@
 	<haxelib name="flixel-ui" />
 	<haxelib name="newgrounds" unless="mobile || switch"/>
 	<haxelib name="faxe" if='switch'/>
-	<haxelib name="polymod" unless="mobile"/>
+	<haxelib name="polymod" unless="switch || mobile"/>
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="actuate" />
-	<haxelib name="ripper" />
-	<haxelib name="extension-webm" if="desktop cpp"/>
+	<haxelib name="extension-webm" unless="html5" />
 
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
 	
@@ -246,7 +244,5 @@
 	<architecture name="x86" if="android" />
 
 	<certificate path="keys.jks" alias="funkin-regen-ext" if="SIGN android"/>
-
-	<haxedef name="sneaker_macro_log_level" value="0" unless="debug"/>
 	<haxedef name="no-deprecation-warnings"/>
 </project>

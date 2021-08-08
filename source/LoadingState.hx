@@ -169,6 +169,8 @@ class LoadingState extends MusicBeatState
 		if (FlxG.keys.justPressed.SPACE)
 			trace('fired: ' + callbacks.getFired() + " unfired:" + callbacks.getUnfired());
 		#end
+		if (!stopMusic)
+			Conductor.songPosition = FlxG.sound.music.time;
 	}
 
 	function onLoad()
@@ -230,7 +232,7 @@ class LoadingState extends MusicBeatState
 		callbacks = null;
 	}
 
-	static function initSongsManifest()
+	public static function initSongsManifest()
 	{
 		var id = "songs";
 		var promise = new Promise<AssetLibrary>();

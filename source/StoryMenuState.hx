@@ -40,19 +40,8 @@ class StoryMenuState extends MusicBeatState
 		['tord', 'bf', 'gf'], ['agoti', 'bf', 'gf'], ['tabi', 'bf', 'gf']];
 
 	var weekNames:Array<String> = [
-		"",
-		#if !MOD_ONLY
-		"Daddy Dearest", "Spooky Month", "PICO", "MOMMY MUST MURDER", "RED SNOW", "hating simulator ft. moawling",
-		#end
-		"Tankman",
-		"SMOKE 'EM OUT STRUGGLE",
-		"Back Alley Blitz",
-		"B-B-BREAK DOWN!",
-		"Please nerf up-b...",
-		"Madness",
-		"Tord",
-		"Prisoner of the Void",
-		"Curse"
+		"", #if !MOD_ONLY "Daddy Dearest", "Spooky Month", "PICO", "MOMMY MUST MURDER", "RED SNOW", "hating simulator ft. moawling", #end "Tankman",
+		"SMOKE 'EM OUT STRUGGLE", "Back Alley Blitz", "B-B-BREAK DOWN!", "Please nerf up-b...", "Madness", "Tord", "Prisoner of the Void", "Curse"
 	];
 
 	var txtWeekTitle:FlxText;

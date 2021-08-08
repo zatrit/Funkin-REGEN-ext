@@ -15,7 +15,8 @@ class MenuBGSelectorSubState extends OptionsSubState
 			'tricky',
 			'tricky amogus',
 			'tord',
-			'agoti'
+			'agoti',
+			'tabi'
 		];
 
 		super(parent, items, true, true);

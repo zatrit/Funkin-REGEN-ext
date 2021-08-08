@@ -1,5 +1,5 @@
 ---SECTION START---
-:class:Cutscene1,
+:class:tabi.Cutscene1,
 :bg:cutscenes/0
 :musicloop:bgms/0
 :disableTypeSound:
@@ -53,7 +53,7 @@
 :disableTypeSound:
 :sound:GF_1
 :gf-worried:%d20%
-:class-use:Cutscene1
+:class-use:tabi.Cutscene1
 :bg:cutscenes/2
 :switchSound:tabiText
 :enableTypeSound:
@@ -76,7 +76,7 @@
 ---SECTION END---
 
 ---SECTION START---
-:class:Cutscene1,
+:class:tabi.Cutscene1,
 :bg:cutscenes/0
 :musicloop:bgms/0
 :disableTypeSound:
@@ -142,7 +142,7 @@
 :soundoverwrite:voices/bath/5
 :gf-worried:%d20%
 :soundoverwritestop:
-:class-use:Cutscene1
+:class-use:tabi.Cutscene1
 :bg:cutscenes/2
 :soundoverwrite:voices/tabi1/1
 :tabi:%d21%

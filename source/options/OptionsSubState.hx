@@ -213,30 +213,30 @@ class OptionsSubState extends MusicBeatSubstate
 		return newVal;
 	}
 
-	function toggleFloatOption(num:Int = 0, text:String = "", oldVal:Float = 0, min:Float=0, max:Float=1, step:Float=0.25):Float
+	function toggleFloatOption(num:Int = 0, text:String = "", oldVal:Float = 0, min:Float = 0, max:Float = 1, step:Float = 0.25):Float
 	{
 		var oldAlphabet = grpOptions.members[num];
-	
+
 		var newVal = oldVal + step;
 
 		if (newVal > max)
 			newVal = min;
 		if (newVal < min)
 			newVal = max;
-	
+
 		textMenuItems[num] = text + newVal;
-	
+
 		var alphabet:Alphabet = new Alphabet(0, 0, textMenuItems[num], BOLD, false);
 		alphabet.ID = num;
 		alphabet.isMenuItem = true;
-	
+
 		alphabet.x = oldAlphabet.x;
 		alphabet.y = oldAlphabet.y;
 		alphabet.targetY = oldAlphabet.targetY;
-	
+
 		grpOptions.replace(oldAlphabet, alphabet);
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-	
+
 		return newVal;
 	}
 
@@ -244,7 +244,8 @@ class OptionsSubState extends MusicBeatSubstate
 	{
 	}
 
-	override function close() {
+	override function close()
+	{
 		FlxG.save.flush();
 
 		super.close();

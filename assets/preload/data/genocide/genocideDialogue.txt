@@ -1,9 +1,9 @@
 ---SECTION START---
-:class:Cutscene2,
+:class:tabi.Cutscene2,
 :bghide:
 :disableTypeSound:
 :switchSound:tabiText
-:class-use:Cutscene2
+:class-use:tabi.Cutscene2
 :fadeOut:0.5
 :musicloop:bgms/2
 :enableTypeSound:
@@ -27,11 +27,11 @@
 ---SECTION END---
 
 ---SECTION START---
-:class:Cutscene2,
+:class:tabi.Cutscene2,
 :disableTypeSound:
 :switchSound:bfText
 :bghide:
-:class-use:Cutscene2
+:class-use:tabi.Cutscene2
 :fadeOut:0.5
 :musicloop:bgms/2
 :soundoverwrite:voices/tabi3/1

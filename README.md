@@ -18,8 +18,12 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [The Full-Ass Tricky Mod](https://gamebanana.com/mods/44334)
 - [Vs. Tord Mod REMASTERED](https://gamebanana.com/mods/183165)
 - [Vs. AGOTI](https://gamebanana.com/mods/284934)
+- [V.S. TABI Ex Boyfriend](https://gamebanana.com/mods/286388)
+- [FNF "Refresh" Song Playable Mod](https://gamebanana.com/mods/291797)
 
 ## Credits / shoutouts
+
+I try to write each name only once, maybe someone has developed a few mods, but I credited him only once 
 
 - [ninjamuffin99](https://twitter.com/ninja_muffin99) - Programmer
 - [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art
@@ -32,6 +36,11 @@ IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMIPLED VERSION, YOU MUST OPEN 
 - [Cval](https://github.com/cvalbrown), [GWebDev](https://gamebanana.com/members/1799048) and [Rozebud](https://github.com/ThatRozebudDude) - Tricky authors
 - [Bbpanzu](https://github.com/bbpanzu) and [Jason The Art Kid](https://gamebanana.com/members/1864663) - Tord authors
 - [A.G.O.T.I](https://gamebanana.com/members/1805341), [Brightfyre](https://gamebanana.com/members/1800180), [SugarRatio](https://gamebanana.com/members/1771573), [Kullix](https://gamebanana.com/members/1782132), [MashProTato](https://gamebanana.com/members/1784170) and iVorare - A.G.O.T.I authors 
+- [Verwex](https://github.com/Verwex) - Mic'd Up Engine(i using his note splashing code)
+- [Homskiy](https://gamebanana.com/members/1803091), [Tenzubushi](https://gamebanana.com/members/1803333), [DaDrawingLad](https://gamebanana.com/members/1775965),
+Angelattes, Cougar MacDowall, Sini, sock.clip and RussianRatigan - V.S. TABI Ex Boyfriend
+- Shannon Sunday and [RRTheWolfcatOfficial](https://gamebanana.com/members/1899336) - FNF "Refresh" Song Playable Mod
+- [luckydog7](https://github.com/luckydog7) - FNF Android Port
 
 This game was made with love to Newgrounds and it's community. Extra love to Tom Fulp.
 
@@ -67,7 +76,7 @@ You'll also need to install a couple things that involve Gits. To do this, you n
 2. Follow instructions to install the application properly.
 3. Run `haxelib git polymod https://github.com/larsiusprime/polymod.git` to install Polymod.
 4. Run `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc` to install Discord RPC.
-5. Run `haxelib git extension-webm https://github.com/KadeDev/extension-webm` and `lime rebuild extension-webm cpp` to install Extension WebM
+5. Run `haxelib git extension-webm https://github.com/KlavierGayming/extension-webm` and `lime rebuild extension-webm cpp` to install Extension WebM
 
 You should have everything ready for compiling the game! Follow the guide below to continue!
 

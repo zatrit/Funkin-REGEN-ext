@@ -1,12 +1,14 @@
 package;
 
-import lime.system.System;
-import sys.FileSystem;
+import lime.app.Application;
+#if polymod
+import mod.CustomLibraryBackend;
+#end
+import haxe.ds.Map;
 import options.DefaultOptions;
 import kade.CachedFrames;
 #if (cpp && desktop)
 import Discord.DiscordClient;
-import sys.thread.Thread;
 #end
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -22,11 +24,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-#if (!switch && !mobile)
-import io.newgrounds.NG;
-#end
-import lime.app.Application;
-import openfl.Assets;
+import lime.utils.Assets;
 
 using StringTools;
 
@@ -46,11 +44,23 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if polymod
+		#if polymodaddMoreText
+		final modRoot='mods';
+		final MOD_LIST='$modRoot/modList.txt';
+
+		var mods:Array<String> = CoolUtil.coolTextFile(MOD_LIST);
+		var map = new Map<String, polymod.backends.PolymodAssets.PolymodAssetType>();
+
+		map.set("ogg",AUDIO_MUSIC);
+		
 		polymod.Polymod.init({
-			modRoot: "mods",
-			dirs: ['introMod']
+			modRoot: modRoot,
+			dirs: mods,
+			framework: CUSTOM,
+			extensionMap: map,
+			customBackend: CustomLibraryBackend
 		});
+
 		#end
 		#if android
 		FlxG.android.preventDefaultKeys = [BACK];
@@ -277,26 +287,17 @@ class TitleState extends MusicBeatState
 			transitioning = true;
 			// FlxG.sound.music.stop();
 
-			#if NO_PRELOAD_ALL
-			var loadedCache:Bool = false;
-			CachedFrames.loadLibrary(() ->
-			{
-				loadedCache = true;
-			}, "preload");
+			#if (mobile&&NO_PRELOAD_ALL)
+			LoadingState.initSongsManifest().onComplete((a) -> {
 			#end
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
 				// Check if version is outdated
 
-				#if NO_PRELOAD_ALL
-				if (!loadedCache)
-					tmr.reset(0.5);
-				#end
-
+				#if !debug
 				var version:String = Application.current.meta.get('version');
 
-				#if !debug
 				var http = new haxe.Http("https://raw.githubusercontent.com/zatrit/Funkin-REGEN-ext/master/version.downloadMe");
 				var githubVersion:String;
 
@@ -313,22 +314,16 @@ class TitleState extends MusicBeatState
 				http.request();
 
 				if (version.trim() != githubVersion && !OutdatedSubState.leftState && githubVersion != "")
-				{
 					FlxG.switchState(new OutdatedSubState());
-					trace('OLD VERSION!');
-					trace('old ver');
-					trace(version.trim());
-					trace('cur ver');
-					trace(githubVersion);
-				}
 				else
-				{
 					FlxG.switchState(new DisclaimerSubState());
-				}
 				#else
 				FlxG.switchState(new DisclaimerSubState());
 				#end
 			});
+			#if (mobile&&NO_PRELOAD_ALL)
+			});
+			#end
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
 
@@ -432,47 +427,52 @@ class TitleState extends MusicBeatState
 				createCoolText(['A.G.O.T.I', 'BrightFyre', 'SugarRatio', 'Kullix', 'iVorare']);
 			case 14:
 				deleteCoolText();
-				createCoolText(['In association', 'with']);
+				createCoolText(['Homskiy', 'Tenzubushi', 'DaDrawingLad', 'Angelattes', 'Cougar MacDowall']);
 			case 15:
+				deleteCoolText();
+				createCoolText(['Sini', 'RussianRatigan', 'Verwex']);
+			case 16:
+				deleteCoolText();
+				createCoolText(['In association', 'with']);
+			case 17:
 				addMoreText('newgrounds');
 				ngSpr.visible = true;
 			// credTextShit.text += '\nNewgrounds';
-			case 16:
+			case 18:
 				deleteCoolText();
 				ngSpr.visible = false;
 			// credTextShit.visible = false;
 
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
-			case 17:
+			case 19:
 				createCoolText([curWacky[0]]);
 			// credTextShit.visible = true;
-			case 18:
+			case 20:
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
-			case 19:
+			case 21:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
-			case 20:
+			case 22:
 				addMoreText('Friday');
 			// credTextShit.visible = true;
-			case 21:
+			case 23:
 				addMoreText('Night');
 			// credTextShit.text += '\nNight';
-			case 22:
+			case 24:
 				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
-			case 23:
+			case 25:
 				addMoreText('REGEN'); // credTextShit.text += '\nFunkin';
 
-			case 24:
+			case 26:
 				addMoreText('EXT'); // credTextShit.text += '\nFunkin';
 
-			case 26:
+			case 28:
 				skipIntro();
-				
 		}
 	}
 

@@ -5,6 +5,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 
+using StringTools;
+
 class Paths
 {
 	inline public static var SOUND_EXT = "ogg";
@@ -18,6 +20,11 @@ class Paths
 
 	static function getPath(file:String, type:AssetType, library:Null<String>)
 	{
+		var modFileName = '${library == null ? "" : (library + "/")}$file';
+
+		if (OpenFlAssets.exists(modFileName))
+			return modFileName;
+
 		if (library != null)
 			return getLibraryPath(file, library);
 
@@ -85,14 +92,19 @@ class Paths
 		return getPath('music/$key.$SOUND_EXT', MUSIC, library);
 	}
 
+	inline static public function getSongsItem(path:String):String
+	{
+		return getPath(path, SOUND, "songs");
+	}
+
 	inline static public function voices(song:String)
 	{
-		return 'songs:assets/songs/${song.toLowerCase()}/Voices.$SOUND_EXT';
+		return getSongsItem('${song.toLowerCase()}/Voices.$SOUND_EXT');
 	}
 
 	inline static public function inst(song:String)
 	{
-		return 'songs:assets/songs/${song.toLowerCase()}/Inst.$SOUND_EXT';
+		return getSongsItem('${song.toLowerCase()}/Inst.$SOUND_EXT');
 	}
 
 	inline static public function image(key:String, ?library:String)
@@ -123,4 +135,7 @@ class Paths
 		return getLibraryPath('videos/$key.mp4', "preload");
 		#end
 	}
+
+	static public function exists(someString:String):Bool
+		return OpenFlAssets.exists(someString);
 }
